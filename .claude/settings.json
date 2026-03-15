@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:doi.org)",
+      "WebFetch(domain:academic.oup.com)",
+      "WebFetch(domain:linkinghub.elsevier.com)",
+      "WebSearch"
+    ]
+  }
+}

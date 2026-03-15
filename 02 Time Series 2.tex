@@ -146,7 +146,7 @@
  %--- Slide 2: The Transition: Why move from Valuation to Risk? ---
 \begin{frame}{Transition: From Valuation to Risk}
     \begin{itemize}
-        \item \textbf{Previously:} We discussed predicting returns using valuation ratios like the Price-Dividend ratio ($pd$) and Consumption-Wealth ratio ($cay$).
+        \item \textbf{Previously:} We discussed predicting returns using valuation ratios like the Price-Dividend ratio ($pd$) and Consumption-Wealth ratio ($cay$). 
         \item \textbf{The Economic Logic:} 
             \begin{itemize}
                 \item Why do $pd$ and $cay$ forecast returns? 
@@ -532,289 +532,289 @@
 \end{frame}
 
 
-\subsection{\href{https://doi.org/10.1093/rfs/hhp008}{\textcolor{blue}{Bollerslev, Tauchen, and Zhou, 2009}}}
+% \subsection{\href{https://doi.org/10.1093/rfs/hhp008}{\textcolor{blue}{Bollerslev, Tauchen, and Zhou, 2009}}}
 
-%--- Slide: Why Decompose Variance? ---
-\begin{frame}{Why Decompose Variance?}
-    \textbf{The Fundamental Problem:}
-    \begin{itemize}
-        \item ICAPM predicts: $E_t[R_{t+1}] = \gamma \cdot E_t[\sigma_{t+1}^2]$
-        \item But we observe $\sigma_t^2$ (realized), not $E_t[\sigma_{t+1}^2]$ (expected).
-        \item Using realized variance conflates predictable and unpredictable components.
-    \end{itemize}
+% %--- Slide: Why Decompose Variance? ---
+% \begin{frame}{Why Decompose Variance?}
+%     \textbf{The Fundamental Problem:}
+%     \begin{itemize}
+%         \item ICAPM predicts: $E_t[R_{t+1}] = \gamma \cdot E_t[\sigma_{t+1}^2]$
+%         \item But we observe $\sigma_t^2$ (realized), not $E_t[\sigma_{t+1}^2]$ (expected).
+%         \item Using realized variance conflates predictable and unpredictable components.
+%     \end{itemize}
     
-    \vspace{0.3cm}
-    \textbf{Key Insight:}
-    \begin{itemize}
-        \item Only the \textit{expected} component should command a risk premium.
-        \item The \textit{unexpected} component creates contamination (volatility feedback).
-        \item Proper identification requires separating these two components.
-    \end{itemize}
+%     \vspace{0.3cm}
+%     \textbf{Key Insight:}
+%     \begin{itemize}
+%         \item Only the \textit{expected} component should command a risk premium.
+%         \item The \textit{unexpected} component creates contamination (volatility feedback).
+%         \item Proper identification requires separating these two components.
+%     \end{itemize}
     
-    \vspace{0.3cm}
-    \centering
-    \textit{The solution: Decompose variance and identify what is actually priced.}
-\end{frame}
+%     \vspace{0.3cm}
+%     \centering
+%     \textit{The solution: Decompose variance and identify what is actually priced.}
+% \end{frame}
 
-%--- Slide: The Variance Decomposition ---
-\begin{frame}{The Variance Decomposition}
-    \textbf{Total variance at time $t+1$ can be decomposed:}
+% %--- Slide: The Variance Decomposition ---
+% \begin{frame}{The Variance Decomposition}
+%     \textbf{Total variance at time $t+1$ can be decomposed:}
     
-    \begin{block}{Decomposition}
-        \begin{equation}
-            \sigma_{t+1}^2 = \underbrace{E_t[\sigma_{t+1}^2]}_{\text{Expected Variance}} + \underbrace{(\sigma_{t+1}^2 - E_t[\sigma_{t+1}^2])}_{\text{Variance Innovation}}
-        \end{equation}
-    \end{block}
+%     \begin{block}{Decomposition}
+%         \begin{equation}
+%             \sigma_{t+1}^2 = \underbrace{E_t[\sigma_{t+1}^2]}_{\text{Expected Variance}} + \underbrace{(\sigma_{t+1}^2 - E_t[\sigma_{t+1}^2])}_{\text{Variance Innovation}}
+%         \end{equation}
+%     \end{block}
     
-    \textbf{Component 1: Expected Variance $E_t[\sigma_{t+1}^2]$}
-    \begin{itemize}
-        \item Predictable based on time-$t$ information.
-        \item Reflects \textit{known} future risk; should be priced according to ICAPM.
-        \item Estimated using GARCH forecasts, HAR models, or option-implied variance.
-    \end{itemize}
+%     \textbf{Component 1: Expected Variance $E_t[\sigma_{t+1}^2]$}
+%     \begin{itemize}
+%         \item Predictable based on time-$t$ information.
+%         \item Reflects \textit{known} future risk; should be priced according to ICAPM.
+%         \item Estimated using GARCH forecasts, HAR models, or option-implied variance.
+%     \end{itemize}
     
-    \textbf{Component 2: Variance Innovation $(\sigma_{t+1}^2 - E_t[\sigma_{t+1}^2])$}
-    \begin{itemize}
-        \item Unpredictable shock to variance.
-        \item Triggers volatility feedback: $\uparrow$ variance $\Rightarrow$ $\downarrow$ contemporaneous price.
-        \item Creates negative correlation between returns and variance.
-    \end{itemize}
-\end{frame}
+%     \textbf{Component 2: Variance Innovation $(\sigma_{t+1}^2 - E_t[\sigma_{t+1}^2])$}
+%     \begin{itemize}
+%         \item Unpredictable shock to variance.
+%         \item Triggers volatility feedback: $\uparrow$ variance $\Rightarrow$ $\downarrow$ contemporaneous price.
+%         \item Creates negative correlation between returns and variance.
+%     \end{itemize}
+% \end{frame}
 
-%--- Slide: Theoretical Foundation ---
-\begin{frame}{Theoretical Foundation: Two Sources of Risk}
-    \textbf{Investors face two distinct sources of variance-related risk:}
+% %--- Slide: Theoretical Foundation ---
+% \begin{frame}{Theoretical Foundation: Two Sources of Risk}
+%     \textbf{Investors face two distinct sources of variance-related risk:}
     
-    \begin{enumerate}
-        \item \textbf{Level Risk:}
-            \begin{itemize}
-                \item Risk from the \textit{expected level} of future variance.
-                \item Higher expected variance $\Rightarrow$ higher required return (ICAPM).
-                \item This is the standard risk-return tradeoff.
-            \end{itemize}
+%     \begin{enumerate}
+%         \item \textbf{Level Risk:}
+%             \begin{itemize}
+%                 \item Risk from the \textit{expected level} of future variance.
+%                 \item Higher expected variance $\Rightarrow$ higher required return (ICAPM).
+%                 \item This is the standard risk-return tradeoff.
+%             \end{itemize}
         
-        \item \textbf{Variance Risk:}
-            \begin{itemize}
-                \item Risk from \textit{unexpected changes} in variance.
-                \item Variance shocks affect marginal utility (bad states have high variance).
-                \item Investors are willing to pay to hedge this risk.
-            \end{itemize}
-    \end{enumerate}
+%         \item \textbf{Variance Risk:}
+%             \begin{itemize}
+%                 \item Risk from \textit{unexpected changes} in variance.
+%                 \item Variance shocks affect marginal utility (bad states have high variance).
+%                 \item Investors are willing to pay to hedge this risk.
+%             \end{itemize}
+%     \end{enumerate}
     
-    \vspace{0.3cm}
-    \begin{block}{The Variance Risk Premium Emerges}
-        The difference between what investors are \textit{willing to pay} (risk-neutral) and what they \textit{expect to receive} (physical) for variance exposure.
-    \end{block}
-\end{frame}
+%     \vspace{0.3cm}
+%     \begin{block}{The Variance Risk Premium Emerges}
+%         The difference between what investors are \textit{willing to pay} (risk-neutral) and what they \textit{expect to receive} (physical) for variance exposure.
+%     \end{block}
+% \end{frame}
 
-%--- Slide: Introducing the Variance Risk Premium ---
-\begin{frame}{The Variance Risk Premium (VRP)}
-    \begin{block}{Definition (\href{https://doi.org/10.1093/rfs/hhp008}{\textcolor{blue}{Bollerslev, Tauchen, and Zhou, 2009}})}
-        \begin{equation}
-            VRP_t = E_t^{\mathbb{Q}}[\sigma_{t,t+1}^2] - E_t^{\mathbb{P}}[\sigma_{t,t+1}^2]
-        \end{equation}
-    \end{block}
+% %--- Slide: Introducing the Variance Risk Premium ---
+% \begin{frame}{The Variance Risk Premium (VRP)}
+%     \begin{block}{Definition (\href{https://doi.org/10.1093/rfs/hhp008}{\textcolor{blue}{Bollerslev, Tauchen, and Zhou, 2009}})}
+%         \begin{equation}
+%             VRP_t = E_t^{\mathbb{Q}}[\sigma_{t,t+1}^2] - E_t^{\mathbb{P}}[\sigma_{t,t+1}^2]
+%         \end{equation}
+%     \end{block}
     
-    \textbf{Two Probability Measures:}
-    \begin{itemize}
-        \item $\mathbb{P}$: Physical (real-world) probability measure.
-            \begin{itemize}
-                \item Governs actual return dynamics.
-                \item $E_t^{\mathbb{P}}[\sigma^2]$: What variance will \textit{actually} be (on average).
-            \end{itemize}
-        \item $\mathbb{Q}$: Risk-neutral probability measure.
-            \begin{itemize}
-                \item Used for derivative pricing (options, VIX).
-                \item $E_t^{\mathbb{Q}}[\sigma^2]$: What investors are \textit{willing to pay} for variance exposure.
-            \end{itemize}
-    \end{itemize}
+%     \textbf{Two Probability Measures:}
+%     \begin{itemize}
+%         \item $\mathbb{P}$: Physical (real-world) probability measure.
+%             \begin{itemize}
+%                 \item Governs actual return dynamics.
+%                 \item $E_t^{\mathbb{P}}[\sigma^2]$: What variance will \textit{actually} be (on average).
+%             \end{itemize}
+%         \item $\mathbb{Q}$: Risk-neutral probability measure.
+%             \begin{itemize}
+%                 \item Used for derivative pricing (options, VIX).
+%                 \item $E_t^{\mathbb{Q}}[\sigma^2]$: What investors are \textit{willing to pay} for variance exposure.
+%             \end{itemize}
+%     \end{itemize}
     
-    \vspace{0.2cm}
-    \textbf{Key Point:} $\mathbb{Q} \neq \mathbb{P}$ because investors are risk-averse.
-\end{frame}
+%     \vspace{0.2cm}
+%     \textbf{Key Point:} $\mathbb{Q} \neq \mathbb{P}$ because investors are risk-averse.
+% \end{frame}
 
-%--- Slide: Economic Interpretation of VRP ---
-\begin{frame}{Economic Interpretation of VRP}
-    \textbf{Why is $VRP > 0$ on average?}
+% %--- Slide: Economic Interpretation of VRP ---
+% \begin{frame}{Economic Interpretation of VRP}
+%     \textbf{Why is $VRP > 0$ on average?}
     
-    \begin{block}{The Insurance Analogy}
-        \begin{itemize}
-            \item Variance spikes during market crashes (bad states).
-            \item Investors value insurance against these states.
-            \item They pay a premium above ``fair value'' for protection.
-        \end{itemize}
-    \end{block}
+%     \begin{block}{The Insurance Analogy}
+%         \begin{itemize}
+%             \item Variance spikes during market crashes (bad states).
+%             \item Investors value insurance against these states.
+%             \item They pay a premium above ``fair value'' for protection.
+%         \end{itemize}
+%     \end{block}
     
-    \textbf{Formal Interpretation:}
-    \begin{itemize}
-        \item Under $\mathbb{Q}$, bad states receive higher probability weights.
-        \item Since variance is high in bad states, $E^{\mathbb{Q}}[\sigma^2] > E^{\mathbb{P}}[\sigma^2]$.
-        \item The difference reflects compensation for bearing variance risk.
-    \end{itemize}
+%     \textbf{Formal Interpretation:}
+%     \begin{itemize}
+%         \item Under $\mathbb{Q}$, bad states receive higher probability weights.
+%         \item Since variance is high in bad states, $E^{\mathbb{Q}}[\sigma^2] > E^{\mathbb{P}}[\sigma^2]$.
+%         \item The difference reflects compensation for bearing variance risk.
+%     \end{itemize}
     
-    \vspace{0.3cm}
-    \textbf{VRP as a Risk Aversion Proxy:}
-    \begin{itemize}
-        \item High VRP $\Rightarrow$ Investors are highly risk-averse (fear of variance spikes).
-        \item Low VRP $\Rightarrow$ Investors are complacent about future uncertainty.
-    \end{itemize}
-\end{frame}
+%     \vspace{0.3cm}
+%     \textbf{VRP as a Risk Aversion Proxy:}
+%     \begin{itemize}
+%         \item High VRP $\Rightarrow$ Investors are highly risk-averse (fear of variance spikes).
+%         \item Low VRP $\Rightarrow$ Investors are complacent about future uncertainty.
+%     \end{itemize}
+% \end{frame}
 
-%--- Slide: Measuring VRP Components ---
-\begin{frame}[allowframebreaks]{Measuring VRP: Practical Implementation}
-    \begin{block}{Risk-Neutral Expectation: $E_t^{\mathbb{Q}}[\sigma_{t,t+1}^2]$}
-        \textbf{Use the VIX (or VIX$^2$):}
-        \begin{equation}
-            VIX_t^2 \approx E_t^{\mathbb{Q}}\left[\int_t^{t+1} \sigma_s^2 ds\right]
-        \end{equation}
-        \begin{itemize}
-            \item VIX is constructed from S\&P 500 option prices.
-            \item Model-free: Uses entire option smile, not just ATM options.
-            \item Available daily from CBOE (1990--present).
-        \end{itemize}
-    \end{block}
-    \framebreak
-    \begin{block}{Physical Expectation: $E_t^{\mathbb{P}}[\sigma_{t,t+1}^2]$}
-        \textbf{Forecast realized variance using:}
-        \begin{itemize}
-            \item GARCH models: $\hat{\sigma}_{t+1}^2 = \omega + \alpha \epsilon_t^2 + \beta \sigma_t^2$
-            \item HAR-RV model: $RV_{t+1} = \alpha + \beta_d RV_t + \beta_w RV_t^{(w)} + \beta_m RV_t^{(m)}$
-            \item Simple historical average of realized variance.
-        \end{itemize}
-    \end{block}
-\end{frame}
+% %--- Slide: Measuring VRP Components ---
+% \begin{frame}[allowframebreaks]{Measuring VRP: Practical Implementation}
+%     \begin{block}{Risk-Neutral Expectation: $E_t^{\mathbb{Q}}[\sigma_{t,t+1}^2]$}
+%         \textbf{Use the VIX (or VIX$^2$):}
+%         \begin{equation}
+%             VIX_t^2 \approx E_t^{\mathbb{Q}}\left[\int_t^{t+1} \sigma_s^2 ds\right]
+%         \end{equation}
+%         \begin{itemize}
+%             \item VIX is constructed from S\&P 500 option prices.
+%             \item Model-free: Uses entire option smile, not just ATM options.
+%             \item Available daily from CBOE (1990--present).
+%         \end{itemize}
+%     \end{block}
+%     \framebreak
+%     \begin{block}{Physical Expectation: $E_t^{\mathbb{P}}[\sigma_{t,t+1}^2]$}
+%         \textbf{Forecast realized variance using:}
+%         \begin{itemize}
+%             \item GARCH models: $\hat{\sigma}_{t+1}^2 = \omega + \alpha \epsilon_t^2 + \beta \sigma_t^2$
+%             \item HAR-RV model: $RV_{t+1} = \alpha + \beta_d RV_t + \beta_w RV_t^{(w)} + \beta_m RV_t^{(m)}$
+%             \item Simple historical average of realized variance.
+%         \end{itemize}
+%     \end{block}
+% \end{frame}
 
-%--- Slide: The HAR-RV Model ---
-\begin{frame}{Forecasting Physical Variance: The HAR-RV Model}
-    \href{https://doi.org/10.1016/j.jfineco.2007.01.002}{\textcolor{blue}{Corsi (2009)}} proposes the Heterogeneous Autoregressive model:
+% %--- Slide: The HAR-RV Model ---
+% \begin{frame}{Forecasting Physical Variance: The HAR-RV Model}
+%     \href{https://doi.org/10.1016/j.jfineco.2007.01.002}{\textcolor{blue}{Corsi (2009)}} proposes the Heterogeneous Autoregressive model:
     
-    \begin{block}{HAR-RV Specification}
-        \begin{equation}
-            RV_{t+1}^{(h)} = \alpha + \beta_d RV_t + \beta_w RV_t^{(w)} + \beta_m RV_t^{(m)} + \epsilon_{t+1}
-        \end{equation}
-    \end{block}
+%     \begin{block}{HAR-RV Specification}
+%         \begin{equation}
+%             RV_{t+1}^{(h)} = \alpha + \beta_d RV_t + \beta_w RV_t^{(w)} + \beta_m RV_t^{(m)} + \epsilon_{t+1}
+%         \end{equation}
+%     \end{block}
     
-    \begin{itemize}
-        \item $RV_t$: Daily realized variance (5-min returns).
-        \item $RV_t^{(w)} = \frac{1}{5}\sum_{i=0}^{4} RV_{t-i}$: Weekly average.
-        \item $RV_t^{(m)} = \frac{1}{22}\sum_{i=0}^{21} RV_{t-i}$: Monthly average.
-    \end{itemize}
+%     \begin{itemize}
+%         \item $RV_t$: Daily realized variance (5-min returns).
+%         \item $RV_t^{(w)} = \frac{1}{5}\sum_{i=0}^{4} RV_{t-i}$: Weekly average.
+%         \item $RV_t^{(m)} = \frac{1}{22}\sum_{i=0}^{21} RV_{t-i}$: Monthly average.
+%     \end{itemize}
     
-    \textbf{Advantages:}
-    \begin{itemize}
-        \item Captures volatility persistence at multiple horizons.
-        \item Simple OLS estimation; robust out-of-sample performance.
-        \item Provides $E_t^{\mathbb{P}}[\sigma_{t+1}^2]$ directly.
-    \end{itemize}
-\end{frame}
+%     \textbf{Advantages:}
+%     \begin{itemize}
+%         \item Captures volatility persistence at multiple horizons.
+%         \item Simple OLS estimation; robust out-of-sample performance.
+%         \item Provides $E_t^{\mathbb{P}}[\sigma_{t+1}^2]$ directly.
+%     \end{itemize}
+% \end{frame}
 
-%--- Slide: VRP Formula ---
-\begin{frame}{Computing the Variance Risk Premium}
-    \begin{block}{BTZ (2009) Implementation}
-        \begin{equation}
-            VRP_t = VIX_t^2 - E_t^{\mathbb{P}}[RV_{t,t+1}]
-        \end{equation}
-    \end{block}
+% %--- Slide: VRP Formula ---
+% \begin{frame}{Computing the Variance Risk Premium}
+%     \begin{block}{BTZ (2009) Implementation}
+%         \begin{equation}
+%             VRP_t = VIX_t^2 - E_t^{\mathbb{P}}[RV_{t,t+1}]
+%         \end{equation}
+%     \end{block}
     
-    \textbf{Typical Values:}
-    \begin{itemize}
-        \item Average $VIX^2 \approx 4\%$ (annualized variance).
-        \item Average $E^{\mathbb{P}}[RV] \approx 3\%$.
-        \item Average $VRP \approx 1\%$ (about 25\% of implied variance).
-    \end{itemize}
+%     \textbf{Typical Values:}
+%     \begin{itemize}
+%         \item Average $VIX^2 \approx 4\%$ (annualized variance).
+%         \item Average $E^{\mathbb{P}}[RV] \approx 3\%$.
+%         \item Average $VRP \approx 1\%$ (about 25\% of implied variance).
+%     \end{itemize}
     
-    \textbf{Time Variation:}
-    \begin{itemize}
-        \item VRP spikes during crises (2008: VRP $> 5\%$).
-        \item VRP compresses during calm periods (2005--2006: VRP $< 0.5\%$).
-        \item This variation predicts future returns.
-    \end{itemize}
-\end{frame}
+%     \textbf{Time Variation:}
+%     \begin{itemize}
+%         \item VRP spikes during crises (2008: VRP $> 5\%$).
+%         \item VRP compresses during calm periods (2005--2006: VRP $< 0.5\%$).
+%         \item This variation predicts future returns.
+%     \end{itemize}
+% \end{frame}
 
-%--- Slide: Why Does VRP Predict Returns? ---
-\begin{frame}{Why Does VRP Predict Returns?}
-    \textbf{Theoretical Channels:}
+% %--- Slide: Why Does VRP Predict Returns? ---
+% \begin{frame}{Why Does VRP Predict Returns?}
+%     \textbf{Theoretical Channels:}
     
-    \begin{enumerate}
-        \item \textbf{Time-Varying Risk Aversion:}
-            \begin{itemize}
-                \item High VRP signals elevated aggregate risk aversion.
-                \item Risk-averse investors demand higher expected returns.
-                \item VRP captures the ``price of fear'' in markets.
-            \end{itemize}
+%     \begin{enumerate}
+%         \item \textbf{Time-Varying Risk Aversion:}
+%             \begin{itemize}
+%                 \item High VRP signals elevated aggregate risk aversion.
+%                 \item Risk-averse investors demand higher expected returns.
+%                 \item VRP captures the ``price of fear'' in markets.
+%             \end{itemize}
         
-        \item \textbf{Disaster Risk (\href{ https://doi.org/10.1111/jofi.12018}{\textcolor{blue}{Wachter, 2013}}):}
-            \begin{itemize}
-                \item VRP reflects compensation for rare disaster events.
-                \item When disaster probability rises, VRP increases.
-                \item Expected returns rise to compensate for crash risk.
-            \end{itemize}
+%         \item \textbf{Disaster Risk (\href{ https://doi.org/10.1111/jofi.12018}{\textcolor{blue}{Wachter, 2013}}):}
+%             \begin{itemize}
+%                 \item VRP reflects compensation for rare disaster events.
+%                 \item When disaster probability rises, VRP increases.
+%                 \item Expected returns rise to compensate for crash risk.
+%             \end{itemize}
         
-        \item \textbf{Limits to Arbitrage:}
-            \begin{itemize}
-                \item Selling variance is risky (unlimited downside).
-                \item Capital constraints prevent arbitrage of VRP.
-                \item Persistent VRP reflects structural risk premium.
-            \end{itemize}
-    \end{enumerate}
-\end{frame}
+%         \item \textbf{Limits to Arbitrage:}
+%             \begin{itemize}
+%                 \item Selling variance is risky (unlimited downside).
+%                 \item Capital constraints prevent arbitrage of VRP.
+%                 \item Persistent VRP reflects structural risk premium.
+%             \end{itemize}
+%     \end{enumerate}
+% \end{frame}
 
-%--- Slide: Empirical Evidence (BTZ 2009) ---
-\begin{frame}{Empirical Evidence: BTZ (2009)}
-    \textbf{Data:} U.S. market, 1990--2007, monthly frequency.
+% %--- Slide: Empirical Evidence (BTZ 2009) ---
+% \begin{frame}{Empirical Evidence: BTZ (2009)}
+%     \textbf{Data:} U.S. market, 1990--2007, monthly frequency.
     
-    \begin{block}{Predictive Regression}
-        \begin{equation}
-            R_{t+1,t+h} = \alpha + \beta \cdot VRP_t + \epsilon_{t+h}
-        \end{equation}
-    \end{block}
+%     \begin{block}{Predictive Regression}
+%         \begin{equation}
+%             R_{t+1,t+h} = \alpha + \beta \cdot VRP_t + \epsilon_{t+h}
+%         \end{equation}
+%     \end{block}
     
-    \begin{table}[h]
-        \centering
-        \footnotesize
-        \begin{tabular}{lccc}
-            \hline
-            \textbf{Horizon} & $\hat{\beta}$ & \textbf{t-stat} & $R^2$ \\
-            \hline
-            1 month & $0.45$ & $2.31$ & $2.8\%$ \\
-            3 months & $1.21$ & $3.15$ & $6.5\%$ \\
-            6 months & $1.89$ & $3.42$ & $9.2\%$ \\
-            12 months & $2.34$ & $2.87$ & $8.1\%$ \\
-            \hline
-        \end{tabular}
-        \caption{VRP predicts excess returns (illustrative)}
-    \end{table}
+%     \begin{table}[h]
+%         \centering
+%         \footnotesize
+%         \begin{tabular}{lccc}
+%             \hline
+%             \textbf{Horizon} & $\hat{\beta}$ & \textbf{t-stat} & $R^2$ \\
+%             \hline
+%             1 month & $0.45$ & $2.31$ & $2.8\%$ \\
+%             3 months & $1.21$ & $3.15$ & $6.5\%$ \\
+%             6 months & $1.89$ & $3.42$ & $9.2\%$ \\
+%             12 months & $2.34$ & $2.87$ & $8.1\%$ \\
+%             \hline
+%         \end{tabular}
+%         \caption{VRP predicts excess returns (illustrative)}
+%     \end{table}
     
-    \textbf{Key Finding:} VRP is a strong predictor, especially at 3--6 month horizons.
-\end{frame}
+%     \textbf{Key Finding:} VRP is a strong predictor, especially at 3--6 month horizons.
+% \end{frame}
 
-%--- Slide: Comparison with Traditional Predictors ---
-\begin{frame}{VRP vs. Traditional Predictors}
-    \begin{table}[h]
-        \centering
-        \footnotesize
-        \begin{tabular}{lccc}
-            \hline
-            \textbf{Predictor} & \textbf{Best Horizon} & $R^2$ & \textbf{Economic Source} \\
-            \hline
-            $pd$ (dividend yield) & 3--5 years & $10$--$15\%$ & Valuation \\
-            $cay$ & 1--2 years & $8$--$12\%$ & Consumption risk \\
-            Term spread & 6--12 months & $3$--$5\%$ & Business cycle \\
-            \textbf{VRP} & \textbf{1--6 months} & $\mathbf{5}$--$\mathbf{10\%}$ & \textbf{Risk aversion} \\
-            \hline
-        \end{tabular}
-    \end{table}
+% %--- Slide: Comparison with Traditional Predictors ---
+% \begin{frame}{VRP vs. Traditional Predictors}
+%     \begin{table}[h]
+%         \centering
+%         \footnotesize
+%         \begin{tabular}{lccc}
+%             \hline
+%             \textbf{Predictor} & \textbf{Best Horizon} & $R^2$ & \textbf{Economic Source} \\
+%             \hline
+%             $pd$ (dividend yield) & 3--5 years & $10$--$15\%$ & Valuation \\
+%             $cay$ & 1--2 years & $8$--$12\%$ & Consumption risk \\
+%             Term spread & 6--12 months & $3$--$5\%$ & Business cycle \\
+%             \textbf{VRP} & \textbf{1--6 months} & $\mathbf{5}$--$\mathbf{10\%}$ & \textbf{Risk aversion} \\
+%             \hline
+%         \end{tabular}
+%     \end{table}
     
-    \textbf{Complementary Information:}
-    \begin{itemize}
-        \item Traditional predictors work best at long horizons.
-        \item VRP excels at \textit{short} horizons (1--6 months).
-        \item Combining VRP with $pd$ or $cay$ improves forecasts at all horizons.
-    \end{itemize}
+%     \textbf{Complementary Information:}
+%     \begin{itemize}
+%         \item Traditional predictors work best at long horizons.
+%         \item VRP excels at \textit{short} horizons (1--6 months).
+%         \item Combining VRP with $pd$ or $cay$ improves forecasts at all horizons.
+%     \end{itemize}
     
-    \vspace{0.2cm}
-    \textit{VRP fills a gap in the return predictability literature.}
-\end{frame}
+%     \vspace{0.2cm}
+%     \textit{VRP fills a gap in the return predictability literature.}
+% \end{frame}
 
 %--- Slide: Paper Overview ---
 \begin{frame}{Cheng, Guo, and Shi (2024, JBF)}
@@ -1038,6 +1038,257 @@
 	\end{itemize}
 \end{frame}
 
+%=============================================================================
+% OUT-OF-SAMPLE TESTING: METHODOLOGY, FORMULAS, AND RECENT DEBATES
+%=============================================================================
+
+\subsection{Out-of-Sample Testing in Equity Premium Prediction}
+
+%--- Slide: Why OOS Testing Matters ---
+\begin{frame}{Why Out-of-Sample Testing Matters}
+    \begin{itemize}
+        \item \textbf{Core Problem}: In-sample (IS) predictive regressions may reflect \textbf{data mining}, \textbf{overfitting}, or \textbf{spurious correlations} rather than genuine predictability.
+        \item \textbf{Publication Bias}: For every published predictor, hundreds of failed variables were never reported (\href{https://doi.org/10.1093/rfs/hhv059}{\textcolor{blue}{Harvey, Liu, and Zhu, 2016}}).
+        \item \textbf{OOS as Diagnostic}: Out-of-sample (OOS) testing serves as a \textbf{model stability diagnostic}---it checks whether IS results hold when parameters are estimated only with \textit{prevailing} information.
+        \item \textbf{Debate}:
+        \begin{itemize}
+            \item \href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch (2008)}}: OOS is a \textit{necessary complement} to IS.
+            \item \href{https://doi.org/10.1093/rfs/hhm055}{\textcolor{blue}{Campbell and Thompson (2008)}}: Under a correctly specified stable model, IS tests are more powerful; OOS tests sacrifice power.
+            \item \href{https://doi.org/10.1016/j.jfineco.2021.10.006}{\textcolor{blue}{Martin and Nagel (2022)}}: OOS tests are recommended because \textit{high-dimensional learning} (many predictors relative to assets) can generate \textit{spurious IS predictability}, even when investors use information optimally in real time.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%--- Slide: OOS Methodology Overview ---
+\begin{frame}{OOS Methodology: The Rolling Forecast Scheme}
+    \textbf{Key Idea}: Simulate what an investor could have done in \textit{real time}, using only information available up to the forecast date.
+
+    \vspace{0.3cm}
+    \textbf{Setup}: The standard predictive regression is
+    \begin{equation}
+        r_{t+1} = \gamma_0 + \gamma_1 x_t + \varepsilon_{t+1}
+    \end{equation}
+    where $r_{t+1}$ is the equity premium and $x_t$ is the lagged predictor.
+
+    \vspace{0.3cm}
+    \textbf{Rolling OOS Forecast}:
+    \begin{enumerate}
+        \item Split the sample: use the first $m$ observations for initial estimation.
+        \item At each time $t$ ($t = m, m+1, \ldots, T-1$):
+        \begin{itemize}
+            \item Estimate $\hat{\gamma}_0^{(t)}, \hat{\gamma}_1^{(t)}$ using \textbf{only data up to time $t$} (expanding window).
+            \item Compute conditional forecast: $\hat{r}_{t+1} = \hat{\gamma}_0^{(t)} + \hat{\gamma}_1^{(t)} x_t$.
+        \end{itemize}
+        \item Collect OOS forecast errors: $e_{A,t+1} = r_{t+1} - \hat{r}_{t+1}$.
+    \end{enumerate}
+\end{frame}
+
+%--- Slide: OOS R-squared ---
+\begin{frame}{OOS $R^2$: The Core Statistic}
+    \textbf{Benchmark (Null) Model}: The prevailing historical mean:
+    \begin{equation}
+        \bar{r}_{t} = \frac{1}{t} \sum_{s=1}^{t} r_s
+    \end{equation}
+    This is what a ``no predictability'' investor would use.
+
+    \vspace{0.3cm}
+    \textbf{OOS $R^2$} (\href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch, 2008}}):
+    \begin{equation}
+        R^2_{\text{OOS}} = 1 - \frac{\text{MSE}_A}{\text{MSE}_N} = 1 - \frac{\sum_{t=m}^{T-1}(r_{t+1} - \hat{r}_{t+1})^2}{\sum_{t=m}^{T-1}(r_{t+1} - \bar{r}_{t})^2}
+    \end{equation}
+    \begin{itemize}
+        \item $\text{MSE}_A$: Mean squared error of the \textbf{Alternative} (conditional) model.
+        \item $\text{MSE}_N$: Mean squared error of the \textbf{Null} (prevailing mean) model.
+        \item $R^2_{\text{OOS}} > 0$: The conditional model outpredicts the historical average.
+        \item $R^2_{\text{OOS}} < 0$: The model is \textit{worse} than simply using the historical average.
+    \end{itemize}
+\end{frame}
+
+%--- Slide: Related OOS Statistics ---
+\begin{frame}{Related OOS Test Statistics}
+    \textbf{1. MSE-F Statistic} (\href{https://doi.org/10.1016/j.jeconom.2006.07.020}{\textcolor{blue}{McCracken, 2007}}):
+    \begin{equation}
+        \text{MSE-F} = (T - h + 1) \times \frac{\text{MSE}_N - \text{MSE}_A}{\text{MSE}_A}
+    \end{equation}
+    Tests $H_0$: $\text{MSE}_N = \text{MSE}_A$ (equal predictive accuracy for \textbf{nested} models). Follows a \textbf{nonstandard} distribution; critical values from bootstrap or McCracken's tables.
+
+    \vspace{0.3cm}
+    \textbf{2. $\Delta$RMSE}:
+    \begin{equation}
+        \Delta\text{RMSE} = \sqrt{\text{MSE}_N} - \sqrt{\text{MSE}_A}
+    \end{equation}
+    Positive values indicate superior conditional forecasts.
+
+    \vspace{0.3cm}
+    \textbf{3. ENC Statistic} (\href{https://doi.org/10.1016/S0304-4076(01)00071-9}{\textcolor{blue}{Clark and McCracken, 2001}}):
+    \begin{equation}
+        \text{ENC} = \frac{T - h + 1}{T} \times \frac{\sum_{t=1}^{T}\left(e_{N,t}^2 - e_{N,t} \cdot e_{A,t}\right)}{\text{MSE}_A}
+    \end{equation}
+    Tests whether the conditional forecast \textit{encompasses} the unconditional forecast.
+\end{frame}
+
+%--- Slide: Campbell-Thompson Enhancement ---
+\begin{frame}{Campbell-Thompson (2008) Enhancement: OOSCT}
+    \href{https://doi.org/10.1093/rfs/hhm055}{\textcolor{blue}{Campbell and Thompson (2008)}} propose two economically motivated restrictions:
+
+    \vspace{0.3cm}
+    \textbf{1. Non-negative equity premium (truncation)}:
+    \begin{equation}
+        \hat{r}_{t+1}^{\text{CT}} = \max\left(\hat{r}_{t+1},\; 0\right)
+    \end{equation}
+    \textbf{Rationale}: A reasonable investor would never forecast a \textit{negative} equity premium. This transforms the linear model into a nonlinear one.
+
+    \vspace{0.3cm}
+    \textbf{2. Correct coefficient sign (unconditional fallback)}:
+    \begin{itemize}
+        \item If the estimated slope has the \textit{wrong} sign relative to theory, revert to the unconditional (prevailing mean) forecast.
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \textbf{Result}: The OOSCT $R^2$ using these restrictions generally \textbf{improves} forecast performance, because the sample experienced high equity premiums on average. This is the standard used in \href{https://doi.org/10.1093/rfs/hhae044}{\textcolor{blue}{Goyal, Welch, and Zafirov (2024)}}.
+\end{frame}
+
+%--- Slide: Bootstrap Procedure ---
+\begin{frame}{Bootstrap for OOS Critical Values}
+    \textbf{Problem}: MSE-F and ENC statistics follow \textbf{nonstandard distributions} for nested models (\href{https://doi.org/10.1016/S0304-4076(01)00071-9}{\textcolor{blue}{Clark and McCracken, 2001}}).
+
+    \vspace{0.3cm}
+    \textbf{Bootstrap under the Null}:
+    \begin{align}
+        y_{t+1} &= \alpha + u_{1,t+1} \quad \text{(no predictability)} \\
+        x_{t+1} &= \mu + \rho \, x_t + u_{2,t+1}
+    \end{align}
+    \begin{enumerate}
+        \item Estimate $\alpha$, $\mu$, $\rho$ from data under $H_0$; store residuals.
+        \item Generate 10,000 bootstrapped time series by drawing residuals \textit{with replacement}, preserving autocorrelation structure.
+        \item For each bootstrap sample, compute the test statistic.
+        \item The empirical distribution provides critical values.
+    \end{enumerate}
+
+    \vspace{0.2cm}
+    This procedure preserves both \textbf{autocorrelation} (Stambaugh bias) and \textbf{cross-correlation} of residuals.
+\end{frame}
+
+%--- Slide: OOS Graphical Diagnostic ---
+\begin{frame}{OOS Graphical Diagnostic: Cumulative SSE Difference}
+     \href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch (2008)}} popularized the following diagnostic plot:
+    \begin{equation}
+        y_t = \sum_{s=1}^{t} \left[ (r_s - \bar{r}_{s-1})^2 - (r_s - \hat{r}_{s-1})^2 \right]
+    \end{equation}
+    \begin{itemize}
+        \item \textbf{Upward trend}: The conditional model predicts better than the prevailing mean.
+        \item \textbf{Downward trend}: The prevailing mean predicts better.
+        \item \textbf{Horizontal}: No marginal improvement (zero predictive ability).
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \textbf{Key Advantage}: Unlike a single OOS $R^2$ number, the plot reveals \textit{when} a model performed well or poorly:
+    \begin{itemize}
+        \item Many models' OOS performance was driven by the \textbf{1973--1975 oil shock}.
+        \item Most models showed good OOS early but poor OOS late (opposite to low-power pattern).
+    \end{itemize}
+\end{frame}
+
+%--- Slide: GW 2008 Main Results ---
+\begin{frame}[allowframebreaks]{Goyal and Welch (2008): Main Results}
+    \textbf{Paper}: \href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch (RFS, 2008)}} examined \textbf{17 predictor variables} (1872--2005):
+    \begin{itemize}
+        \item Dividend ratios (d/p, d/y, e/p, d/e), stock variance, book-to-market, net equity expansion, equity issuing, Treasury-bill rate, long-term yield, term spread, default yield/return spreads, inflation, investment-capital ratio, cay.
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \textbf{Key Findings}:
+    \begin{enumerate}
+        \item \textbf{Most models are no longer IS significant}: 12 of 17 variables were insignificant IS over the full sample.
+        \item \textbf{Poor OOS performance}: Nearly all variables had \textit{negative} OOS $R^2$---worse than the prevailing mean.
+        \item \textbf{Instability}: Good performance was concentrated in \textbf{early periods} (especially the 1973--1975 oil shock); \textit{no model performed well over the most recent 30 years}.
+        \item \textbf{Oil shock dependence}: Many models' significance derived \textit{exclusively} from a few consecutive observations during the oil crisis.
+        \item \textbf{Investment failure}: None would have helped an investor profitably time the market.
+    \end{enumerate}
+
+    \framebreak
+
+    \textbf{Four Criteria for a Well-Specified Signal} (\href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch (2008)}}):
+    \begin{enumerate}
+        \item Both significant IS and reasonably good OOS performance over the entire sample.
+        \item A generally upward drift in cumulative SSE difference (not just in one episode).
+        \item Performance not concentrated in one short or unusual period (e.g., the oil shock).
+        \item Positive performance over the \textit{most recent several decades}.
+    \end{enumerate}
+
+    \vspace{0.3cm}
+    \textbf{Verdict}: \textit{``No single variable meets all four criteria. Most models fail on all four.''}
+
+    \vspace{0.3cm}
+    \textbf{Notable Exceptions}:
+    \begin{itemize}
+        \item \textbf{eqis} (equity issuing): The only variable with statistically significant annual OOS $R^2$ (driven by oil shock performance).
+        \item \textbf{cayp} (with look-ahead bias): Good OOS, but uses ex-post information.
+        \item \textbf{i/k} (investment-capital ratio): Promising at 5-year horizon.
+    \end{itemize}
+\end{frame}
+
+%--- Slide: GWZ 2024 Main Results ---
+\begin{frame}[allowframebreaks]{Goyal, Welch, and Zafirov (2024): Updated Results}
+    \textbf{Paper}: \href{https://doi.org/10.1093/rfs/hhae044}{\textcolor{blue}{Goyal, Welch, and Zafirov (RFS, 2024)}} examined \textbf{29 new variables} from \textbf{26 papers} published after GW (2008), extended to December 2021.
+
+    \vspace{0.3cm}
+    \textbf{Key Findings}:
+    \begin{enumerate}
+        \item \textbf{13 of 29 variables} (45\%) lost IS significance when extended forward to 2021.
+        \item Only \textbf{9 of 29 variables} (31\%) \textit{improved} their $t$-statistics with more data; 69\% deteriorated.
+        \item Higher original $t$-statistics were \textit{modestly} more predictive of survival:
+        \begin{itemize}
+            \item $|t| \geq 2.0$: 36\% improved; $|t| \geq 3.0$: 40\% improved; $|t| \geq 4.5$: 100\% improved.
+        \end{itemize}
+        \item Simulations suggest the poor extended performance is more consistent with \textbf{spurious associations} than with genuine predictability.
+    \end{enumerate}
+
+    \framebreak
+
+    \textbf{Variables that Survived Both IS and OOSCT}:
+    \begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{llll}
+    \hline
+    \textbf{Variable} & \textbf{Paper} & \textbf{Freq} & \textbf{Description} \\
+    \hline
+    tchi & Neely et al.\ (2014) & M & 14 technical indicators \\
+    shtint & Rapach et al.\ (2016) & M & Short stock interest \\
+    accrul & Hirshleifer et al.\ (2009) & A & Aggregate accruals \\
+    gpce & M{\o}ller and Rangvid (2015) & A & Q4 consumption growth \\
+    \hline
+    tby & Campbell (1987) & M & Treasury-bill rate \\
+    i/k & Cochrane (1991) & Q & Investment-capital ratio \\
+    eqis & Baker and Wurgler (2000) & A & Equity issuing activity \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+    \textbf{Investment Strategy Performance}:
+    \begin{itemize}
+        \item Of $53 \times 4 = 212$ strategy-variable combinations, only \textbf{16\%} beat \textit{all-equity-all-the-time}.
+        \item Only \textbf{3 variables} (accrul, gpce, gip) did so with even marginal statistical significance ($t \approx 1.3$--$1.5$).
+        \item \textbf{84\%} of strategies \textit{underperformed} buy-and-hold; one-third even \textit{lost money} in absolute terms.
+    \end{itemize}
+\end{frame}
+
+%--- Slide: Conjoint IS+OOS Testing ---
+\begin{frame}{Conjoint IS + OOSCT Testing}
+    \href{https://doi.org/10.1093/rfs/hhae044}{\textcolor{blue}{Goyal, Welch, and Zafirov (2024)}} introduce a \textbf{conjoint} $p$-value:
+    \begin{equation}
+        p(\text{IS}, \text{OOSCT}) = \Pr\left(R^2_{\text{IS}} \geq R^{2,\text{obs}}_{\text{IS}} \;\;\text{and}\;\; R^2_{\text{OOSCT}} \geq R^{2,\text{obs}}_{\text{OOSCT}} \;\Big|\; H_0\right)
+    \end{equation}
+    \begin{itemize}
+        \item Computed via bootstrap: under $H_0$ of no predictability, how often do we observe \textit{both} IS and OOSCT performance as good as observed?
+        \item IS and OOSCT are \textbf{not independent}, so probabilities cannot simply be multiplied.
+        \item Requiring \textit{both} IS and OOSCT significance allows using \textbf{lower individual thresholds} while maintaining overall significance.
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \textbf{Example}: A variable with IS $p = 6\%$ and OOSCT $p = 6\%$ may have conjoint $p < 5\%$.
+\end{frame}
 
 \subsection{\textcolor{blue}{Guo and Savickas (2006)}}
 
@@ -1129,7 +1380,7 @@
 
     \vspace{0.5cm}
     \begin{itemize}
-        \item The "risk-return puzzle" is largely due to an omitted variable ($IV$).
+        \item The ``risk-return puzzle" is largely due to an omitted variable ($IV$).
          \item $IV$ captures systematic movements in stock returns and is likely a proxy for risk factors omitted from the standard CAPM (e.g., liquidity or disagreement).
     \end{itemize}
 \end{frame}
@@ -1139,7 +1390,7 @@
     \begin{block}{The Challenge from Goyal and Welch (2008)}
         \begin{itemize}
             \item Academic literature has long suggested that valuation ratios (e.g., Dividend-Price, Earnings-Price) predict future stock returns.
-            \item However, Goyal and Welch (2007) argue that while these variables work \textbf{in-sample}, they fail \textbf{out-of-sample}.
+            \item However, Goyal and Welch (2008) argue that while these variables work \textbf{in-sample}, they fail \textbf{out-of-sample}.
             \item \textbf{Their Conclusion:} Predictive regressions cannot consistently beat the simple \textbf{historical average} of past returns.
         \end{itemize}
     \end{block}
@@ -1169,7 +1420,7 @@
 
 %--- Slide 4: Methodology I - Sign Restrictions ---
 \begin{frame}{Methodology I: Sign Restrictions}
-    The authors propose imposing "weak" theoretical restrictions on the OLS coefficients:
+    The authors propose imposing ``weak" theoretical restrictions on the OLS coefficients:
 
     \begin{enumerate}
         \item \textbf{Positive Coefficient Restriction:}
@@ -1195,7 +1446,7 @@
         P = \frac{D}{R - G} \implies R = \frac{D}{P} + G
     \end{equation}
 
-    \textbf{The "Steady-State" Forecasting Model:}
+    \textbf{The ``Steady-State" Forecasting Model:}
     \begin{itemize}
         \item Do not estimate $\alpha$ or $\beta$.
         \item Impose \textbf{$\alpha = 0$} and \textbf{$\beta = 1$}.
@@ -1980,26 +2231,8 @@ Period & IPOFDR & IPOFDR $\times$ DUM & $\gamma + \delta$ & $R^2$ \\
 \textbf{Interpretation:} Predictive power stronger in hot markets ($\gamma$) than cold markets ($\gamma + \delta$), consistent with theory.
 \end{frame}
 
-
-\begin{frame}{Machine Learning in Return Prediction}
-	\textbf{Recent advances}:
-	\begin{itemize}
-		\item \href{https://doi.org/10.1093/rfs/hhaa009}{\textcolor{blue}{Gu, Kelly, and Xiu (2020)}}: Comprehensive ML comparison
-		\begin{itemize}
-			\item Neural networks, random forests, gradient boosting
-			\item Significant out-of-sample $R^2$ improvements
-		\end{itemize}
-		\item \href{https://doi.org/10.1016/j.jfineco.2020.06.017}{\textcolor{blue}{Rapach, Strauss, Tu, and Zhou (2019)}}: LASSO and Ridge for forecasting
-		\item \href{https://doi.org/10.1093/rfs/hhab086}{\textcolor{blue}{Cong, Tang, Wang, and Zhang (2021)}}: Deep learning for China's market
-		\item \href{https://doi.org/10.1093/rfs/hhab123}{\textcolor{blue}{Gu, Kelly, and Xiu (2021)}}: Autoencoder asset pricing models
-	\end{itemize}
-	
-	\vspace{5pt}
-	\textbf{Key finding}: Combining multiple predictors via ML often outperforms individual predictors.
-\end{frame}
-
 \begin{frame}{Combination Forecasts}
-	\href{https://doi.org/10.1093/rfs/hhq033}{\textcolor{blue}{Rapach, Strauss, and Zhou (2010)}}: Forecast combinations
+	\href{https://doi.org/10.1093/rfs/hhp063}{\textcolor{blue}{Rapach, Strauss, and Zhou (2010)}}: Forecast combinations
 	
 	\vspace{5pt}
 	\textbf{Simple average}:
@@ -2013,706 +2246,241 @@ Period & IPOFDR & IPOFDR $\times$ DUM & $\gamma + \delta$ & $R^2$ \\
 		\item Reduces model uncertainty and estimation error
 		\item Robust to structural breaks
 	\end{itemize}
-	
+\end{frame}
+
+%% ============================================================
+%% Post-2010 Equity Premium Prediction: Research Framework
+%% ============================================================
+
+\begin{frame}{Post-2010 Equity Premium Prediction: Overview}
+	\textbf{Five major research streams since 2010:}
+	\begin{enumerate}
+		\item \textbf{Decomposition \& Dimension Reduction} \\
+		      {\small Break returns into components or extract latent factors}
+		\item \textbf{New Predictors} \\
+		      {\small Technical indicators, sentiment, short interest, option-implied measures}
+		\item \textbf{Economic Constraints \& Bayesian Methods} \\
+		      {\small Impose economic priors to improve forecasts}
+		\item \textbf{Model Averaging \& International Evidence} \\
+		      {\small Complete subset regressions, cross-country return spillovers}
+		\item \textbf{Cross-Sectional Information for Market Returns} \\
+		      {\small Aggregate firm-level anomaly signals to predict the market}
+	\end{enumerate}
+
 	\vspace{5pt}
-	\href{https://doi.org/10.1016/j.jfineco.2017.05.012}{\textcolor{blue}{Huang, Jiang, Tu, and Zhou (2017)}}: LASSO-based combination with constraints
+	{\small \textit{Common theme: addressing the weak predictability documented by \href{https://doi.org/10.1093/rfs/hhm014}{\textcolor{blue}{Welch and Goyal (2008)}}}}
 \end{frame}
 
-\begin{frame}{Recent Literature: 2020-2025}
-	\textbf{Methodological advances}:
+\begin{frame}{Decomposition \& Dimension Reduction}
+	\textbf{1.} \href{https://doi.org/10.1016/j.jfineco.2011.02.003}{\textcolor{blue}{Ferreira and Santa-Clara (2011, JFE)}}: Sum-of-the-Parts
 	\begin{itemize}
-		\item \href{https://doi.org/10.1093/rfs/hhae044}{\textcolor{blue}{Goyal, Welch, and Zafirov (2024)}}: Comprehensive update
-		\begin{itemize}
-			\item More than one-third of new variables lose in-sample significance
-			\item Half of remaining have poor out-of-sample performance
-		\end{itemize}
-		\item \href{https://doi.org/10.1093/rfs/hhaf010}{\textcolor{blue}{Li, Rossi, and Zhou (2025)}}: Hybrid forecasting framework
-		\begin{itemize}
-			\item Combines bias-reduction with historical average
-			\item Outperforms conventional methods across economic cycles
-		\end{itemize}
+		\item Decompose market return: $r_{t+1} = \Delta d_{t+1} + \Delta (dp)_{t+1}$
+		\item Forecast each component separately, then aggregate
+		\item \textbf{Key insight}: Components are easier to predict than total returns
+		\item Monthly $R^2_{OOS} \approx 1.3\%$, large economic gains
 	\end{itemize}
-\end{frame}
 
-\subsection{\href{https://doi.org/10.1093/rfs/hhaf010}{\textcolor{blue}{Li, Rossi, and Zhou (2025)}}}
-
-\begin{frame}{\href{https://doi.org/10.1093/rfs/hhaf010}{\textcolor{blue}{Li, Rossi, and Zhou (2025)}}: The Challenge of Equity Premium Prediction}
-	\textbf{The Gold Standard: Historical Average}
+	\vspace{8pt}
+	\textbf{2.} \href{https://doi.org/10.1111/jofi.12060}{\textcolor{blue}{Kelly and Pruitt (2013, JF)}}: Three-Pass Regression Filter
 	\begin{itemize}
-		\item The historical average is the current benchmark for forecasting equity premium
-		\item Goyal and Welch (2008): Many predictors perform poorly in \textbf{out-of-sample (OOS)} forecasts
-		\item Goyal, Welch, and Zafirov (2024): Confirm these findings over longer periods
-	\end{itemize}
-	
-	\textbf{Campbell and Thompson (2008) posed the question:} ``Can anything beat the historical average?''
-	\textbf{This paper's answer:} \textcolor{blue}{Yes, by targeting a lower bias rather than unbiasedness!}
-\end{frame}
-
-\begin{frame}{Main Contribution}
-	\textbf{A Novel Methodology for OOS Forecasting}
-	
-	
-	\textbf{Key Innovation:}
-	\begin{itemize}
-		\item Use a \textbf{conservative constant} as the predictive slope coefficient
-		\item This constant has:
-		\begin{itemize}
-			\item \textbf{Lower bias} than the zero slope of historical average
-			\item \textbf{Same variance} (zero) as the historical average
-		\end{itemize}
-	\end{itemize}
-	
-	
-	\textbf{Theoretical Results:}
-	\begin{itemize}
-		\item The proposed forecast \textbf{first-order stochastically dominates} the historical average
-		\item Lower mean squared forecast error when population slope $\neq 0$
-	\end{itemize}
-	
-	
-	\textbf{Empirical Results:}
-	\begin{itemize}
-		\item 15 of 23 predictors achieve significant positive OOS $R^2$ at 90\% level
-		\item 8 predictors significant at 95\% level
+		\item Extract latent predictive factor from cross-section of price-dividend ratios
+		\item Three-pass procedure: (1) cross-sectional proxies, (2) time-series targets, (3) predictive regression
+		\item \textbf{Key insight}: Cross-sectional value dispersion contains aggregate predictive information
+		\item $R^2_{OOS} \approx 3.2\%$ for quarterly returns
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Intuition: The ``Price Is Right'' Game}
-	\textbf{A Guess-the-Number Game Analogy}
-	
-	\vspace{0.2cm}
+\begin{frame}{New Predictors: Technical Indicators \& Sentiment}
+	\textbf{3.} \href{https://doi.org/10.1287/mnsc.2013.1838}{\textcolor{blue}{Neely, Rapach, Tu, and Zhou (2014, MS)}}: Technical Indicators
 	\begin{itemize}
-		\item Competitors guess the actual slope coefficient $b$ of a predictor
-		\item \textbf{Mr. Historical Average} guesses \textbf{zero}
-		\item Suppose the true slope is $b = 1$
+		\item 14 technical indicators (moving averages, momentum, volume)
+		\item Technical indicators complement macroeconomic predictors
+		\item \textbf{Key insight}: Combining macro + technical achieves $R^2_{OOS} \approx 1.8\%$
+		\item Technical indicators capture different information than fundamentals
 	\end{itemize}
-	
-	
-	\textbf{OLS Approach (estimation variance = 1):}
+
+	\vspace{8pt}
+	\textbf{4.} \href{https://doi.org/10.1093/rfs/hhu080}{\textcolor{blue}{Huang, Jiang, Tu, and Zhou (2015, RFS)}}: Aligned Sentiment Index
 	\begin{itemize}
-		\item Loses to Mr. Historical Average if estimate is $<0$ or $>2$
-		\item High variance makes OLS unreliable
-	\end{itemize}
-	
-	
-	\textbf{The Authors' Approach:}
-	\begin{itemize}
-		\item Guess a \textbf{conservative positive constant}, e.g., $\delta = 0.2$
-		\item Beats Mr. Historical Average unless true $b < 0.1$
-		\item \textcolor{blue}{Conservative + deterministic = bias reduction with zero variance}
+		\item Partial least squares (PLS) to align Baker-Wurgler sentiment proxies with future returns
+		\item \textbf{Key insight}: Aligned sentiment is a much more powerful predictor than the original BW index
+		\item Monthly $R^2_{OOS} \approx 1.2\%$; significant economic value
 	\end{itemize}
 \end{frame}
 
-
-\begin{frame}{Model Setup}
-	\textbf{Predictive Regression:}
-	\begin{equation}
-		r = \mu + bx + e
-	\end{equation}
-	
-	where:
+\begin{frame}{New Predictors: Short Interest \& Option-Implied}
+	\textbf{5.} \href{https://doi.org/10.1016/j.jfineco.2016.03.004}{\textcolor{blue}{Rapach, Ringgenberg, and Zhou (2016, JFE)}}: Short Interest Index
 	\begin{itemize}
-		\item $r$: future return
-		\item $x$: predictor (zero mean)
-		\item $b$: predictive slope coefficient
-		\item $e$: residual (zero mean, uncorrelated with $x$)
-		\item $\mu$: unconditional expected return
+		\item Aggregate short interest as a measure of informed pessimism
+		\item Short sellers are sophisticated: their activity predicts aggregate returns
+		\item \textbf{Key insight}: Short interest index negatively predicts market returns
+		\item $R^2_{OOS} \approx 1.5\%$; strongest single predictor in their comparison
 	\end{itemize}
-	
-	
-	\textbf{Historical Average Estimation:}
-	\begin{equation}
-		\mu = \hat{\mu} + \xi
-	\end{equation}
-	where $\hat{\mu}$ is the historical average and $\xi$ has zero mean.
-	
-	\vspace{0.2cm}
-	\textbf{Combined Form:}
-	\begin{equation}
-		r = \hat{\mu} + bx + \epsilon, \quad \text{where } \epsilon \equiv e + \xi
-	\end{equation}
-\end{frame}
 
-\begin{frame}{Theorem 1: First-Order Stochastic Dominance (Population Mean)}
-	\textbf{Theorem 1:} The forecast $\mu + \delta x$ \textbf{first-order stochastically dominates} the forecast $\mu$ under:
-	
-	
-	\textbf{Conditions:}
-	\begin{enumerate}
-		\item $\delta$ is a constant between 0 and $b$
-		\item The PDF of vector $\mathbf{e}$ is strictly decreasing in $\|\mathbf{e}\|$
-	\end{enumerate}
-	
-	
-	\textbf{Definition of First-Order Stochastic Dominance:}
+	\vspace{8pt}
+	\textbf{6.} \href{https://doi.org/10.1093/qje/qjw034}{\textcolor{blue}{Martin (2017, QJE)}}: SVIX --- Option-Implied Expected Return
 	\begin{itemize}
-		\item $A$ dominates $B$ if: $P(A \geq c) \geq P(B \geq c)$ for all $c$
-		\item And $P(A \geq c) > P(B \geq c)$ for some $c$
-	\end{itemize}
-	
-	
-	\textbf{Implication:} Anyone with strictly increasing utility over gains prefers forecast A to B (Huang and Litzenberger, 1988)
-\end{frame}
-
-\begin{frame}{Theorem 2: First-Order Stochastic Dominance (Estimated Mean)}
-	\textbf{Theorem 2:} The forecast $\hat{\mu} + \delta x$ \textbf{first-order stochastically dominates} the forecast $\hat{\mu}$ (historical average) under:
-	
-	
-	\textbf{Conditions:}
-	\begin{enumerate}
-		\item $\delta$ is a constant between 0 and $b$
-		\item The PDF of vector $\boldsymbol{\epsilon}$ is strictly decreasing in $\|\boldsymbol{\epsilon}\|$
-	\end{enumerate}
-	
-	
-	\textbf{Corollary 1:}
-	\begin{equation}
-		\text{MSE}_{\hat{\mu}+\delta x} \overset{d}{=} \text{MSE}_{\hat{\mu}} - \eta, \quad \eta \geq 0
-	\end{equation}
-	
-	\vspace{0.2cm}
-	\textbf{Key Insight:}
-	\begin{itemize}
-		\item Monotonicity restriction holds for $t$-distribution and normal distribution
-		\item Zero variance matching + bias reduction $\Rightarrow$ lower MSE
+		\item Lower bound on equity premium derived from index option prices (SVIX)
+		\item $\mathbb{E}_t[R_{t+1}] - R_f \geq \frac{1}{R_f}\text{Var}^*_t(R_{t+1}) = \text{SVIX}^2_t$
+		\item \textbf{Key insight}: No predictive regression needed; direct extraction from options
+		\item Tighter bound than VIX-based measures
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Implementation: Predictive Slope Selection}
-	\textbf{Predictive Slope:}
-	\begin{equation}
-		\delta = \begin{cases}
-			1/A & \text{if } b > 0 \\
-			-1/A & \text{if } b < 0
-		\end{cases}
-	\end{equation}
-	where $A > 0$ is a constant.
-	
-	
-	\textbf{Larger $A$:}
+\begin{frame}{Economic Constraints \& Bayesian Methods}
+	\textbf{7.} \href{https://doi.org/10.1016/j.jfineco.2014.07.015}{\textcolor{blue}{Pettenuzzo, Timmermann, and Valkanov (2014, JFE)}}:
 	\begin{itemize}
-		\item Ensures $\delta$ is between 0 and $b$ (required by Theorem 2)
-		\item More conservative (smaller magnitude)
+		\item Bayesian predictive regression with economic constraints:
+		\begin{enumerate}
+			\item Non-negative equity premium: $\mathbb{E}_t[r_{t+1}] \geq 0$
+			\item Bounded Sharpe ratio: $|SR_t| \leq \kappa$
+		\end{enumerate}
+		\item \textbf{Key insight}: Imposing reasonable economic priors dramatically improves OOS performance
+		\item Reduces extreme forecasts that plague unconstrained regressions
+		\item Significant gains in both statistical and economic metrics
 	\end{itemize}
-	
-	
-	\textbf{Sign Determination:}
-	\begin{enumerate}
-		\item \textbf{Economic theory}: Campbell and Thompson (2008) restrictions
-		\item \textbf{Statistical inference}: Confidence intervals
-		\item \textbf{Previous studies}: Published estimates
-	\end{enumerate}
+
+	\vspace{8pt}
+	\textbf{Broader lesson}: Weak in-sample predictability + noisy estimates $\Rightarrow$ economic theory as regularizer
 \end{frame}
 
-\begin{frame}{Using Confidence Intervals}
-	\textbf{For Significantly Positive Slope:}
-	
-	Consider 95\% confidence interval $[\hat{b}_L, \hat{b}_U]$:
-	\begin{equation}
-		0 < \hat{b}_L \leq b \leq \hat{b}_U \quad \text{(with 95\% probability)}
-	\end{equation}
-	
-	\vspace{0.2cm}
-	\textbf{Setting $\delta$ to lower confidence bound:}
+\begin{frame}{Model Averaging \& International Evidence}
+	\textbf{8.} \href{https://doi.org/10.1016/j.jeconom.2013.04.017}{\textcolor{blue}{Elliott, Gargano, and Timmermann (2013, JFE)}}: Complete Subset Regressions
 	\begin{itemize}
-		\item $\delta = 1/A = \hat{b}_L$ ensures $\delta$ between 0 and $b$ with high probability
+		\item Average forecasts over all possible $k$-variable subsets of predictors
+		\item Addresses model uncertainty: which predictors to include?
+		\item \textbf{Key insight}: Subset averaging with $k=2$ or $k=3$ outperforms kitchen-sink and BMA
+		\item Monthly $R^2_{OOS} > 0$ for equity premium; robust across evaluation periods
 	\end{itemize}
-	
-	
-	\textbf{Example: Campbell and Shiller (1988a)}
+
+	\vspace{8pt}
+	\textbf{9.} \href{https://doi.org/10.1111/jofi.12041}{\textcolor{blue}{Rapach, Strauss, and Zhou (2013, JF)}}: International Predictability
 	\begin{itemize}
-		\item Dividend-price ratio: slope = 0.129, SE = 0.057, $\sigma_x = 0.277$
-		\item 95\% lower bound for standardized predictor:
-		\begin{equation}
-			(0.129 - 1.96 \times 0.057) \times 0.277 = 0.0048
-		\end{equation}
-		\item This implies $A = 1/0.0048 = 209$
+		\item Lagged U.S. returns predict equity premiums in other industrialized countries
+		\item But foreign returns do \textit{not} predict U.S. returns
+		\item \textbf{Key insight}: The U.S.\ market is a leading indicator for global equity premiums
+		\item Consistent with gradual information diffusion across markets
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Theorems 3 \& 4: Uncertainty About Sign}
-	\textbf{When Sign is Inferred with Error:}
-	\begin{equation}
-		d = \begin{cases}
-			\delta & \text{with probability } p \text{ (correct sign)} \\
-			-\delta & \text{with probability } q \text{ (wrong sign)} \\
-			0 & \text{with probability } 1-p-q \text{ (undetermined)}
-		\end{cases}
-	\end{equation}
-	
-	
-	\textbf{Theorem 3 \& 4:} First-order stochastic dominance holds when:
-	\begin{equation}
-		\frac{p}{q} > \max(B_1, B_2)
-	\end{equation}
-	
-	\vspace{0.2cm}
-	\textbf{Lemma 1 (Student's $t$ distribution):}
-	\begin{equation}
-		B_1 > \frac{2b + \delta}{2b - \delta}
-	\end{equation}
-	
-	\textbf{Rule of Thumb:}
+\begin{frame}{Cross-Sectional Information for Market Prediction}
+	\textbf{10.} \href{https://doi.org/10.1111/jofi.13099}{\textcolor{blue}{Dong, Li, Rapach, and Zhou (2022, JF)}}: Anomalies and Market Return
 	\begin{itemize}
-		\item When $\delta/b \approx 0$: $\frac{2b+\delta}{2b-\delta} \approx 1$, any $p/q > 1$ suffices
-		\item At maximum $\delta/b = 1$: requires $p/q > 3$
-		\item 95\% significance: $p/q \geq 0.95/0.05 = 19 \gg 3$ \checkmark
+		\item Aggregate cross-sectional anomaly information to predict market returns
+		\item Compute expected returns from 100+ firm-level anomaly signals, then average
+		\item \textbf{Key insight}: Cross-sectional mispricing signals aggregate into a powerful market predictor
+		\item Monthly $R^2_{OOS} \approx 1.0\%$; large economic gains (CER $> 3\%$ p.a.)
+		\item Bridges the cross-section and time-series predictability literatures
 	\end{itemize}
 \end{frame}
 
-
-\begin{frame}{Why is the Historical Average Hard to Beat?}
-	\textbf{OOS MSE Difference:}
-	\begin{align}
-		E\left[\text{MSE}_{\hat{\mu}} - \text{MSE}_{\hat{\mu}+\hat{b}x}\right] &= \left(b^2 - \text{Bias}(\hat{b})^2 - \text{Var}(\hat{b})\right)x^2 \notag \\
-		&\quad - 2E\left[(\hat{\mu}-\mu)\hat{b}\right]x
-	\end{align}
-	
-	
-	\textbf{Historical Average's Advantage:}
+\begin{frame}{Option-Implied Approach: From Market to Individual Stocks}
+	\textbf{11.} \href{https://doi.org/10.1111/jofi.12778}{\textcolor{blue}{Martin and Wagner (2019, JF)}}: Expected Return on a Stock
 	\begin{itemize}
-		\item Zero slope $\Rightarrow$ zero estimation variance
-		\item High variance of $\hat{b}$ can offset bias reduction
-	\end{itemize}
-	
-	
-	\textbf{Our Method's Solution:}
-	\begin{itemize}
-		\item Use \textbf{constant} slope $\delta$ $\Rightarrow$ zero variance (like historical average)
-		\item Last term becomes zero when $\hat{b}$ is constant and $\hat{\mu}$ unbiased
-		\item MSE difference $= (b^2 - \text{Bias}(\delta)^2)x^2 > 0$ when $\delta$ between 0 and $b$
+		\item Extend \href{https://doi.org/10.1093/qje/qjw034}{\textcolor{blue}{Martin (2017)}} from aggregate market to individual stocks
+		\item Expected excess return of stock $i$:
+		\[
+			\mathbb{E}_t[R_{i,t+1}] - R_f = \frac{1}{R_f}\text{Cov}^*_t(R_{i,t+1}, R_{M,t+1})
+		\]
+		\item \textbf{Key insight}: Only need option prices on the market index and individual stocks
+		\item No need to estimate risk aversion, factor loadings, or run predictive regressions
+		\item Strong OOS performance for both market and cross-sectional returns
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Gradient Descent Interpretation}
-	\textbf{Gradient Descent:}
-	\begin{equation}
-		a_1 = a_0 - \gamma f'(a_0)
-	\end{equation}
-	
-	\vspace{0.2cm}
-	\textbf{Mapping to Our Method:}
+\begin{frame}{Time-Varying Predictability: Pockets of Predictability}
+	\textbf{14.} \href{https://doi.org/10.1111/jofi.13229}{\textcolor{blue}{Farmer, Schmidt, and Timmermann (2023, JF)}}: Pockets of Predictability
 	\begin{itemize}
-		\item $f$: forecast loss function
-		\item $a$: predictive slope
-		\item Historical average: initial guess $a_0 = 0$
-		\item Our method: $a_1 = \delta = 1/A$
-	\end{itemize}
-	
-	
-	\textbf{Interpretation:}
-	\begin{itemize}
-		\item Our predictive slope = one step from zero toward predictability
-		\item Step direction: guided by sign of population slope $b$
-		\item Step size: constant $1/A$ (matches zero variance)
+		\item Return predictability is \textbf{local in time}: short ``pockets'' of significant predictability interspersed with long periods of none
+		\item Method: nonparametric kernel regression with time-varying coefficients
+		\[
+			r_{t+1} = x_t'\beta_t + \varepsilon_{t+1}, \quad \hat{\beta}_t = \arg\min \sum_{s} K_{hT}(s-t)[r_{s+1} - x_s'\beta_0]^2
+		\]
+		\item Pockets cover only 14\%--24\% of the sample but concentrate most predictability
+		\item Combination forecasts inside pockets: annualized $\alpha \approx 6\%$, $SR \approx 1.0$
+		\item \textbf{Explanation}: Sticky expectations model (investors slowly update beliefs about cash flow growth)
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Amortization Interpretation}
-	\textbf{Standardized Predictor (e.g., $dp$):}
-	\begin{itemize}
-		\item $dp = 0$: at mean, no effect on forecast
-		\item $dp = -1$: one standard deviation below mean (price excessively high)
-	\end{itemize}
-	
-	
-	\textbf{Amortization of Excess Valuation:}
-	\begin{itemize}
-		\item Slope $1/A$ $\approx$ mean reversion rate
-		\item Example: $A = 100$ $\Rightarrow$ 1\% mean reversion per period
-	\end{itemize}
-	
-	
-	\textbf{Connection to AR(1) Process:}
-	\begin{itemize}
-		\item If $dp$ follows AR(1) with coefficient $\rho$
-		\item Linear approximation: mean reversion rate $\approx 1 - \rho$
-		\item Setting $1/A = 1 - \rho$ matches the dynamics
-		\item Persistent predictors ($\rho \approx 1$) $\Rightarrow$ large $A$
-	\end{itemize}
-\end{frame}
+\begin{frame}{Technical Detail: One-Sided vs.\ Two-Sided Kernel}
+	FST's method has \textbf{two steps}, both using kernel regression:
 
-\begin{frame}{Better Limit for Shrinkage}
-	\textbf{Traditional Shrinkage:}
-	\begin{itemize}
-		\item Shrink regression estimate toward a constant limit (often zero)
-		\item Still produces a \textbf{random} estimator
-	\end{itemize}
-	
-	
-	\textbf{Our Approach:}
-	\begin{itemize}
-		\item Slope $\delta$ is \textbf{constant} (not random)
-		\item Matches zero variance while reducing bias
-		\item Enables \textbf{ex ante} characterization of superior performance
-	\end{itemize}
-	
-	
-	\textbf{Improvement to Shrinkage:}
-	\begin{itemize}
-		\item Historical average (zero) is biased when predictability exists
-		\item Bias can be same magnitude as estimation standard deviation
-		\item Replace zero limit with our forecast for better shrinkage performance
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Simulation Setup}
-	\textbf{VAR System (Cochrane, 2008):}
-	\begin{align}
-		r_{t+1} &= a_r + b_r \cdot dp_t + \varepsilon^r_{t+1} \\
-		dp_{t+1} - \overline{dp} &= \rho(dp_t - \overline{dp}) + \varepsilon^{dp}_{t+1} \\
-		\Delta d_{t+1} &= a_d + b_d \cdot dp_t + \varepsilon^d_{t+1}
-	\end{align}
-	
-	\vspace{0.2cm}
-	\textbf{Calibration Parameters:}
-	\begin{center}
-		\begin{tabular}{lc}
-			\toprule
-			Parameter & Value \\
-			\midrule
-			$\overline{dp}$ & $-3.2239$ \\
-			$\rho$ & $0.8911$ \\
-			$\kappa_1$ & $0.9617$ \\
-			$b_d$ & $0$ \\
-			$b_r = 1 - \kappa_1\rho + b_d$ & $0.1430$ \\
-			\bottomrule
-		\end{tabular}
-	\end{center}
-	
-	\vspace{0.2cm}
-	Rolling 20-year windows for estimation
-\end{frame}
-
-\begin{frame}{Bias-Variance Trade-off}
-	\begin{columns}
-		\begin{column}{0.5\textwidth}
-			\textbf{Bias of Predictive Slope:}
-			\begin{itemize}
-				\item HM: biased (uses zero slope)
-				\item Our method ($A=50$): smaller bias
-				\item OLS: Stambaugh (1999) bias
-			\end{itemize}
-			
-			
-			\textbf{Standard Deviation:}
-			\begin{itemize}
-				\item HM: zero
-				\item Our method: \textbf{zero}
-				\item OLS: large (almost equals HM bias!)
-			\end{itemize}
-		\end{column}
-		\begin{column}{0.5\textwidth}
-			\textbf{RMSE of Slope:}
-			\begin{itemize}
-				\item Our method has \textbf{smallest RMSE}
-				\item Same zero variance as HM
-				\item But smaller bias than HM
-			\end{itemize}
-			
-			
-			\textbf{Key Insight:}
-			\begin{itemize}
-				\item OLS variance $\approx$ HM bias
-				\item Variance can offset bias reduction
-				\item Our method: pure bias reduction
-			\end{itemize}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{OOS $R^2$ Distribution}
-	\textbf{OOS $R^2$ Definition:}
-	\begin{equation}
-		R^2 = \frac{\text{MSE}_{\hat{\mu}} - \text{MSE}_{\hat{\mu}+\delta x}}{\text{MSE}_{\hat{\mu}}}
-	\end{equation}
-	
-	
-	\textbf{Simulation Results (146 annual returns):}
-	\begin{itemize}
-		\item \textbf{Our method} ($A = 50$ to 500):
-		\begin{itemize}
-			\item Distributions entirely to the \textbf{right of zero}
-			\item Confirms Corollary 1: lower MSE than HM
-			\item Larger $A$ $\Rightarrow$ smaller but less noisy gains
-		\end{itemize}
-		
-		\vspace{0.2cm}
-		\item \textbf{OLS}:
-		\begin{itemize}
-			\item Centered on positive $R^2$
-			\item \textbf{Large fluctuation} (fat tails)
-			\item Substantial probability of $R^2 < 0$
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{First-Order Stochastic Dominance in Simulations}
-	\textbf{CDF of MSE:}
-	\begin{itemize}
-		\item Our method's CDF is \textbf{everywhere above} HM's CDF
-		\item Confirms Theorem 2
-	\end{itemize}
-	
-	
-	\textbf{Horizon Effects:}
-	\begin{itemize}
-		\item \textbf{1-year window:} MSE more spread out, CDFs closer together
-		\item \textbf{10-year window:} Clearer separation
-		\item \textbf{40-year window:} Much narrower MSE range, dominance easier to discern
-	\end{itemize}
-	
-	
-	\textbf{Implication:}
-	\begin{itemize}
-		\item First-order stochastic dominance holds at all horizons
-		\item Longer horizons facilitate empirical inference
-		\item Long-term investors benefit most clearly
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Data and Predictors}
-	\textbf{Data Sources:}
-	\begin{itemize}
-		\item Market returns: CRSP value-weighted index (post-1926), S\&P Index (pre-1926)
-		\item Predictors: Goyal and Welch (2008) + Robert Shiller's website
-	\end{itemize}
-	
-	
-	\textbf{23 Predictors Examined:}
-	\begin{columns}
-		\begin{column}{0.5\textwidth}
-			\footnotesize
-			\begin{itemize}
-				\item Book-to-market (bm)
-				\item CAPE (cape Shiller)
-				\item Consumption-wealth ratio (cay)
-				\item Corporate bond return (corpr)
-				\item Dividend-payout ratio (de)
-				\item Dividend-price ratio (dp)
-				\item Dividend yield (dy)
-				\item Earnings-price ratio (ep)
-			\end{itemize}
-		\end{column}
-		\begin{column}{0.5\textwidth}
-			\footnotesize
-			\begin{itemize}
-				\item Investment-capital ratio (ik)
-				\item Inflation (infl)
-				\item Long-term return (ltr)
-				\item Long-term yield (lty)
-				\item Net equity issuance (ntis)
-				\item Stock variance (svar)
-				\item T-bill rate (tbl)
-				\item Term spread (tms)
-			\end{itemize}
-		\end{column}
-	\end{columns}
-	
-	\vspace{0.2cm}
-	\textbf{Standardization:} 20-year rolling windows for mean and std
-\end{frame}
-
-\begin{frame}{Cumulative Performance: Dividend-Price Ratio}
-	\textbf{Cumulative SSE Difference (HM minus forecast):}
-	
-	\vspace{0.2cm}
-	\textbf{OLS Performance:}
-	\begin{itemize}
-		\item Volatile, driven by 1970s Oil Shock
-		\item Key concern in Goyal and Welch (2008)
-	\end{itemize}
-	
-	\vspace{0.2cm}
-	\textbf{Our Method's Performance:}
-	\begin{itemize}
-		\item \textbf{Steady accumulation} of gains over time
-		\item Works for various $A$ values (50 to 1,000)
-		\item Even $A = 1,000$ (0.1\% per std dev) beats OLS at sample end
-	\end{itemize}
-	
-	\vspace{0.2cm}
-	\textbf{Dot-Com Period:}
-	\begin{itemize}
-		\item Biggest forecast error (high returns despite low $dp$)
-		\item Loss mitigated with larger $A$ (e.g., $A \geq 200$)
-		\item $A = 500$ or 1,000: minimal impact from extreme periods
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{OOS $R^2$ Results: Dividend-Price Ratio}
-	\begin{center}
-		\begin{tabular}{lccccc}
-			\toprule
-			& $A=1000$ & $A=500$ & $A=200$ & $A=100$ & $A=50$ \\
-			\midrule
-			$R^2$ (\%) & 0.2 & 0.5 & 1.1 & 2.1 & 3.4 \\
-			$p$-value & (.008) & (.009) & (.012) & (.019) & (.044) \\
-			\bottomrule
-		\end{tabular}
-	\end{center}
-	
-	
-	\textbf{Comparison with OLS and CT Methods:}
-	\begin{center}
-		\begin{tabular}{lccc}
-			\toprule
-			& OLS & CT+ & CT++ \\
-			\midrule
-			$R^2$ (\%) & 0.2 & 1.3 & 1.8 \\
-			$p$-value & (.477) & (.357) & (.286) \\
-			\bottomrule
-		\end{tabular}
-	\end{center}
-	
-	\vspace{0.2cm}
-	\textbf{Key Finding:} Our method achieves \textbf{more significant} $p$-values than all alternatives!
-\end{frame}
-
-\begin{frame}{Economic Magnitude of Gains}
-	\textbf{How to Judge $R^2$ Magnitude?}
-	
-	Compare to squared Sharpe ratio (Campbell and Thompson, 2008):
-	\begin{itemize}
-		\item Annual market Sharpe ratio: 0.278
-		\item Squared Sharpe ratio: $0.278^2 = 0.078$
-	\end{itemize}
-	
-	
-	\textbf{Example with $A = 100$:}
-	\begin{itemize}
-		\item $R^2 = 2.1\%$
-		\item Proportional expected return increase: $\frac{0.021}{0.078} = \mathbf{27\%}$
-	\end{itemize}
-	
-	
-	\textbf{Interpretation:}
-	\begin{itemize}
-		\item An investor recognizing predictability gains 27\% higher expected return
-		\item Despite ``modest'' aim of bias reduction (not unbiasedness)
-		\item Nontrivial economic gains
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Comprehensive Results: All Predictors}
-	\textbf{95\% Significant OOS $R^2$ (8 predictors):}
-	\begin{itemize}
-		\item CAPE, Total Return CAPE (Campbell and Shiller, 1988b; Bunn and Shiller, 2014)
-		\item Dividend-price ratio, Dividend yield
-		\item Consumption-wealth ratio (Lettau and Ludvigson, 2001)
-		\item Investment-capital ratio (Cochrane, 1991)
-		\item Long-term rate of returns
-		\item Corporate bond returns
-	\end{itemize}
-	
-	
-	\textbf{90\% Significant OOS $R^2$ (7 additional predictors):}
-	\begin{itemize}
-		\item Book-to-market ratio
-		\item Long-term government bond yield
-		\item Treasury-bill rate, Term spread
-		\item Inflation (Shiller data)
-		\item Earnings-to-price ratio
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{First-Order Stochastic Dominance: Empirical Evidence}
-	\textbf{Using 40-Year Rolling Windows:}
-	\begin{itemize}
-		\item Empirical CDF of our method \textbf{everywhere above} HM's CDF
-		\item For any MSE threshold: higher probability of achieving lower MSE
-	\end{itemize}
-	
-	
-	\textbf{Confirmation:}
-	\begin{itemize}
-		\item Uses empirical distribution function (actual occurrences)
-		\item Also confirmed with kernel smoothing
-	\end{itemize}
-	
-	
-	\textbf{Implication for Long-Term Investors:}
-	\begin{itemize}
-		\item First-order stochastic dominance holds empirically
-		\item Any risk-averse investor prefers our forecast to HM
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Using Estimates from Previous Studies}
-	\textbf{Campbell and Shiller (1988a) Example:}
-	\begin{itemize}
-		\item Sample: 1871-1986
-		\item Significantly positive slope for $dp$
-		\item 95\% lower bound implies $A = 209$
-	\end{itemize}
-	
-	
-	\textbf{OOS Performance (post-1987):}
-	\begin{itemize}
-		\item Using positive slope with various $A$ values: positive OOS $R^2$
-		\item Using $A = 209$ (95\% lower bound): positive OOS $R^2$
-		\item \textbf{Published estimates add value to subsequent forecasts!}
-	\end{itemize}
-	
-	
-	\textbf{Direct Evidence of OOS Predictability:}
-	\begin{itemize}
-		\item Confidence bounds from prior studies help future forecasts
-		\item Not data mining: uses pre-existing published numbers
-		\item Similar results for Cochrane (1991) investment-capital ratio
-	\end{itemize}
-\end{frame}
-
-
-
-\begin{frame}{Main Contributions}
-	\textbf{1. Novel OOS Forecast Methodology}
-	\begin{itemize}
-		\item First method \textbf{proven ex ante} to outperform historical average
-		\item Crucial for classroom teaching and practical implementation
-	\end{itemize}
-
-	\textbf{2. Theoretical Foundation}
-	\begin{itemize}
-		\item First-order stochastic dominance (Theorems 1-4)
-		\item Characterization of required sign accuracy
-	\end{itemize}
-	
-	\textbf{3. Implementation Guidance}
-	\begin{itemize}
-		\item Confidence bound near zero as nearly necessary and sufficient condition
-		\item Connection to published estimates
-	\end{itemize}
-
-	\textbf{4. Strong Empirical Evidence}
-	\begin{itemize}
-		\item 15/23 predictors significant at 90\%, 8/23 at 95\%
-		\item Solves instability concern of Goyal and Welch (2008)
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Open Questions in Predictability Research}
-	\begin{enumerate}
-		\item \textbf{Economic vs. Statistical significance}: Even with $R^2_{OOS} > 0$, are returns economically exploitable after transaction costs?
-		\item \textbf{Source of predictability}: Risk premium variation or mispricing?
-		\item \textbf{Instability}: Why do predictors work in some periods but not others?
-		\item \textbf{International evidence}: Do U.S. findings generalize globally?
-		\item \textbf{Real-time availability}: Are predictors available to investors in real time?
-	\end{enumerate}
-	
 	\vspace{5pt}
-	\href{https://doi.org/10.1111/jofi.12612}{\textcolor{blue}{Kozak, Nagel and Santosh (2018)}}: 
+	\textbf{Step 1: Estimate $\hat{\beta}_t$} (predictive coefficients) --- uses \textbf{one-sided} kernel (correct):
+	\[
+		K(u) = \tfrac{3}{2}(1-u^2)\,\mathbf{1}\{-1 < u < 0\} \quad \text{(only past data)}
+	\]
+
+	\textbf{Step 2: Identify pockets} via $\widehat{SED}_t = \hat{\gamma}_{0,t} + \hat{\gamma}_{1,t}\,t > 0$
 	\begin{itemize}
-		\item \alert{Can we distinguish between investor sentiment and risk?}  
+		\item \textbf{Paper claims}: one-sided kernel $\Rightarrow$ uses 12 months \textit{before} $t$
+		\item \textbf{Code actually uses}: two-sided kernel $\Rightarrow$ uses 12 months \textit{before} \alert{and after} $t$
 	\end{itemize}
+
+	\vspace{5pt}
+	\begin{block}{Why does this matter?}
+	With the two-sided kernel, the pocket indicator at time $t$ depends on \alert{future} $SED$ values (from $t+1$ to $t+252$). The model ``knows'' whether the kernel forecast will beat the benchmark \textit{after} the fact --- a textbook \alert{look-ahead bias}.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Replication Failure: Look-Ahead Bias}
+	\textbf{15.} \href{https://doi.org/10.1111/jofi.13484}{\textcolor{blue}{Cakici, Fieberg, Neumaier, Poddig, and Zaremba (2025, JF)}}: Replication
+	\begin{itemize}
+		\item \alert{Critical coding error} in Farmer et al.\ (2023):
+		\begin{itemize}
+			\item Paper claims \textbf{one-sided} kernel (out-of-sample, no future info)
+			\item Code actually uses \textbf{two-sided} kernel for pocket identification $\Rightarrow$ \alert{look-ahead bias}
+		\end{itemize}
+		\item Correcting to true one-sided kernel \textbf{invalidates most results}:
+		\begin{itemize}
+			\item Average integral $R^2$ drops by $\sim 20\times$ (e.g., $3.70\% \to 0.12\%$ for T-bill rate)
+			\item Pockets become $\sim 10\times$ shorter, $\sim 20\times$ more frequent
+			\item No significant difference between in-pocket vs.\ out-of-pocket predictability
+		\end{itemize}
+		\item \textbf{Lesson}: Out-of-sample discipline is essential; even sophisticated methods can embed look-ahead bias through implementation errors
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Open Questions in Predictability Research (I)}
+	\begin{enumerate}
+		\item \textbf{Risk premia vs.\ mispricing}: Is predictability driven by rational time-varying risk compensation, or behavioral biases (sticky expectations, sentiment)?
+		\begin{itemize}
+			\item \href{https://doi.org/10.1111/jofi.12612}{\textcolor{blue}{Kozak, Nagel, and Santosh (2018)}}: Hard to distinguish the two empirically?
+		\end{itemize}
+
+		\vspace{3pt}
+		\item \textbf{Out-of-sample credibility}: Many predictors succeed in-sample but fail OOS (\href{https://doi.org/10.1093/rfs/hhm014}{\textcolor{blue}{Welch and Goyal, 2008}}). Even sophisticated OOS methods can embed look-ahead bias (\href{https://doi.org/10.1111/jofi.13484}{\textcolor{blue}{Cakici et al., 2025}}).
+		\begin{itemize}
+			\item \alert{How do we ensure genuine real-time predictability?}
+		\end{itemize}
+
+		\vspace{3pt}
+		\item \textbf{Instability \& structural breaks}: Why do predictors work in some periods but not others? Is predictability itself time-varying, or an artifact of estimation error and data mining?
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Open Questions in Predictability Research (II)}
+	\begin{enumerate}
+		\setcounter{enumi}{3}
+		\item \textbf{ML and economic structure}: Neural networks excel for \textit{individual} stock returns (\href{https://doi.org/10.1093/rfs/hhaa009}{\textcolor{blue}{Gu, Kelly, Xiu, 2020}}), but gains for \textit{aggregate} equity premium remain modest.
+		\begin{itemize}
+			\item Can we design ML methods with built-in no-arbitrage or economic constraints?
+		\end{itemize}
+
+		\vspace{3pt}
+		\item \textbf{Cross-section $\leftrightarrow$ time-series link}: \href{https://doi.org/10.1111/jofi.13099}{\textcolor{blue}{Dong, Li, Rapach, and Zhou (2022, JF)}} show anomaly signals predict the market. What is the deeper economic mechanism connecting cross-sectional and aggregate predictability?
+
+		\vspace{3pt}
+		\item \textbf{International \& cross-asset evidence}: Most evidence is U.S.-centric. \href{https://doi.org/10.1016/j.jfineco.2012.05.008}{\textcolor{blue}{Rapach, Strauss, Zhou (2013)}} show U.S.\ leads globally, but do new predictors (sentiment, ML) also generalize?
+
+		\vspace{3pt}
+		\item \textbf{Economic exploitability}: Even statistically significant $R^2_{OOS}$ may not survive transaction costs, estimation risk, and leverage constraints. What is the \textit{true} economic value of predictability?
+	\end{enumerate}
 \end{frame}
 
 \section{Homework}
 \begin{frame}{Homework}
-	\href{https://chenghang.notion.site/Homework-1-efe9cdfdfc0d439ebc7883b40680ce69?pvs=4}{\textcolor{blue}{Homework}}
+	\href{https://www.notion.so/betalpha/Homework-1-286428ff9d5c4a57be85da747da99f31}{\textcolor{blue}{Homework}}
 \end{frame}
 
 \end{document}
