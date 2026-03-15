@@ -1,0 +1,357 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+
+% \usefonttheme{professionalfonts} % using non standard fonts for beamer
+% \usefonttheme{serif} % default family is serif
+% \usepackage{fontspec}
+% \setmainfont{Calibri} % 这四行命令修改全局字体
+
+\usepackage{ragged2e} % 两端对齐
+\justifying\let\raggedright\justifying
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Asset Pricing]{\textbf{Asset Pricing}} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\subtitle{5. Beta}
+
+\author[Cheng Hang]{Cheng Hang} % Your name
+\institute[DUFE] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{School of Fintech \\
+Dongbei University of Finance \& Economics \\ % Your institution for the title page
+\medskip
+\textbf{chenghangch@qq.com}% Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+	\AtBeginSection[]
+{
+	\begin{frame}{Content}
+		\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide] %这几个参数我也不知道该如何准确地解释，反正它们最终的效果是突出显示当前章节，而其它章节都进行了淡化处理
+		\addtocounter{framenumber}{-1}  %目录页不计算页码
+	\end{frame}
+}
+
+%----------------------------------------------------------------------------------------
+%	Begin
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\section{Time-Series}
+\subsection{Forecast Stock Market Return}
+
+\begin{frame}{Forecast Market Return: In Sample}
+The commonly used \textbf{Predictive Regression} is, For simplicity, considering a univariate predictive regression of the period-($t + 1$) stock market return (excess return) $r_{t+1}$ on a single predictor variable $x_t$:
+\begin{equation}\label{equ: 预测收益率}
+	r_{t+1}=\alpha+\beta x_t+\varepsilon_{t+1} \quad \text { for } t=1, \ldots, T-1
+\end{equation}
+
+There are two primary reasons for the widespread use of the simple predictive regression in Equation \textcolor{blue}{(\ref{equ: 预测收益率})}.
+\begin{enumerate}
+	\item It is straightforward to implement, with the results intuitively understandable in a familiar regression framework.
+	\item It should capture some return predictability, even if the true DGP is more complex.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Forecast Market Return}
+\begin{itemize}
+	\item $R^2$ statistic for the predictive regression in Equation \textcolor{blue}{(\ref{equ: 预测收益率})} is usually quite small.
+	\item It is worth noting that the conventional ordinary least squares (OLS) estimator of $\beta$ in Equation \textcolor{blue}{(\ref{equ: 预测收益率})} is generally biased.
+
+		\begin{itemize}
+			\item \textcolor{blue}{\href{https://doi.org/10.1016/S0304-405X(99)00041-0}{Stambaugh (1999)}}
+			\item \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhu139}{Kostakis, Magdalinos, and Stamatogiannis (2015)}}
+			\item \textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2019.08.004}{Huang et al. (2020)}}
+		\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Out-of-Sample Tests of Return Predictability}
+	This in sample regression can be misleading in that using all the data leads to a ``lookahead" bias, because an investor in real time does not have access to all the sample.
+	As a result, the traditional in-sample approach cannot be used to make forecasts that mimic the situation of an investor in real time.
+
+	An out-of-sample forecast of $r_{t+1}$ based on the predictor $x_t$ and information available through period $t$ is given by
+	\begin{equation}
+		\hat{r}_{t+1 \mid t}=\hat{\alpha}_t+\hat{\beta}_t x_t
+	\end{equation}
+	where $\hat{\alpha}_t$ and $\hat{\beta}_t$ are the OLS estimates of $\beta$ and $\alpha$, respectively, in Equation \textcolor{blue}{(\ref{equ: 预测收益率})} based on data available through $t$.
+\end{frame}
+
+\subsection{Test Pricing Factors}
+
+\begin{frame}{Test Pricing Factors}
+	The commonly used method is
+	\begin{equation}
+		R_{i t}=\alpha_i+\beta_i^{\prime} f_t+\varepsilon_{i t}, \quad t=1,2, \cdots, T, \forall i
+    \end{equation}
+	where $R_{i t}$ is the stock or portfolio $i$\('\)s return, $f_t$ is the factor (return). $\beta_i$ is the exposure corresponding to the factor $f_t$.
+
+	The average of the time-series is
+	\begin{equation}
+		\mathrm{E}_T\left[R_i\right]=\alpha_i+\beta_i^{\prime} \mathrm{E}_T\left[f_t\right]
+	\end{equation}
+
+Note: You need to estimate the model using individual portfolios or stock returns.
+
+\end{frame}
+
+\section{Cross-Section}
+
+\begin{frame}{Cross Section Regression}
+The factors in cross section regression can be economic variables, such as inflation, GDP, money supply, and technological shock. So, the first step of cross section regression is time-series estimation:
+\begin{equation}\label{cross section reg first}
+	R_{i t}=a_i+\beta_i^{\prime} f_t+\varepsilon_{i t}, \quad t=1,2, \cdots, T, \forall i
+\end{equation}
+where $f_t$ is the pricing factor. $beta_i^{\prime}$ is the factor loading or exposure. The next step is
+\begin{equation}\label{cross section reg second}
+	\mathrm{E}\left[R_i\right]=\beta_i^{\prime} \lambda+\alpha_i, \quad i=1,2, \cdots, N
+\end{equation}
+Note:
+\begin{enumerate}
+	\item In the previous model, the left hand is the expected return (the mean of return within $T$ period), and the right-hand regressor is $\beta$ estimated by time-series regression of model \textcolor{blue}{(\ref{cross section reg first})}.
+	\item There is no intercept in model \textcolor{blue}{(\ref{cross section reg second})}. $\alpha_i$ is the pricing error.
+	\item $\beta$ is esitmated.
+\end{enumerate}
+
+\end{frame}
+
+\subsection{Fama-MacBeth Regression}
+
+\begin{frame}{Fama-MacBeth Regression}
+	The initial stage of Fama-MacBeth regression involves acquiring the exposure of each asset on all factors via $N$ time series regression, which is analogous to the first step of cross-sectional regression. The dissimilarity between the Fama-MacBeth regression and the sectional regression test primarily manifests in the second step of sectional regression. At each time point $t$, a Fama-MacBeth regression is conducted where the dependent variable is the expected return (specifically, the return of the period and not the average rate of all periods). During the $t$ time period, the cross-sectional linear regression model for asset excess return and factor return is expressed as follows:
+
+	\begin{equation}
+		R_{i t}^e=\gamma_t+\hat{\boldsymbol{\beta}}_i^{\prime} \boldsymbol{\lambda}_t+\alpha_{i t}, \quad i=1,2, \cdots, N
+	\end{equation}
+
+\end{frame}
+
+\begin{frame}{Fama-MacBeth Regression}
+\begin{equation}
+	\begin{aligned}
+		\hat{\boldsymbol{\lambda}} & =\frac{1}{T} \sum_{t=1}^T \hat{\boldsymbol{\lambda}}_t \\
+		\hat{\alpha}_i & =\frac{1}{T} \sum_{t=1}^T \hat{\alpha}_{i t}
+		\end{aligned}
+\end{equation}
+\end{frame}
+
+\begin{frame}{Main Steps}
+	\begin{enumerate}
+		\item Summary Statistics
+		\begin{enumerate}
+			\item Cross-Sectional Summary Statistics
+			\item Time-series averages of the cross-sectional summary statistics
+		\end{enumerate}
+		\item Correlation
+		\begin{enumerate}
+			\item Cross-sectional Pearson product-moment ($\rho_t$) and Spearman rank ($\rho^S_t$) correlations
+			\item Time-series averages of the cross-sectional correlation coefficient
+		\end{enumerate}
+	\end{enumerate}
+\end{frame}
+
+\section{Factors}
+
+\begin{frame}{Factors and Factors Exposures}
+
+	\begin{itemize}
+		\item Improve the estimation of factors exposures
+		\begin{itemize}
+			\item Fama and MacBeth (1973)
+		\end{itemize}
+		\item How to construct factors?
+		\begin{itemize}
+			\item Factor mimicking portfolio
+			\begin{enumerate}
+				\item The portfolio only has exposure to the target factor and zero exposure to other factors;
+				\item Of all the portfolios satisfying condition 1, this portfolio has the least idiosyncratic risk.
+			\end{enumerate}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{table}[H]
+	\small
+	\centering
+	\resizebox{!}{!}{
+		\begin{tabular}{cccc}
+			\hline \\[-2ex]
+			         & exposure factor A & exposure factor B &  idiosyncratic volatility \\
+			\hline \\ [-2ex]
+			stock 1  & 1 & 1.2 &  1\%  \\
+			stock 2  & 1 & 1 &   1\%  \\
+			stock 3  & 2 & -1.2 &  1\% \\
+			stock 4  & 1.1 & -1.2 &  5\% \\
+			stock 5  & 0.1 & -1.2 &  5\% \\
+
+			\hline \\
+			\end{tabular}
+
+}
+\end{table}
+\end{frame}
+
+\begin{frame}{Factors: Portfolio Sort}
+	The primary benefit of utilizing the \textbf{Portfolio Sort} method is its ability to eliminate the prerequisite that the factor exposure is already established.
+
+	This approach presupposes solely that variables and factor exposures exhibit an association. Using $BM$ as an example case, this approach suggests that equities with higher BM exhibit greater susceptibility to value-based factors. Conversely, equities with lowered BM display reduced susceptibility to the value-based factors without any additional implications. Within the framework of this fundamental concept, individuals may construct a factor portfolio based on the level of $BM$, even in the absence of knowledge regarding the exposure of individual stocks value factor.
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Factors: Portfolio Sort}
+Main steps:
+\begin{enumerate}
+	\item Sort: The stocks are organized in the cross section based on the value of the sorting variable (BM, in this instance) in descending order.
+	\begin{itemize}
+		\item Three portfolios: 30th, 70th; Five portfolios: 20th, 40th, 60th, 80th
+	\end{itemize}
+	\item Group: The construction of a spread portfolio involves the establishment of a long-short hedge portfolio, whereby the highest-ranked group stocks are purchased while simultaneously shorting the lowest-ranked group stocks. (Fund neutrality, value-weighted or equal-weighted)
+	\begin{equation}
+	r_p = r_{high} - r_{low}
+	\end{equation}
+	\item Rebalance: Monthly or Yearly (Trading Cost)
+\end{enumerate}
+Then, we test
+\begin{itemize}
+	\item Significance: The null hypothesis is
+\begin{equation*}
+	r_p = 0
+\end{equation*}
+	\item Monotonicity
+\end{itemize}
+\end{frame}
+
+\section{China's Stock Market Data}
+
+\begin{frame}{Trading Rules}
+	\begin{itemize}
+		\item 1996.12.16 $\pm 10\%$ daily price limit (10.4\%), except
+		\begin{itemize}
+			\item The IPO date
+			\item The first trading date after the stock split-structure reform
+			\item The first trading date after seasonal offerings
+			\item The first trading date after material assets restructuring.
+			\item The first re-listing date of de-listed stocks
+			\item Science and technology innovation board: $\pm 20\%$ daily price limit after initial 5 days
+		\end{itemize}
+		\item 1995 ``T+1'' rules
+		\item Since April 22, 1998, the Shanghai and Shenzhen Stock Exchange announced that firms with financial abnormality will undergo special treatment with “ST” being added as a prefix to its stock name.
+		\item The Split-Share Structure and Its Reform
+		\item March 2010, margin trading and short selling (MTSS) program
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Common Data Filters}
+	\begin{enumerate}
+		\item Financial firms
+		\item IPO stocks
+		\item ST stocks
+		\item Trading days
+	\end{enumerate}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,1077 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[10pt]{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{fontspec}
+\setsansfont{Calibri}
+%\setsansfont{Calibri}[
+%    Path=../Font/,
+%    Scale=0.9,
+%    Extension = .ttf,
+%    UprightFont=*-Regular,
+%    BoldFont=*-Bold,
+%    ItalicFont=*-Italic,
+%    BoldItalicFont=*-BoldItalic
+%    ]
+\usepackage{unicode-math}
+\setmathfont{Libertinus Math}% 使用默认的数学字体或你偏好的数学字体 Latin Modern Math/Libertinus Math
+% \setmathfont[version=bold]{Latin Modern Math}
+
+\usepackage{ragged2e}
+\justifying\let\raggedright\justifying %两端对齐
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Asset Pricing]{\textbf{Asset Pricing}} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\subtitle{5. Beta}
+
+\author[Cheng Hang]{Cheng Hang} % Your name
+\institute[DUFE] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{School of Fintech \\
+Dongbei University of Finance \& Economics \\ % Your institution for the title page
+\medskip
+\textbf{chenghangch@qq.com}% Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+	\AtBeginSection[]
+{
+	\begin{frame}{Content}
+		\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide] %这几个参数我也不知道该如何准确地解释，反正它们最终的效果是突出显示当前章节，而其它章节都进行了淡化处理
+		\addtocounter{framenumber}{-1}  %目录页不计算页码
+	\end{frame}
+}
+
+%----------------------------------------------------------------------------------------
+%	Begin
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+
+%---------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%---------------------------------------------------------------------------
+\section{Fama and MacBeth (1973)}
+
+% --- Introduction ---
+\begin{frame}{The Core Question}
+  \begin{itemize}
+    \item Empirical asset pricing tests aim to determine if factors have significant risk premia.
+    \item A crucial first step: Correctly calculating factor loadings ($\beta$).
+  \end{itemize}
+\end{frame}
+
+% --- Fama-MacBeth Regression ---
+\begin{frame}{Background: Fama-MacBeth (1973) Regression}
+  A standard two-step procedure to test for risk premia:
+  \begin{enumerate}
+    \item \textbf{First Pass (Time-Series Regression):}
+      \begin{itemize}
+        \item For each asset $i$, regress its returns $R_{i,t}$ on factor returns $F_{k,t}$ over time:
+              \[ R_{i,t} = \alpha_i + \sum_{k=1}^{K} \beta_{i,k} F_{k,t} + \epsilon_{i,t} \]
+        \item This yields estimates of factor loadings $\hat{\beta}_{i,k}$ for each asset $i$ on each factor $k$.
+      \end{itemize}
+    \item \textbf{Second Pass (Cross-Sectional Regression):}
+      \begin{itemize}
+        \item For each time period $t$, regress asset returns $R_{i,t}$ on their estimated factor loadings $\hat{\beta}_{i,k}$ from the first pass:
+              \[ R_{i,t} = \lambda_{0,t} + \sum_{k=1}^{K} \lambda_{k,t} \hat{\beta}_{i,k} + \eta_{i,t} \]
+        \item This yields estimates of risk premia $\hat{\lambda}_{k,t}$ for each factor $k$ at time $t$.
+        \item The final risk premium for factor $k$ is the time-series average of $\hat{\lambda}_{k,t}$, and its significance is tested (e.g., t-test).
+      \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+% --- Theoretical Background ---
+\begin{frame}
+  \frametitle{Theoretical Underpinnings: The Two-Parameter Model}
+  The paper tests three key implications of the traditional CAPM:
+  \begin{enumerate}
+    \item \textbf{Linearity:} The relationship between an asset's expected return and its systematic risk (beta) is linear.
+    \item \textbf{Systematic Risk is Key:} No other measure of risk, particularly non-systematic (idiosyncratic) risk, systematically affects expected returns.
+    \item \textbf{Positive Risk-Return Tradeoff:} There is a positive expected premium for bearing systematic risk.
+  \end{enumerate}
+
+  \bigskip
+  The ex-ante CAPM equation:
+  \[ E(R_i) = R_f + \beta_i [E(R_m) - R_f] \]
+  where:
+  \begin{itemize}
+    \item $E(R_i)$: Expected return on asset $i$.
+    \item $R_f$: Risk-free rate of return.
+    \item $\beta_i = \text{Cov}(R_i, R_m) / \text{Var}(R_m)$: Systematic risk of asset $i$.
+    \item $E(R_m)$: Expected return on the market portfolio.
+  \end{itemize}
+  Fama and MacBeth aimed to test a stochastic (ex-post) version of this model.
+\end{frame}
+
+% --- Data and Period ---
+\begin{frame}
+  \frametitle{Data and Sample Period}
+  \begin{itemize}
+    \item \textbf{Assets:} All common stocks listed on the New York Stock Exchange (NYSE).
+    \item \textbf{Period:} Monthly data from January 1926 to June 1968.
+      \begin{itemize}
+        \item Overall period: 1935-1968 (for the main tests).
+        \item Subperiods were also examined: 1935-1945, 1946-1955, 1956-1968.
+      \end{itemize}
+    \item \textbf{Market Proxy ($R_m$):} An equally-weighted portfolio of all NYSE stocks.
+    \item \textbf{Risk-Free Rate ($R_f$):} One-month Treasury bill rate (or commercial paper rates for earlier periods where T-bills were not available).
+  \end{itemize}
+\end{frame}
+
+% --- Methodology Overview ---
+\begin{frame}
+  \frametitle{Methodology: The Two-Pass Regression Approach}
+  The core of the Fama-MacBeth methodology involves a two-stage (or "two-pass") procedure repeated over time:
+
+  \begin{block}{Overall Procedure}
+  \begin{enumerate}
+    \item \textbf{Portfolio Formation and Beta Estimation (First Pass - Time Series):}
+        \begin{itemize}
+            \item Form portfolios of stocks to mitigate the errors-in-variables (EIV) problem associated with individual stock beta estimates.
+            \item Estimate betas for these portfolios using time-series regressions.
+        \end{itemize}
+    \item \textbf{Cross-Sectional Regressions (Second Pass):}
+        \begin{itemize}
+            \item For each month in the sample period, run a cross-sectional regression of portfolio returns on their estimated betas (and other test variables).
+        \end{itemize}
+    \item \textbf{Hypothesis Testing:}
+        \begin{itemize}
+            \item Analyze the time series of coefficients obtained from the monthly cross-sectional regressions.
+        \end{itemize}
+  \end{enumerate}
+  \end{block}
+\end{frame}
+
+% --- Step 1: Portfolio Formation and Beta Estimation ---
+\begin{frame}[allowframebreaks]
+  \frametitle{Step 1 (First Pass): Portfolio Formation \& Beta Estimation}
+  \textbf{Objective:} Obtain reliable estimates of systematic risk ($\beta$) and ensure a wide dispersion of betas across test assets.
+
+  \begin{enumerate}
+    \item \textbf{Initial Beta Ranking Period (e.g., 1926-1929 for first portfolio set):}
+      \begin{itemize}
+        \item For each individual stock, estimate its beta ($\hat{\beta}_i$) using monthly returns over a preceding period (e.g., 4-7 years, typically 5 years in their main setup) by regressing individual stock returns on the market proxy returns:
+              \[ R_{i,t} = a_i + b_i R_{m,t} + e_{i,t} \]
+              (Note: They used raw returns, not excess returns, for this initial beta estimation.)
+      \end{itemize}
+
+    \item \textbf{Portfolio Formation (e.g., at end of 1929):}
+      \begin{itemize}
+        \item Rank all stocks based on their estimated $\hat{\beta}_i$ from the ranking period.
+        \item Group these stocks into 20 portfolios (equally weighted returns for each portfolio). This helps diversify away idiosyncratic risk and provides more stable beta estimates for the portfolios.
+      \end{itemize}
+
+    \item \textbf{Portfolio Beta Estimation Period (e.g., 1930-1934 for betas used in 1935 CSR):}
+      \begin{itemize}
+        \item For each of the 20 portfolios, calculate its monthly returns.
+        \item Estimate the beta for each portfolio ($\hat{\beta}_{p,t-1}$) using monthly returns from a subsequent period (e.g., the next 5 years) by regressing portfolio returns on market proxy returns:
+              \[ R_{p,\tau} = a_p + \beta_p R_{m,\tau} + e_{p,\tau} \]
+              These $\hat{\beta}_{p,t-1}$ are the betas used as independent variables in the cross-sectional regressions for month $t$.
+      \end{itemize}
+
+    \item \textbf{Rolling Procedure:}
+      \begin{itemize}
+        \item The entire process (ranking, portfolio formation, portfolio beta estimation) is repeated annually. For example, to get betas for 1936, portfolios are reformed based on 1927-1930 individual stock betas, and portfolio betas are estimated using 1931-1935 data.
+        \item This ensures that the betas used in the cross-sectional regressions are estimated from data prior to the month of the cross-sectional regression.
+      \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+% --- Step 2: Cross-Sectional Regressions ---
+\begin{frame}[allowframebreaks]
+  \frametitle{Step 2 (Second Pass): Monthly Cross-Sectional Regressions}
+  For \textbf{each month $t$} in the test period (e.g., January 1935 to June 1968), run the following cross-sectional regression:
+
+  \[ R_{p,t} = \hat{\gamma}_{0,t} + \hat{\gamma}_{1,t} \hat{\beta}_{p,t-1} + \hat{\gamma}_{2,t} \hat{\beta}_{p,t-1}^2 + \hat{\gamma}_{3,t} \bar{s}_{p,t-1}(\hat{e}_i) + \eta_{p,t} \]
+  where:
+  \begin{itemize}
+    \item $R_{p,t}$: The return on portfolio $p$ in month $t$. (They used both raw returns and excess returns $R_{p,t} - R_{f,t}$ in different specifications).
+    \item $\hat{\beta}_{p,t-1}$: The estimated beta for portfolio $p$, calculated using data from the period \textit{ending before month $t$}.
+    \item $\hat{\beta}_{p,t-1}^2$: The square of the portfolio's beta. This term tests for non-linearity in the risk-return relationship.
+    \item $\bar{s}_{p,t-1}(\hat{e}_i)$: The average residual standard deviation of the stocks within portfolio $p$. This is a measure of non-systematic (idiosyncratic) risk, estimated from the first-pass individual stock regressions used for portfolio formation. This term tests if non-market risk is priced.
+    \item $\hat{\gamma}_{0,t}, \hat{\gamma}_{1,t}, \hat{\gamma}_{2,t}, \hat{\gamma}_{3,t}$: The regression coefficients estimated for month $t$.
+    \item $\eta_{p,t}$: The regression residual for portfolio $p$ in month $t$.
+  \end{itemize}
+  This regression is run for each of the $N_t$ months in the sample, yielding $N_t$ estimates for each $\gamma_j$.
+\end{frame}
+
+% --- Hypothesis Testing ---
+\begin{frame}[allowframebreaks]
+  \frametitle{Hypothesis Testing: Analyzing the Time Series of Coefficients}
+  The CAPM implies specific hypotheses about the expected values of the $\gamma_j$ coefficients:
+
+  \begin{enumerate}
+    \item \textbf{Average Coefficients:} Calculate the time-series average of each estimated coefficient:
+          \[ \bar{\hat{\gamma}}_j = \frac{1}{N_t} \sum_{t=1}^{N_t} \hat{\gamma}_{j,t} \quad \text{for } j = 0, 1, 2, 3 \]
+
+    \item \textbf{Test Statistics:} Test if the average coefficients are significantly different from their hypothesized values using a t-statistic:
+          \[ t(\bar{\hat{\gamma}}_j) = \frac{\bar{\hat{\gamma}}_j - E(\gamma_j)_{\text{hypothesized}}}{s(\hat{\gamma}_j) / \sqrt{N_t}} \]
+          where $s(\hat{\gamma}_j)$ is the standard deviation of the time series of $\hat{\gamma}_{j,t}$.
+
+    \item \textbf{Specific Hypotheses (based on $R_{p,t}$ as LHS):}
+      \begin{itemize}
+        \item $E(\gamma_{0,t})$: Expected return on a zero-beta portfolio ($E(R_z)$). If the strict CAPM holds, $E(\gamma_{0,t})$ should be $R_{f,t}$ (or its average).
+        \item $E(\gamma_{1,t})$: Expected market risk premium ($E(R_m) - E(R_z)$ or $E(R_m) - R_f$). Should be positive.
+        \item $E(\gamma_{2,t})$: Tests for non-linearity. Should be zero.
+        \item $E(\gamma_{3,t})$: Tests if non-systematic risk is priced. Should be zero.
+      \end{itemize}
+      (If $R_{p,t} - R_{f,t}$ is LHS, then $E(\gamma_{0,t})$ should be zero.)
+  \end{enumerate}
+  The significance of these t-statistics provides evidence for or against the CAPM's predictions.
+\end{frame}
+
+% --- Key Findings (Brief Summary) ---
+\begin{frame}[allowframebreaks]
+  \frametitle{Summary of Fama-MacBeth (1973) Key Findings}
+  While the paper is primarily about methodology, its main empirical findings were:
+
+  \begin{itemize}
+    \item \textbf{Support for Linearity and Systematic Risk:}
+      \begin{itemize}
+        \item The average estimate $\bar{\hat{\gamma}}_2$ (for $\beta^2$) was generally not significantly different from zero, supporting linearity.
+        \item The average estimate $\bar{\hat{\gamma}}_3$ (for residual risk $\bar{s}(\hat{e}_i)$) was generally not significantly different from zero, supporting that only systematic risk is priced.
+      \end{itemize}
+    \item \textbf{Positive Risk-Return Tradeoff:}
+      \begin{itemize}
+        \item The average estimate $\bar{\hat{\gamma}}_1$ (the coefficient on $\beta$) was consistently positive and statistically significant, indicating a positive price for systematic risk.
+      \end{itemize}
+    \item \textbf{Deviations from Strict CAPM (Sharpe-Lintner version):}
+      \begin{itemize}
+        \item $\bar{\hat{\gamma}}_0$ was often significantly higher than the average risk-free rate.
+        \item $\bar{\hat{\gamma}}_1$ was often significantly lower than the average market excess return ($R_m - R_f$).
+        \item These findings were more consistent with Black's (1972) zero-beta CAPM, where $E(\gamma_{0,t}) = E(R_{z,t})$ and $E(\gamma_{1,t}) = E(R_{m,t}) - E(R_{z,t})$, and $E(R_{z,t})$ could be greater than $R_{f,t}$ due to restrictions on borrowing.
+      \end{itemize}
+    \item \textbf{Stability:} The qualitative results were generally stable across different subperiods.
+  \end{itemize}
+\end{frame}
+
+% --- Contribution and Legacy ---
+\begin{frame}
+  \frametitle{Contribution and Legacy of Fama-MacBeth (1973)}
+  \begin{itemize}
+    \item \textbf{Standard Methodology:} The Fama-MacBeth two-pass regression procedure became a standard tool for testing asset pricing models and examining the cross-section of stock returns.
+    \item \textbf{Addressing EIV:} The use of portfolios was a key innovation to mitigate the errors-in-variables problem in beta estimation.
+    \item \textbf{Time-Varying Risk Premia:} By estimating coefficients for each month, the methodology implicitly allows for time-varying risk premia. The test is on the average premium.
+    \item \textbf{Foundation for Future Research:} It laid the groundwork for countless subsequent studies on asset pricing anomalies and factor models.
+    \item \textbf{Limitations Acknowledged:}
+        \begin{itemize}
+            \item Market proxy issues (Roll's Critique).
+            \item Assumes betas are relatively stable within estimation periods.
+        \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\section{Standard Estimation beta in recent Literature}
+
+\begin{frame}{Method 1: Standard CAPM Regression}
+  The most common approach is the one-factor market model regression:
+  \begin{equation*}
+    r_{i,t} = \alpha_i + \beta_i \text{MKT}_t + \epsilon_{i,t} \quad (8.3)
+  \end{equation*}
+  \begin{itemize}
+    \item $r_{i,t}$: Excess return of stock $i$ ($R_{i,t} - R_{f,t}$)
+    \item $\text{MKT}_t$: Excess return of the market portfolio ($R_{m,t} - R_{f,t}$)
+    \item $\epsilon_{i,t}$: Regression residual
+    \item The estimated slope coefficient is taken as the stock's market beta ($\hat{\beta}_i$).
+  \end{itemize}
+
+  \textbf{Key Variations:}
+  \begin{itemize}
+    \item Periodicity of data (daily, monthly)
+    \item Length of the estimation period
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Standard CAPM Regression: Data Variations}
+  \textbf{Using Daily Excess Return Data:}
+  \begin{itemize}
+    \item Notation: $\beta^{kM}$, where $k$ is the number of months.
+    \item Examples from the text:
+    \begin{itemize}
+        \item $\beta^{1M}$: 1 month of daily data (min 15 days)
+        \item $\beta^{3M}$: 3 months of daily data (min 50 days)
+        \item $\beta^{6M}$: 6 months of daily data (min 100 days)
+        \item $\beta^{12M}$: 12 months of daily data (min 200 days)
+        \item $\beta^{24M}$: 24 months of daily data (min 450 days)
+    \end{itemize}
+  \end{itemize}
+
+  \textbf{Using Monthly Excess Return Data:}
+  \begin{itemize}
+    \item Notation: $\beta^{kY}$, where $k$ is the number of years.
+    \item Examples from the text:
+    \begin{itemize}
+        \item $\beta^{1Y}$: 1 year of monthly data (min 10 obs.)
+        \item $\beta^{2Y}$: 2 years of monthly data (min 20 obs.)
+        \item $\beta^{3Y}$: 3 years of monthly data (min 24 obs.)
+        \item $\beta^{5Y}$: 5 years of monthly data (min 24 obs.)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Method 2: Scholes-Williams (1977) Beta}
+  \textbf{Purpose:} To account for nonsynchronous trading, which can affect beta estimates from the standard CAPM model, especially with daily data.
+
+  \textbf{Procedure:} Run three regressions:
+  \begin{align*}
+    r_{i,t} &= a_i + b_i^{-} \text{MKT}_{t-1} + e_{i,t}^{-} \\
+    r_{i,t} &= a_i + b_i \text{MKT}_{t} + e_{i,t}  \\
+    r_{i,t} &= a_i + b_i^{+} \text{MKT}_{t+1} + e_{i,t}^{+}
+  \end{align*}
+
+  The Scholes-Williams beta is defined as:
+  \begin{equation*}
+    \beta_i^{\text{SW}} = \frac{\hat{b}_i^{-} + \hat{b}_i + \hat{b}_i^{+}}{1 + 2\rho} 
+  \end{equation*}
+  where $\rho$ is the first-order serial correlation of the market portfolio's excess return.
+
+  \textbf{Implementation (from text):}
+  \begin{itemize}
+    \item Calculated using daily data.
+    \item Example: 1-year period (months $t-11$ to $t$), min 200 observations.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Method 3: Dimson (1979) Beta}
+  \textbf{Purpose:} To address bias in beta estimates for infrequently traded stocks when using the standard CAPM model.\\
+
+  \textbf{Procedure:} Estimate coefficients from the following regression:
+  \begin{equation*}
+    r_{i,t} = a_i + \sum_{k=-L}^{L} b_{k,i} \text{MKT}_{t+k} + e_{i,t} 
+  \end{equation*}
+  The text uses $L=5$:
+  \begin{equation*}
+    r_{i,t} = a_i + \sum_{k=-5}^{5} b_{k,i} \text{MKT}_{t+k} + e_{i,t} 
+  \end{equation*}
+
+  The Dimson beta is the sum of these slope coefficients:
+  \begin{equation*}
+    \beta_i^{\text{D}} = \sum_{k=-5}^{5} \hat{b}_{k,i} 
+  \end{equation*}
+
+  \textbf{Implementation (from text):}
+  \begin{itemize}
+    \item Applicable to all stocks (does not introduce bias for frequently traded ones).
+    \item Example: 1-year daily data (months $t-11$ to $t$), min 200 observations.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Data Sources and Sample (as per the text)}
+  The empirical examination in the chapter uses:
+  \begin{itemize}
+    \item \textbf{Stock Return Data:}
+    \begin{itemize}
+        \item Daily: Center for Research in Security Prices (CRSP) daily stock file (dsf).
+        \item Monthly: CRSP monthly stock file (msf).
+    \end{itemize}
+    \item \textbf{Market Factor (MKT) and Risk-Free Rate ($R_f$):}
+    \begin{itemize}
+        \item Daily and Monthly: Ken French's data library.
+        \item Used to calculate excess returns.
+    \end{itemize}
+    \item \textbf{Sample Period for Empirical Examination:}
+    \begin{itemize}
+        \item June 1963 through November 2012.
+    \end{itemize}
+  \end{itemize}
+  \textit{Note: These are details in Chapter in ``Book Bali, Turan, Robert Engle, and Scott Murray, 2017, Empirical Asset Pricing: The Cross Section of Stock Returns: An Overview".
+.}
+\end{frame}
+
+\begin{frame}{Summary of Beta Estimation Methods}
+  This chapter excerpt discusses three main approaches to estimating market beta:
+  \begin{enumerate}
+    \item \textbf{Standard CAPM Regression:}
+    \begin{itemize}
+        \item $r_{i,t} = \alpha_i + \beta_i \text{MKT}_t + \epsilon_{i,t}$
+        \item Variations based on data frequency (daily/monthly) and estimation window length.
+    \end{itemize}
+    \item \textbf{Scholes-Williams (1977) Beta:}
+    \begin{itemize}
+        \item Adjusts for nonsynchronous trading using lead, contemporaneous, and lagged market returns.
+        \item $\beta_i^{\text{SW}} = (\hat{b}_i^{-} + \hat{b}_i + \hat{b}_i^{+}) / (1 + 2\rho)$
+    \end{itemize}
+    \item \textbf{Dimson (1979) Beta:}
+    \begin{itemize}
+        \item Addresses infrequent trading by summing coefficients from a regression with multiple lead and lagged market returns.
+        \item $\beta_i^{\text{D}} = \sum \hat{b}_{k,i}$
+    \end{itemize}
+  \end{enumerate}
+  These methods are widely used in empirical asset pricing research.
+\end{frame}
+
+\section{EIV}
+
+% --- The EIV Problem ---
+
+\begin{frame}{The Errors-in-Variables (EIV) Problem}
+  \begin{itemize}
+    \item Using $\hat{\beta}_{i,k}$ instead of true $\beta_{i,k}$ leads to an Errors-in-Variables (EIV) bias.
+    \item Risk premium estimates ($\hat{\gamma}_k$) become biased and inconsistent.
+    \item Direction of bias is unknown with multiple factors.
+    \item \textbf{Traditional Solution:} Use portfolios as test assets instead of individual stocks.
+    \begin{itemize}
+        \item Portfolio betas are estimated more precisely, reducing EIV bias.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\subsection{Jegadeesh et al. (2019)}
+
+\begin{frame}[allowframebreaks]{Motivation: Shortcomings of Using Portfolios}
+  \textbf{Why move away from portfolios? Several critical issues:}
+  \begin{itemize}
+    \item \textbf{Reduced Test Power:} Dimensionality is reduced. Average returns vary less across portfolios than individual stocks.
+    \item \textbf{Masking Phenomena:} Diversification into portfolios can hide cross-sectional patterns in individual stocks unrelated to the grouping procedure (e.g., fundamental indexation arguments).
+    \item \textbf{Misleading Inference on Efficiency:}
+        \begin{itemize}
+            \item If the market index is on the mean-variance frontier of individual assets, a linear relation between E(R) and $\beta$ holds.
+            \item Grouping by beta might lead to the mistaken inference that the index is efficient with respect to beta-sorted portfolios, even if not for individual assets.
+        \end{itemize}
+    \item \textbf{Factor Structure from Sorting (Lewellen et al., 2010):}
+        \begin{itemize}
+            \item Sorting on characteristics (size, B/M) known to predict returns imparts a strong factor structure in test portfolio returns.
+            \item Even factors weakly correlated with sorting characteristics might appear to explain average returns.
+        \end{itemize}
+    \item \textbf{Dependence on Test Portfolios:} Significance and magnitude of risk premiums can depend critically on the choice of test portfolios.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{This Paper's Contribution}
+  \begin{itemize}
+    \item \textbf{Objective:} Develop a procedure to estimate risk premiums and test their significance using \textbf{individual stocks} while avoiding EIV bias.
+    \item \textbf{Proposed Method:} An Instrumental Variables (IV) approach.
+    \begin{itemize}
+        \item Allows use of individual stocks as test assets.
+        \item Delivers consistent estimates of ex-post risk premiums (N-consistency).
+        \item Yields well-specified tests in small samples.
+    \end{itemize}
+    \item \textbf{Key Punchline (Preview):} Market risk premium (CAPM, LCAPM), premiums on FF3, FF5, and Hou et al. (2015) q-factors are all \textbf{insignificant} after controlling for asset characteristics when using this IV method with individual stocks.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{The IV Estimator}
+  Recall the second-pass regression for month $t$:
+  \[ r_{i,t} = \gamma_{0,t} + \sum_{k=1}^{K} \hat{\beta}_{i,k} \gamma_{k,t} + \xi_{i,t} \]
+  In matrix form: $r_t = \hat{\gamma} \hat{B} + \xi_t$.
+
+  The proposed IV estimator for factor risk premiums $\hat{\gamma}_{IV,t}$ is:
+  \[ \hat{\gamma}'_{IV,t} = (\hat{B}_{IV} \hat{B}'_{EV})^{-1} (\hat{B}_{IV} r'_t) \]
+  Where:
+  \begin{itemize}
+    \item $\hat{B}_{EV}$: Matrix of explanatory variable betas (e.g., estimated using even months' daily data from a prior period).
+    \item $\hat{B}_{IV}$: Matrix of instrumental variable betas (e.g., estimated using odd months' daily data from the same prior period).
+    \item $r_t$: Vector of realized excess returns in month $t$.
+  \end{itemize}
+
+  \textbf{Key Idea:} Measurement errors in $\hat{B}_{EV}$ and $\hat{B}_{IV}$ are uncorrelated because they are estimated from disjoint data samples.
+\end{frame}
+
+% \begin{frame}{Properties of the IV Estimator}
+%   \begin{itemize}
+%     \item \textbf{N-Consistency (Proposition 1):} The IV estimator converges to the ex-post risk premium as the number of stocks (N) increases, even for finite T.
+%     \item \textbf{Intuition (2SLS):}
+%     \begin{enumerate}
+%         \item Regress explanatory betas ($\hat{B}_{EV}$) on instrumental betas ($\hat{B}_{IV}$).
+%         \item Use fitted values from (1) as explanatory variables in the second-stage regression for $r_t$.
+%     \end{enumerate}
+%     \item \textbf{Small Sample Properties (Simulations):}
+%     \begin{itemize}
+%         \item IV estimates are not different from true parameters even with short time-series for beta estimation (e.g., 1 year of daily data).
+%         \item OLS estimates with individual stocks are significantly biased towards zero.
+%         \item Conventional t-tests based on IV estimator are well-specified (correct size) and reasonably powerful.
+%     \end{itemize}
+%     \item \textbf{Time-Varying Betas:} IV estimator remains consistent if betas follow covariance stationary processes.
+%   \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Data and General Setup}
+%   \begin{itemize}
+%     \item \textbf{Data:} CRSP (returns, volume, market cap), Compustat (financials).
+%     \item \textbf{Sample Period:} Jan 1956 - Dec 2012 (main tests for CAPM/FF3). Varies for other models based on factor availability.
+%     \item \textbf{Stock Inclusion:} Common stocks (CRSP share codes 10/11), price > \$1, market cap > \$1M. Sufficient daily return data for beta estimation.
+%     \item \textbf{Beta Estimation:}
+%         \begin{itemize}
+%             \item Daily returns over rolling 36-month windows.
+%             \item Dimson (1979) betas (with 1-day lead/lag) to account for non-synchronous trading.
+%             \item For IV: Odd-month daily data for one set of betas, even-month daily data for the other.
+%         \end{itemize}
+%     \item \textbf{Characteristics:} SIZE (log market cap), BM (book-to-market), OP (operating profitability), INV (investment).
+%   \end{itemize}
+% \end{frame}
+
+\begin{frame}{Summary of Main Empirical Findings}
+  \begin{itemize}
+    \item Across multiple prominent asset pricing models (CAPM, FF3F, FF5F, q-Factor):
+    \item When using \textbf{individual stocks} as test assets and the proposed \textbf{IV method}:
+    \item \textbf{Factor risk premiums are generally NOT statistically significant after controlling for corresponding firm characteristics.}
+    \item \textbf{Firm characteristics themselves (SIZE, BM, OP, INV, Amihud Illiquidity) are strongly and significantly priced.}
+    \item This contrasts with findings from original papers that typically use portfolios and find significant risk premiums.
+    \item Simulation evidence suggests this is not due to a lack of test power of the IV method.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{The ``Risk-Proxy" Hypothesis}
+  \begin{itemize}
+    \item \textbf{Concern:} Could characteristics be priced because they are better proxies for \textit{true (future) betas} than betas estimated from past data, especially if true betas are time-varying and characteristics anticipate these changes?
+    \item If so, the significant coefficients on characteristics might actually reflect compensation for systematic risk.
+  \end{itemize}
+\end{frame}
+
+\section{Downside Beta}
+
+\subsection{Ang, Chen, and Xing (2006)}
+
+%----------------------------------------------------------------------
+\begin{frame}{Introduction \& Motivation}
+    \begin{itemize}
+        \item Economists have long recognized that \textbf{investors care differently about downside losses versus upside gains}.
+        \item Standard CAPM beta is symmetric and may not fully capture risk.
+        \item This paper investigates whether \textbf{stocks with high sensitivities to downside market movements (high ``downside risk") earn a return premium}.
+        \item Key Question: Is downside risk priced in the cross-section of stock returns?
+    \end{itemize}
+\end{frame}
+
+%----------------------------------------------------------------------
+\begin{frame}{What is Downside Risk?}
+    \begin{columns}[T] % Align columns at the top
+        \begin{column}{0.5\textwidth}
+            \textbf{Conceptual Understanding}
+            \begin{itemize}
+                \item Assets that perform poorly when the overall market declines are particularly undesirable.
+                \item Investors require compensation for holding such assets.
+            \end{itemize}
+            \vspace{1em}
+            \textbf{Measuring Downside Beta ($\beta^{-}$)}
+            \begin{itemize}
+                \item Defined analogously to CAPM beta, but conditional on market declines:
+                \end{itemize}
+                $$
+ \beta_i^{-} = \frac{Cov(R_i, R_m | R_m < \mu_m)}{Var(R_m | R_m < \mu_m)} 
+$$
+                 where $R_m < \mu_m$ indicates periods where excess market return is below its mean.
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Other Related Measures}
+            \begin{itemize}
+                \item \textbf{Upside Beta ($\beta^{+}$):} Covariance when $R_m > \mu_m$.
+                \item \textbf{Relative Downside Beta:} $\beta^{-} - \beta_{CAPM}$.
+                \item This paper focuses on the idea that high $\beta^{-}$ should command a premium.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Theoretical Motivation: Disappointment Aversion}
+    \begin{itemize}
+        \item The paper uses a simple model with a representative agent exhibiting \textbf{Disappointment Aversion (DA)} preferences (Gul, 1991).
+        \item DA utility places greater weight on outcomes below a certain endogenous reference point (the certainty equivalent of wealth) than on outcomes above it.
+        \item This framework naturally leads to a higher required return for assets that covary more strongly with the market during market downturns.
+        \item \textbf{The model predicts that assets with higher downside risk ($\beta^{-}$) will have higher expected returns, not fully captured by standard CAPM beta.}
+        \item It also implies a potential discount for assets with high upside potential (high $\beta^{+}$).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Contemporaneous Premium: Portfolio Sorts}
+    \begin{itemize}
+        \item Strategy: Sort stocks into quintiles based on their \textit{realized} betas (e.g., $\beta^{-}$, relative $\beta^{-}$) computed over a 12-month period, and examine contemporaneous returns of these portfolios.
+        \item Data: NYSE stocks, July 1963 - December 2001. Daily data for beta calculations.
+        \item \textbf{Key Findings (from Table 1 in the paper):}
+        \begin{itemize}
+            \item Stocks with high realized $\beta^{-}$ earn significantly higher average returns.
+                \begin{itemize}
+                    \item \textbf{High-Low $\beta^{-}$ portfolio spread: 11.8\% per annum.}
+                \end{itemize}
+            \item Stocks with high realized \textit{relative} $\beta^{-}$ (i.e., $\beta^{-} - \beta_{CAPM}$) also earn high returns.
+                 \begin{itemize}
+                    \item \textbf{High-Low relative $\beta^{-}$ spread: 6.6\% per annum.}
+                \end{itemize}
+            \item Stocks with high realized \textit{relative} $\beta^{+}$ (i.e., $\beta^{+} - \beta_{CAPM}$) earn lower returns, suggesting a discount for upside potential.
+                \begin{itemize}
+                    \item \textbf{High-Low relative $\beta^{+}$ spread: -6.1\% per annum.}
+                \end{itemize}
+        \end{itemize}
+    \end{itemize}  
+\end{frame}
+
+\begin{frame}{Contemporaneous Premium: Fama-MacBeth Regressions}
+    \begin{itemize}
+        \item Fama-MacBeth (1973) cross-sectional regressions of monthly excess returns on firm characteristics and realized betas.
+        \item Controls include: size, book-to-market, momentum, volatility, coskewness, cokurtosis, and liquidity beta.
+        \item \textbf{Key Findings (from Table 2 in the paper):}
+        \begin{itemize}
+            \item The coefficient on \textbf{$\beta^{-}$ is consistently positive and statistically significant.}
+            \item Estimated premium for downside risk is approximately \textbf{6\% per annum} after various controls.
+            \item The coefficient on $\beta^{+}$ is often negative but less robust than the $\beta^{-}$ premium.
+            \item The downside risk premium is distinct from and incremental to other known cross-sectional effects like size, value, momentum, and coskewness.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+%----------------------------------------------------------------------
+% \begin{frame}{Downside Beta vs. Coskewness}
+%     \begin{itemize}
+%         \item Coskewness (Harvey and Siddique, 2000) also captures asymmetry, where investors prefer positive coskewness (dislike negative coskewness).
+%         \item Are downside beta and coskewness capturing the same thing?
+%         \item \textbf{Double Sorts (Table 3 in the paper):}
+%         \begin{itemize}
+%             \item First sort on coskewness, then on $\beta^{-}$ (and vice-versa).
+%             \item The \textbf{premium for high $\beta^{-}$ persists even after controlling for coskewness levels.} (High-Low $\beta^{-}$ spread of 7.6\% p.a. within coskewness quintiles).
+%             \item The \textbf{premium for low coskewness persists after controlling for $\beta^{-}$ levels.} (High-Low coskewness spread of -6.2\% p.a. within $\beta^{-}$ quintiles).
+%         \end{itemize}
+%         \item Conclusion: **Downside beta and coskewness are related but distinct risk factors.** Downside beta explicitly conditions on market declines.
+%     \end{itemize}
+% \end{frame}
+% %----------------------------------------------------------------------
+% \begin{frame}{Robustness of Contemporaneous Premium}
+%     The paper performs extensive robustness checks for the contemporaneous downside risk premium. The findings are generally robust to:
+%     \begin{itemize}
+%         \item \textbf{Different Cutoff Points for Beta Calculation:} Using risk-free rate or zero return as market benchmark instead of mean market return.
+%         \item \textbf{Data Frequency:} Using weekly data over 24 months for beta calculation.
+%         \item \textbf{Portfolio Weighting:} Value-weighted portfolios (premium slightly smaller but still significant).
+%         \item \textbf{Stock Universe:} Including all NYSE/AMEX/NASDAQ stocks (premium tends to be larger).
+%         \item \textbf{Overlapping vs. Non-overlapping Periods:} Results hold for non-overlapping annual periods.
+%         \item \textbf{Downside Risk in Fama-French Portfolios (Table 6):} GMM tests show that downside market risk significantly helps price the 25 Fama-French size and book-to-market sorted portfolios.
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Predicting Future Downside Risk Exposure}
+%     For a downside risk premium to be exploitable, past downside risk exposure should predict future exposure.
+%     \begin{itemize}
+%         \item \textbf{Determinants of Future Relative $\beta^{-}$ (Table 7):}
+%         \begin{itemize}
+%             \item Past relative $\beta^{-}$ weakly predicts future relative $\beta^{-}$ (12-month autocorrelation is only 0.082).
+%             \item Other firm characteristics like past standard deviation (+), log-size (-), and past ROE (+) show some predictive power for future relative $\beta^{-}$.
+%         \end{itemize}
+%          \item This suggests that simply using past $\beta^{-}$ might be a noisy predictor of future $\beta^{-}$.
+%     \end{itemize}
+% \end{frame}
+% %----------------------------------------------------------------------
+% \begin{frame}{Past Downside Risk and Future Returns}
+%     \begin{itemize}
+%         \item \textbf{Portfolio Sorts on Past $\beta^{-}$ (Table 8, Panel A):}
+%         \begin{itemize}
+%             \item Sorting stocks based on $\beta^{-}$ from the previous 12 months.
+%             \item Result: A \textbf{weak and inconsistent predictive relationship between past $\beta^{-}$ and next month's returns.} The highest past $\beta^{-}$ quintile does not consistently earn the highest future returns.
+%         \end{itemize}
+%         \item \textbf{Contrast with Past Coskewness (Table 8, Panel B):}
+%         \begin{itemize}
+%             \item Past coskewness strongly predicts future returns (low past coskewness $\rightarrow$ high future returns), consistent with Harvey and Siddique (2000).
+%         \end{itemize}
+%         \item Why is the predictive power of past $\beta^{-}$ weak? \textbf{The role of volatility.}
+%     \end{itemize}
+% \end{frame}
+% %----------------------------------------------------------------------
+% \begin{frame}{The Confounding Role of Volatility}
+%     Two issues with high volatility stocks:
+%     \begin{enumerate}
+%         \item \textbf{Measurement Error:} High volatility makes past $\beta^{-}$ estimates noisy predictors of future $\beta^{-}$. (Average 1-year autocorrelation of $\beta^{-}$ is 0.435, but only 0.258 for highest volatility quintile stocks - Table 9A).
+%         \item \textbf{Volatility Anomaly:} Stocks with very high total/idiosyncratic volatility tend to have anomalously low returns (Ang et al., 2006). This works against the high $\beta^{-} \rightarrow$ high return effect.
+%     \end{enumerate}
+%     \textbf{Excluding High Volatility Stocks (Table 9, Panel B):}
+%     \begin{itemize}
+%         \item Exclude the highest quintile of stocks based on past volatility (approx. 4\% of market cap).
+%         \item Now, sorting the remaining stocks on past $\beta^{-}$ yields a \textbf{statistically significant positive relationship with future returns.} (High-Low spread of 0.34\% per month).
+%     \end{itemize}
+%     \textbf{Controlling for Volatility (Table 11 - Double Sorts):}
+%     \begin{itemize}
+%         \item Within each past volatility quintile (except the very highest), stocks with higher past $\beta^{-}$ have higher future size-and-book-to-market adjusted returns.
+%         \item Averaging across volatility quintiles, the spread is 0.31\% per month.
+%     \end{itemize}
+% \end{frame}
+
+\subsection{Bollerslev, Patton, and Quaedvlieg (2022)}
+
+% Realized Semibetas Section
+\begin{frame}{Defining Realized Semibetas}
+  The traditional market beta ($\beta$) is decomposed as:
+  $$
+ \beta_t = \frac{\text{Cov}(r_t, f_t)}{\text{Var}(f_t)} 
+$$
+  This paper decomposes it into four components based on joint sign of asset return ($r_t$) and market return ($f_t$):
+  \begin{itemize}
+    \item $\beta^N$: Covariation when $r_t < 0$ and $f_t < 0$ (Both Negative)
+    \item $\beta^P$: Covariation when $r_t > 0$ and $f_t > 0$ (Both Positive)
+    \item $\beta^{M+}$: Covariation when $r_t < 0$ and $f_t > 0$ (Mixed: Market Positive, Asset Negative)
+    \item $\beta^{M-}$: Covariation when $r_t > 0$ and $f_t < 0$ (Mixed: Market Negative, Asset Positive)
+  \end{itemize}
+
+  The paper defines mixed-sign semibetas as $\beta^{M+} = -M^+/\text{Var}(f)$ and $\beta^{M-} = -M^-/\text{Var}(f)$ for easier interpretation of risk premia.
+  The decomposition is: $\beta = \beta^N + \beta^P - \beta^{M+} - \beta^{M-}$.
+\end{frame}
+
+\begin{frame}{Intuition}
+  Imagine four assets, all with CAPM beta = 1:
+  \begin{itemize}
+    \item \textbf{Asset A (Normal):} Standard joint Normal distribution. Expected return benchmark.
+    \item \textbf{Asset B ($\beta^N < \beta^P$):} Less correlated during market downturns. Desirable hedging property.
+    \begin{itemize}
+        \item \textbf{Predicted: Lower expected return} than Asset A.
+    \end{itemize}
+    \item \textbf{Asset C ($\beta^N > \beta^P$):} More correlated during market downturns. Undesirable from a mean-semivariance perspective.
+    \begin{itemize}
+        \item \textbf{Predicted: Higher expected return} than Asset A.
+    \end{itemize}
+    \item \textbf{Asset D ($\beta^N > \beta^P$, but $\beta^{M-} > \beta^{M+}$):} Also more correlated in downturns, but its mixed semicovariations offer superior hedging benefits (e.g., goes up more when market is down) compared to C.
+    \begin{itemize}
+        \item \textbf{Predicted: Lower expected return} than Asset C.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% Empirical Findings
+\begin{frame}{Pricing of Monthly Semibetas}
+  Key findings from Fama-MacBeth regressions using monthly semibetas:
+  \begin{itemize}
+    \item \textbf{$\beta^N$ (both negative): Associated with significantly higher subsequent returns.}
+    \begin{itemize}
+        \item Investors demand a premium for assets that fall when the market falls.
+    \end{itemize}
+    \item \textbf{$\beta^{M-}$ (market negative, asset positive): Associated with significantly lower subsequent returns.}
+    \begin{itemize}
+        \item Assets that hedge market downturns (go up when the market is down) offer lower returns. This $\beta^{M-}$ is defined with a negative sign, so a positive coefficient means lower returns. The paper states, ``stocks with higher $\beta^{M-}$ are associated with significantly lower subsequent daily returns".
+    \end{itemize}
+    \item $\beta^P$ (both positive) and $\beta^{M+}$ (market positive, asset negative) appear \textbf{unpriced}.
+    \item Results are robust to the inclusion of standard controls (size, B/M, momentum, IVOL, etc.).
+    \item Semibeta model shows higher cross-sectional $R^2$ than traditional CAPM.
+  \end{itemize}
+\end{frame}
+
+\section{Betting against beta}
+
+\subsection{Frazzini and Pedersen (2014)}
+
+\begin{frame}{Motivation: Leverage Constraints}
+  \begin{itemize}
+    \item Many investors, such as individuals, pension funds, and mutual funds, are \textbf{constrained in their use of leverage}.
+    \item To achieve higher target returns, these constrained investors may \textbf{overweight high-beta assets} instead of leveraging low-beta assets.
+    \item This behavior can lead to:
+        \begin{itemize}
+            \item High-beta assets becoming ``overpriced" (demanded by constrained investors), thus offering low alpha.
+            \item Low-beta assets being relatively ``underpriced," offering higher alpha if leverage could be applied.
+        \end{itemize}
+    \item The paper builds on and extends the work of Black (1972) on CAPM with restricted borrowing.
+  \end{itemize}
+\end{frame}
+
+% Theoretical Model Section
+\begin{frame}{The Model}
+  \begin{itemize}
+    \item The paper presents a model with \textbf{heterogeneous investors} facing varying leverage and margin constraints.
+    \item Some investors cannot use leverage, while others can but face margin requirements.
+    \item These constraints ($m_i$) affect portfolio choices:
+        \begin{itemize}
+            \item Constrained investors who seek higher returns tend to tilt their portfolios towards high-beta assets.
+            \item Unconstrained investors can exploit this by holding leveraged low-beta assets and shorting high-beta assets.
+        \end{itemize}
+    \item The model generates an equilibrium where funding constraints influence asset prices and lead to a \textbf{flatter SML}.
+    \item Key variable: $\psi_t$, the average Lagrange multiplier, measuring the tightness of funding constraints.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Key Propositions from the Model}
+  The model yields several empirically testable predictions:
+  \begin{enumerate}
+    \item \textbf{High beta is low alpha}:
+        \begin{itemize}
+            \item Alpha is inversely related to beta: $\alpha_s = \psi_t (1-\beta_s)$.
+            \item The SML is flatter; intercept is $r_f + \psi_t$.
+        \end{itemize}
+    \item \textbf{Positive expected return of BAB factor}:
+        \begin{itemize}
+            \item A ``Betting Against Beta" (BAB) factor, which is long leveraged low-beta assets and short de-leveraged high-beta assets (market-neutral), produces significant positive risk-adjusted returns.
+        \end{itemize}
+    \item \textbf{Funding shocks and BAB returns}:
+        \begin{itemize}
+            \item When funding constraints tighten (e.g., margin requirements increase), the contemporaneous return of the BAB factor is low, and its future required return increases.
+        \end{itemize}
+    \item \textbf{Beta compression}:
+        \begin{itemize}
+            \item Increased funding liquidity risk compresses betas of all securities toward one.
+        \end{itemize}
+    \item \textbf{Constrained investors hold riskier assets}:
+        \begin{itemize}
+            \item More constrained investors hold higher-beta assets in their portfolios.
+        \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Methods}
+    \begin{equation}
+\hat{\beta}_i^{TS}=\hat{\rho} \frac{\hat{\sigma}_i}{\hat{\sigma}_m}
+\end{equation}
+\begin{itemize}
+    \item a \textbf{one-year rolling standard deviation} for volatilities 
+    \item a \textbf{five-year horizon for the correlation} to account for the fact that correlations appear to move more slowly than volatilities.
+    \item one-day log returns to estimate volatilities
+    \item overlapping three-day log returns, $r_{i, t}^{3 d}=\sum_{k=0}^2 \ln \left(1+r_{t+k}^i\right)$, for correlation to control for nonsynchronous trading (which affects only correlations).
+\end{itemize}
+
+\begin{equation}
+\hat{\beta}_i=w_i \hat{\beta}_i^{T S}+\left(1-w_i\right) \hat{\beta}^{X S}
+\end{equation}
+Then shrink the time series estimate of beta $\hat{\beta}_i^{t s}$ toward the cross-sectional mean
+\end{frame}
+
+\begin{frame}{Following Literature}
+\begin{itemize}
+    \item Cederburg, Scott, and Michael S. O’Doherty, 2016, \textbf{Does it pay to bet against beta? On the conditional performance of the beta anomaly}, Journal of Finance 71, 737–774.
+    \item Asness, Cliff, Andrea Frazzini, Niels Joachim Gormsen, and Lasse Heje Pedersen, 2020, \textbf{Betting against correlation: Testing theories of the low-risk effect}, Journal of Financial Economics 135, 629–652.
+   \item Novy-Marx, Robert, and Mihail Velikov, 2022, \textbf{Betting against betting against beta}, Journal of Financial Economics 143, 80–106.
+\end{itemize}
+\end{frame}
+
+\section{Focus on Different Times or Different Types Stocks}
+
+\begin{frame}{Overview of Selected Papers}
+  \begin{itemize}
+    \item \textbf{Savor \& Wilson (2014):} Macroeconomic Announcement Days
+    \item \textbf{Hong \& Sraer (2016):} Speculative Betas and Disagreement
+    \item \textbf{Wang et al. (2017):} Reference-Dependent Preferences
+    \item \textbf{Hendershott et al. (2020):} Night vs. Day Returns
+    \item \textbf{Bodilsen et al. (2021):} FOMC Press Conferences
+    \item \textbf{Chan \& Marsh (2022):} Leading Earnings Announcement Days
+    \item \textbf{Huang et al. (2024):} Booms and Busts of Beta Arbitrage
+  \end{itemize}
+  \bigskip
+  \textbf{Common Thread:} The relationship between beta and returns is not static but varies systematically with market conditions, information flow, and investor behavior.
+\end{frame}
+
+\begin{frame}{Savor \& Wilson (2014): A Tale of Two Days}
+
+  \begin{itemize}
+    \item \textbf{Focus:} Examines asset price behavior on days with scheduled macroeconomic news announcements (e.g., inflation, unemployment, FOMC) versus other days.
+    \item \textbf{Key Findings:}
+    \begin{itemize}
+        \item Risky assets earn significantly higher average returns on announcement days (a-days).
+        \item On a-days, stock market beta is \textbf{strongly positively related} to average returns.
+        \item SML intercept is low/insignificant, slope close to market excess return on a-days.
+        \item On non-announcement days (n-days), beta is unrelated or negatively related to returns.
+    \end{itemize}
+    \item \textbf{Implication for CAPM:} CAPM appears to hold conditionally during periods of important, pre-scheduled macroeconomic information release.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Hong \& Sraer (2016): Speculative Betas}
+
+  \begin{itemize}
+    \item \textbf{Focus:} Impact of investor disagreement about market prospects, especially with short-sales constraints.
+    \item \textbf{Key Findings:}
+    \begin{itemize}
+        \item High-beta assets are more sensitive to aggregate disagreement, leading to greater divergence of opinion about their payoffs.
+        \item With short-sales constraints, optimists drive up prices of high-beta assets.
+        \item \textbf{High disagreement:} SML can be flat or even inverted (downward-sloping) due to overpricing of high-beta stocks.
+        \item \textbf{Low disagreement:} SML tends to be upward-sloping (risk-sharing dominates).
+    \end{itemize}
+    \item \textbf{Implication for CAPM:} Behavioral factors (disagreement) and market frictions (short-sale constraints) can significantly distort the SML.
+  \end{itemize}
+\end{frame}
+
+% --- Wang et al. (2017) ---
+\begin{frame}{Wang et al. (2017): Reference-Dependent Preferences}
+  \begin{itemize}
+    \item \textbf{Focus:} How prior gains or losses (Capital Gains Overhang - CGO) affect the risk-return relationship, motivated by prospect theory.
+    \item \textbf{Key Findings:}
+    \begin{itemize}
+        \item Among stocks with \textbf{high CGO} (investors in a gain position), the risk-return relation is \textbf{positive}.
+        \item Among stocks with \textbf{low CGO} (investors in a loss position), the risk-return relation is \textbf{negative}.
+        \item This holds for various risk measures (beta, volatility, idiosyncratic volatility).
+    \end{itemize}
+    \item \textbf{Implication for CAPM:} Investor psychology, specifically reference-dependent risk attitudes (risk-averse in gains, risk-seeking in losses), influences the observed SML.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Hendershott et al. (2020): A Tale of Night and Day}
+  \begin{itemize}
+    \item \textbf{Focus:} Differentiates between returns earned overnight (market closed) and during the trading day (market open).
+    \item \textbf{Key Findings:}
+    \begin{itemize}
+        \item \textbf{Overnight:} Stock returns are \textbf{positively related} to beta (CAPM-like).
+        \item \textbf{Trading Day:} Stock returns are \textbf{negatively related} to beta.
+        \item The implied risk-free rate also differs significantly between night and day.
+        \item Holds for US and international stocks, various portfolios.
+    \end{itemize}
+    \item \textbf{Implication for CAPM:} The failure of the 24-hour CAPM might be due to opposing SML slopes and different pricing regimes during trading vs. non-trading hours.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Bodilsen et al. (2021): FOMC Press Conferences}
+  \begin{itemize}
+    \item \textbf{Focus:} Differentiates FOMC announcement days \textit{with} a press conference (pc-days) from those \textit{without} (non-pc days) during 2011-2018.
+    \item \textbf{Key Findings:}
+    \begin{itemize}
+        \item On \textbf{pc-days}, excess stock returns are strongly and \textbf{positively related} to beta.
+        \item SML slope is positive and significant on pc-days.
+        \item On non-pc days (and non-announcement days), the SML is flat or insignificant.
+        \item Cross-sectional dispersion in betas declines substantially on pc-days.
+    \end{itemize}
+    \item \textbf{Implication for CAPM:} The \textit{way} information is communicated (not just the announcement itself) matters for asset pricing. PCs enhance the CAPM-like relationship.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Chan \& Marsh (2022): Earnings Announcement Days}
+  \begin{itemize}
+    \item \textbf{Focus:} Examines asset pricing on days when a cluster of influential S\&P 500 firms disclose quarterly earnings early in the season (LEADs).
+    \item \textbf{Key Findings:}
+    \begin{itemize}
+        \item On \textbf{LEADs}, market betas have a strong and \textbf{positive relation} with average stock returns.
+        \item SML intercept is insignificant on LEADs.
+        \item On days other than LEADs, the beta-return relation is flat or negative.
+        \item Market premium is significantly higher on LEADs.
+    \end{itemize}
+    \item \textbf{Implication for CAPM:} Concentrated, market-moving firm-specific news (early earnings from leaders) can create conditions where CAPM holds.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Huang et al. (2024): Booms and Busts of Beta Arbitrage}
+  \begin{itemize}
+    \item \textbf{Focus:} How arbitrage activity (measured by excess return comovement of beta-arbitrage stocks, CoBAR) affects the profitability and dynamics of beta-arbitrage strategies.
+    \item \textbf{Key Findings:}
+    \begin{itemize}
+        \item \textbf{High CoBAR (high arbitrage activity):}
+        \begin{itemize}
+            \item Short-term: SML slopes downward (low-beta strategy profitable).
+            \item Long-term (e.g., year 3): SML slopes upward (reversal, strategy loses money) $\implies$ overshooting.
+        \end{itemize}
+        \item \textbf{Low CoBAR (low arbitrage activity):}
+        \begin{itemize}
+            \item Short-term: SML weakly upward sloping.
+            \item Long-term: SML slopes downward (delayed correction).
+        \end{itemize}
+        \item Proposes a positive-feedback channel via firm leverage.
+    \end{itemize}
+    \item \textbf{Implication for CAPM:} Arbitrage activity itself creates dynamic patterns in the SML, leading to periods of apparent CAPM failure and correction/overcorrection.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Common Themes and Insights}
+  \begin{itemize}
+    \item \textbf{Conditional Validity of CAPM:} The unconditional CAPM generally fails, but beta appears to be priced positively under specific, identifiable conditions.
+    \item \textbf{Role of Information Flow:}
+    \begin{itemize}
+        \item CAPM performs better during periods of significant, market-wide information release (macro news, FOMC PCs, LEADs).
+        \item The \textit{nature} and \textit{intensity} of information (and its communication) matter.
+    \end{itemize}
+    \item \textbf{Investor Behavior and Market Frictions:}
+    \begin{itemize}
+        \item Disagreement (Hong \& Sraer) and reference-dependent preferences (Wang et al.) can significantly alter the SML.
+        \item Arbitrage activity and its limits (Huang et al.) lead to dynamic patterns, not always towards efficiency.
+    \end{itemize}
+    \item \textbf{Market Structure and Timing:}
+    \begin{itemize}
+        \item Pricing dynamics differ drastically between trading hours and overnight (Hendershott et al.).
+    \end{itemize}
+    \item \textbf{Beta is Not (Completely) Dead:} While not a universal explainer of returns, beta remains a relevant measure of risk, especially when conditioned on the right state variables.
+  \end{itemize}
+\end{frame}
+
+\section{Puzzles and Future Directions}
+
+\begin{frame}{Remaining Puzzles and Future Research}
+  \begin{itemize}
+    \item \textbf{Unifying Theory:} Is there an overarching framework that can explain \textit{why} these specific conditions (announcements, sentiment, CGO, time of day) matter for beta's pricing?
+    \item \textbf{Interaction Effects:} How do these different conditionalities interact? For example, do macro announcements during high disagreement periods show a different SML than during low disagreement?
+    \item \textbf{Mechanism Identification:}
+    \begin{itemize}
+        \item What are the precise micro-foundations? Changes in risk aversion, perceived risk, liquidity, attention, or arbitrage capital?
+        \item Why does beta compression occur on some announcement days (e.g., Bodilsen et al.)?
+    \end{itemize}
+    \item \textbf{Predictability and Arbitrage:}
+    \begin{itemize}
+        \item Can these conditional CAPM findings lead to robust, out-of-sample profitable trading strategies after accounting for transaction costs and implementation challenges?
+        \item How do sophisticated arbitrageurs respond to these predictable patterns (as partly addressed by Huang et al.)?
+    \end{itemize}
+    \item \textbf{International Evidence:} While some papers provide international evidence (e.g., Hendershott et al.), more is needed for other conditionalities.
+  \end{itemize}
+\end{frame}
+
+
+\end{document}

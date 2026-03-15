@@ -1,0 +1,1705 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{fontspec}
+\setsansfont{Calibri}[
+    Path=Font/,
+    Scale=0.9,
+    Extension = .ttf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic,
+    BoldItalicFont=*-BoldItalic
+    ]
+\usepackage{unicode-math}
+\setmathfont{Libertinus Math}% 使用默认的数学字体或你偏好的数学字体 Latin Modern Math/Libertinus Math
+% \setmathfont[version=bold]{Latin Modern Math}
+
+\usepackage{ragged2e}
+\justifying\let\raggedright\justifying %两端对齐
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Asset Pricing]{\textbf{Asset Pricing}} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\subtitle{6. Factor Zoo}
+
+\author[Cheng Hang]{Cheng Hang} % Your name
+\institute[DUFE] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{School of Fintech \\
+Dongbei University of Finance \& Economics \\ % Your institution for the title page
+\medskip
+\textbf{chenghangch@qq.com}% Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+	\AtBeginSection[]
+{
+	\begin{frame}{Content}
+		\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide] %这几个参数我也不知道该如何准确地解释，反正它们最终的效果是突出显示当前章节，而其它章节都进行了淡化处理
+		\addtocounter{framenumber}{-1}  %目录页不计算页码
+	\end{frame}
+}
+
+%----------------------------------------------------------------------------------------
+%	Begin
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+
+%--------------------------------------
+%	PRESENTATION SLIDES
+%--------------------------------------
+
+\section{The Factor Zoo Problem}
+
+\begin{frame}{``Factor Zoo"}
+	In his 2011 Presidential address to the American Finance Association, \href{https://onlinelibrary.wiley.com/doi/10.1111/j.1540-6261.2011.01671.x}{\textcolor{blue}{John Cochrane}}  asks three questions about what he describes as the “zoo” of new anomalies:
+	\begin{enumerate}
+		\item Which characteristics really provide independent information about average returns?
+		\item Does each new anomaly variable also correspond to a new factor formed on those same anomalies?
+		\item Do many of these new factors are really important (and can account for many
+		characteristics)?
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{The Proliferation of Factors: A Crisis?}
+    \textbf{\href{https://onlinelibrary.wiley.com/doi/10.1111/j.1540-6261.2011.01671.x}{\textcolor{blue}{Cochrane (2011)}} \textcolor{red}{Warning}:}
+    \begin{itemize}
+        \item ``A zoo of new factors"
+        \item Threatens coherent understanding of asset pricing
+        \item Calls for parsimony and economic interpretation
+    \end{itemize}
+
+    \textbf{The Explosion of Factors:}
+    \begin{itemize}
+        \item \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhv059}{Harvey, Liu, and Zhu (2016)}}: 316 factors documented in top journals
+        \item \textcolor{blue}{\href{https://academic.oup.com/rfs/article/30/12/4389/3091648}{Green, Hand, and Zhang (2017)}}: 94 characteristics with "independent" information
+        \item \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhy131}{Hou, Xue, and Zhang (2020)}}: Attempt to replicate 452 anomalies
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{The Statistical Crisis: Multiple Testing Problem}
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhv059}{Harvey, Liu, and Zhu (2016)}} "...and the Cross-Section of Expected Returns"}
+    
+    
+    \textbf{Key Findings:}
+    \begin{itemize}
+        \item 316 factors published across 313 top journal articles
+        \item Traditional t-stat threshold (1.96) is too low
+        \item Propose new hurdle: \textbf{t-stat $> 3.0$} for new discoveries
+        \item Most recently discovered factors fail this higher standard
+    \end{itemize}
+    
+    
+    \textbf{The Multiple Testing Problem:}
+    \begin{equation*}
+        \text{Prob}(\text{At least one false positive}) = 1 - (1-0.05)^{316} \approx 100\%
+    \end{equation*}
+    
+    \begin{itemize}
+        \item With 316 tests at 5\% level, expect 16 false discoveries
+        \item Publication bias: Only significant results get published
+        \item Bonferroni correction: Divide $\alpha$ by number of tests
+    \end{itemize}
+    
+    
+    \textbf{Implications:}
+    \begin{itemize}
+        \item Many ``significant" factors are likely spurious
+        \item Need higher standards for claiming new discoveries
+        \item Out-of-sample validation crucial
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Replication Crisis}
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhy131}{Hou, Xue, and Zhang (2020)}} ``Replicating Anomalies"}
+    
+    
+    \textbf{Research Design:}
+    \begin{itemize}
+        \item Attempt to replicate 452 anomalies from 447 studies
+        \item Use consistent methodology and data
+        \item Test both equal-weighted and value-weighted portfolios
+    \end{itemize}
+    
+    
+    \textbf{Shocking Results:}
+    \begin{itemize}
+        \item Only \textbf{64\%} significant at 5\% level (should be 95\%)
+        \item Only \textbf{42\%} significant in value-weighted portfolios
+        \item \textbf{85\%} driven by microcaps (smallest 20\% of firms)
+        \item Many anomalies disappear with slight methodology changes
+    \end{itemize}
+    
+    
+    \textbf{Reasons for Failure:}
+    \begin{enumerate}
+        \item \textbf{Microcap bias:} Many anomalies only work in illiquid stocks
+        \item \textbf{Data errors:} Mistakes in original implementation
+        \item \textbf{Specification choices:} Arbitrary decisions drive results
+        \item \textbf{Pure data mining:} Never real to begin with
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Post-Publication Decay}
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhw101}{McLean and Pontiff (2016)}} "Does Academic Research Destroy Predictability?"}
+    
+    
+    \textbf{Key Finding:}
+    \begin{itemize}
+        \item Anomaly returns decline by \textbf{26\%} (equal-weighted) after publication
+        \item \textbf{32\%} decline for microcaps
+        \item \textbf{58\%} decline for short legs of anomalies
+        \item Decay begins even before publication (working paper stage)
+    \end{itemize}
+    
+    
+    \textbf{Two Competing Explanations:}
+    \begin{enumerate}
+        \item \textbf{Arbitrage:} Sophisticated investors trade on published anomalies
+        \begin{itemize}
+            \item Partial decay suggests arbitrage is limited
+            \item Short-sale constraints bind for negative alphas
+        \end{itemize}
+        
+        \item \textbf{Data Mining:} In-sample overfitting inflates original results
+        \begin{itemize}
+            \item Out-of-sample returns closer to true magnitude
+            \item Publication bias exaggerates effect sizes
+        \end{itemize}
+    \end{enumerate}
+    
+    
+    \textbf{Evidence suggests BOTH mechanisms at work}
+\end{frame}
+
+\begin{frame}{Additional Statistical Issues}
+    \textbf{1. P-Hacking (\textcolor{blue}{\href{https://doi.org/10.1111/jofi.12530}{Harvey, 2017}}):}
+    \begin{itemize}
+        \item Researchers try multiple specifications until finding significance
+        \item File drawer problem: Negative results unpublished
+        \item Solution: Pre-registration of hypotheses and methods
+    \end{itemize}
+    
+    
+    \textbf{2. Data Snooping (\textcolor{blue}{\href{https://academic.oup.com/rfs/article/31/7/2606/4977829}{Linnainmaa and Roberts, 2018}}):}
+    \begin{itemize}
+        \item Same datasets used repeatedly across studies
+        \item Spurious patterns emerge from repeated testing
+        \item Need fresh, out-of-sample data
+    \end{itemize}
+    
+    
+    \textbf{3. Errors-in-Variables (\textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2019.02.010}{Jegadeesh et al., 2019}}):}
+    \begin{itemize}
+        \item Beta estimates contain measurement error
+        \item Traditional two-pass regressions biased
+        \item Propose instrumental variables approach
+        \item Find: Most factor risk premiums insignificant after controlling for characteristics
+    \end{itemize}
+\end{frame}
+
+\section{The Factor Wars: Competing Models}
+
+\begin{frame}{Evolution of Multi-Factor Models}
+    \begin{table}
+        \scriptsize
+        \begin{tabular}{p{3.5cm}p{6cm}}
+            \toprule
+            \textbf{Model} & \textbf{Factors} \\
+            \midrule
+            \textcolor{blue}{\href{https://doi.org/10.1016/0304-405X(93)90023-5}{Fama-French (1993)}} & Market, Size (SMB), Value (HML) \\[0.2cm]
+            \textcolor{blue}{\href{https://doi.org/10.1111/j.1540-6261.1997.tb03808.x}{Carhart (1997)}} & FF3 + Momentum (UMD) \\[0.2cm]
+            \textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2013.01.003}{Novy-Marx (2013)}} & Market, Size, Value, Profitability \\[0.2cm]
+            \textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2014.02.010}{Fama-French (2015)}} & Market, Size, Value, Profitability (RMW), Investment (CMA) \\[0.2cm]
+            \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhu068}{Hou, Xue, Zhang (2015)}} & Market, Size, Investment (I/A), Profitability (ROE) \\[0.2cm]
+            \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhw107}{Stambaugh-Yuan (2017)}} & Market, Size, Management (MGMT), Performance (PERF) \\[0.2cm]
+            \textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2018.02.012}{Fama-French (2018)}} & FF5 + Momentum (FF6) \\[0.2cm]
+            \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhz069}{Daniel et al. (2020)}} & Market, Financing, Post-earnings drift, Long/short-term contrarian \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    
+    \textit{From 3 factors (1993) to dozens of competing models (2020s)}
+\end{frame}
+
+\begin{frame}{Fama-French vs. Q-Factors: The Core Debate}
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rof/rfy032}{Hou, Mo, Xue, Zhang (2019)}} ``Which Factors?"}
+    
+    \textbf{Key Claims:}
+    \begin{enumerate}
+        \item \textbf{Spanning Tests:} Q-factor model subsumes FF5 and FF6
+        \begin{itemize}
+            \item FF factors have insignificant alphas vs. Q-factors
+            \item But Q-factors have significant alphas vs. FF
+        \end{itemize}
+        
+        \item \textbf{Construction Method Matters:}
+        \begin{itemize}
+            \item Stambaugh-Yuan MGMT and PERF are correlated 0.8+ with Q-factors
+            \item Once replicated with traditional methods, very similar
+            \item Differences driven by construction details, not economics
+        \end{itemize}
+        
+        \item \textbf{Theoretical Support:}
+        \begin{itemize}
+            \item Investment CAPM predicts investment-return relation
+            \item Valuation theory supports profitability effect
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Fama-French Response: Choosing factors \href{https://doi.org/10.1016/j.jfineco.2018.02.012}{\textcolor{blue}{(Fama and French, 2018)}}}
+
+    \begin{itemize}
+        \item Core Idea: The optimal model should maximize the squared Sharpe ratio ($Sh^{2}(f)$) of its factors.
+        \item Formula:
+        \begin{align*}
+        Sh^{2}(\alpha) = \sum_{i = 1}^{n}\frac{a_{i}^{2}}{\sigma_{i}^{2}} = a^{\prime}\Sigma^{-1}a
+        \end{align*}
+        where $a_{i}$ is the intercept, $\sigma_{i}$ is the residual standard deviation, and $\Sigma$ is the residual covariance matrix.
+        \item Minimization Objective: Model evaluation should minimize the squared Sharpe ratio ($Sh^{2}(a)$) of the intercept vector.
+        \item Model Selection: Select the model with the highest $Sh^{2}(f)$, that is, the model with the lowest $Sh^{2}(a)$.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Choosing factors: \href{https://doi.org/10.1016/j.jfineco.2018.02.012}{\textcolor{blue}{Fama and French (2018)}}}
+    \begin{itemize}
+\item Proposes using the \textbf{maximum squared Sharpe ratio} ($Sh^2(f)$) of model factors as a metric for ranking asset pricing models
+\item \textbf{Minimize unexplained average returns} (intercepts) across all assets
+\item Examines:
+\begin{itemize}
+\item Nested models: CAPM, 3-factor, 5-factor, 6-factor
+\item Non-nested variations addressing:
+\begin{enumerate}
+\item Cash vs. operating profitability
+\item Spread factors vs. excess returns
+\item Small stock vs. combined size factors
+\end{enumerate}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Choosing factors: \href{https://doi.org/10.1016/j.jfineco.2018.02.012}{\textcolor{blue}{Fama and French (2018)}}}
+\begin{itemize}
+\item \textbf{Nested models:} 6-factor model (adding momentum) performs best
+\item \textbf{Profitability:} Cash profitability ($RMW_c$) $\gg$ operating profitability ($RMW_o$) in $Sh^2 (f)$
+\item \textbf{Factor construction:}
+\begin{itemize}
+\item Small stock factors outperform combined size factors
+\item Best model: Mkt + SMB + small stock HML, RMWc, CMA, UMD
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\section{Model Selection: The Maximum Sharpe Ratio Criterion}
+
+\begin{frame}{The Model Selection Problem}
+    \textbf{The Challenge:}
+    \begin{itemize}
+        \item 316+ factors documented (Harvey et al., 2016)
+        \item Multiple competing models: FF5, FF6, Q-factors, behavioral factors
+        \item How to choose the "best" model?
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Traditional Approaches Have Problems:}
+    \begin{enumerate}
+        \item \textbf{GRS test:} Depends on choice of test assets
+        \item \textbf{Spanning tests:} Only work for nested models, often circular
+        \item \textbf{Information criteria (AIC/BIC):} Arbitrary penalties
+    \end{enumerate}
+    
+    \vspace{0.3cm}
+    \textbf{The Barillas-Shanken (2017, 2018) Solution:}
+    \begin{itemize}
+        \item Use \textbf{maximum squared Sharpe ratio} of factors
+        \item Theoretically grounded in SDF framework
+        \item Works for nested and non-nested models
+        \item Directly interpretable: Best risk-return tradeoff
+    \end{itemize}
+    
+    
+    \textit{Following: \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhx182}{Barillas and Shanken (2017)}}, \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhz089}{Barillas and Shanken (2018)}}}
+\end{frame}
+
+\section{Theoretical Foundation}
+
+\begin{frame}{Starting Point: The SDF Framework}
+    \textbf{Fundamental Pricing Equation:}
+    \begin{equation}\label{eq:sdf_basic}
+        E[m_{t+1} R_{i,t+1}] = 1 \quad \text{for all assets } i
+    \end{equation}
+    where $m_{t+1}$ is the stochastic discount factor (SDF)
+    
+    \vspace{0.3cm}
+    \textbf{For Excess Returns:}
+    \begin{equation}\label{eq:sdf_excess}
+        E[m_{t+1} R^e_{i,t+1}] = 0 \quad \text{for all } i
+    \end{equation}
+    
+    \vspace{0.3cm}
+    \textbf{Key Properties:}
+    \begin{itemize}
+        \item SDF $m$ is unique if markets complete
+        \item If incomplete, many valid SDFs exist
+        \item All valid SDFs lie in same \textit{SDF space}
+        \item Our goal: Find SDF that best prices assets
+    \end{itemize}
+    
+    
+    \textbf{Connection to Factor Models:}
+    \begin{itemize}
+        \item Linear factor model assumes $m = a + b' f$
+        \item Different factor sets $\rightarrow$ Different SDFs
+        \item Which factor set gives the "best" SDF?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Hansen-Jagannathan Distance}
+    \textbf{Measuring SDF Quality:}
+    
+    For a candidate SDF $m^*$, define the pricing error:
+    \begin{equation*}
+        e_i = E[m^* R^e_i] \neq 0 \quad \text{(if model wrong)}
+    \end{equation*}
+    
+    
+    \textbf{Hansen-Jagannathan (1997) Distance:}
+    \begin{equation}\label{eq:hj_distance}
+        HJ = \min_m \sqrt{E[(m - m^*)^2]} \quad \text{subject to } E[m R^e_i] = 0 \text{ for all } i
+    \end{equation}
+    
+    \begin{itemize}
+        \item Minimum distance from $m^*$ to set of valid SDFs
+        \item If $HJ = 0$, then $m^*$ prices all assets correctly
+        \item If $HJ > 0$, then $m^*$ has pricing errors
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Key Result (Hansen-Jagannathan, 1997):}
+    \begin{equation}\label{eq:hj_alpha}
+        HJ^2 = e' \Sigma^{-1} e = \alpha' \Sigma_\varepsilon^{-1} \alpha
+    \end{equation}
+    where $\alpha$ is vector of pricing errors (intercepts), $\Sigma_\varepsilon$ is residual covariance matrix
+    
+    
+    \textit{Minimizing HJ distance $\Leftrightarrow$ Minimizing weighted sum of squared alphas}
+\end{frame}
+
+\begin{frame}{The Hansen-Jagannathan Bound}
+    \textbf{The Fundamental Inequality:}
+    
+    For any SDF $m$ and any return $R^e$:
+    \begin{equation}\label{eq:hj_bound}
+        \frac{\sigma(m)}{E[m]} \geq \frac{|E[R^e]|}{\sigma(R^e)} = |SR(R^e)|
+    \end{equation}
+    
+    where $SR(R^e)$ is the Sharpe ratio of $R^e$
+    
+    \vspace{0.3cm}
+    \textbf{Proof Sketch:}
+    \begin{equation*}
+        \begin{aligned}
+            E[m R^e] &= 0 \quad \text{(fundamental equation)} \\
+            \Rightarrow \text{Cov}(m, R^e) &= -E[m] E[R^e] \\
+            \Rightarrow |\text{Cov}(m, R^e)| &= E[m] |E[R^e]| \\
+            \Rightarrow \sigma(m) \sigma(R^e) &\geq E[m] |E[R^e]| \quad \text{(Cauchy-Schwarz)} \\
+            \Rightarrow \frac{\sigma(m)}{E[m]} &\geq \frac{|E[R^e]|}{\sigma(R^e)}
+        \end{aligned}
+    \end{equation*}
+    
+    
+    \textbf{Economic Interpretation:}
+    \begin{itemize}
+        \item LHS: Volatility of SDF relative to its mean
+        \item RHS: Maximum Sharpe ratio achievable by any portfolio
+        \item Bound is tight: Equality holds for tangency portfolio
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Maximum Sharpe Ratio}
+    \textbf{Definition:}
+    
+    Consider all possible portfolios formed from assets. The \textbf{maximum squared Sharpe ratio} is:
+    \begin{equation}\label{eq:max_sr}
+        SR^2_{\max} = \max_w \frac{(w' \mu)^2}{w' \Sigma w}
+    \end{equation}
+    where $w$ is portfolio weights, $\mu = E[R^e]$ is expected excess returns, $\Sigma = \text{Var}(R^e)$
+    
+    \vspace{0.3cm}
+    \textbf{Solution (Mean-Variance Optimization):}
+    \begin{equation*}
+        SR^2_{\max} = \mu' \Sigma^{-1} \mu
+    \end{equation*}
+    
+    
+    \textbf{Connection to HJ Bound:}
+    \begin{itemize}
+        \item From HJ bound: $\frac{\sigma(m)}{E[m]} \geq SR_{\max}$
+        \item Equality holds when $m$ is in the mean-variance frontier
+        \item At equality: $\left(\frac{\sigma(m)}{E[m]}\right)^2 = SR^2_{\max} = \mu' \Sigma^{-1} \mu$
+    \end{itemize}
+    
+    
+    \textbf{Key Insight:}
+    \begin{itemize}
+        \item $SR^2_{\max}$ measures the "sharpness" of investment opportunities
+        \item Higher $SR^2_{\max}$ $\rightarrow$ Better risk-return tradeoffs available
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Linear Factor Models and the SDF}
+    \textbf{Factor Model Specification:}
+    \begin{equation}\label{eq:factor_model}
+        R^e_{i,t+1} = \alpha_i + \beta_i' f_{t+1} + \varepsilon_{i,t+1}
+    \end{equation}
+    
+    \textbf{Implied SDF (Linear):}
+    \begin{equation}\label{eq:sdf_linear}
+        m_{t+1} = a + b' f_{t+1}
+    \end{equation}
+    
+    
+    \textbf{Pricing Restriction:}
+    \begin{equation*}
+        E[m_{t+1} R^e_{i,t+1}] = 0 \quad \Rightarrow \quad E[R^e_i] = -\frac{b}{a} E[f] = \beta_i' \lambda
+    \end{equation*}
+    where $\lambda = E[f]$ is the vector of factor risk premiums
+    
+    \vspace{0.3cm}
+    \textbf{Key Properties:}
+    \begin{enumerate}
+        \item If $\alpha_i = 0$ for all $i$, model prices all assets correctly
+        \item SDF is determined by factor premiums: $m \propto 1 - \lambda' \Sigma_f^{-1} (f - E[f])$
+        \item Different factor sets $\rightarrow$ Different SDFs with different pricing accuracy
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{The Equivalence Theorem}
+    \textbf{Barillas-Shanken (2017) Key Result:}
+    
+    For \textit{traded} factors (portfolios), the following are equivalent:
+    
+    
+    \begin{theorem}
+    Let $f_A$ and $f_B$ be two sets of traded factors. Then:
+    \begin{equation}\label{eq:equivalence}
+        SR^2(f_A) > SR^2(f_B) \quad \Leftrightarrow \quad SR^2(\alpha_B | f_A) > SR^2(\alpha_A | f_B)
+    \end{equation}
+    \end{theorem}
+    
+    
+    \textbf{In Words:}
+    \begin{itemize}
+        \item Model A has higher factor Sharpe ratio than B
+        \item $\Leftrightarrow$ Model B's factors have larger alphas vs. A than vice versa
+        \item $\Leftrightarrow$ Model A explains B better than B explains A
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Implication:}
+    \begin{itemize}
+        \item Maximizing $SR^2(f)$ $\Leftrightarrow$ Minimizing $SR^2(\alpha)$ on test assets
+        \item Can rank models by either metric
+        \item For model selection: Choose model with highest $SR^2(f)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Proof of Equivalence (Part 1): Setup}
+    \textbf{Consider two factor models with traded factors:}
+    \begin{align*}
+        R^e_i &= \alpha_i^A + \beta_i^{A'} f_A + \varepsilon_i^A \\
+        R^e_i &= \alpha_i^B + \beta_i^{B'} f_B + \varepsilon_i^B
+    \end{align*}
+    
+    
+    \textbf{Squared Sharpe Ratios:}
+    \begin{align*}
+        SR^2(f_A) &= E[f_A]' \text{Var}(f_A)^{-1} E[f_A] = \mu_A' \Sigma_A^{-1} \mu_A \\
+        SR^2(f_B) &= E[f_B]' \text{Var}(f_B)^{-1} E[f_B] = \mu_B' \Sigma_B^{-1} \mu_B
+    \end{align*}
+    
+    
+    \textbf{Pricing Errors on Test Assets:}
+    \begin{align*}
+        SR^2(\alpha^A) &= \alpha^{A'} \Sigma_{\varepsilon^A}^{-1} \alpha^A \\
+        SR^2(\alpha^B) &= \alpha^{B'} \Sigma_{\varepsilon^B}^{-1} \alpha^B
+    \end{align*}
+    
+    
+    \textbf{Goal:} Show that $SR^2(f_A) > SR^2(f_B) \Leftrightarrow SR^2(\alpha^A) < SR^2(\alpha^B)$
+\end{frame}
+
+\begin{frame}{Proof of Equivalence (Part 2): Key Step}
+    \textbf{Spanning Regression:}
+    
+    Since factors are traded, we can regress one set on the other:
+    \begin{equation}\label{eq:spanning}
+        f_B = \alpha_{BA} + \Gamma f_A + u
+    \end{equation}
+    
+    where $\alpha_{BA}$ are alphas of model B's factors vs. model A
+    
+    \vspace{0.3cm}
+    \textbf{Decomposition of Sharpe Ratios:}
+    
+    By orthogonality of $f_A$ and $u$:
+    \begin{equation}\label{eq:decomposition}
+        SR^2(f_B) = SR^2(f_A) + SR^2(\alpha_{BA} | f_A)
+    \end{equation}
+    
+    
+    \textbf{Interpretation:}
+    \begin{itemize}
+        \item $SR^2(f_B)$: Total Sharpe ratio of model B factors
+        \item $SR^2(f_A)$: Component explained by model A factors
+        \item $SR^2(\alpha_{BA} | f_A)$: \textit{Incremental} Sharpe ratio beyond A
+    \end{itemize}
+    
+    
+    \textit{This decomposition is the key to the equivalence}
+\end{frame}
+
+\begin{frame}{Proof of Equivalence (Part 3): Conclusion}
+    \textbf{From the Decomposition:}
+    \begin{equation*}
+        SR^2(f_B) - SR^2(f_A) = SR^2(\alpha_{BA} | f_A)
+    \end{equation*}
+    
+    Similarly:
+    \begin{equation*}
+        SR^2(f_A) - SR^2(f_B) = SR^2(\alpha_{AB} | f_B)
+    \end{equation*}
+    
+    \vspace{0.3cm}
+    \textbf{Therefore:}
+    \begin{equation*}
+        SR^2(f_A) > SR^2(f_B) \quad \Leftrightarrow \quad SR^2(\alpha_{BA} | f_A) > 0
+    \end{equation*}
+    
+    
+    \textbf{Economic Interpretation:}
+    \begin{itemize}
+        \item Model A dominates B if and only if:
+        \begin{itemize}
+            \item B's factors have significant alphas vs. A, OR
+            \item A's factors subsume B's factors
+        \end{itemize}
+        \item Can test by either:
+        \begin{itemize}
+            \item Computing factor Sharpe ratios, OR
+            \item Running spanning regressions
+        \end{itemize}
+    \end{itemize}
+    
+    
+    \textit{This proves the equivalence for traded factors}
+\end{frame}
+
+\begin{frame}{Extension to Pricing Test Assets}
+    \textbf{From Factors to Alphas:}
+    
+    \textbf{Key Insight (Gibbons-Ross-Shanken, 1989):}
+    
+    For test assets $R^e$ and factors $f$:
+    \begin{equation}\label{eq:grs}
+        SR^2_{\max}(R^e, f) = SR^2(f) + SR^2(\alpha)
+    \end{equation}
+    
+    where:
+    \begin{itemize}
+        \item $SR^2_{\max}(R^e, f)$: Maximum Sharpe ratio from combining test assets and factors
+        \item $SR^2(f)$: Sharpe ratio of factors alone
+        \item $SR^2(\alpha) = \alpha' \Sigma_\varepsilon^{-1} \alpha$: Sharpe ratio of pricing errors
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Rearranging:}
+    \begin{equation}\label{eq:alpha_sr}
+        SR^2(\alpha) = SR^2_{\max}(R^e, f) - SR^2(f)
+    \end{equation}
+    
+    
+    \textbf{Interpretation:}
+    \begin{itemize}
+        \item $SR^2(\alpha)$ measures how much test assets add to Sharpe ratio
+        \item If factors span test assets: $\alpha = 0 \Rightarrow SR^2(\alpha) = 0$
+        \item If factors don't span: $SR^2(\alpha) > 0$ $\rightarrow$ Pricing errors
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{The Model Selection Criterion}
+    \textbf{Putting It All Together:}
+    
+    Given test assets $R^e$ with maximum achievable Sharpe ratio $SR^2_{\max}$:
+    \begin{equation*}
+        SR^2(\alpha) = SR^2_{\max} - SR^2(f)
+    \end{equation*}
+    
+    \vspace{0.3cm}
+    \textbf{Decision Rule:}
+    \begin{center}
+        \fbox{\parbox{0.85\textwidth}{
+        \textbf{Choose the model that maximizes $SR^2(f)$}
+        
+        \vspace{0.1cm}
+        Equivalently: Minimize $SR^2(\alpha)$
+        
+        \vspace{0.1cm}
+        This gives the smallest pricing errors on test assets
+        }}
+    \end{center}
+    
+    \vspace{0.3cm}
+    \textbf{Why This Works:}
+    \begin{enumerate}
+        \item Maximizing $SR^2(f)$ gets closest to $SR^2_{\max}$
+        \item Leaves least "room" for unexplained returns (alphas)
+        \item Minimizes Hansen-Jagannathan distance
+        \item Finds SDF that best prices assets
+    \end{enumerate}
+    
+    
+    \textbf{Advantages:}
+    \begin{itemize}
+        \item Works for nested and non-nested models
+        \item Clear economic interpretation
+        \item Straightforward to compute
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Mathematics: Formal Statement}
+    \textbf{Theorem (Barillas-Shanken, 2018):}
+    
+    
+    Let $\mathcal{F}_A$ and $\mathcal{F}_B$ be two candidate factor models with traded factors. Define:
+    
+    \begin{itemize}
+        \item $\theta_A^2 = SR^2(f_A) = \mu_A' \Sigma_A^{-1} \mu_A$
+        \item $\theta_B^2 = SR^2(f_B) = \mu_B' \Sigma_B^{-1} \mu_B$
+        \item $\psi_A^2 = SR^2(\alpha^A) = \alpha^{A'} \Sigma_{\varepsilon^A}^{-1} \alpha^A$
+        \item $\psi_B^2 = SR^2(\alpha^B) = \alpha^{B'} \Sigma_{\varepsilon^B}^{-1} \alpha^B$
+    \end{itemize}
+    
+    
+    Then:
+    \begin{equation}\label{eq:theorem}
+        \boxed{
+        \theta_A^2 > \theta_B^2 \quad \Leftrightarrow \quad \psi_A^2 < \psi_B^2
+        }
+    \end{equation}
+    
+    
+    \textbf{Moreover:}
+    \begin{equation*}
+        \theta_A^2 - \theta_B^2 = \psi_B^2 - \psi_A^2
+    \end{equation*}
+    
+    
+    \textit{The gain in factor Sharpe ratio exactly equals the reduction in pricing error Sharpe ratio}
+\end{frame}
+
+\begin{frame}{Numerical Example}
+    \textbf{Suppose we compare two models:}
+    
+    
+    \textbf{Model A (FF5):} $f_A = \{\text{Mkt}, \text{SMB}, \text{HML}, \text{RMW}, \text{CMA}\}$
+    \begin{itemize}
+        \item $SR^2(f_A) = 0.45$
+    \end{itemize}
+    
+    \textbf{Model B (FF6):} $f_B = \{\text{Mkt}, \text{SMB}, \text{HML}, \text{RMW}, \text{CMA}, \text{UMD}\}$
+    \begin{itemize}
+        \item $SR^2(f_B) = 0.58$
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Test on 25 size-value portfolios:}
+    \begin{itemize}
+        \item Model A pricing errors: $SR^2(\alpha^A) = 0.25$
+        \item Model B pricing errors: $SR^2(\alpha^B) = 0.12$
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Verification of Equivalence:}
+    \begin{align*}
+        SR^2(f_B) - SR^2(f_A) &= 0.58 - 0.45 = 0.13 \\
+        SR^2(\alpha^A) - SR^2(\alpha^B) &= 0.25 - 0.12 = 0.13 \quad \checkmark
+    \end{align*}
+    
+    
+    \textbf{Conclusion:} Model B (FF6) is superior $\rightarrow$ Adding momentum improves model
+\end{frame}
+
+\begin{frame}{Why Squared Sharpe Ratio? (Not Just Sharpe Ratio)}
+    \textbf{Mathematical Reasons:}
+    
+    
+    \begin{enumerate}
+        \item \textbf{Additive Decomposition:}
+        \begin{equation*}
+            SR^2(f_A, f_B) = SR^2(f_A) + SR^2(\alpha_B | f_A)
+        \end{equation*}
+        Only works for \textit{squared} Sharpe ratios, not levels
+        
+        \item \textbf{Quadratic Forms:}
+        \begin{equation*}
+            SR^2 = \mu' \Sigma^{-1} \mu
+        \end{equation*}
+        Natural quadratic form appears in mean-variance optimization
+        
+        \item \textbf{Chi-squared Distributions:}
+        \begin{equation*}
+            T \cdot SR^2 \sim \chi^2_k \quad \text{asymptotically}
+        \end{equation*}
+        Enables straightforward hypothesis testing
+    \end{enumerate}
+    
+    \vspace{0.3cm}
+    \textbf{Economic Interpretation:}
+    \begin{itemize}
+        \item $SR^2$ measures \textit{curvature} of mean-variance frontier
+        \item Higher curvature $\rightarrow$ Better investment opportunities
+        \item Related to maximum expected utility gain
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Connection to GRS Test}
+    \textbf{Gibbons-Ross-Shanken (1989) Test:}
+    
+    Test $H_0: \alpha = 0$ using:
+    \begin{equation}\label{eq:grs_test}
+        GRS = \frac{T-N-K}{N} \cdot \frac{1}{1 + SR^2(f)} \cdot \alpha' \Sigma_\varepsilon^{-1} \alpha \sim F_{N, T-N-K}
+    \end{equation}
+    
+    where $T$ = time periods, $N$ = test assets, $K$ = factors
+    
+    \vspace{0.3cm}
+    \textbf{Relationship to $SR^2(\alpha)$:}
+    \begin{equation*}
+        GRS \propto SR^2(\alpha) = \alpha' \Sigma_\varepsilon^{-1} \alpha
+    \end{equation*}
+    
+    
+    \textbf{Key Insights:}
+    \begin{enumerate}
+        \item GRS test statistic directly related to $SR^2(\alpha)$
+        \item Minimizing $SR^2(\alpha)$ $\Rightarrow$ Lower GRS statistic
+        \item Maximum $SR^2(f)$ criterion consistent with GRS testing
+        \item But: $SR^2$ criterion doesn't depend on choice of $N$ test assets
+    \end{enumerate}
+    
+    
+    \textit{The Sharpe ratio criterion generalizes GRS to model comparison}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Bayesian Interpretation}
+    \textbf{Barillas-Shanken (2018) Bayesian Extension:}
+
+    \textbf{Model Posterior Probability:}
+    \begin{equation}\label{eq:bayesian}
+        P(\mathcal{M}_A | \text{data}) \propto P(\text{data} | \mathcal{M}_A) \cdot P(\mathcal{M}_A)
+    \end{equation}
+    
+    \textbf{Key Result:}
+    
+    Under diffuse priors, the Bayes factor comparing models A and B is:
+    \begin{equation*}
+        \frac{P(\text{data} | \mathcal{M}_A)}{P(\text{data} | \mathcal{M}_B)} \approx \left(\frac{1 + SR^2(f_B)}{1 + SR^2(f_A)}\right)^{T/2} \cdot \text{(complexity penalty)}
+    \end{equation*}
+    
+    \vspace{0.3cm}
+    \textbf{Interpretation:}
+    \begin{itemize}
+        \item Higher $SR^2(f)$ increases model likelihood
+        \item But: Penalized by number of factors (parsimony)
+        \item Trade-off between fit and complexity
+        \item Simpler models preferred if $SR^2$ similar
+    \end{itemize}
+    
+    \textbf{Practical Implication:}
+    \begin{itemize}
+        \item Don't just maximize $SR^2(f)$ blindly
+        \item Consider model complexity
+        \item Substantial $SR^2$ improvement needed to justify additional factors
+    \end{itemize}
+\end{frame}
+
+\section{Fama-French (2018) Implementation}
+
+\begin{frame}{FF (2018): Applying the Sharpe Ratio Criterion}
+    \textbf{Research Design:}
+    
+    
+    \textbf{1. Models Compared:}
+    \begin{itemize}
+        \item \textbf{Nested:} CAPM, FF3, FF5, FF6 (adding momentum)
+        \item \textbf{Non-nested variations:}
+        \begin{itemize}
+            \item Operating vs. cash profitability ($\text{RMW}_o$ vs. $\text{RMW}_c$)
+            \item Spread factors vs. excess returns
+            \item Small-stock vs. combined size factors
+        \end{itemize}
+    \end{itemize}
+    
+    
+    \textbf{2. Compute $SR^2(f)$ for Each Model:}
+    \begin{equation*}
+        SR^2(f) = \hat{\mu}_f' \hat{\Sigma}_f^{-1} \hat{\mu}_f
+    \end{equation*}
+    using sample estimates $\hat{\mu}_f = \bar{f}$, $\hat{\Sigma}_f = \text{sample covariance}$
+    
+    
+    \textbf{3. Rank Models by $SR^2(f)$:}
+    \begin{itemize}
+        \item Higher $SR^2$ $\rightarrow$ Better model
+        \item Check if differences statistically significant
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{FF (2018): Main Results}
+    \textbf{Nested Model Comparison (Table 1 in paper):}
+    
+    
+    \begin{table}
+        \small
+        \begin{tabular}{lcc}
+            \toprule
+            \textbf{Model} & \textbf{$SR^2(f)$} & \textbf{$\Delta SR^2$} \\
+            \midrule
+            CAPM & 0.14 & --- \\
+            FF3 & 0.32 & +0.18 \\
+            FF5 & 0.39 & +0.07 \\
+            FF6 & 0.52 & +0.13 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    \vspace{0.3cm}
+    \textbf{Interpretation:}
+    \begin{itemize}
+        \item Each nested extension improves $SR^2(f)$
+        \item Momentum (UMD) adds substantial value: $\Delta SR^2 = 0.13$
+        \item FF6 is best among nested models
+    \end{itemize}
+    
+    
+    \textbf{Statistical Significance:}
+    \begin{itemize}
+        \item Use spanning regressions to test differences
+        \item Momentum has significant alpha vs. FF5: $t > 3$
+        \item Conclusion: Momentum is not subsumed by FF5
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{FF (2018): Non-Nested Comparisons}
+    \textbf{Cash vs. Operating Profitability:}
+    
+    
+    \begin{table}
+        \small
+        \begin{tabular}{lc}
+            \toprule
+            \textbf{Model} & \textbf{$SR^2(f)$} \\
+            \midrule
+            FF5 with $\text{RMW}_o$ (operating) & 0.39 \\
+            FF5 with $\text{RMW}_c$ (cash) & 0.47 \\
+            \midrule
+            Difference & +0.08 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    
+    \textbf{Finding:} Cash profitability substantially outperforms operating profitability
+    
+    \vspace{0.3cm}
+    \textbf{Small-Stock vs. Combined Factors:}
+    \begin{itemize}
+        \item \textbf{Combined:} Single HML, RMW, CMA across all size groups
+        \item \textbf{Small-stock:} Separate factors for small firms only
+        \item Result: Small-stock factors have higher $SR^2$ by 0.05
+    \end{itemize}
+    
+    
+    \textbf{Best Overall Model:}
+    \begin{itemize}
+        \item Market + SMB + Small-stock $\text{HML}_c$, $\text{RMW}_c$, CMA + UMD
+        \item $SR^2(f) = 0.55$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Practical Implementation: Step-by-Step}
+    \textbf{How to Apply the Sharpe Ratio Criterion:}
+    
+    
+    \textbf{Step 1: Compute Sample Moments}
+    \begin{itemize}
+        \item Mean factor returns: $\hat{\mu}_f = \frac{1}{T} \sum_{t=1}^T f_t$
+        \item Factor covariance: $\hat{\Sigma}_f = \frac{1}{T-1} \sum_{t=1}^T (f_t - \hat{\mu}_f)(f_t - \hat{\mu}_f)'$
+    \end{itemize}
+    
+    
+    \textbf{Step 2: Compute $SR^2(f)$}
+    \begin{equation*}
+        \widehat{SR^2}(f) = \hat{\mu}_f' \hat{\Sigma}_f^{-1} \hat{\mu}_f
+    \end{equation*}
+    
+    
+    \textbf{Step 3: Compare Across Models}
+    \begin{itemize}
+        \item Rank by $\widehat{SR^2}(f)$
+        \item Test significance via spanning regressions
+    \end{itemize}
+    
+    
+    \textbf{Step 4: Verify with Test Assets (Optional)}
+    \begin{itemize}
+        \item Regress test portfolios on factors
+        \item Compute $\widehat{SR^2}(\alpha) = \hat{\alpha}' \hat{\Sigma}_\varepsilon^{-1} \hat{\alpha}$
+        \item Verify: Higher $SR^2(f)$ $\Leftrightarrow$ Lower $SR^2(\alpha)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Advantages and Limitations}
+    \textbf{Advantages of $SR^2$ Criterion:}
+    
+    
+    \begin{enumerate}
+        \item \textbf{Theoretically grounded:} Based on SDF/mean-variance theory
+        \item \textbf{General:} Works for nested and non-nested models
+        \item \textbf{Interpretable:} Measures risk-return efficiency
+        \item \textbf{Asset-independent:} Doesn't depend on choice of test portfolios
+        \item \textbf{Consistent:} Equivalent to minimizing pricing errors
+    \end{enumerate}
+    
+    \vspace{0.3cm}
+    \textbf{Limitations:}
+    
+    
+    \begin{enumerate}
+        \item \textbf{Requires traded factors:} Non-traded factors need different treatment
+        \item \textbf{Sample uncertainty:} $\widehat{SR^2}$ has large standard errors
+        \item \textbf{No complexity penalty:} Unlike Bayesian approach
+        \item \textbf{Mean-variance framework:} Assumes quadratic utility/normal returns
+        \item \textbf{Ignores factor interpretability:} Focuses only on statistical fit
+    \end{enumerate}
+    
+    
+    \textbf{Best Practice:}
+    \begin{itemize}
+        \item Use $SR^2$ as primary criterion
+        \item But also consider: Economic interpretation, parsimony, robustness
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary: Why Maximum Sharpe Ratio Works}
+    \textbf{The Logic Chain:}
+    
+    
+    \begin{enumerate}
+        \item Assets must be priced by some SDF: $E[m R^e] = 0$
+        
+        \item Hansen-Jagannathan bound: $\frac{\sigma(m)}{E[m]} \geq SR_{\max}$
+        
+        \item Equality holds for mean-variance efficient SDF
+        
+        \item Linear factor models imply specific SDF: $m = a + b' f$
+        
+        \item Better factors $\rightarrow$ Higher $SR^2(f)$ $\rightarrow$ SDF closer to efficient frontier
+        
+        \item By GRS decomposition: $SR^2_{\max} = SR^2(f) + SR^2(\alpha)$
+        
+        \item Therefore: $\max SR^2(f) \Leftrightarrow \min SR^2(\alpha)$
+        
+        \item Conclusion: Choose model with highest factor Sharpe ratio
+    \end{enumerate}
+    
+    \vspace{0.3cm}
+    \textbf{Bottom Line:}
+    \begin{itemize}
+        \item Maximizing $SR^2(f)$ finds factors that best approximate true SDF
+        \item Minimizes unexplained returns (pricing errors)
+        \item Provides clear, economically interpretable ranking of models
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Verdict: No Clear Winner}
+    \textbf{Cross-Model Comparisons:}
+    
+    \begin{table}
+        \footnotesize
+        \begin{tabular}{p{3cm}|p{2.5cm}|p{2.5cm}}
+            \hline
+            \textbf{Criterion} & \textbf{Winner} & \textbf{Source} \\
+            \hline
+            Squared Sharpe ratio & FF6 & Fama-French (2018) \\
+            Spanning tests & Q-factors & Hou et al. (2019) \\
+            Anomaly alphas & Mixed & Multiple studies \\
+            Bayesian posterior & Simpler models & Barillas-Shanken (2018) \\
+            \hline
+        \end{tabular}
+    \end{table}
+    
+    
+    \textbf{Why No Consensus?}
+    \begin{enumerate}
+        \item \textbf{Test asset dependence:} Different results for different portfolios
+        \item \textbf{Sample period sensitivity:} 1960s vs. recent decades
+        \item \textbf{Weighting schemes:} Equal-weighted vs. value-weighted
+        \item \textbf{Microcap effects:} Include or exclude smallest stocks?
+        \item \textbf{Factor construction:} Breakpoints, rebalancing frequency matter
+    \end{enumerate}
+    
+    
+    \textbf{Practical Implications:}
+    \begin{itemize}
+        \item Report results for multiple models
+        \item Be transparent about robustness (or lack thereof)
+        \item Consider economic mechanism, not just $R^2$
+    \end{itemize}
+\end{frame}
+
+\section{New Methodologies and Solutions}
+
+\begin{frame}{Machine Learning Approaches}
+    \textbf{The Promise: Handle High Dimensions}
+    \begin{itemize}
+        \item Traditional methods break down with 100+ characteristics
+        \item ML techniques designed for $p \gg n$ problems
+        \item Can capture non-linearities and interactions
+    \end{itemize}
+    
+    
+    \textbf{1. IPCA: Instrumented Principal Component Analysis}
+    
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2019.05.001}{Kelly, Pruitt, and Su (2019)}}}
+    \begin{itemize}
+        \item Allow factor loadings to vary with firm characteristics
+        \item $r_{it} = \beta_{it}' f_t + \varepsilon_{it}$, where $\beta_{it} = \Gamma' z_{it}$
+        \item Use PCA to extract latent factors with time-varying loadings
+        \item Characteristics instrument for unobservable risk exposures
+    \end{itemize}
+    
+    
+    \textbf{Key Result:}
+    \begin{itemize}
+        \item Finds 5 latent factors explain most of cross-section
+        \item If characteristics capture risk, IPCA should work well
+        \item Outperforms fixed-loading models (FF5, Q-factors)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Machine Learning Approaches (cont.)}
+    \textbf{2. LASSO and Regularization Methods}
+    
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1111/jofi.12883}{Feng, Giglio, and Xiu (2020)}} ``Taming the Factor Zoo"}
+    \begin{itemize}
+        \item Apply three-pass regression filter (3PRF) with LASSO
+        \item \textbf{Pass 1:} Time-series regressions to estimate loadings
+        \item \textbf{Pass 2:} Cross-sectional regressions with LASSO penalty
+        \begin{equation*}
+            \min_{\lambda} \sum_{t=1}^T (r_t - \beta_t \lambda)' (r_t - \beta_t \lambda) + \eta ||\lambda||_1
+        \end{equation*}
+        \item \textbf{Pass 3:} Re-estimate without penalty on selected factors
+    \end{itemize}
+    
+    
+    \textbf{Key Findings:}
+    \begin{itemize}
+        \item Of 150+ factors, LASSO selects only 10-15 as relevant
+        \item Selected factors change over time (adaptive)
+        \item Out-of-sample $R^2$ higher than kitchen-sink models
+    \end{itemize}
+    
+    
+    \textbf{3. Other ML Methods:}
+    \begin{itemize}
+        \item \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhaa009}{Gu, Kelly, and Xiu (2020)}}: Neural networks
+        \item Random forests for non-linear interactions
+        \item Elastic net (LASSO + Ridge)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Testing for Omitted Factors}
+    \textbf{The Residual Structure Test:}
+    
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1016/j.jeconom.2019.06.001}{Gagliardini, Ossola, and Scaillet (2019)}}}
+    
+    
+    \textbf{Core Idea:}
+    \begin{itemize}
+        \item If model is complete, residuals should have no factor structure
+        \item Test by examining eigenvalues of residual covariance matrix
+        \item Large eigenvalues $\rightarrow$ Missing common factors
+    \end{itemize}
+    
+    
+    \textbf{Test Statistic:}
+    \begin{equation*}
+        \text{Eigenvalue ratio} = \frac{\lambda_{\max}(\hat{\Sigma}_\varepsilon)}{\text{trace}(\hat{\Sigma}_\varepsilon)/n}
+    \end{equation*}
+    
+    \begin{itemize}
+        \item Under null (no omitted factors): Ratio bounded
+        \item Under alternative: Ratio diverges as $n \to \infty$
+    \end{itemize}
+    
+    
+    \textbf{Application:}
+    \begin{itemize}
+        \item FF5: \textbf{Reject} null, missing factors remain
+        \item Q-factor: \textbf{Reject} null as well
+        \item Adding more factors reduces but doesn't eliminate residual structure
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{SDF-Based Approaches}
+    \textbf{The Fundamental Pricing Equation:}
+    \begin{equation*}
+        E[m_{t+1} R_{t+1}] = 1 \quad \text{for all returns } R
+    \end{equation*}
+    
+    \textbf{Hansen-Jagannathan Bound:}
+    \begin{equation*}
+        \frac{\sigma(m)}{E[m]} \geq \frac{|E[R^e]|}{\sigma(R^e)} = \text{Sharpe ratio}
+    \end{equation*}
+    
+    
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1086/714090}{Giglio and Xiu (2021)}} ``Asset Pricing with Omitted Factors"}
+    \begin{itemize}
+        \item Estimate risk premiums when some factors unobserved
+        \item Use three-pass regression with bias correction
+        \item Recover SDF even with incomplete factor set
+    \end{itemize}
+    
+    
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhaa111}{Giglio, Liao, and Xiu (2020)}} ``Thousands of Alphas"}
+    \begin{itemize}
+        \item Test thousands of anomalies simultaneously
+        \item Control for data mining using latent factor structure
+        \item Find: Few anomalies survive after proper controls
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Accounting for Measurement Error}
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2019.02.010}{Jegadeesh, Noh, Pukthuanthong, Roll, Wang (2019)}}}
+    
+    
+    \textbf{The EIV Problem in Asset Pricing:}
+    \begin{itemize}
+        \item Factor betas estimated with error: $\hat{\beta} = \beta + \eta$
+        \item Standard two-pass regression: $r_i = \lambda_0 + \lambda' \hat{\beta}_i + \varepsilon_i$
+        \item EIV bias: $\hat{\lambda}$ attenuated toward zero
+    \end{itemize}
+    
+    
+    \textbf{Instrumental Variables Solution:}
+    \begin{itemize}
+        \item Use characteristics as instruments for betas
+        \item Characteristics correlated with true betas but not measurement error
+        \item Two-stage least squares (2SLS) estimation
+    \end{itemize}
+    
+    
+    \textbf{Shocking Result:}
+    \begin{itemize}
+        \item After correcting for EIV bias:
+        \begin{itemize}
+            \item CAPM market premium: \textbf{Insignificant}
+            \item FF3 factor premiums: \textbf{Mostly insignificant}
+            \item FF5 factor premiums: \textbf{Insignificant}
+        \end{itemize}
+        \item But characteristics still predict returns strongly
+        \item Interpretation: Characteristics matter, not covariances (again!)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Characteristics Response}
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhaa018}{Chordia, Goyal, and Saretto (2020)}} and \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhz089}{Fama and French (2020)}}}
+    
+    
+    \textbf{Pushback Against Jegadeesh et al. (2019):}
+    \begin{enumerate}
+        \item \textbf{Characteristics naturally predict better:}
+        \begin{itemize}
+            \item Characteristics measured precisely
+            \item Betas estimated with large standard errors
+            \item Of course characteristics win in horse races
+        \end{itemize}
+        
+        \item \textbf{Doesn't prove mispricing:}
+        \begin{itemize}
+            \item Characteristics could still proxy for risk
+            \item Through time-varying exposures
+            \item Or non-linear factor loadings
+        \end{itemize}
+        
+        \item \textbf{Economic interpretation:}
+        \begin{itemize}
+            \item Small firms have high betas $\rightarrow$ High risk $\rightarrow$ High returns
+            \item But characteristic (size) more stable than beta estimates
+            \item Use characteristic as better proxy for risk
+        \end{itemize}
+    \end{enumerate}
+    
+    
+    \textbf{Bottom Line:}
+    \begin{itemize}
+        \item Debate unresolved
+        \item Both sides make valid points
+        \item May be impossible to definitively separate risk from mispricing
+    \end{itemize}
+\end{frame}
+
+\section{Recent Developments (2020-2025)}
+
+\begin{frame}{Transaction Costs and Tradability}
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rof/rfae034}{Johansson, Sabbatucci, and Tamoni (2025)}} ``Tradable Factor Risk Premia"}
+    
+    
+    \textbf{The Tradability Problem:}
+    \begin{itemize}
+        \item Most factor portfolios have high turnover
+        \item Transaction costs eat into returns
+        \item Many anomalies unprofitable net of costs
+    \end{itemize}
+    
+    
+    \textbf{Key Innovations:}
+    \begin{enumerate}
+        \item \textbf{Construct low-turnover factor portfolios:}
+        \begin{itemize}
+            \item Use coarser sorts (quintiles instead of deciles)
+            \item Rebalance quarterly instead of monthly
+            \item Skip small buffer zones around breakpoints
+        \end{itemize}
+        
+        \item \textbf{Estimate realistic transaction costs:}
+        \begin{itemize}
+            \item Bid-ask spreads from CRSP
+            \item Price impact from trade sizes
+            \item Different costs for institutional vs. retail
+        \end{itemize}
+        
+        \item \textbf{Net return factors:}
+        \begin{itemize}
+            \item Gross return minus transaction costs
+            \item More realistic for practical implementation
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Tradable Factors: Main Results}
+    \textbf{Findings (Johansson et al., 2025):}
+    
+    
+    \begin{enumerate}
+        \item \textbf{Microcap anomalies disappear:}
+        \begin{itemize}
+            \item High transaction costs eliminate alphas
+            \item Even for institutional investors
+        \end{itemize}
+        
+        \item \textbf{Quality and profitability survive:}
+        \begin{itemize}
+            \item Low turnover strategies
+            \item Focus on large, liquid stocks
+            \item Net returns still positive
+        \end{itemize}
+        
+        \item \textbf{Momentum partially survives:}
+        \begin{itemize}
+            \item High turnover hurts
+            \item But effect large enough to overcome costs
+            \item Depends on implementation details
+        \end{itemize}
+        
+        \item \textbf{Value struggles:}
+        \begin{itemize}
+            \item Moderate turnover + declining gross returns
+            \item Net returns close to zero in recent decades
+        \end{itemize}
+    \end{enumerate}
+    
+    
+    \textbf{Implication:}
+    \begin{itemize}
+        \item Academic factors $\neq$ Investable strategies
+        \item Need to report net returns in research
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Alternative Data and New Signals}
+    \textbf{Beyond Traditional Accounting Data:}
+    
+    
+    \textbf{1. \textcolor{blue}{\href{https://doi.org/10.1017/S0022109024000528}{So, Wang, and Zhang (2024)}} ``Investor Visits"}
+    \begin{itemize}
+        \item Track institutional investor visits to firms (unique Chinese data)
+        \item Firms with more visits earn higher subsequent returns
+        \item Interpretation: Visits reveal private information about firm prospects
+        \item Reduces information asymmetry $\rightarrow$ Lower cost of capital
+    \end{itemize}
+    
+    
+    \textbf{2. Other Alternative Data:}
+    \begin{itemize}
+        \item \textbf{Satellite imagery:} Parking lot traffic, factory activity
+        \item \textbf{Credit card data:} Consumer spending in real-time
+        \item \textbf{Web scraping:} Product reviews, job postings
+        \item \textbf{Social media:} Sentiment, attention, news flow
+    \end{itemize}
+    
+    
+    \textbf{Challenges:}
+    \begin{itemize}
+        \item Data mining concerns even worse with alternative data
+        \item Decay after publication likely faster
+        \item Expensive, proprietary access limits replication
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Current State: Factor Consolidation?}
+    \textbf{Signs of Consolidation:}
+    \begin{enumerate}
+        \item \textbf{Core factors emerging:}
+        \begin{itemize}
+            \item Market, size, value, momentum, profitability, investment
+            \item Most other "factors" are combinations of these
+        \end{itemize}
+        
+        \item \textbf{Higher standards for new factors:}
+        \begin{itemize}
+            \item t-stat $> 3.0$ threshold widely adopted
+            \item Journals requiring out-of-sample tests
+            \item Pre-registration gaining traction
+        \end{itemize}
+        
+        \item \textbf{Focus on implementation:}
+        \begin{itemize}
+            \item Transaction costs becoming standard
+            \item Capacity constraints discussed
+            \item Practitioner involvement increasing
+        \end{itemize}
+    \end{enumerate}
+    
+    
+    \textbf{But Proliferation Continues:}
+    \begin{itemize}
+        \item Machine learning finding new patterns
+        \item Alternative data sources expanding
+        \item Behavioral explanations multiplying
+    \end{itemize}
+    
+    
+    \textit{The zoo is under better management, but still growing}
+\end{frame}
+
+\section{Practical Guidance and Conclusions}
+
+\begin{frame}{Best Practices for Researchers}
+    \textbf{When Proposing New Factors:}
+    
+    
+    \textbf{1. Statistical Rigor:}
+    \begin{itemize}
+        \item Use t-stat $> 3.0$ threshold (Harvey et al., 2016)
+        \item Report Bonferroni or other multiple testing corrections
+        \item Show results are robust to:
+        \begin{itemize}
+            \item Different sample periods
+            \item Equal vs. value-weighted portfolios
+            \item Inclusion/exclusion of microcaps
+            \item Various breakpoint choices
+        \end{itemize}
+    \end{itemize}
+    
+    
+    \textbf{2. Out-of-Sample Validation:}
+    \begin{itemize}
+        \item Test in different time periods (pre-1960s if possible)
+        \item International evidence (developed and emerging markets)
+        \item Different asset classes (bonds, currencies, commodities)
+        \item Distinguish in-sample from out-of-sample clearly
+    \end{itemize}
+    
+    
+    \textbf{3. Economic Content:}
+    \begin{itemize}
+        \item Provide theoretical motivation (risk or behavioral)
+        \item Estimate realistic transaction costs
+        \item Discuss capacity and scalability
+        \item Who can actually exploit this anomaly?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Best Practices for Researchers (cont.)}
+    \textbf{4. Model Testing:}
+    \begin{itemize}
+        \item Report alphas relative to multiple models:
+        \begin{itemize}
+            \item CAPM (baseline)
+            \item FF3 (established benchmark)
+            \item FF5 or FF6 (current standard)
+            \item Q-factors (theory-based alternative)
+        \end{itemize}
+        \item Test whether your factor subsumes existing factors
+        \item Test whether existing factors subsume yours
+    \end{itemize}
+    
+    
+    \textbf{5. Transparency and Replication:}
+    \begin{itemize}
+        \item Share code and data
+        \item Document all data cleaning steps
+        \item Explain treatment of missing data, outliers
+        \item Report summary statistics of key variables
+    \end{itemize}
+    
+    
+    \textbf{6. Avoid Common Pitfalls:}
+    \begin{itemize}
+        \item Don't just add your factor to FF5 and declare victory
+        \item Don't ignore that your factor may be combination of existing ones
+        \item Don't claim "new" factor without checking related work
+        \item Don't oversell implications ("death of CAPM", "solution to asset pricing")
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{For Practitioners and Investors}
+    \textbf{How to Evaluate Factor Strategies:}
+    
+    \textbf{1. Scrutinize Backtests:}
+    \begin{itemize}
+        \item What sample period? (In-sample overfitting?)
+        \item Microcaps included? (Tradability?)
+        \item Realistic transaction costs? (Implementation drag?)
+        \item How selected test assets? (Cherry-picking?)
+    \end{itemize}
+    
+    
+    \textbf{2. Check Post-Publication Performance:}
+    \begin{itemize}
+        \item Expect 26-32\% return decay after publication
+        \item Has factor "worked" since academic discovery?
+        \item Arbitrage competition may have eroded returns
+    \end{itemize}
+    
+    
+    \textbf{3. Understand Economic Rationale:}
+    \begin{itemize}
+        \item Is this compensation for risk?
+        \item Is this exploiting behavioral bias?
+        \item Is this just data mining?
+        \item Why should it persist going forward?
+    \end{itemize}
+    
+    
+    \textbf{4. Diversify Factor Exposure:}
+    \begin{itemize}
+        \item Don't bet everything on one factor
+        \item Combine factors with low correlations
+        \item Adjust for capacity constraints
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{The Path Forward}
+    \textbf{Where is Asset Pricing Headed?}
+    
+    
+    \textbf{1. Consolidation vs. Proliferation:}
+    \begin{itemize}
+        \item Core factors likely to survive: market, size, value, momentum, profitability
+        \item But new factors will continue to emerge
+        \item Machine learning accelerating discovery
+    \end{itemize}
+    
+    
+    \textbf{2. Theory vs. Empirics:}
+    \begin{itemize}
+        \item Need stronger theoretical foundations
+        \item But pure theory often fails empirically
+        \item Middle ground: Structural models with realistic frictions
+    \end{itemize}
+    
+    
+    \textbf{3. Risk vs. Mispricing:}
+    \begin{itemize}
+        \item Debate unlikely to be fully resolved
+        \item Both forces probably at work
+        \item Context-dependent, varies by anomaly
+    \end{itemize}
+    
+    
+    \textbf{4. Academic vs. Practitioner Divide:}
+    \begin{itemize}
+        \item Growing convergence on implementation issues
+        \item Transaction costs, capacity, market impact now standard
+        \item But academic incentives still favor novelty over replication
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusions: What Have We Learned?}
+    \textbf{Key Takeaways from the Factor Wars:}
+    
+    
+    \begin{enumerate}
+        \item \textbf{The zoo is real, but manageable:}
+        \begin{itemize}
+            \item Many factors are redundant or spurious
+            \item Core set of 5-10 factors likely sufficient
+            \item But identifying which ones remains contentious
+        \end{itemize}
+        
+        \item \textbf{No single model dominates:}
+        \begin{itemize}
+            \item FF6, Q-factors, behavioral factors all have merits
+            \item Performance varies by test assets, period, weighting
+            \item Use multiple models, report robustness
+        \end{itemize}
+        
+        \item \textbf{Characteristics matter more than covariances:}
+        \begin{itemize}
+            \item But interpretation remains ambiguous
+            \item Could be risk through non-linear channels
+            \item Or could be persistent mispricing
+        \end{itemize}
+        
+        \item \textbf{Implementation details are crucial:}
+        \begin{itemize}
+            \item Transaction costs eliminate many anomalies
+            \item Microcap bias pervasive in literature
+            \item Academic backtests often not investable
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Final Thoughts}
+    \textbf{The State of Asset Pricing in 2025:}
+    
+    \begin{itemize}
+        \item \textbf{Progress:} Better understanding of what drives returns
+        \item \textbf{Humility:} Recognition of many past "discoveries" were spurious
+        \item \textbf{Rigor:} Higher statistical standards being adopted
+        \item \textbf{Realism:} More attention to implementation constraints
+    \end{itemize}
+    
+    
+    \textbf{Unresolved Questions:}
+    \begin{itemize}
+        \item Fundamental nature of alpha (risk vs. mispricing)
+        \item ``Correct" number of factors
+        \item Role of machine learning (help or harm?)
+        \item Declining returns to factors over time
+    \end{itemize}
+    
+    
+    \textbf{For Students and Researchers:}
+    \begin{itemize}
+        \item Critical thinking about published results
+        \item Emphasis on replication and robustness
+        \item Economic intuition alongside statistical tests
+        \item Bridge academic research and practical implementation
+    \end{itemize}
+    
+    
+    \textit{The factor zoo is not a crisis, but an opportunity to deepen our understanding of asset prices}
+\end{frame}
+
+
+\end{document} 

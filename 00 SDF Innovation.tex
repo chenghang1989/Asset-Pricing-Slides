@@ -1,0 +1,230 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{fontspec}
+\setsansfont{Calibri}[
+    Path=Font/,
+    Scale=0.9,
+    Extension = .ttf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic,
+    BoldItalicFont=*-BoldItalic
+    ]
+\usepackage{unicode-math}
+\setmathfont{Libertinus Math}% 使用默认的数学字体或你偏好的数学字体 Latin Modern Math/Libertinus Math
+
+\usepackage{ragged2e}
+\justifying\let\raggedright\justifying %两端对齐
+
+ \usepackage{tcolorbox} 
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Asset Pricing]{\textbf{Asset Pricing}} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\subtitle{Why Focus on SDF Innovation?}
+
+\author[Cheng Hang]{Cheng Hang} % Your name
+\institute[DUFE] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{School of Fintech \\
+Dongbei University of Finance \& Economics \\ % Your institution for the title page
+\medskip
+\textbf{chenghangch@qq.com}% Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+	\AtBeginSection[]
+{
+	\begin{frame}{Content}
+		\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide] %这几个参数我也不知道该如何准确地解释，反正它们最终的效果是突出显示当前章节，而其它章节都进行了淡化处理
+		\addtocounter{framenumber}{-1}  %目录页不计算页码
+	\end{frame}
+}
+
+%----------------------------------------------------------------------------------------
+%	Begin
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Why Focus on SDF Innovation?}
+    
+    \textbf{Question:} Why do we decompose the SDF into expected and unexpected components?
+    
+    \textbf{Recall the fundamental asset pricing equation:}
+    \begin{equation*}
+        1 = E_t[M_{t+1} R_{i,t+1}]
+    \end{equation*}
+    
+    Expanding this:
+    \begin{equation*}
+        1 = E_t[M_{t+1}] \cdot E_t[R_{i,t+1}] + \text{Cov}_t(M_{t+1},R_{i,t+1})
+    \end{equation*}
+    
+    \framebreak
+    
+    \textbf{Key insight:} The expected component $E_t[M_{t+1}]$ is common to all assets.
+    
+    Rearranging for expected return:
+    \begin{equation*}
+        E_t[R_{i,t+1}] = \frac{1}{E_t[M_{t+1}]}  - \frac{\text{Cov}_t(M_{t+1}, R_{i,t+1})}{E_t[M_{t+1}]}
+    \end{equation*}
+    
+    \textbf{The risk-free rate:}
+    \begin{equation*}
+      R_{f,t} = \frac{1}{E_t[M_{t+1}]}
+    \end{equation*}
+    
+    \textbf{Therefore, the risk premium is:}
+    \begin{tcolorbox}[colback=orange!5!white, colframe=orange!75!black]
+    \begin{equation*}
+        E_t[R_{i,t+1}] - R_{f,t} = -\frac{\text{Cov}_t(M_{t+1}, R_{i,t+1})}{E_t[M_{t+1}]}
+    \end{equation*}
+    \end{tcolorbox}
+    
+    \framebreak
+    
+    \textbf{Observation:} Risk premium depends ONLY on the covariance of $M_{t+1}$ with returns.
+    
+    Since $E_t[M_{t+1}]$ is known at time $t$, we can write:
+    \begin{equation*}
+        \text{Cov}_t(M_{t+1}, R_{i,t+1}) = \text{Cov}_t(M_{t+1} - E_t[M_{t+1}], R_{i,t+1}) = \text{Cov}_t(\tilde{M}_{t+1}, R_{i,t+1})
+    \end{equation*}
+    
+    where $\tilde{M}_{t+1} \equiv M_{t+1} - E_t[M_{t+1}]$ is the SDF innovation.
+    
+    \textbf{Conclusion:} For asset pricing (risk premia), only the unexpected component of the SDF matters!
+    
+    \framebreak
+    
+    \textbf{Economic interpretation in three points:}
+    
+    \textbf{1. Risk premium is about unexpected shocks}
+    \begin{itemize}
+        \item Assets are risky because their payoffs covary with unexpected changes in marginal utility
+        \item Expected changes in marginal utility are already reflected in the risk-free rate
+        \item Only surprises create risk that requires compensation
+    \end{itemize}
+    
+    \textbf{2. SDF innovation identifies priced risk factors}
+    \begin{itemize}
+        \item Each term in $\tilde{m}_{t+1}$ represents a source of systematic risk
+        \item Assets with high covariance with these shocks command risk premia
+        \item This is the foundation for multifactor models
+    \end{itemize}
+    
+    \framebreak
+    
+    \textbf{3. SDF innovation reveals what investors fear}
+    \begin{itemize}
+        \item The terms that appear in $\tilde{m}_{t+1}$ tell us what kinds of shocks affect marginal utility
+        \item The coefficients tell us how much investors care about each shock
+        \item This guides us in building consumption-based asset pricing models
+    \end{itemize}
+    
+    \framebreak
+    
+    \textbf{Log-linear approximation:}
+    
+    Under joint lognormality, we can work with log returns and log SDF:
+    \begin{equation*}
+        E_t[r_{i,t+1}] - r_{f,t} \approx -\text{Cov}_t(\tilde{m}_{t+1}, r_{i,t+1}) - \frac{1}{2}\text{Var}_t(r_{i,t+1})
+    \end{equation*}
+    
+    where lowercase letters denote logs.
+    
+    \textbf{This is why we focus on the log-linearized SDF innovation:}
+    \begin{equation*}
+        \tilde{m}_{t+1} = m_{t+1} - E_t[m_{t+1}]
+    \end{equation*}
+    
+    It directly determines risk premia through its covariance with asset returns.
+\end{frame}
+
+\end{document}

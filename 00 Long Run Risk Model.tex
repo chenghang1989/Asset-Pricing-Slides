@@ -1,0 +1,815 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+
+
+%\usecolortheme{albatross}
+\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+%\usepackage{ctex}
+\usepackage{multicol}
+
+\usepackage{fontspec}
+\setsansfont{Calibri}[
+    Path=Font/,
+    Scale=0.9,
+    Extension = .ttf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic,
+    BoldItalicFont=*-BoldItalic
+    ]
+\usepackage{unicode-math}
+
+% \setmathfont{Libertinus Math} % 使用默认的数学字体或你偏好的数学字体 Latin Modern Math
+
+\usepackage{ragged2e}
+\justifying\let\raggedright\justifying %两端对齐
+
+%--------
+%	TITLE PAGE
+%--------
+
+\title[Asset Pricing]{\textbf{Asset Pricing}} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\subtitle{Long Run Risk Model}
+
+\author[Cheng Hang]{Cheng Hang} % Your name
+\institute[DUFE] 
+{School of Fintech \\
+Dongbei University of Finance \& Economics \\ 
+\medskip
+\textbf{chenghangch@qq.com}
+}
+\date{\today} 
+
+	\AtBeginSection[]
+{
+	\begin{frame}{Content}
+		\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide] %这几个参数我也不知道该如何准确地解释，反正它们最终的效果是突出显示当前章节，而其它章节都进行了淡化处理
+		\addtocounter{framenumber}{-1}  %目录页不计算页码
+	\end{frame}
+}
+
+%----------------------------------------------------------------------------------------
+%	Begin
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+
+%==========================================
+\section{From Extended ICAPM to Long-Run Risk}
+%==========================================
+
+\begin{frame}{Review: Extended Consumption CAPM}
+    \textbf{Key Result from Epstein-Zin Preferences:}
+    
+    The log SDF innovation can be written as:
+    \begin{equation}
+        m_{t+1} = -\gamma c_{t+1} - \left(\gamma - \frac{1}{\psi}\right) g_{t+1}
+    \end{equation}
+    
+    where:
+    \begin{itemize}
+        \item $c_{t+1} = c_{t+1} - \E_t[c_{t+1}]$: consumption innovation
+        \item $g_{t+1} = (E_{t+1} - E_t) \sum_{j=1}^{\infty} \rho^j \Delta c_{t+1+j}$: news about future consumption growth
+        \item $\gamma$: coefficient of relative risk aversion
+        \item $\psi$: elasticity of intertemporal substitution (EIS)
+    \end{itemize}
+
+    \textbf{Implication:} With $\gamma \neq 1/\psi$, \textbf{long-run consumption risk} affects asset prices!
+\end{frame}
+
+\begin{frame}{The Extended Consumption CAPM Formula}
+    \textbf{Risk Premium Equation (6.50):}
+    \begin{equation}
+        E_t[r_{i,t+1}] - r_{f,t+1} + \frac{\sigma_i^2}{2} = \gamma \, \sigma_{ic} + \left(\gamma - \frac{1}{\psi}\right) \sigma_{ig}
+    \end{equation}
+    
+    \vspace{0.3cm}
+    \textbf{Two Sources of Risk:}
+    \begin{enumerate}
+        \item \textbf{Consumption covariance risk} ($\sigma_{ic}$): Standard CCAPM component
+        \item \textbf{Long-run growth risk} ($\sigma_{ig}$): Covariance with news about future consumption growth
+    \end{enumerate}
+    
+    \vspace{0.3cm}
+    \textbf{Key Insight:} When $\gamma > 1/\psi$, assets that pay off when expected future consumption growth increases are \textbf{risky} and command positive risk premia.
+\end{frame}
+
+\begin{frame}{Motivation for Long-Run Risk Model}
+    \textbf{Empirical Puzzles in Asset Pricing:}
+    \begin{itemize}
+        \item Equity premium puzzle: $\E[R_m - R_f] \approx 6\%$ with low consumption volatility
+        \item Risk-free rate puzzle: Low and stable risk-free rate
+        \item Volatility puzzle: Stock returns much more volatile than consumption growth
+        \item Predictability: Return predictability at long horizons
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Solution Approach:}
+    \begin{itemize}
+        \item Bansal and Yaron (2004): Introduce a small, persistent component in consumption growth
+        \item Combined with Epstein-Zin preferences and time-varying volatility
+        \item Small shocks have large effects on asset prices through persistence
+    \end{itemize}
+\end{frame}
+
+%==========================================
+\section{Long-Run Risk Model Setup}
+%==========================================
+
+\begin{frame}{The Bansal-Yaron (2004) Model: Consumption Dynamics}
+    \textbf{Consumption Growth Process:}
+    \begin{align}
+        \Delta c_{t+1} &= \mu + x_t + \sigma_t \eta_{t+1} \label{eq:cons}\\
+        x_{t+1} &= \rho_x x_t + \varphi_e \sigma_t e_{t+1} \label{eq:x}\\
+        \sigma_{t+1}^2 &= \bar{\sigma}^2 + \nu_1 (\sigma_t^2 - \bar{\sigma}^2) + \sigma_w w_{t+1} \label{eq:vol}
+    \end{align}
+    
+    \vspace{0.3cm}
+    \textbf{Key State Variables:}
+    \begin{itemize}
+        \item $x_t$: Expected growth rate (long-run risk component)
+        \item $\sigma_t^2$: Time-varying volatility (economic uncertainty)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Shocks:} $\eta_{t+1}$, $e_{t+1}$, $w_{t+1}$ are i.i.d. $N(0,1)$ and mutually independent
+\end{frame}
+
+\begin{frame}{Economic Interpretation of State Variables}
+    \textbf{The Long-Run Risk Component $x_t$:}
+    \begin{itemize}
+        \item Represents slow-moving, persistent variation in expected growth
+        \item $\rho_x$ close to 1 (typically $\approx 0.979$): highly persistent
+        \item Small volatility $\varphi_e \sigma_t$: hard to detect econometrically
+        \item Reflects long-term economic prospects, technological trends, demographics
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{The Volatility Component $\sigma_t^2$:}
+    \begin{itemize}
+        \item Represents time-varying economic uncertainty
+        \item $\nu_1$ close to 1 (typically $\approx 0.987$): persistent uncertainty
+        \item Captures business cycle variations in risk
+        \item Higher $\sigma_t^2 \Rightarrow$ higher uncertainty $\Rightarrow$ affects discount rates
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Dividend Growth Process}
+    \textbf{Dividend Dynamics (Leverage Effect):}
+    \begin{equation}
+        \Delta d_{t+1} = \mu_d + \phi x_t + \varphi_d \sigma_t u_{t+1}
+    \end{equation}
+    
+    where:
+    \begin{itemize}
+        \item $\phi > 1$: leverage parameter (dividends more sensitive to $x_t$ than consumption)
+        \item $\varphi_d$: dividend volatility parameter
+        \item $u_{t+1} \sim N(0,1)$: idiosyncratic dividend shock
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Correlation Structure:}
+    \begin{equation}
+        \Cov(\eta_{t+1}, u_{t+1}) = \rho_{u\eta}
+    \end{equation}
+    
+    \textbf{Key Feature:} Dividends share the long-run component $x_t$ with consumption, creating comovement at long horizons.
+\end{frame}
+
+\begin{frame}{Epstein-Zin Preferences: Recursive Utility}
+    \textbf{Recursive Utility Specification:}
+    \begin{equation}
+        V_t = \left[ (1-\delta) C_t^{1-1/\psi} + \delta \left( \E_t\left[ V_{t+1}^{1-\gamma} \right] \right)^{\frac{1-1/\psi}{1-\gamma}} \right]^{\frac{1}{1-1/\psi}}
+    \end{equation}
+    
+    \textbf{Parameters:}
+    \begin{itemize}
+        \item $\delta$: subjective discount factor
+        \item $\gamma$: coefficient of relative risk aversion (RRA)
+        \item $\psi$: elasticity of intertemporal substitution (EIS)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Key Departure from CRRA:}
+    \begin{itemize}
+        \item CRRA: $\psi = 1/\gamma$ (risk aversion and intertemporal substitution tied)
+        \item Epstein-Zin: $\psi$ and $\gamma$ can vary independently
+        \item Crucial for long-run risk: need $\psi > 1$ and $\gamma > 1/\psi$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Stochastic Discount Factor}
+    \textbf{Log SDF under Epstein-Zin:}
+    \begin{equation}
+        m_{t+1} = \theta \log \delta - \frac{\theta}{\psi} \Delta c_{t+1} + (\theta - 1) r_{a,t+1}
+    \end{equation}
+    
+    where:
+    \begin{itemize}
+        \item $\theta = \frac{1-\gamma}{1-1/\psi}$: preference parameter
+        \item $r_{a,t+1}$: return on the wealth portfolio (claim to aggregate consumption)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Linearized Version (from Extended ICAPM):}
+    \begin{equation}
+        m_{t+1} = m_0 - \gamma \Delta c_{t+1} - (\gamma - 1/\psi)(\E_{t+1} - \E_t) \sum_{j=1}^{\infty} \rho^j \Delta c_{t+1+j}
+    \end{equation}
+    
+    The second term captures the effect of \textbf{news about future consumption growth}.
+\end{frame}
+
+%==========================================
+\section{Solving the Model}
+%==========================================
+
+\begin{frame}{Solution Method: Log-Linear Approximation}
+    \textbf{Strategy:} Conjecture affine solutions for price-dividend ratios
+    
+    \textbf{Wealth-Consumption Ratio:}
+    \begin{equation}
+        z_t \equiv \log(P_t^a / C_t) = A_0 + A_1 x_t + A_2 \sigma_t^2
+    \end{equation}
+    
+    \textbf{Price-Dividend Ratio:}
+    \begin{equation}
+        z_t^m \equiv \log(P_t^m / D_t) = A_0^m + A_1^m x_t + A_2^m \sigma_t^2
+    \end{equation}
+    
+    \vspace{0.3cm}
+    \textbf{Campbell-Shiller Approximation:}
+    \begin{equation}
+        r_{a,t+1} \approx \kappa_0 + \kappa_1 z_{t+1} - z_t + \Delta c_{t+1}
+    \end{equation}
+    
+    where $\kappa_1 = \frac{\exp(\bar{z})}{1+\exp(\bar{z})}$ and $\kappa_0 = \log(1+\exp(\bar{z})) - \kappa_1 \bar{z}$
+\end{frame}
+
+\begin{frame}{Derivation: Solving for $A_1$}
+    \textbf{Euler Equation:}
+    \begin{equation}
+        \E_t[\exp(m_{t+1} + r_{a,t+1})] = 1
+    \end{equation}
+    
+    \textbf{Under log-normality:}
+    \begin{equation}
+        \E_t[m_{t+1} + r_{a,t+1}] + \frac{1}{2} \Var_t[m_{t+1} + r_{a,t+1}] = 0
+    \end{equation}
+    
+    \textbf{Substituting the conjectured solution:}
+    \begin{align}
+        r_{a,t+1} &= \kappa_0 + \kappa_1(A_0 + A_1 x_{t+1} + A_2 \sigma_{t+1}^2) \nonumber \\
+        &\quad - (A_0 + A_1 x_t + A_2 \sigma_t^2) + \mu + x_t + \sigma_t \eta_{t+1}
+    \end{align}
+    
+    \textbf{Collecting terms in $x_t$:}
+    \begin{equation}
+        A_1 = \frac{1 - 1/\psi}{1 - \kappa_1 \rho_x}
+    \end{equation}
+\end{frame}
+
+\begin{frame}{Derivation: Solving for $A_2$}
+    \textbf{Collecting terms in $\sigma_t^2$:}
+    
+    The coefficient $A_2$ solves:
+    \begin{equation}
+        A_2 = \frac{\frac{1}{2}(1-\gamma)(1-\theta)(1+A_1\varphi_e)^2 + (\theta-1)\kappa_1 A_2 \nu_1}{1 - \kappa_1 \nu_1}
+    \end{equation}
+    
+    \textbf{Simplified Result:}
+    \begin{equation}
+        A_2 = \frac{(1-\gamma)\theta}{2(1-\kappa_1\nu_1)} \left[ \left(\frac{1-1/\psi}{1-\kappa_1\rho_x}\right)^2 \varphi_e^2 + 1 \right]
+    \end{equation}
+    
+    \vspace{0.3cm}
+    \textbf{Key Insight:}
+    \begin{itemize}
+        \item When $\psi > 1$: $A_2 < 0$ (higher volatility $\Rightarrow$ lower wealth-consumption ratio)
+        \item Agents dislike uncertainty about future consumption growth
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{News about Future Consumption Growth}
+    \textbf{Computing $\tld{g}_{t+1}$:}
+    \begin{align}
+        \tld{g}_{t+1} &= (\E_{t+1} - \E_t) \sum_{j=1}^{\infty} \rho^j \Delta c_{t+1+j} \nonumber \\
+        &= (\E_{t+1} - \E_t) \sum_{j=1}^{\infty} \rho^j (\mu + x_{t+j}) \nonumber \\
+        &= (\E_{t+1} - \E_t) \sum_{j=1}^{\infty} \rho^j x_{t+j}
+    \end{align}
+    
+    \textbf{Using $x_{t+j} = \rho_x^{j-1} x_{t+1} + \ldots$:}
+    \begin{equation}
+        \tld{g}_{t+1} = \sum_{j=1}^{\infty} \rho^j \rho_x^{j-1} (x_{t+1} - \E_t[x_{t+1}]) = \frac{\rho}{1-\rho \rho_x} \varphi_e \sigma_t e_{t+1}
+    \end{equation}
+    
+    \textbf{With $\rho \approx \kappa_1$:}
+    \begin{equation}
+        \tld{g}_{t+1} = \frac{\kappa_1}{1-\kappa_1 \rho_x} \varphi_e \sigma_t e_{t+1} = A_1 \varphi_e \sigma_t e_{t+1}
+    \end{equation}
+\end{frame}
+
+\begin{frame}{Innovations to the SDF}
+    \textbf{Log SDF Innovation:}
+    \begin{equation}
+        \tld{m}_{t+1} = m_{t+1} - \E_t[m_{t+1}]
+    \end{equation}
+    
+    \textbf{Substituting the derived expressions:}
+    \begin{equation}
+        \boxed{\tld{m}_{t+1} = -\gamma \sigma_t \eta_{t+1} - (\gamma - 1/\psi) A_1 \varphi_e \sigma_t e_{t+1} - \lambda_w \sigma_w w_{t+1}}
+    \end{equation}
+    
+    where $\lambda_w = (\theta - 1) \kappa_1 A_2$
+    
+    \vspace{0.3cm}
+    \textbf{Three Risk Prices:}
+    \begin{itemize}
+        \item $\gamma$: Price of consumption shock risk
+        \item $(\gamma - 1/\psi) A_1 \varphi_e$: Price of long-run growth risk
+        \item $\lambda_w$: Price of volatility risk
+    \end{itemize}
+\end{frame}
+
+%==========================================
+\section{Equity Premium and Risk-Free Rate}
+%==========================================
+
+\begin{frame}{Risk-Free Rate}
+    \textbf{From Euler Equation:}
+    \begin{equation}
+        r_f = -\E_t[m_{t+1}] - \frac{1}{2}\Var_t[m_{t+1}]
+    \end{equation}
+    
+    \textbf{Derived Expression:}
+    \begin{equation}
+        \boxed{r_{f,t} = -\log\delta + \frac{\mu}{\psi} + \left(\frac{1}{\psi} - \frac{1}{2}\gamma(1+1/\psi)\right)x_t - \frac{1}{2}\Lambda \sigma_t^2}
+    \end{equation}
+    
+    where $\Lambda = \gamma^2 + (\gamma - 1/\psi)^2 A_1^2 \varphi_e^2$
+    
+    \vspace{0.3cm}
+    \textbf{Key Features:}
+    \begin{itemize}
+        \item Risk-free rate varies with expected growth $x_t$
+        \item Risk-free rate varies with volatility $\sigma_t^2$ (precautionary savings)
+        \item With $\psi > 1$: higher expected growth $\Rightarrow$ higher $r_f$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Equity Risk Premium: Derivation}
+    \textbf{Log Return on Wealth Portfolio:}
+    \begin{equation}
+        r_{a,t+1} - \E_t[r_{a,t+1}] = \sigma_t \eta_{t+1} + A_1 \varphi_e \sigma_t e_{t+1} + \kappa_1 A_2 \sigma_w w_{t+1}
+    \end{equation}
+    
+    \textbf{Risk Premium (using $\E[r - r_f] + \sigma^2/2 = -\Cov(m, r)$):}
+    \begin{align}
+        \E_t[r_{a,t+1}] - r_{f,t} + \frac{1}{2}\Var_t[r_{a,t+1}] &= -\Cov_t(m_{t+1}, r_{a,t+1}) \nonumber \\
+        &= \gamma \sigma_t^2 + (\gamma - 1/\psi) A_1^2 \varphi_e^2 \sigma_t^2 + \lambda_w \kappa_1 A_2 \sigma_w^2
+    \end{align}
+    
+    \textbf{Equity Premium on Wealth:}
+    \begin{equation}
+        \boxed{\E_t[r_{a,t+1}] - r_{f,t} = \left[\gamma + (\gamma - 1/\psi)A_1^2\varphi_e^2\right]\sigma_t^2 + \text{volatility risk term}}
+    \end{equation}
+\end{frame}
+
+\begin{frame}{Market Equity Premium}
+    \textbf{For the Market Portfolio (with leverage $\phi$):}
+    
+    The price-dividend ratio satisfies:
+    \begin{equation}
+        z_t^m = A_0^m + A_1^m x_t + A_2^m \sigma_t^2
+    \end{equation}
+    
+    where:
+    \begin{equation}
+        A_1^m = \frac{\phi - 1/\psi}{1 - \kappa_1^m \rho_x}
+    \end{equation}
+    
+    \textbf{Market Risk Premium:}
+    \begin{equation}
+        \boxed{\E_t[r_{m,t+1}] - r_{f,t} = \gamma \beta_c \sigma_t^2 + (\gamma - 1/\psi) \beta_x A_1 \varphi_e^2 \sigma_t^2 + \text{vol risk}}
+    \end{equation}
+    
+    where:
+    \begin{itemize}
+        \item $\beta_c = \Cov(\tld{r}_m, \eta)/\Var(\eta)$: consumption beta
+        \item $\beta_x = \Cov(\tld{r}_m, e)/\Var(e)$: long-run risk beta
+    \end{itemize}
+\end{frame}
+
+%==========================================
+\section{Calibration and Empirical Implications}
+%==========================================
+
+\begin{frame}{Bansal-Yaron Calibration}
+    \begin{table}[h]
+    \centering
+    \small
+    \begin{tabular}{lcc}
+    \toprule
+    \textbf{Parameter} & \textbf{Symbol} & \textbf{Value} \\
+    \midrule
+    Mean consumption growth & $\mu$ & 0.0015 (monthly) \\
+    Persistence of $x_t$ & $\rho_x$ & 0.979 \\
+    Vol of long-run component & $\varphi_e$ & 0.044 \\
+    Mean volatility & $\bar{\sigma}$ & 0.0078 \\
+    Persistence of $\sigma_t^2$ & $\nu_1$ & 0.987 \\
+    Vol of volatility & $\sigma_w$ & $2.3 \times 10^{-6}$ \\
+    \midrule
+    Risk aversion & $\gamma$ & 10 \\
+    EIS & $\psi$ & 1.5 \\
+    Discount factor & $\delta$ & 0.998 \\
+    Leverage & $\phi$ & 3 \\
+    \bottomrule
+    \end{tabular}
+    \end{table}
+    
+    \textbf{Note:} $\psi > 1$ and $\gamma > 1/\psi$ are crucial for the mechanism!
+\end{frame}
+
+\begin{frame}{Model Implications: Matching the Data}
+    \begin{table}[h]
+    \centering
+    \small
+    \begin{tabular}{lccc}
+    \toprule
+    \textbf{Moment} & \textbf{Data} & \textbf{LRR Model} & \textbf{CRRA} \\
+    \midrule
+    $\E[R_m - R_f]$ & 6.33\% & 6.84\% & 0.08\% \\
+    $\sigma(R_m - R_f)$ & 19.42\% & 20.22\% & 2.71\% \\
+    $\E[R_f]$ & 0.86\% & 0.91\% & 12.67\% \\
+    $\sigma(R_f)$ & 0.97\% & 0.81\% & 2.71\% \\
+    Sharpe Ratio & 0.33 & 0.34 & 0.03 \\
+    \bottomrule
+    \end{tabular}
+    \end{table}
+    
+    \vspace{0.3cm}
+    \textbf{Key Success:} LRR model generates:
+    \begin{itemize}
+        \item High equity premium with moderate risk aversion
+        \item Low and stable risk-free rate
+        \item Realistic Sharpe ratio
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Mechanism: Why Does It Work?}
+    \textbf{Amplification through Persistence:}
+    
+    A small shock to $x_t$ has cumulative effect on consumption:
+    \begin{equation}
+        \sum_{j=0}^{\infty} \rho_x^j = \frac{1}{1-\rho_x} \approx 48 \quad (\text{for } \rho_x = 0.979)
+    \end{equation}
+    
+    \textbf{Effect on Wealth:}
+    \begin{equation}
+        \frac{\partial z_t}{\partial x_t} = A_1 = \frac{1-1/\psi}{1-\kappa_1\rho_x} \approx 22
+    \end{equation}
+    
+    \textbf{Intuition:}
+    \begin{itemize}
+        \item Small $x_t$ shock $\Rightarrow$ large revision in present value of consumption
+        \item With $\psi > 1$: substitution effect dominates income effect
+        \item Wealth falls when expected future consumption rises (agent substitutes away from current consumption)
+        \item Makes long-run risk priced even though shock is small
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Volatility Channel}
+    \textbf{Effect of Volatility Shocks:}
+    
+    When $\sigma_t^2$ increases:
+    \begin{enumerate}
+        \item \textbf{Precautionary savings:} Agents want to save more $\Rightarrow$ $r_f$ falls
+        \item \textbf{Wealth effect:} Future consumption more uncertain $\Rightarrow$ wealth falls
+        \item \textbf{Risk premium rises:} Higher compensation for bearing risk
+    \end{enumerate}
+    
+    \vspace{0.3cm}
+    \textbf{With $\psi > 1$ and $\gamma > 1/\psi$:}
+    \begin{equation}
+        A_2 < 0 \quad \Rightarrow \quad \frac{\partial z_t}{\partial \sigma_t^2} < 0
+    \end{equation}
+    
+    \textbf{Implication:} Time-varying volatility generates:
+    \begin{itemize}
+        \item Countercyclical risk premia
+        \item Predictable returns (high P/D $\Rightarrow$ low future returns)
+        \item Excess volatility of stock returns
+    \end{itemize}
+\end{frame}
+
+%==========================================
+\section{Asset Pricing Implications}
+%==========================================
+
+\begin{frame}{Cross-Section of Expected Returns}
+    \textbf{Two-Factor Model:}
+    \begin{equation}
+        \E[R_i] - R_f = \beta_{i,c} \lambda_c + \beta_{i,x} \lambda_x
+    \end{equation}
+    
+    where:
+    \begin{itemize}
+        \item $\lambda_c = \gamma \sigma^2$: price of consumption risk
+        \item $\lambda_x = (\gamma - 1/\psi) A_1 \varphi_e^2 \sigma^2$: price of long-run risk
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Empirical Implementation:}
+    \begin{itemize}
+        \item Long-run risk is related to cash flow duration
+        \item Growth stocks: High duration, high $\beta_{i,x}$ $\Rightarrow$ Higher risk premium
+        \item Value stocks: Low duration, low $\beta_{i,x}$
+        \item Can help explain value premium through cash flow duration differences
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Predictability of Returns}
+    \textbf{Return Predictability:}
+    \begin{equation}
+        r_{m,t+1} - r_{f,t} = a + b \cdot (p_t - d_t) + \epsilon_{t+1}
+    \end{equation}
+    
+    \textbf{LRR Model Prediction:}
+    \begin{itemize}
+        \item High P/D ratio signals low expected growth $x_t$ or low volatility $\sigma_t^2$
+        \item Both imply lower expected returns
+        \item Predictability increases with horizon (due to persistence)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{R-squared Pattern:}
+    \begin{equation}
+        R^2(k) \approx R^2(1) \times \frac{1 - \rho_x^{2k}}{1 - \rho_x^2}
+    \end{equation}
+    
+    Long-horizon $R^2$ can be substantial even if short-horizon $R^2$ is small.
+\end{frame}
+
+\begin{frame}{Volatility Dynamics and Return Predictability}
+    \textbf{Model Implications for Volatility:}
+    \begin{equation}
+        \Var_t(r_{m,t+1}) = (1 + A_1^m \varphi_e)^2 \sigma_t^2 + (\kappa_1^m A_2^m)^2 \sigma_w^2
+    \end{equation}
+    
+    \textbf{Key Features:}
+    \begin{itemize}
+        \item Return volatility is time-varying and persistent
+        \item Volatility is countercyclical (high during recessions)
+        \item Generates ``volatility clustering'' in returns
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Variance Risk Premium:}
+    \begin{equation}
+        \E_t^{\mathbb{Q}}[\sigma_{t+1}^2] - \E_t^{\mathbb{P}}[\sigma_{t+1}^2] = -\Cov_t(m_{t+1}, \sigma_{t+1}^2) > 0
+    \end{equation}
+    
+    \textbf{Implication:} Risk-neutral expected variance exceeds physical expected variance, consistent with observed negative variance risk premium.
+\end{frame}
+
+%==========================================
+\section{Extensions and Criticisms}
+%==========================================
+
+\begin{frame}{Extensions of the LRR Model}
+    \textbf{1. Multiple Long-Run Components (Bansal, Kiku, Yaron 2012):}
+    \begin{itemize}
+        \item Separate persistent components for growth and volatility
+        \item Better fit to consumption dynamics
+    \end{itemize}
+    
+    \textbf{2. Disasters with LRR (Wachter 2013):}
+    \begin{itemize}
+        \item Combine time-varying disaster probability with LRR
+        \item Both mechanisms contribute to equity premium
+    \end{itemize}
+    
+    \textbf{3. International LRR (Colacito and Croce 2011):}
+    \begin{itemize}
+        \item Multi-country LRR with correlated long-run components
+        \item Explains forward premium puzzle
+    \end{itemize}
+    
+    \textbf{4. Production-Based LRR (Kaltenbrunner and Lochstoer 2010):}
+    \begin{itemize}
+        \item Endogenize consumption dynamics from production economy
+        \item Address critique about exogenous consumption process
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Empirical Challenges and Criticisms}
+    \textbf{1. Identification of Long-Run Risk:}
+    \begin{itemize}
+        \item $x_t$ component is hard to identify econometrically
+        \item Small and persistent $\Rightarrow$ looks like random walk
+        \item Beeler and Campbell (2012): difficult to reject $\rho_x = 1$
+    \end{itemize}
+    
+    \textbf{2. Consumption Data Quality:}
+    \begin{itemize}
+        \item Aggregate consumption measured with error
+        \item Durables vs. non-durables distinction matters
+        \item Stockholder consumption may differ from aggregate
+    \end{itemize}
+    
+    \textbf{3. High EIS Controversy:}
+    \begin{itemize}
+        \item Model requires $\psi > 1$
+        \item Micro estimates often find $\psi < 1$
+        \item Macro vs. micro EIS puzzle
+    \end{itemize}
+    
+    \textbf{4. Sensitivity to Parameters:}
+    \begin{itemize}
+        \item Results sensitive to persistence $\rho_x$ and $\nu_1$
+        \item Small changes in parameters $\Rightarrow$ large changes in moments
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{LRR vs. Alternative Models}
+    \begin{table}[h]
+    \centering
+    \small
+    \begin{tabular}{p{3cm}ccc}
+    \toprule
+    \textbf{Feature} & \textbf{LRR} & \textbf{Habit} & \textbf{Disaster} \\
+    \midrule
+    Equity premium & \checkmark & \checkmark & \checkmark \\
+    Low risk-free rate & \checkmark & \checkmark & \checkmark \\
+    Predictability & \checkmark & \checkmark & \checkmark \\
+    Cross-section & Partial & Limited & Limited \\
+    Volatility dynamics & \checkmark & Limited & \checkmark \\
+    \midrule
+    \textbf{Mechanism} & Persistent growth & Time-varying risk aversion & Rare disasters \\
+    \textbf{Key parameter} & $\rho_x, \psi$ & Habit curvature & Disaster prob \\
+    \bottomrule
+    \end{tabular}
+    \end{table}
+    
+    \textbf{Note:} These mechanisms may coexist and complement each other.
+\end{frame}
+
+%==========================================
+\section{Summary}
+%==========================================
+
+\begin{frame}{Summary: Key Takeaways}
+    \textbf{1. Theoretical Foundation:}
+    \begin{itemize}
+        \item Extended ICAPM with Epstein-Zin preferences prices long-run consumption risk
+        \item When $\gamma > 1/\psi$, news about future growth affects marginal utility
+    \end{itemize}
+    
+    \textbf{2. Long-Run Risk Model:}
+    \begin{itemize}
+        \item Small, persistent component $x_t$ in expected consumption growth
+        \item Time-varying volatility $\sigma_t^2$ as additional state variable
+        \item Amplification: persistence magnifies small shocks into large wealth effects
+    \end{itemize}
+    
+    \textbf{3. Empirical Success:}
+    \begin{itemize}
+        \item Resolves equity premium and risk-free rate puzzles
+        \item Generates predictable returns and excess volatility
+        \item Provides unified framework for asset pricing puzzles
+    \end{itemize}
+    
+    \textbf{4. Challenges:}
+    \begin{itemize}
+        \item Long-run component hard to identify empirically
+        \item Requires high EIS ($\psi > 1$)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Key Equations Summary}
+    \begin{block}{Consumption Dynamics}
+    \begin{align}
+        \Delta c_{t+1} &= \mu + x_t + \sigma_t \eta_{t+1} \\
+        x_{t+1} &= \rho_x x_t + \varphi_e \sigma_t e_{t+1}
+    \end{align}
+    \end{block}
+    
+    \begin{block}{Log SDF}
+    \begin{equation}
+        m_{t+1} = \theta \log \delta - \frac{\theta}{\psi} \Delta c_{t+1} + (\theta - 1) r_{a,t+1}
+    \end{equation}
+    \end{block}
+    
+    \begin{block}{Risk Premium}
+    \begin{equation}
+        \E_t[r_{a,t+1}] - r_{f,t} = \gamma \sigma_t^2 + (\gamma - 1/\psi) A_1^2 \varphi_e^2 \sigma_t^2 + \text{vol term}
+    \end{equation}
+    \end{block}
+\end{frame}
+
+\begin{frame}{References}
+    \small
+    \begin{itemize}
+        \item Bansal, R. and A. Yaron (2004). ``Risks for the Long Run: A Potential Resolution of Asset Pricing Puzzles.'' \textit{Journal of Finance}, 59(4), 1481-1509.
+        
+        \item Bansal, R., D. Kiku, and A. Yaron (2012). ``An Empirical Evaluation of the Long-Run Risks Model for Asset Prices.'' \textit{Critical Finance Review}, 1, 183-221.
+        
+        \item Campbell, J.Y. (2018). \textit{Financial Decisions and Markets: A Course in Asset Pricing}. Princeton University Press.
+        
+        \item Restoy, F. and P. Weil (2011). ``Approximate Equilibrium Asset Prices.'' \textit{Review of Finance}, 15, 1-28.
+        
+        \item Beeler, J. and J.Y. Campbell (2012). ``The Long-Run Risks Model and Aggregate Asset Prices: An Empirical Assessment.'' \textit{Critical Finance Review}, 1, 141-182.
+        
+        \item Epstein, L.G. and S.E. Zin (1989). ``Substitution, Risk Aversion, and the Temporal Behavior of Consumption and Asset Returns: A Theoretical Framework.'' \textit{Econometrica}, 57(4), 937-969.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        \Huge \textbf{Thank You}
+        
+        \vspace{1cm}
+        \large Questions?
+    \end{center}
+\end{frame}
+
+
+
+
+
+
+
+\end{document}
