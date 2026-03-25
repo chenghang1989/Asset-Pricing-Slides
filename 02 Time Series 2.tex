@@ -2268,12 +2268,17 @@ Period & IPOFDR & IPOFDR $\times$ DUM & $\gamma + \delta$ & $R^2$ \\
 	\end{enumerate}
 
 	\vspace{5pt}
+<<<<<<< HEAD
 	{\small \textit{Common theme: addressing the weak predictability documented by \href{https://doi.org/10.1093/rfs/hhm014}{\textcolor{blue}{Welch and Goyal (2008)}}}}
+=======
+	\href{https://doi.org/10.1093/rfs/hhu080}{\textcolor{blue}{Huang, Jiang, Tu, and Zhou (2015)}}: Sentiment-aligned index for return prediction
+>>>>>>> 98f7b365f0a5ae09b021e0a6513ee2f5c1c2bab7
 \end{frame}
 
 \begin{frame}{Decomposition \& Dimension Reduction}
 	\textbf{1.} \href{https://doi.org/10.1016/j.jfineco.2011.02.003}{\textcolor{blue}{Ferreira and Santa-Clara (2011, JFE)}}: Sum-of-the-Parts
 	\begin{itemize}
+<<<<<<< HEAD
 		\item Decompose market return: $r_{t+1} = \Delta d_{t+1} + \Delta (dp)_{t+1}$
 		\item Forecast each component separately, then aggregate
 		\item \textbf{Key insight}: Components are easier to predict than total returns
@@ -2405,6 +2410,763 @@ Period & IPOFDR & IPOFDR $\times$ DUM & $\gamma + \delta$ & $R^2$ \\
 \begin{frame}{Technical Detail: One-Sided vs.\ Two-Sided Kernel}
 	FST's method has \textbf{two steps}, both using kernel regression:
 
+=======
+		\item \href{https://doi.org/10.1093/rfs/hhae044}{\textcolor{blue}{Goyal, Welch, and Zafirov (2024)}}: Comprehensive update
+		\begin{itemize}
+			\item More than one-third of new variables lose in-sample significance
+			\item Half of remaining have poor out-of-sample performance
+		\end{itemize}
+		\item \href{https://doi.org/10.1093/rfs/hhaf010}{\textcolor{blue}{Li et al. (2025)}}: Hybrid forecasting framework
+		\begin{itemize}
+			\item Combines bias-reduction with historical average
+			\item Outperforms conventional methods across economic cycles
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+% \subsection{\href{https://doi.org/10.1093/rfs/hhaf010}{\textcolor{blue}{Li et al. (2025)}}}
+
+% %--- Slide 1: Background and Motivation ---
+% \begin{frame}[allowframebreaks]{\href{https://doi.org/10.1093/rfs/hhaf010}{\textcolor{blue}{Li et al. (2025) RFS}}: How to Dominate the Historical Average}
+% 	\textbf{The Challenge: Forecasting the Equity Premium}
+% 	\begin{itemize}
+% 		\item The simplest forecast of next period's stock return: the \textbf{historical average} $\hat{\mu}$
+% 		\begin{itemize}
+% 			\item Just use the mean of all past returns as your forecast
+% 			\item This is the ``null model'' --- it ignores all predictors
+% 		\end{itemize}
+% 		\item Goyal and Welch (2008): Despite many proposed predictors (D/P, E/P, term spread, etc.), \textbf{none reliably beats $\hat{\mu}$ out-of-sample}
+% 		\item Goyal, Welch, and Zafirov (2024): Confirm this over longer periods and more predictors
+% 	\end{itemize}
+
+% 	\framebreak
+% 	\textbf{Why Does OLS Fail Out-of-Sample?}
+% 	\begin{itemize}
+% 		\item In-sample: OLS regression $r_{t+1} = \hat{\alpha} + \hat{b} x_t + \hat{e}_{t+1}$ works well
+% 		\item Out-of-sample: the \textbf{estimation noise} in $\hat{b}$ is so large that OLS forecasts are often \textit{worse} than simply using $\hat{\mu}$
+% 		\item The historical average wins by having \textbf{zero estimation variance} --- it uses a fixed slope of zero
+% 	\end{itemize}
+
+% 	\vspace{0.3cm}
+% 	Campbell and Thompson (2008) posed the question: \textit{``Can anything beat the historical average?''}
+
+% 	\vspace{0.2cm}
+% 	\textbf{This paper's answer:} \textcolor{blue}{Yes --- by targeting a lower bias rather than unbiasedness!}
+% \end{frame}
+
+% %--- Slide 2: Core Idea ---
+% \begin{frame}{The Core Idea: Conservative Constant Slope}
+% 	\textbf{Three Approaches to Forecasting $r_{t+1}$:}
+
+% 	\vspace{0.2cm}
+% 	\begin{enumerate}
+% 		\item \textbf{Historical Average (HM):} Forecast $= \hat{\mu}$ \quad (slope $= 0$, variance $= 0$, but biased if $b \neq 0$)
+% 		\item \textbf{OLS Regression:} Forecast $= \hat{\mu} + \hat{b}x_t$ \quad (slope $= \hat{b}$, lower bias, but \textbf{high variance})
+% 		\item \textbf{This Paper:} Forecast $= \hat{\mu} + \delta x_t$ \quad (slope $= \delta =$ small constant, variance $= 0$, lower bias than HM)
+% 	\end{enumerate}
+
+% 	\vspace{0.3cm}
+% 	\begin{block}{Key Insight}
+% 		The historical average uses a \textbf{deterministic} slope of zero $\Rightarrow$ no estimation variance. \\
+% 		This paper also uses a \textbf{deterministic} slope, but a small nonzero constant $\delta$ $\Rightarrow$ still no estimation variance, but \textbf{less biased} than zero!
+% 	\end{block}
+
+% 	\vspace{0.2cm}
+% 	\centering
+% 	\textit{Same variance as HM + Lower bias = Better forecast.}
+% \end{frame}
+
+% %--- Slide 3: The Price Is Right Game ---
+% \begin{frame}[allowframebreaks]{Intuition: The ``Price Is Right'' Game}
+% 	\textbf{A Guess-the-Number Game}
+
+% 	\vspace{0.2cm}
+% 	Imagine a game: guess the true predictive slope $b$. The closest guess wins.
+
+% 	\vspace{0.2cm}
+% 	\begin{itemize}
+% 		\item \textbf{Mr.\ Historical Average} always guesses $\mathbf{0}$
+% 		\item Suppose the true slope is $b = 1$
+% 	\end{itemize}
+
+% 	\framebreak
+% 	\textbf{Strategy 1: OLS Regression} (estimation variance $= 1$)
+% 	\begin{itemize}
+% 		\item OLS gives an unbiased estimate $\hat{b}$, centered on $b = 1$
+% 		\item But with variance $= 1$: actual estimate could be anywhere from $-1$ to $3$
+% 		\item OLS \textbf{loses} to Mr.\ Historical Average whenever $\hat{b} < 0$ or $\hat{b} > 2$
+% 		\item This happens with $\approx 32\%$ probability!
+% 	\end{itemize}
+
+% 	\vspace{0.3cm}
+% 	\textbf{Strategy 2: This Paper} (guess $\delta = 0.2$)
+% 	\begin{itemize}
+% 		\item Distance from truth: $|0.2 - 1| = 0.8$
+% 		\item Mr.\ Historical Average's distance: $|0 - 1| = 1$
+% 		\item We win whenever true $b > 0.1$ (i.e., $\delta/2 = 0.1$)
+% 		\item \textbf{No randomness, no estimation error, always closer to truth!}
+% 	\end{itemize}
+
+% 	\vspace{0.3cm}
+% 	\begin{block}{Lesson}
+% 		A \textbf{conservative and deterministic} guess beats a noisy unbiased estimate.\\
+% 		We sacrifice some bias reduction for \textbf{zero variance}.
+% 	\end{block}
+% \end{frame}
+
+% %--- Slide 4: Model Setup ---
+% \begin{frame}[allowframebreaks]{Model Setup}
+% 	\textbf{Predictive Regression:}
+% 	\begin{equation}
+% 		r = \mu + bx + e
+% 	\end{equation}
+% 	\begin{itemize}
+% 		\item $r$: future excess return
+% 		\item $x$: predictor variable (standardized to zero mean)
+% 		\item $b$: population predictive slope (unknown, but nonzero if predictability exists)
+% 		\item $e$: residual (zero mean, uncorrelated with $x$)
+% 		\item $\mu$: unconditional expected return
+% 	\end{itemize}
+
+% 	\framebreak
+% 	\textbf{In Practice: $\mu$ Must Be Estimated}
+% 	\begin{equation}
+% 		\mu = \hat{\mu} + \xi
+% 	\end{equation}
+% 	where $\hat{\mu}$ is the historical average (sample mean), $\xi$ is estimation error (zero mean).
+
+% 	\vspace{0.2cm}
+% 	\textbf{Combined Form:}
+% 	\begin{equation}
+% 		r = \hat{\mu} + bx + \epsilon, \quad \text{where } \epsilon \equiv e + \xi
+% 	\end{equation}
+
+% 	\vspace{0.2cm}
+% 	\textbf{Three Competing Forecasts:}
+% 	\begin{center}
+% 		\begin{tabular}{lcc}
+% 			\toprule
+% 			Method & Forecast & Slope \\
+% 			\midrule
+% 			Historical Mean (HM) & $\hat{\mu}$ & $0$ (constant) \\
+% 			OLS Regression & $\hat{\mu} + \hat{b}x$ & $\hat{b}$ (random) \\
+% 			\textbf{This Paper} & $\hat{\mu} + \delta x$ & $\delta$ (constant $\neq 0$) \\
+% 			\bottomrule
+% 		\end{tabular}
+% 	\end{center}
+% \end{frame}
+
+% %--- Slide 5: Why is HM Hard to Beat? ---
+% \begin{frame}[allowframebreaks]{Why Is the Historical Average So Hard to Beat?}
+% 	\textbf{OOS MSE Difference} (positive $=$ our forecast is better):
+% 	\begin{align}
+% 		E\left[\text{MSE}_{\hat{\mu}} - \text{MSE}_{\hat{\mu}+\hat{b}x}\right] &= \underbrace{\left(b^2 - \text{Bias}(\hat{b})^2\right)}_{\text{bias reduction gain}} \cdot x^2 - \underbrace{\text{Var}(\hat{b}) \cdot x^2}_{\text{variance cost}} \notag \\
+% 		&\quad - \underbrace{2E\left[(\hat{\mu}-\mu)\hat{b}\right]x}_{\text{interaction term}}
+% 	\end{align}
+
+% 	\framebreak
+% 	\textbf{The Problem with OLS:}
+% 	\begin{itemize}
+% 		\item OLS reduces bias ($\hat{b}$ is centered on $b$), so $\text{Bias}(\hat{b})^2$ is small
+% 		\item But OLS has \textbf{high variance}: $\text{Var}(\hat{b})$ is large
+% 		\item The variance cost can \textbf{more than offset} the bias gain!
+% 		\item Additionally, the interaction term can hurt when $\hat{\mu}$ and $\hat{b}$ co-move
+% 	\end{itemize}
+
+% 	\vspace{0.3cm}
+% 	\textbf{This Paper's Solution:} Use a \textbf{constant} slope $\delta$ instead of $\hat{b}$
+% 	\begin{itemize}
+% 		\item $\text{Var}(\delta) = 0$ (it's a constant!) $\Rightarrow$ variance cost disappears
+% 		\item Interaction term $= 0$ (because $\delta$ is constant and $\hat{\mu}$ is unbiased)
+% 		\item MSE difference simplifies to:
+% 		\begin{equation}
+% 			\left(b^2 - \text{Bias}(\delta)^2\right) x^2 > 0 \quad \text{whenever } 0 < \delta < b
+% 		\end{equation}
+% 		\item If $\delta$ is between $0$ and $b$, we \textbf{always} beat the historical average!
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 6: Theorem 1 and 2 ---
+% \begin{frame}[allowframebreaks]{Theoretical Foundation: First-Order Stochastic Dominance}
+% 	\textbf{What Is First-Order Stochastic Dominance (FOSD)?}
+% 	\begin{itemize}
+% 		\item Forecast A \textbf{dominates} Forecast B if:
+% 		\begin{itemize}
+% 			\item For \textit{any} MSE threshold $c$: $P(\text{MSE}_A \leq c) \geq P(\text{MSE}_B \leq c)$
+% 			\item For \textit{some} $c$: the inequality is strict
+% 		\end{itemize}
+% 		\item FOSD is the \textbf{strongest} form of dominance: \textit{any} investor with increasing utility prefers A to B, regardless of risk preferences (Huang and Litzenberger, 1988)
+% 	\end{itemize}
+
+% 	\framebreak
+% 	\textbf{Theorem 1} (Known $\mu$): The forecast $\mu + \delta x$ FOSD the forecast $\mu$, if:
+% 	\begin{enumerate}
+% 		\item $\delta$ is a constant between $0$ and $b$
+% 		\item The PDF of the error vector $\mathbf{e}$ is strictly decreasing in $\|\mathbf{e}\|$
+% 	\end{enumerate}
+
+% 	\vspace{0.3cm}
+% 	\textbf{Theorem 2} (Estimated $\hat{\mu}$): The forecast $\hat{\mu} + \delta x$ FOSD the forecast $\hat{\mu}$, if:
+% 	\begin{enumerate}
+% 		\item $\delta$ is a constant between $0$ and $b$
+% 		\item The PDF of the error vector $\boldsymbol{\epsilon}$ is strictly decreasing in $\|\boldsymbol{\epsilon}\|$
+% 	\end{enumerate}
+% 	\begin{itemize}
+% 		\item Condition 2 holds for normal distribution, Student's $t$ distribution, etc.
+% 	\end{itemize}
+
+% 	\vspace{0.3cm}
+% 	\textbf{Corollary 1:}
+% 	\begin{equation}
+% 		\text{MSE}_{\hat{\mu}+\delta x} \overset{d}{=} \text{MSE}_{\hat{\mu}} - \eta, \quad \eta \geq 0
+% 	\end{equation}
+% 	The MSE of our method equals HM's MSE minus a \textbf{nonnegative} random variable $\Rightarrow$ always (weakly) better!
+% \end{frame}
+
+% %--- Slide 7: Implementation ---
+% \begin{frame}[allowframebreaks]{Implementation: How to Choose $\delta$}
+% 	\textbf{Step 1: Choose the Sign of $\delta$}
+
+% 	The key requirement is: $\delta$ must be \textbf{between 0 and $b$}. This means we need the \textbf{sign} of $b$.
+
+% 	\vspace{0.2cm}
+% 	Three ways to determine the sign:
+% 	\begin{enumerate}
+% 		\item \textbf{Economic theory}: e.g., Campbell and Thompson (2008) --- $dp$ should positively predict returns
+% 		\item \textbf{Statistical inference}: use confidence intervals from the data
+% 		\item \textbf{Previous studies}: use published estimates (e.g., Campbell and Shiller, 1988a)
+% 	\end{enumerate}
+
+% 	\framebreak
+% 	\textbf{Step 2: Choose the Magnitude $1/A$}
+% 	\begin{equation}
+% 		\delta = \begin{cases}
+% 			+1/A & \text{if } b > 0 \\
+% 			-1/A & \text{if } b < 0
+% 		\end{cases}
+% 	\end{equation}
+% 	\begin{itemize}
+% 		\item $A > 0$ is a constant controlling \textbf{conservatism}
+% 		\item \textbf{Larger $A$} $\Rightarrow$ smaller $|\delta|$ $\Rightarrow$ more conservative $\Rightarrow$ safer but smaller gains
+% 		\item \textbf{Smaller $A$} $\Rightarrow$ larger $|\delta|$ $\Rightarrow$ more aggressive $\Rightarrow$ bigger gains but risk overshooting $b$
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{Practical meaning of $A$:}
+% 	\begin{itemize}
+% 		\item Predictors are standardized to std $= 1$
+% 		\item If $A = 100$: a one-std-dev change in the predictor shifts the annual return forecast by $1/100 = 1\%$
+% 		\item If $A = 1000$: the shift is only $0.1\%$ --- extremely conservative
+% 	\end{itemize}
+
+% 	\framebreak
+% 	\textbf{Step 3 (Optional): Use Confidence Intervals to Pin Down $A$}
+
+% 	\vspace{0.2cm}
+% 	If the slope $b$ is significantly positive with 95\% CI $[\hat{b}_L, \hat{b}_U]$:
+% 	\begin{equation}
+% 		0 < \hat{b}_L \leq b \leq \hat{b}_U \quad \text{(with 95\% probability)}
+% 	\end{equation}
+% 	Setting $\delta = \hat{b}_L$ (the lower bound) ensures $0 < \delta \leq b$ with high probability.
+
+% 	\vspace{0.3cm}
+% 	\textbf{Example: Campbell and Shiller (1988a)}
+% 	\begin{itemize}
+% 		\item Dividend-price ratio: slope $= 0.129$, SE $= 0.057$, $\sigma_x = 0.277$
+% 		\item 95\% lower bound for the standardized predictor:
+% 		\begin{equation}
+% 			\delta = (0.129 - 1.96 \times 0.057) \times 0.277 = 0.0048
+% 		\end{equation}
+% 		\item This implies $A = 1/0.0048 \approx 209$
+% 		\item Meaning: a one-std-dev change in $dp$ shifts the annual return forecast by $\approx 0.5\%$
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 8: Sign Uncertainty ---
+% \begin{frame}{What If We Are Unsure About the Sign?}
+% 	\textbf{Theorems 3 \& 4: Sign Inferred with Error}
+
+% 	\vspace{0.2cm}
+% 	In practice, we may get the sign wrong. Suppose:
+% 	\begin{equation}
+% 		d = \begin{cases}
+% 			+\delta & \text{with probability } p \text{ (correct sign)} \\
+% 			-\delta & \text{with probability } q \text{ (wrong sign)} \\
+% 			0 & \text{with probability } 1-p-q \text{ (undetermined, use HM)}
+% 		\end{cases}
+% 	\end{equation}
+
+% 	\vspace{0.2cm}
+% 	\textbf{Result:} FOSD still holds as long as:
+% 	\begin{equation}
+% 		\frac{p}{q} > \frac{2b + \delta}{2b - \delta} \quad \text{(rule of thumb from Lemma 1)}
+% 	\end{equation}
+
+% 	\vspace{0.2cm}
+% 	\textbf{How stringent is this requirement?}
+% 	\begin{center}
+% 		\begin{tabular}{lcc}
+% 			\toprule
+% 			Scenario & $\frac{2b+\delta}{2b-\delta}$ & Required $p/q$ \\
+% 			\midrule
+% 			$\delta/b \approx 0$ (very conservative) & $\approx 1$ & barely $> 1$ \\
+% 			$\delta/b = 1$ (maximum allowed) & $= 3$ & $> 3$ \\
+% 			\midrule
+% 			95\% statistical significance & --- & $0.95/0.05 = 19 \gg 3$ \checkmark \\
+% 			90\% statistical significance & --- & $0.90/0.10 = 9 \gg 3$ \checkmark \\
+% 			\bottomrule
+% 		\end{tabular}
+% 	\end{center}
+
+% 	\vspace{0.2cm}
+% 	Conventional significance levels \textbf{easily} satisfy the requirement.
+% \end{frame}
+
+% %--- Slide 9: Interpretations ---
+% \begin{frame}[allowframebreaks]{Interpretations of the Method}
+% 	\textbf{Interpretation 1: Gradient Descent}
+
+% 	\vspace{0.2cm}
+% 	Gradient descent finds the minimum of a loss function $f(a)$:
+% 	\begin{equation}
+% 		a_1 = a_0 - \gamma f'(a_0)
+% 	\end{equation}
+
+% 	\begin{itemize}
+% 		\item The historical average is the ``starting point'': $a_0 = 0$
+% 		\item Our method takes \textbf{one step} from zero toward predictability: $a_1 = \delta = 1/A$
+% 		\item Step direction: guided by the sign of $b$
+% 		\item Step size: the constant $1/A$ (no randomness $\Rightarrow$ zero variance)
+% 	\end{itemize}
+
+% 	\centering
+% 	\textit{Our method $=$ one gradient descent step from the historical average toward the truth.}
+
+% 	\framebreak
+% 	\textbf{Interpretation 2: Amortization of Mispricing}
+
+% 	\vspace{0.2cm}
+% 	Consider the standardized $dp$ ratio:
+% 	\begin{itemize}
+% 		\item $dp = 0$: at its historical mean $\Rightarrow$ no adjustment to forecast
+% 		\item $dp = -1$: one std below mean $\Rightarrow$ price is \textit{excessively high} relative to dividends
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	A slope of $1/A$ means: we assume $1/A$ fraction of the excess valuation \textbf{mean-reverts each period}.
+% 	\begin{itemize}
+% 		\item $A = 100$: 1\% mean reversion per year
+% 		\item $A = 1000$: 0.1\% mean reversion per year
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{Connection to AR(1):} If $dp$ follows AR(1) with persistence $\rho$:
+% 	\begin{equation}
+% 		dp_0 - dp_t = dp_0(1 - \rho^t) \approx dp_0(1-\rho)t
+% 	\end{equation}
+% 	Setting $1/A = 1 - \rho$ matches the mean-reversion rate.\\
+% 	Persistent predictors ($\rho \approx 1$) $\Rightarrow$ large $A$ (conservative slope).
+
+% 	\framebreak
+% 	\textbf{Interpretation 3: A Better Shrinkage Target}
+
+% 	\vspace{0.2cm}
+% 	Traditional shrinkage: pull the OLS estimate $\hat{b}$ toward zero.
+% 	\begin{itemize}
+% 		\item Result: a \textbf{random} estimator (weighted average of $\hat{b}$ and 0)
+% 		\item Problem: still has estimation variance
+% 	\end{itemize}
+
+% 	\vspace{0.3cm}
+% 	This paper's approach:
+% 	\begin{itemize}
+% 		\item Use $\delta$ as the slope directly --- it is \textbf{not random} at all
+% 		\item This enables the \textbf{ex ante} guarantee of outperformance (Theorems 1--4)
+% 		\item Also: when predictability exists, zero is a \textbf{biased} shrinkage target
+% 		\begin{itemize}
+% 			\item The bias of shrinking toward zero can be as large as the std of $\hat{b}$!
+% 			\item Replacing zero with $\delta$ as the shrinkage limit improves performance
+% 		\end{itemize}
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 10: Simulation Setup ---
+% \begin{frame}{Simulation Setup}
+% 	\textbf{Data-Generating Process:} VAR system (Cochrane, 2008)
+% 	\begin{align}
+% 		r_{t+1} &= a_r + b_r \cdot dp_t + \varepsilon^r_{t+1} \\
+% 		dp_{t+1} - \overline{dp} &= \rho(dp_t - \overline{dp}) + \varepsilon^{dp}_{t+1} \\
+% 		\Delta d_{t+1} &= a_d + b_d \cdot dp_t + \varepsilon^d_{t+1}
+% 	\end{align}
+
+% 	Campbell-Shiller decomposition: $\varepsilon^r_{t+1} = \varepsilon^d_{t+1} - \kappa_1 \varepsilon^{dp}_{t+1}$ $\Rightarrow$ captures the Stambaugh (1999) bias.
+
+% 	\vspace{0.2cm}
+% 	\textbf{Calibration:}
+% 	\begin{center}
+% 		\begin{tabular}{lcc}
+% 			\toprule
+% 			Parameter & Value & Meaning \\
+% 			\midrule
+% 			$\overline{dp}$ & $-3.2239$ & mean log $d/p$ ratio \\
+% 			$\rho$ & $0.8911$ & persistence of $dp$ \\
+% 			$\kappa_1$ & $0.9617$ & linearization constant \\
+% 			$b_d$ & $0$ & no dividend growth predictability \\
+% 			$b_r = 1 - \kappa_1\rho + b_d$ & $\mathbf{0.1430}$ & \textbf{true predictive slope} \\
+% 			\bottomrule
+% 		\end{tabular}
+% 	\end{center}
+
+% 	Rolling 20-year windows; each simulation: 146 annual returns.
+% \end{frame}
+
+% %--- Slide 11: Simulation Results - Bias-Variance ---
+% \begin{frame}{Simulation Results: The Bias-Variance Trade-off}
+% 	\textbf{Comparing Three Methods} (true slope $b_r = 0.143$):
+
+% 	\vspace{0.2cm}
+% 	\begin{center}
+% 		\begin{tabular}{lccc}
+% 			\toprule
+% 			& \textbf{HM} & \textbf{Our Method} ($A=50$) & \textbf{OLS} \\
+% 			\midrule
+% 			Slope used & 0 & $1/50 = 0.02$ & $\hat{b} \approx 0.143$ \\
+% 			Bias & $-0.143$ (large) & $-0.123$ (smaller) & $\approx 0$ (Stambaugh bias) \\
+% 			Std Dev & \textbf{0} & \textbf{0} & $\approx 0.12$ (large!) \\
+% 			RMSE & 0.143 & 0.123 & $\approx 0.12$ \\
+% 			\bottomrule
+% 		\end{tabular}
+% 	\end{center}
+
+% 	\vspace{0.3cm}
+% 	\textbf{Key Insight from Simulations:}
+% 	\begin{itemize}
+% 		\item The \textbf{standard deviation of OLS} $\approx$ the \textbf{bias of HM}!
+% 		\item This is exactly why OLS cannot reliably beat HM: the variance cost offsets the bias gain
+% 		\item Our method: same zero variance as HM, but \textbf{smaller bias} $\Rightarrow$ smallest RMSE
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 12: Simulation Results - OOS R² ---
+% \begin{frame}{Simulation Results: OOS $R^2$ Distribution}
+% 	\textbf{OOS $R^2$ measures improvement over HM:}
+% 	\begin{equation}
+% 		R^2_{OOS} = \frac{\text{MSE}_{\hat{\mu}} - \text{MSE}_{\hat{\mu}+\delta x}}{\text{MSE}_{\hat{\mu}}}
+% 	\end{equation}
+% 	$R^2_{OOS} > 0$: our method beats HM. \quad $R^2_{OOS} < 0$: HM wins.
+
+% 	\vspace{0.3cm}
+% 	\textbf{Simulation Findings (146 annual returns per sample):}
+% 	\begin{itemize}
+% 		\item \textbf{Our method} ($A = 50$ to $500$):
+% 		\begin{itemize}
+% 			\item $R^2_{OOS}$ distributions are \textbf{entirely to the right of zero}
+% 			\item Confirms Corollary 1: MSE is always $\leq$ HM's MSE
+% 			\item Larger $A$ $\Rightarrow$ smaller gains but \textbf{less noisy} (tighter distribution)
+% 		\end{itemize}
+% 		\item \textbf{OLS}:
+% 		\begin{itemize}
+% 			\item Centered on a positive $R^2_{OOS}$, but has \textbf{fat tails}
+% 			\item Substantial probability of $R^2_{OOS} < 0$ (losing to HM!)
+% 			\item This is the instability documented by Goyal and Welch (2008)
+% 		\end{itemize}
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 13: Simulation - FOSD ---
+% \begin{frame}{Simulation Results: First-Order Stochastic Dominance}
+% 	\textbf{CDF of MSE:} Our method's CDF is \textbf{everywhere above} HM's CDF.
+
+% 	\vspace{0.2cm}
+% 	This means: for \textit{any} MSE threshold $c$, our method has a \textit{higher} probability of achieving MSE $\leq c$ than HM.
+
+% 	\vspace{0.3cm}
+% 	\textbf{Horizon Effects:}
+% 	\begin{center}
+% 		\begin{tabular}{lp{8cm}}
+% 			\toprule
+% 			Window & Observation \\
+% 			\midrule
+% 			1-year & MSE very noisy; CDFs close together, but dominance still holds \\
+% 			10-year & Clearer separation between CDFs \\
+% 			40-year & Narrow MSE range; dominance \textbf{easy to discern} visually \\
+% 			\bottomrule
+% 		\end{tabular}
+% 	\end{center}
+
+% 	\vspace{0.2cm}
+% 	\textbf{Implication:}
+% 	\begin{itemize}
+% 		\item FOSD holds at \textit{all} horizons
+% 		\item Long-term investors benefit most clearly: longer evaluation windows reduce noise
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 14: Empirical Data ---
+% \begin{frame}{Empirical Analysis: Data and Predictors}
+% 	\textbf{Data:}
+% 	\begin{itemize}
+% 		\item Market returns: CRSP value-weighted index (post-1926), S\&P 500 (pre-1926)
+% 		\item 23 predictors from Goyal and Welch (2008) + Robert Shiller's website
+% 		\item Nonoverlapping \textbf{annual} returns
+% 		\item Standardize each predictor to mean 0, std 1 using \textbf{rolling 20-year windows}
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{Key Predictors:}
+% 	\begin{columns}
+% 		\begin{column}{0.5\textwidth}
+% 			\footnotesize
+% 			\begin{itemize}
+% 				\item Dividend-price ratio ($dp$)
+% 				\item Dividend yield ($dy$)
+% 				\item Earnings-price ratio ($ep$)
+% 				\item Book-to-market ($bm$)
+% 				\item CAPE (Shiller)
+% 				\item Total Return CAPE (Shiller)
+% 				\item Consumption-wealth ratio ($cay$)
+% 				\item Investment-capital ratio ($ik$)
+% 			\end{itemize}
+% 		\end{column}
+% 		\begin{column}{0.5\textwidth}
+% 			\footnotesize
+% 			\begin{itemize}
+% 				\item Long-term bond return ($ltr$)
+% 				\item Long-term yield ($lty$)
+% 				\item Corporate bond return ($corpr$)
+% 				\item T-bill rate ($tbl$)
+% 				\item Term spread ($tms$)
+% 				\item Inflation ($infl$)
+% 				\item Net equity issuance ($ntis$)
+% 				\item Stock variance ($svar$)
+% 			\end{itemize}
+% 		\end{column}
+% 	\end{columns}
+% \end{frame}
+
+% %--- Slide 15: Cumulative Performance ---
+% \begin{frame}[allowframebreaks]{Empirical Results: Cumulative Performance (Using $dp$)}
+% 	\textbf{Cumulative SSE Difference} $= \sum (\text{HM error}^2 - \text{forecast error}^2)$
+
+% 	\vspace{0.1cm}
+% 	Above zero $=$ beating HM; below zero $=$ losing to HM.
+
+% 	\vspace{0.3cm}
+% 	\textbf{OLS Performance:}
+% 	\begin{itemize}
+% 		\item Highly \textbf{volatile}: big gains in 1970s (Oil Shock), big losses in other periods
+% 		\item This is the key concern in Goyal and Welch (2008): instability
+% 	\end{itemize}
+
+% 	\framebreak
+% 	\textbf{Our Method's Performance:}
+% 	\begin{itemize}
+% 		\item \textbf{Steady accumulation} of gains over time for all $A$ values (50 to 1,000)
+% 		\item The biggest forecast error: the \textbf{dot-com period} (late 1990s)
+% 		\begin{itemize}
+% 			\item Market returned high despite low $dp$ ratio (the predictor ``failed'')
+% 			\item But with larger $A$ (e.g., $A \geq 200$), the loss is \textbf{substantially mitigated}
+% 			\item $A = 1000$: impact of dot-com is barely visible
+% 		\end{itemize}
+% 		\item Even with $A = 1,000$ (only 0.1\% per std dev!), cumulative performance \textbf{exceeds OLS} at the end of the sample
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{This solves the key concern of Goyal and Welch (2008):}
+% 	\begin{itemize}
+% 		\item OLS gains are concentrated in specific episodes (unstable)
+% 		\item Our method's gains accumulate \textit{steadily} across the entire sample
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 16: OOS R² Results ---
+% \begin{frame}{Empirical Results: OOS $R^2$ for $dp$}
+% 	\textbf{Our Method:}
+% 	\begin{center}
+% 		\begin{tabular}{lccccc}
+% 			\toprule
+% 			& $A=1000$ & $A=500$ & $A=200$ & $A=100$ & $A=50$ \\
+% 			\midrule
+% 			$R^2_{OOS}$ (\%) & 0.2 & 0.5 & 1.1 & 2.1 & 3.4 \\
+% 			$p$-value & (.008) & (.009) & (.012) & (.019) & (.044) \\
+% 			\bottomrule
+% 		\end{tabular}
+% 	\end{center}
+% 	All are statistically significant! Larger $A$ $\Rightarrow$ smaller $R^2$ but \textbf{more significant $p$-value} (less noisy).
+
+% 	\vspace{0.3cm}
+% 	\textbf{Comparison with Existing Methods:}
+% 	\begin{center}
+% 		\begin{tabular}{lccc}
+% 			\toprule
+% 			& OLS & CT+ & CT++ \\
+% 			\midrule
+% 			$R^2_{OOS}$ (\%) & 0.2 & 1.3 & 1.8 \\
+% 			$p$-value & (.477) & (.357) & (.286) \\
+% 			\bottomrule
+% 		\end{tabular}
+% 	\end{center}
+
+% 	\vspace{0.2cm}
+% 	\textbf{Key finding:} OLS has $R^2 = 0.2\%$ but $p = .477$ (insignificant!). Our method with $A = 1000$ also has $R^2 = 0.2\%$ but $p = .008$ (highly significant!). Same $R^2$, but our method achieves it \textbf{reliably}.
+% \end{frame}
+
+% %--- Slide 17: Economic Magnitude ---
+% \begin{frame}{How Large Are the Economic Gains?}
+% 	\textbf{How to evaluate an $R^2_{OOS}$ of 2.1\%?}
+
+% 	\vspace{0.2cm}
+% 	Campbell and Thompson (2008): compare $R^2_{OOS}$ to the \textbf{squared Sharpe ratio}:
+% 	\begin{itemize}
+% 		\item Annual market Sharpe ratio: $SR = 0.278$
+% 		\item Squared Sharpe ratio: $SR^2 = 0.278^2 = 0.078$
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{Proportional increase in expected return} for a mean-variance investor:
+% 	\begin{equation}
+% 		\frac{R^2_{OOS}}{SR^2} = \frac{0.021}{0.078} = \mathbf{27\%}
+% 	\end{equation}
+
+% 	\vspace{0.3cm}
+% 	\textbf{Interpretation:}
+% 	\begin{itemize}
+% 		\item An investor who recognizes predictability via our method ($A = 100$) can increase her expected return by \textbf{27\%} relative to an investor using HM
+% 		\item This is achieved with a ``modest'' aim: we only target \textbf{bias reduction}, not unbiasedness
+% 		\item Even small $R^2_{OOS}$ values translate to economically meaningful gains
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 18: All Predictors ---
+% \begin{frame}{Comprehensive Results: All 23 Predictors}
+% 	\textbf{95\% Significant OOS $R^2$ (8 predictors):}
+% 	\begin{itemize}
+% 		\item CAPE, Total Return CAPE (Campbell and Shiller, 1988b; Bunn and Shiller, 2014)
+% 		\item Dividend-price ratio, Dividend yield (Ball, 1978; Hodrick, 1992; Cochrane, 2008)
+% 		\item Consumption-wealth ratio $cay$ (Lettau and Ludvigson, 2001)
+% 		\item Investment-capital ratio $ik$ (Cochrane, 1991)
+% 		\item Long-term rate of returns (Campbell, 1987; Fama and French, 1989)
+% 		\item Corporate bond returns (Keim and Stambaugh, 1986)
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{90\% Significant OOS $R^2$ (7 additional predictors):}
+% 	\begin{itemize}
+% 		\item Book-to-market ratio; Earnings-to-price ratio
+% 		\item Long-term government bond yield (Goyal-Welch data and Shiller data)
+% 		\item Treasury-bill rate; Term spread
+% 		\item Inflation (Shiller data)
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{Summary:} \textcolor{blue}{15 out of 23} predictors produce significantly positive OOS $R^2$!
+% 	Contrast: Goyal and Welch (2008) found \textit{almost none} could beat HM using OLS.
+% \end{frame}
+
+% %--- Slide 19: FOSD Empirical ---
+% \begin{frame}{Empirical Evidence: First-Order Stochastic Dominance}
+% 	\textbf{Method:} Estimate the CDF of MSE using 40-year rolling windows.
+
+% 	\vspace{0.3cm}
+% 	\textbf{Finding:}
+% 	\begin{itemize}
+% 		\item The empirical CDF of our method is \textbf{everywhere above} HM's CDF
+% 		\item For any MSE threshold: our method has a higher probability of achieving MSE below that threshold
+% 		\item Confirmed using both the empirical distribution function and kernel smoothing
+% 	\end{itemize}
+
+% 	\vspace{0.3cm}
+% 	\textbf{Implication for Long-Term Investors:}
+% 	\begin{itemize}
+% 		\item FOSD holds \textit{empirically}, not just in theory or simulations
+% 		\item \textbf{Any} investor with increasing utility (regardless of risk aversion level) should prefer our forecast to HM
+% 		\item Longer evaluation horizons make the dominance easier to detect
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 20: Previous Studies ---
+% \begin{frame}[allowframebreaks]{Using Published Estimates from Previous Studies}
+% 	\textbf{A Powerful Implication of the Theory:}
+
+% 	\vspace{0.2cm}
+% 	If a previous study reports a \textbf{significantly positive} slope with 95\% CI $[\hat{b}_L, \hat{b}_U]$:
+% 	\begin{itemize}
+% 		\item The lower bound $\hat{b}_L > 0$ (by definition of significance)
+% 		\item $\hat{b}_L \leq b$ with high probability (by construction of CI)
+% 		\item Setting $\delta = \hat{b}_L$ satisfies the conditions of Theorem 2 $\Rightarrow$ FOSD over HM!
+% 	\end{itemize}
+
+% 	\centering
+% 	\textit{Published confidence bounds from old papers can improve future forecasts.}
+
+% 	\framebreak
+% 	\textbf{Example: Campbell and Shiller (1988a)}
+% 	\begin{itemize}
+% 		\item Sample: 1871--1986
+% 		\item Found significantly positive slope for $dp$; 95\% lower bound $\Rightarrow A = 209$
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{OOS Test (post-1987):}
+% 	\begin{itemize}
+% 		\item Using $A = 209$ (from their published 95\% lower bound): positive OOS $R^2$!
+% 		\item Similar result using Cochrane (1991) for the investment-capital ratio
+% 	\end{itemize}
+
+% 	\vspace{0.3cm}
+% 	\textbf{Why This Matters:}
+% 	\begin{itemize}
+% 		\item The numbers were published \textit{before} the OOS period $\Rightarrow$ \textbf{no data mining}
+% 		\item This is \textbf{direct evidence} that OOS predictability is real
+% 		\item Published parameter estimates are \textit{not} useless for future forecasting --- contrary to the skeptical view of Goyal and Welch (2008)
+% 	\end{itemize}
+% \end{frame}
+
+% %--- Slide 21: Summary ---
+% \begin{frame}[allowframebreaks]{Summary of Contributions}
+% 	\textbf{1. A Novel OOS Forecast Methodology}
+% 	\begin{itemize}
+% 		\item Use a \textbf{conservative constant} as the predictive slope
+% 		\item Match the zero variance of HM while reducing bias
+% 		\item The \textbf{first} method proven \textit{ex ante} to outperform the historical average
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{2. Theoretical Foundation}
+% 	\begin{itemize}
+% 		\item Theorems 1--2: FOSD when the sign is known
+% 		\item Theorems 3--4: FOSD when the sign is inferred statistically (conventional significance levels suffice)
+% 		\item Confidence bound near zero: a nearly necessary and sufficient condition
+% 	\end{itemize}
+
+% 	\framebreak
+% 	\textbf{3. Strong Empirical Evidence}
+% 	\begin{itemize}
+% 		\item 15/23 predictors produce significantly positive OOS $R^2$ at 90\%; 8 at 95\%
+% 		\item Cumulative gains are \textbf{steady over time} (solves the instability concern)
+% 		\item FOSD confirmed empirically using 40-year windows
+% 		\item Published estimates from prior studies \textbf{add value} to subsequent forecasts
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+% 	\textbf{4. Practical Takeaway}
+% 	\begin{itemize}
+% 		\item To forecast the equity premium: start from the historical average, then take a \textbf{small, conservative step} in the direction suggested by theory or prior evidence
+% 		\item This simple adjustment is enough to \textbf{dominate} the gold standard
+% 	\end{itemize}
+% \end{frame}
+
+
+\begin{frame}{Open Questions in Predictability Research}
+	\begin{enumerate}
+		\item \textbf{Economic vs. Statistical significance}: Even with $R^2_{OOS} > 0$, are returns economically exploitable after transaction costs?
+		\item \textbf{Source of predictability}: Risk premium variation or mispricing?
+		\item \textbf{Instability}: Why do predictors work in some periods but not others?
+		\item \textbf{International evidence}: Do U.S. findings generalize globally?
+		\item \textbf{Real-time availability}: Are predictors available to investors in real time?
+	\end{enumerate}
+	
+>>>>>>> 98f7b365f0a5ae09b021e0a6513ee2f5c1c2bab7
 	\vspace{5pt}
 	\textbf{Step 1: Estimate $\hat{\beta}_t$} (predictive coefficients) --- uses \textbf{one-sided} kernel (correct):
 	\[
