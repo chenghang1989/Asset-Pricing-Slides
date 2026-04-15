@@ -78,31 +78,35 @@
 
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+%\usepackage{ctex}
+\usepackage{multicol}
 
 \usepackage{fontspec}
-\setsansfont{Calibri}
-%\setsansfont{Calibri}[
-%    Path=../Font/,
-%    Scale=0.9,
-%    Extension = .ttf,
-%    UprightFont=*-Regular,
-%    BoldFont=*-Bold,
-%    ItalicFont=*-Italic,
-%    BoldItalicFont=*-BoldItalic
-%    ]
+\setsansfont{Calibri}[
+    Path=Font/,
+    Scale=0.9,
+    Extension = .ttf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic,
+    BoldItalicFont=*-BoldItalic
+    ]
 \usepackage{unicode-math}
-\setmathfont{Libertinus Math}% 使用默认的数学字体或你偏好的数学字体 Latin Modern Math/Libertinus Math
-% \setmathfont[version=bold]{Latin Modern Math}
+
+% \setmathfont{Libertinus Math} % 使用默认的数学字体或你偏好的数学字体 Latin Modern Math
 
 \usepackage{ragged2e}
 \justifying\let\raggedright\justifying %两端对齐
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
 \title[Asset Pricing]{\textbf{Asset Pricing}} % The short title appears at the bottom of every slide, the full title is only on the title page
 
-\subtitle{5. Beta}
+\subtitle{Beta}
 
 \author[Cheng Hang]{Cheng Hang} % Your name
 \institute[DUFE] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
