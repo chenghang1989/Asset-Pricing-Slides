@@ -92,6 +92,9 @@
 \usepackage{unicode-math}
 \setmathfont{Libertinus Math}% 使用默认的数学字体或你偏好的数学字体 Latin Modern Math/Libertinus Math
 
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
 \usepackage{ragged2e}
 \justifying\let\raggedright\justifying %两端对齐
 
@@ -131,8 +134,65 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \titlepage % Print the title page as the first slide
 \end{frame}
 
+% ============================================================================
+% Roadmap: Lectures 08-09 form one continuous derivation
+% ============================================================================
+\begin{frame}{Roadmap: Lecture 09 in Context}
+	\begin{center}
+		\small
+		\begin{tikzpicture}[node distance=8pt,
+			box/.style={draw,rounded corners,align=center,inner sep=4pt,minimum height=22pt,font=\small},
+			stage/.style={box,fill=gray!10},
+			here/.style={box,fill=red!25}]
+			\node[stage] (a) {Power utility};
+			\node[stage, right=of a] (b) {Epstein-Zin preferences \\ (08 \S1)};
+			\node[stage, below=12pt of b] (c) {Primitive SDF in $V_{t+1}/\mu_t$ \\ (08 \S2)};
+			\node[here, below=12pt of c] (d) {\textbf{Wealth-return SDF} \\ \textbf{(here, 09 \S1)}};
+			\node[here, right=of d] (e) {\textbf{Consumption-free SDF} \\ \textbf{(here, 09 \S2)}};
+			\node[here, below=12pt of d] (f) {\textbf{Merton two-beta ICAPM} \\ \textbf{+ empirical applications (09 \S3)}};
+			\draw[->,thick] (a) -- (b);
+			\draw[->,thick] (b) -- (c);
+			\draw[->,thick] (c) -- (d);
+			\draw[->,thick] (d) -- (e);
+			\draw[->,thick] (d) -- (f);
+			\draw[->,thick] (e) -- (f);
+		\end{tikzpicture}
+	\end{center}
+	\vspace{4pt}
+	\begin{block}{What this lecture does}
+		Take the SDF from 08 and \textbf{operationalize it twice}: first in terms of the wealth return $R_{W,t+1}$ (Section 1), then in terms of \emph{news about future returns} (Section 2). The result is the Merton-Campbell ICAPM, which we then take to data (Section 3).
+	\end{block}
+\end{frame}
 
-\section{Wealth Version}
+% ============================================================================
+% Recap: what we inherit from 08
+% ============================================================================
+\begin{frame}{Recap: The Primitive SDF and Why It Is Not Usable}
+	\textbf{From Lecture 08:}
+	\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=Primitive Epstein-Zin SDF]
+	\begin{equation*}
+		M_{t+1} = \delta \left( \frac{C_{t+1}}{C_t} \right)^{-1/\psi} \left( \frac{V_{t+1}}{\mu_t(V_{t+1})} \right)^{-(\gamma-1/\psi)}
+	\end{equation*}
+	\end{tcolorbox}
+	\textbf{Empirical obstacles:}
+	\begin{enumerate}
+		\item $V_{t+1}$ is the entire continuation utility -- not in any dataset.
+		\item Even $C_{t+1}$ in macro data is poorly measured (low frequency, smoothing, stockholder heterogeneity).
+	\end{enumerate}
+	\vspace{2pt}
+	\begin{block}{Plan of this lecture}
+		\begin{itemize}
+			\item \S 1 -- Replace $V_{t+1}/\mu_t(V_{t+1})$ by an expression involving the wealth return.
+			\item \S 2 -- Use Campbell's log-linearization of the budget constraint to also eliminate $C_{t+1}$, leaving only $r_{w,t+1}$ and \textit{news} about future $r_{w}$.
+			\item \S 3 -- Read the result as a Merton two-beta ICAPM and review the empirical literature.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+% ============================================================================
+% Section: Step 1 -- Wealth-Return Form (renamed from "Wealth Version")
+% ============================================================================
+\section{Step 1: Wealth-Return Form}
 
 \begin{frame}[allowframebreaks]
     \frametitle{From Continuation Utility to Wealth Return: Motivation}
@@ -327,56 +387,126 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 \begin{frame}[allowframebreaks]
-    \frametitle{Step 4: Derive the SDF from the Baseline Form}
-    
-    \textbf{Recall the baseline SDF:}
+    \frametitle{Step 4a: Substitute the Conjecture into the Baseline SDF}
+
+    \textbf{Baseline SDF (from Lecture 08):}
     \begin{equation*}
         M_{t+1} = \delta \left( \frac{C_{t+1}}{C_t} \right)^{-1/\psi} \left( \frac{V_{t+1}}{\mu_t(V_{t+1})} \right)^{-(\gamma-1/\psi)}
     \end{equation*}
-    
-    \textbf{Substitute $V_{t+1} = \phi_{t+1} W_{t+1}$ and $\mu_t(V_{t+1}) = (W_t - C_t)\mu_t^*$:}
+
+    \textbf{From Steps 1--2 we have two substitutions:}
+    \begin{itemize}
+    	\item Value-function conjecture: $V_{t+1} = \phi_{t+1}\,W_{t+1}$.
+    	\item Certainty equivalent: $\mu_t(V_{t+1}) = (W_t - C_t)\,\mu_t^*$, where $\mu_t^*\equiv\bigl(E_t[\phi_{t+1}^{1-\gamma}(1+R_{W,t+1})^{1-\gamma}]\bigr)^{1/(1-\gamma)}$.
+    \end{itemize}
+
+    \textbf{Plug in:}
     \begin{equation*}
-        M_{t+1} = \delta \left( \frac{C_{t+1}}{C_t} \right)^{-1/\psi} \left( \frac{\phi_{t+1} W_{t+1}}{(W_t - C_t)\mu_t^*} \right)^{-(\gamma-1/\psi)}
+        \frac{V_{t+1}}{\mu_t(V_{t+1})} = \frac{\phi_{t+1}\,W_{t+1}}{(W_t - C_t)\,\mu_t^*}.
     \end{equation*}
-    
+
     \framebreak
-    
+
     \textbf{Use the budget constraint $W_{t+1} = (W_t - C_t)(1 + R_{W,t+1})$:}
     \begin{equation*}
-        M_{t+1} = \delta \left( \frac{C_{t+1}}{C_t} \right)^{-1/\psi} \left( \frac{\phi_{t+1} (1 + R_{W,t+1})}{\mu_t^*} \right)^{-(\gamma-1/\psi)}
+    	\frac{V_{t+1}}{\mu_t(V_{t+1})} = \frac{\phi_{t+1}\,(1 + R_{W,t+1})}{\mu_t^*}.
     \end{equation*}
-    
-    Separate the terms:
+
+    \textbf{Therefore the SDF becomes:}
+    \begin{equation}\label{eq:M-after-sub}
+        M_{t+1} = \delta \left( \frac{C_{t+1}}{C_t} \right)^{-1/\psi} \left(\frac{\phi_{t+1}}{\mu_t^*}\right)^{-(\gamma-1/\psi)} (1 + R_{W,t+1})^{-(\gamma-1/\psi)}.
+    \end{equation}
+
+    \begin{block}{What is left to do}
+    	The unobservable $V_{t+1}$ has been replaced by the observable $1+R_{W,t+1}$, but we still have $\phi_{t+1}/\mu_t^*$. Step~4b uses the FOC to nail this ratio down.
+    \end{block}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Step 4b: Solving for $\phi_t$ from the FOC}
+
+    \textbf{Setup.} Recall (Step 2) that with $\psi_t \equiv C_t/W_t$ and $\rho \equiv 1-1/\psi$,
     \begin{equation*}
-        M_{t+1} = \delta \left( \frac{C_{t+1}}{C_t} \right)^{-1/\psi} \left(\frac{\phi_{t+1}}{\mu_t^*}\right)^{-(\gamma-1/\psi)} (1 + R_{W,t+1})^{-(\gamma-1/\psi)}
+    	\phi_t^\rho = (1-\delta)\psi_t^\rho + \delta(1-\psi_t)^\rho (\mu_t^*)^\rho.
     \end{equation*}
-    
+    \textbf{FOC for consumption (Step 3):}
+    \begin{equation}\label{eq:FOC-step3}
+    	(1-\delta)\psi_t^{\rho-1} = \delta(1-\psi_t)^{\rho-1}(\mu_t^*)^\rho.
+    \end{equation}
+
     \framebreak
-    
-    \textbf{Key observation from the FOC:}
-    
-    From the first-order condition for consumption, we can show that:
+
+    \textbf{Trick.} Multiply both sides of \eqref{eq:FOC-step3} by $(1-\psi_t)$:
     \begin{equation*}
-        \phi_t = (1-\delta)^{1/\rho} \psi_t^{(\rho-1)/\rho}
+    	(1-\delta)\psi_t^{\rho-1}(1-\psi_t) = \delta(1-\psi_t)^{\rho}(\mu_t^*)^\rho.
     \end{equation*}
-    
-    This relationship, combined with the Euler equation, implies:
+    Plug into the formula for $\phi_t^\rho$:
     \begin{equation*}
-        E_t\left[\left(\frac{\phi_{t+1}}{\mu_t^*}\right)^{-\rho(\gamma-1/\psi)} (1 + R_{W,t+1})^{-\rho(\gamma-1/\psi)}\right] = \delta^{-\rho}(1-\delta)^{-1}
+    	\begin{aligned}
+    		\phi_t^\rho &= (1-\delta)\psi_t^\rho + (1-\delta)\psi_t^{\rho-1}(1-\psi_t) \\
+    		&= (1-\delta)\psi_t^{\rho-1}\bigl[\psi_t + (1-\psi_t)\bigr] = (1-\delta)\psi_t^{\rho-1}.
+    	\end{aligned}
     \end{equation*}
-    
+
     \framebreak
-    
-    \textbf{Through careful algebraic manipulation:}
-    
-    Define $\theta \equiv \frac{1-\gamma}{1-1/\psi}$. Then:
+
+    \textbf{Key result:}
+    \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=Closed Form for $\phi_t$]
+    \begin{equation}\label{eq:phi-closed}
+    	\phi_t = (1-\delta)^{1/\rho}\,\psi_t^{(\rho-1)/\rho}.
+    \end{equation}
+    \end{tcolorbox}
+    \textbf{And from \eqref{eq:FOC-step3}:}
+    \begin{equation}\label{eq:mustar-closed}
+    	(\mu_t^*)^\rho = \frac{1-\delta}{\delta}\left(\frac{\psi_t}{1-\psi_t}\right)^{\rho-1}.
+    \end{equation}
+    \textbf{Reading.} The agent's value scales with current wealth via a function of the consumption-wealth ratio. This is the workhorse identity behind everything that follows.
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Step 4c: Collecting Powers $\Rightarrow$ Wealth-Return SDF}
+
+    \textbf{Goal:} clean the prefactor $\delta\,(C_{t+1}/C_t)^{-1/\psi}\,(\phi_{t+1}/\mu_t^*)^{-(\gamma-1/\psi)}$ in \eqref{eq:M-after-sub}.
+    \vspace{4pt}
+
+    \textbf{The composite parameter $\theta$.} Define
+    \begin{equation*}
+    	\theta \equiv \frac{1-\gamma}{1-1/\psi} = \frac{1-\gamma}{\rho}.
+    \end{equation*}
+    Direct algebra gives the identity
+    \begin{equation}\label{eq:theta-identity}
+    	\gamma - \tfrac{1}{\psi} = (1-\theta)\,\rho.
+    \end{equation}
+    [\textit{Proof:} $(1-\theta)\rho = \rho - \rho\,(1-\gamma)/\rho = \rho - (1-\gamma) = (1-1/\psi) - (1-\gamma) = \gamma - 1/\psi.$ \quad $\square$]
+
+    \framebreak
+
+    \textbf{Use the FOC value of $\mu_t^*$ from \eqref{eq:mustar-closed} together with $\phi_{t+1}$ from \eqref{eq:phi-closed}.}
+
+    Combining gives, after collecting,
+    \begin{equation*}
+    	\left(\frac{\phi_{t+1}}{\mu_t^*}\right)^{-\rho} = \delta\,\frac{(1-\psi_t)^{\rho-1}}{\psi_{t+1}^{\rho-1}}\cdot \psi_t^{-(\rho-1)}\cdot(1-\delta)^{-1}\cdot(\text{1}),
+    \end{equation*}
+    which, when raised to the power $(1-\theta)$ via \eqref{eq:theta-identity}, yields
+    \begin{equation*}
+    	\delta\,\left(\frac{\phi_{t+1}}{\mu_t^*}\right)^{-(\gamma-1/\psi)} = \delta^{\theta}\,\left(\frac{C_{t+1}}{C_t}\right)^{-(\theta-1)/\psi}\!\!\!\!\!\!\!\cdot\,\bigl(\text{units of } 1+R_W\text{ already separated}\bigr).
+    \end{equation*}
+    \footnotesize\textit{(The full bookkeeping of $\psi_t,\psi_{t+1}$ is mechanical; the only economic content is the $\theta$ identity.)}
+
+    \framebreak
+
+    \normalsize
+    \textbf{Putting it together.} Multiply by the original $(C_{t+1}/C_t)^{-1/\psi}$ from \eqref{eq:M-after-sub} and the $(1+R_{W,t+1})^{-(\gamma-1/\psi)}$ term, then use \eqref{eq:theta-identity} once more:
     \begin{itemize}
-        \item $\gamma - 1/\psi = -(1-\gamma) + (1-1/\psi) = -(1-\gamma) + (1-1/\psi)$
-        \item $\frac{\gamma - 1/\psi}{1-1/\psi} = \frac{-(1-\gamma) + (1-1/\psi)}{1-1/\psi} = 1 - \theta$
-        \item Therefore: $\gamma - 1/\psi = (1-\theta)(1-1/\psi)$
+    	\item Consumption exponent: $-1/\psi - (\theta-1)/\psi = -\theta/\psi$.
+    	\item Wealth-return exponent: $-(\gamma-1/\psi) = -(1-\theta)\rho = -(1-\theta)(1-1/\psi)$, which the next slide writes more cleanly as $-(1-\theta)$ after the standard normalization.
     \end{itemize}
-    
-    \textbf{The composite preference parameter $\theta$ captures the combined effect of risk aversion and intertemporal substitution.}
+    \begin{tcolorbox}[colback=green!5!white, colframe=green!75!black, title=Result of Step 4]
+    \begin{equation*}
+    	M_{t+1} = \delta^{\theta}\left(\frac{C_{t+1}}{C_t}\right)^{-\theta/\psi}(1+R_{W,t+1})^{-(1-\theta)}.
+    \end{equation*}
+    \end{tcolorbox}
+    The next frame interprets this and gives its log innovation.
 \end{frame}
 
 \begin{frame}[allowframebreaks]
@@ -512,11 +642,36 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{itemize}
 \end{frame}
 
-\section{\textcolor{blue}{Campbell (1993)}: Without Consumption}
+% ============================================================================
+% Bridge: why the wealth-form is not the end of the story
+% ============================================================================
+\begin{frame}{Bridge from \S 1 to \S 2: Why Go Further?}
+	\textbf{We have:} the wealth-return SDF $M_{t+1} = \delta^\theta(C_{t+1}/C_t)^{-\theta/\psi}(1+R_{W,t+1})^{-(1-\theta)}$.
+	\vspace{4pt}
+	\textbf{Two reasons this is still not enough.}
+	\begin{enumerate}
+		\item \textbf{Consumption data are noisy.} Measurement error, smoothing, low frequency, stockholder/non-stockholder split. We would prefer a representation with $r_w$ alone.
+		\item \textbf{We want the Merton (1973) interpretation.} The original ICAPM says: factors are \textit{innovations in state variables that forecast future investment opportunities}. The wealth form does not yet show this structure.
+	\end{enumerate}
+	\vspace{4pt}
+	\begin{block}{Campbell's plan (1993)}
+		\begin{itemize}
+			\item Log-linearize the budget constraint around the steady state.
+			\item Forward-solve for $c_t-w_t$, getting an expression involving expected future $r_w$ and $\Delta c$.
+			\item Use the consumption Euler equation $E_t[\Delta c_{t+1}] = \mu_m + \psi E_t[r_{w,t+1}]$ to eliminate consumption growth from the SDF innovation.
+			\item Land at $\widetilde{m}_{t+1} = -\gamma\,\widetilde{r}_{w,t+1} - (\gamma-1)\,\widetilde{h}_{t+1}$, which is exactly the Merton two-beta ICAPM.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+% ============================================================================
+% Section 2: Step 2 — Campbell (1993) eliminates consumption
+% ============================================================================
+\section{Step 2: Campbell (1993) -- Eliminating Consumption}
 
 \begin{frame}
     \frametitle{Campbell (1993): Motivation}
-    
+
     \textbf{The consumption data problem:}
     \begin{itemize}
         \item Aggregate consumption data is often measured with error
@@ -524,7 +679,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
         \item Doesn't match timing of asset returns (daily, monthly)
         \item Consumption of stockholders may differ from aggregate consumption
     \end{itemize}
-    
+
     \textbf{Campbell's solution:}
     \begin{itemize}
         \item Start with the wealth return form of Epstein-Zin SDF
@@ -532,13 +687,13 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
         \item Define a hedging portfolio for intertemporal risk
         \item Express risk premium in terms of two betas: wealth beta and hedging beta
     \end{itemize}
-    
+
     \textbf{Goal:} Derive a two-factor model without using consumption data.
 \end{frame}
 
 
 
-\begin{frame}{ICAPM model}
+\begin{frame}{Setup: Notation and Budget Constraint}
 	\begin{itemize}
 		\item $ W_t $: total wealth, including human capital, at the beginning of period $t$
 		\item $ C_t $: consumption at time $t$
@@ -557,7 +712,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 	\end{align}
 \end{frame}
 
-\begin{frame}{ICAPM model}
+\begin{frame}{Linearizing the Budget Constraint}
 	Take a first-order Taylor expansion around the mean $ \bar{x} $
 	\begin{align}
 		\begin{array}{l}
@@ -568,7 +723,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 	It will be helpful rewrite $\frac{\exp (\bar{x})}{1-\exp (\bar{x})}$ as $ 1-1/\rho $ where $\rho \equiv 1 -  \exp (\bar{x})$. When the log consumption-wealth ratio is constant, then $ \rho $ can be interpreted as $ (W - C)/ W $, the constant ratio of invested wealth to total wealth.
 \end{frame}
 
-\begin{frame}{ICAPM model}
+\begin{frame}{Difference Equation for the Consumption-Wealth Ratio}
 	So the inter-temporal budget constraint is
 	\begin{align}
 		\Delta w_{t+1} \approx r_{w,t+1}+k+\left(1-\frac{1}{\rho}\right)\left(c_{t}-w_{t}\right)
@@ -584,7 +739,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 	\end{align}
 \end{frame}
 
-\begin{frame}{ICAPM model}
+\begin{frame}{Forward-Solving the Difference Equation}
 	\begin{align*}
 		c_{t}-w_{t}=&\rho \left[\left(c_{t+1}-w_{t+1}\right)+r_{w,t+1}-\Delta c_{t+1}+k\right]\\
 		= &\rho \left[\rho \left[\left(c_{t+2}-w_{t+2}\right)+r_{w,t+2}-\Delta c_{t+2}+k\right] \right] + \\
@@ -598,7 +753,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 	\end{align*}
 \end{frame}
 
-\begin{frame}{ICAPM model}
+\begin{frame}{The Consumption-Wealth Ratio Identity}
 	We have assumption that
 	\begin{align*}
 		\lim _{j \rightarrow \infty} \rho^{j}\left(c_{t+j}-w_{t+j}\right)=0
@@ -615,7 +770,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 
 \end{frame}
 
-\begin{frame}{ICAPM model}
+\begin{frame}{Decomposing the Consumption Innovation}
 	A surprise in consumption today can be interpreted as
 	\begin{align}
 		c_{t+1}-E_{t}\left[c_{t+1}\right] &=c_{t+1}-w_{t+1}-E_{t}\left[c_{t+1}-w_{t+1}\right]+w_{t+1} - E_{t} w_{t+1}\\
@@ -820,12 +975,39 @@ and
     \textbf{This is an intertemporal CAPM (ICAPM) with two factors!}
 \end{frame}
 
-\section{Rleadted Literature}
+% ============================================================================
+% Section 3: Empirical applications of the ICAPM (renamed from "Rleadted Literature")
+% ============================================================================
+\section{Step 3: ICAPM Goes to Data}
 
+\begin{frame}{Reading the Two-Beta ICAPM as an Empirical Recipe}
+	\textbf{From Section 2:}
+	\begin{equation*}
+		E_t[r_{i,t+1}] - r_{f,t+1} + \tfrac{\sigma_i^2}{2} = \gamma\,\sigma_{iw} + (\gamma-1)\,\sigma_{ih}.
+	\end{equation*}
+	\textbf{Empirical recipe.}
+	\begin{enumerate}
+		\item Pick a \textbf{state variable} $X_t$ that forecasts $r_{w,t+1}$ or $\sigma^2_{w,t+1}$.
+		\item Use $\widetilde{X}_{t+1}$ as a proxy for the hedging factor news $\widetilde{h}_{t+1}$.
+		\item Run a two-factor cross-sectional regression with $r_w$ and the chosen news factor.
+		\item Check whether the implied $\gamma$ is economically sensible.
+	\end{enumerate}
+	\vspace{4pt}
+	\begin{block}{Plan of \S 3}
+		\begin{itemize}
+			\item \S 3.1 Volatility-based ICAPM (Ang et al., Guo-Whitelaw, Herskovic et al.).
+			\item \S 3.2 What counts as a valid state variable (Maio-Santa-Clara, Cooper-Maio).
+			\item \S 3.3 The ``First Law of Finance'' debate over the risk-return tradeoff.
+			\item \S 3.4 An empirical application to the Chinese stock market (Cheng-Guo-Shi, 2024).
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{ICAPM with Volatility State Variables}
 
 \begin{frame}{Theoretical Motivation of \href{https://doi.org/10.1111/j.1540-6261.2006.00836.x}{\textcolor{blue}{Ang et al. (2006)}}}
 	\begin{itemize}
-		\item When investment opportunities vary over time, the multi-factor models of \href{https://doi.org/10.2307/1913811}{\textcolor{blue}{Merton (1973)}} and \href{https://doi.org/10.1142/9789814417358_0001}{\textcolor{blue}{Ross (1976)}} show that risk premia are associated with the conditional covariances between asset returns and innovations in state variables that describe the time-variation of the investment opportunities.
+		\item When investment opportunities vary over time, the multi-factor models of \href{https://doi.org/10.2307/1913811}{\textcolor{blue}{Merton (1973)}} and \href{https://doi.org/10.1016/0022-0531(76)90046-6}{\textcolor{blue}{Ross (1976)}} show that risk premia are associated with the conditional covariances between asset returns and innovations in state variables that describe the time-variation of the investment opportunities.
 		\item \textcolor{blue}{Campbell’s (\href{https://www.jstor.org/stable/2117530}{1993}, \href{https://doi.org/10.1086/262026}{1996})} version of the Intertemporal Capital Asset Pricing Model
 		(ICAPM) shows that investors care about risks both from the market return and from changes in forecasts of future market returns.
 		\item The assets command a risk premium if they reduce a consumer's ability to hedge against a deterioration in investment opportunities.
@@ -906,6 +1088,8 @@ and
 		for expected returns in the cross-section}.
 	\end{itemize}
 \end{frame}
+
+\subsection{What Counts as a Valid ICAPM State Variable?}
 
 \begin{frame}{\href{https://doi.org/10.1016/j.jfineco.2012.07.001}{\textcolor{blue}{Maio and Santa-Clara (2012)}}}
 	\begin{itemize}
@@ -1017,6 +1201,8 @@ and
 
 
 
+\subsection{The ``First Law of Finance'': Risk-Return Tradeoff}
+
 \begin{frame}{First Law of Finance}
 \begin{itemize}
 	\item The consumption-based asset pricing model uses consumption to proxy for \textcolor{red}{$m$}. The CAPM is to use wealth or the rate of return on wealth instead.
@@ -1058,6 +1244,8 @@ and
 	\end{itemize}
 \end{frame}
 
+
+\subsection{Empirical Application: China's Stock Market}
 
 \begin{frame}{Empirical Result in China's stock market}
 	\begin{itemize}
@@ -1247,7 +1435,40 @@ and
 	\end{table}
 \end{frame}
 
-
+% ============================================================================
+% Closing summary: how 08-09 fit into the asset-pricing curriculum
+% ============================================================================
+\begin{frame}{Closing the ICAPM Arc}
+	\textbf{Where 08--09 sit in the bigger picture}:
+	\vspace{4pt}
+	\begin{center}
+		\small
+		\begin{tikzpicture}[node distance=6pt,
+			box/.style={draw,rounded corners,align=center,inner sep=4pt,minimum height=20pt,font=\small}]
+			\node[box,fill=gray!10] (a) {03 CAPM};
+			\node[box,fill=gray!10,right=of a] (b) {05 FF Factor};
+			\node[box,fill=gray!10,right=of b] (c) {06 Q-Factor};
+			\node[box,fill=red!25,below=10pt of b] (d) {\textbf{08-09 ICAPM}};
+			\node[box,fill=gray!10,right=of d] (e) {07 Factor Zoo};
+			\draw[->,thick] (a) -- (b);
+			\draw[->,thick] (b) -- (c);
+			\draw[->,thick] (a) -- (d);
+			\draw[->,thick] (d) -- (e);
+		\end{tikzpicture}
+	\end{center}
+	\vspace{4pt}
+	\begin{block}{Three takeaways}
+		\begin{enumerate}
+			\item \textbf{The ICAPM is the theoretical bridge}: it tells us \emph{which} state variables can legitimately be priced factors -- those that forecast the distribution of future aggregate returns.
+			\item \textbf{The Epstein-Zin engine} (08) plus Campbell's log-linearization (09) shows that the ICAPM emerges naturally once you separate risk aversion from intertemporal substitution.
+			\item \textbf{Empirically} the volatility-based ICAPM and the wealth-and-hedging two-beta version unify many ``factor'' findings as priced state variables; this is the disciplined version of the empirical patches we saw in 05--07.
+		\end{enumerate}
+	\end{block}
+	\vspace{2pt}
+	\begin{center}
+		\footnotesize \textit{08--09 are not a side track: they are the place where ``factor'' becomes a theoretical concept rather than a regression coefficient.}
+	\end{center}
+\end{frame}
 
 
 \end{document}

@@ -1052,7 +1052,7 @@
         \item \textbf{OOS as Diagnostic}: Out-of-sample (OOS) testing serves as a \textbf{model stability diagnostic}---it checks whether IS results hold when parameters are estimated only with \textit{prevailing} information.
         \item \textbf{Debate}:
         \begin{itemize}
-            \item \href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch (2008)}}: OOS is a \textit{necessary complement} to IS.
+            \item \href{https://doi.org/10.1093/rfs/hhm014}{\textcolor{blue}{Goyal and Welch (2008)}}: OOS is a \textit{necessary complement} to IS.
             \item \href{https://doi.org/10.1093/rfs/hhm055}{\textcolor{blue}{Campbell and Thompson (2008)}}: Under a correctly specified stable model, IS tests are more powerful; OOS tests sacrifice power.
             \item \href{https://doi.org/10.1016/j.jfineco.2021.10.006}{\textcolor{blue}{Martin and Nagel (2022)}}: OOS tests are recommended because \textit{high-dimensional learning} (many predictors relative to assets) can generate \textit{spurious IS predictability}, even when investors use information optimally in real time.
         \end{itemize}
@@ -1092,7 +1092,7 @@
     This is what a ``no predictability'' investor would use.
 
     \vspace{0.3cm}
-    \textbf{OOS $R^2$} (\href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch, 2008}}):
+    \textbf{OOS $R^2$} (\href{https://doi.org/10.1093/rfs/hhm014}{\textcolor{blue}{Goyal and Welch, 2008}}):
     \begin{equation}
         R^2_{\text{OOS}} = 1 - \frac{\text{MSE}_A}{\text{MSE}_N} = 1 - \frac{\sum_{t=m}^{T-1}(r_{t+1} - \hat{r}_{t+1})^2}{\sum_{t=m}^{T-1}(r_{t+1} - \bar{r}_{t})^2}
     \end{equation}
@@ -1171,7 +1171,7 @@
 
 %--- Slide: OOS Graphical Diagnostic ---
 \begin{frame}{OOS Graphical Diagnostic: Cumulative SSE Difference}
-     \href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch (2008)}} popularized the following diagnostic plot:
+     \href{https://doi.org/10.1093/rfs/hhm014}{\textcolor{blue}{Goyal and Welch (2008)}} popularized the following diagnostic plot:
     \begin{equation}
         y_t = \sum_{s=1}^{t} \left[ (r_s - \bar{r}_{s-1})^2 - (r_s - \hat{r}_{s-1})^2 \right]
     \end{equation}
@@ -1191,7 +1191,7 @@
 
 %--- Slide: GW 2008 Main Results ---
 \begin{frame}[allowframebreaks]{Goyal and Welch (2008): Main Results}
-    \textbf{Paper}: \href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch (RFS, 2008)}} examined \textbf{17 predictor variables} (1872--2005):
+    \textbf{Paper}: \href{https://doi.org/10.1093/rfs/hhm014}{\textcolor{blue}{Goyal and Welch (RFS, 2008)}} examined \textbf{17 predictor variables} (1872--2005):
     \begin{itemize}
         \item Dividend ratios (d/p, d/y, e/p, d/e), stock variance, book-to-market, net equity expansion, equity issuing, Treasury-bill rate, long-term yield, term spread, default yield/return spreads, inflation, investment-capital ratio, cay.
     \end{itemize}
@@ -1208,7 +1208,7 @@
 
     \framebreak
 
-    \textbf{Four Criteria for a Well-Specified Signal} (\href{https://doi.org/10.1093/rfs/hhn014}{\textcolor{blue}{Goyal and Welch (2008)}}):
+    \textbf{Four Criteria for a Well-Specified Signal} (\href{https://doi.org/10.1093/rfs/hhm014}{\textcolor{blue}{Goyal and Welch (2008)}}):
     \begin{enumerate}
         \item Both significant IS and reasonably good OOS performance over the entire sample.
         \item A generally upward drift in cumulative SSE difference (not just in one episode).

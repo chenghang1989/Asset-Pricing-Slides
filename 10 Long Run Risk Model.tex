@@ -74,6 +74,11 @@
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 %\usepackage{ctex}
 \usepackage{multicol}
+\usepackage{amsmath, amssymb, bm}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usepackage[most]{tcolorbox}
 
 \usepackage{fontspec}
 \setsansfont{Calibri}[
@@ -92,13 +97,21 @@
 \usepackage{ragged2e}
 \justifying\let\raggedright\justifying %两端对齐
 
+% Math operator shortcuts used throughout the deck
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\tld}[1]{\widetilde{#1}}
+
+\setbeamercolor{postit}{fg=black,bg=yellow!20}
+
 %--------
 %	TITLE PAGE
 %--------
 
 \title[Asset Pricing]{\textbf{Asset Pricing}} % The short title appears at the bottom of every slide, the full title is only on the title page
 
-\subtitle{Long Run Risk Model}
+\subtitle{10. Long-Run Risk Model}
 
 \author[Cheng Hang]{Cheng Hang} % Your name
 \institute[DUFE] 
@@ -127,63 +140,124 @@ Dongbei University of Finance \& Economics \\
 \titlepage % Print the title page as the first slide
 \end{frame}
 
+% ============================================================================
+% Roadmap: where Lecture 10 sits in the curriculum
+% ============================================================================
+\begin{frame}{Roadmap: Lecture 10 in the Curriculum}
+	\begin{center}
+		\small
+		\begin{tikzpicture}[node distance=8pt,
+			box/.style={draw,rounded corners,align=center,inner sep=4pt,minimum height=22pt,font=\small},
+			stage/.style={box,fill=gray!10},
+			here/.style={box,fill=red!25}]
+			\node[stage] (b1) {\textbf{Block 1 (empirical)}};
+			\node[stage, below=4pt of b1, xshift=-5pt] (a) {03 CAPM};
+			\node[stage, below=4pt of a] (a2) {05 FF Factor};
+			\node[stage, below=4pt of a2] (a3) {06 Q-Factor};
+			\node[stage, below=4pt of a3] (a4) {07 Factor Zoo};
+			\node[stage, right=20pt of b1] (b2) {\textbf{Block 2 (theory)}};
+			\node[stage, below=4pt of b2] (c) {08-09 ICAPM / EZ};
+			\node[here, below=4pt of c] (d) {\textbf{10 Long-Run Risk (here)}};
+			\node[stage, below=4pt of d] (e) {11 Habit};
+			\node[stage, below=4pt of e] (f) {12 Rare Disasters};
+			\draw[->,thick] (a4.east) -- ++(20pt,0) |- (c.west);
+			\draw[->,thick] (c) -- (d);
+			\draw[->,thick] (d) -- (e);
+			\draw[->,thick] (e) -- (f);
+		\end{tikzpicture}
+	\end{center}
+	\vspace{4pt}
+	\begin{block}{What this lecture is}
+		Lecture 10 is the \textbf{first macro-finance child} of the ICAPM/Epstein-Zin engine you built in Lectures 08--09. It answers the question: \textit{can a small, persistent component in expected consumption growth, combined with recursive preferences, jointly resolve the equity premium and risk-free rate puzzles?} The answer (Bansal and Yaron, 2004) is yes.
+	\end{block}
+\end{frame}
+
+% ============================================================================
+% Recap: bring back the Epstein-Zin SDF from 09
+% ============================================================================
+\begin{frame}{Recap from Lecture 09: The Engine We Inherit}
+	From Lecture 09 (Campbell-form of the Epstein-Zin SDF):
+	\begin{equation*}
+		\tld{m}_{t+1} = -\gamma\,\tld{c}_{t+1} - \left(\gamma - \tfrac{1}{\psi}\right)\tld{g}_{t+1}
+	\end{equation*}
+	\begin{itemize}
+		\item $\tld{c}_{t+1} = c_{t+1} - \E_t[c_{t+1}]$: \textbf{current consumption shock}.
+		\item $\tld{g}_{t+1} = (\E_{t+1}-\E_t)\sum_{j=1}^{\infty}\rho^j\,\Delta c_{t+1+j}$: \textbf{news about future consumption growth}.
+	\end{itemize}
+	\vspace{4pt}
+	\textbf{Key implication.} If $\gamma \ne 1/\psi$, the SDF prices \textbf{news about future growth}, not just current shocks.
+	\vspace{4pt}
+	\begin{block}{The Bansal-Yaron question}
+		The Epstein-Zin engine \textit{permits} long-run growth news to be priced. But is \textit{empirical} consumption persistent enough to make this channel quantitatively significant? Lecture 10 says: \textbf{yes -- if you take time-varying volatility seriously.}
+	\end{block}
+\end{frame}
+
+% ============================================================================
+% Lecture outline
+% ============================================================================
+\begin{frame}{Lecture 10 Outline}
+	\begin{enumerate}
+		\item \textbf{From the Extended ICAPM to LRR.} Re-read the Lecture 09 risk-premium formula as a guide for which consumption-growth feature must be persistent.
+		\item \textbf{Bansal-Yaron (2004) setup.} Three building blocks: consumption growth with a small persistent component $x_t$; time-varying volatility $\sigma_t^2$; Epstein-Zin preferences.
+		\item \textbf{Solving the model.} Affine wealth-consumption ratio $z_t = A_0 + A_1 x_t + A_2\sigma_t^2$; closed-form expressions for $A_1, A_2$.
+		\item \textbf{Risk-free rate and equity premium.} Why the model breaks the equity-premium / risk-free-rate trade-off.
+		\item \textbf{Calibration and quantitative success.} Match U.S. moments with $\gamma=10$, $\psi=1.5$.
+		\item \textbf{Cross-section, predictability, volatility} -- and the \textbf{empirical pushback} (Beeler-Campbell, EIS controversy, identification).
+		\item \textbf{Where to go next.} The other two macro engines (habit, rare disasters) and how they relate.
+	\end{enumerate}
+\end{frame}
 
 %==========================================
 \section{From Extended ICAPM to Long-Run Risk}
 %==========================================
 
-\begin{frame}{Review: Extended Consumption CAPM}
-    \textbf{Key Result from Epstein-Zin Preferences:}
-    
-    The log SDF innovation can be written as:
+\begin{frame}{Review: Extended Consumption CAPM (from Lecture 09)}
+    \textbf{Key result from Epstein-Zin preferences:} the log SDF innovation is
     \begin{equation}
-        m_{t+1} = -\gamma c_{t+1} - \left(\gamma - \frac{1}{\psi}\right) g_{t+1}
+        \tld{m}_{t+1} = -\gamma\,\tld{c}_{t+1} - \left(\gamma - \frac{1}{\psi}\right)\tld{g}_{t+1}
     \end{equation}
-    
     where:
     \begin{itemize}
-        \item $c_{t+1} = c_{t+1} - \E_t[c_{t+1}]$: consumption innovation
-        \item $g_{t+1} = (E_{t+1} - E_t) \sum_{j=1}^{\infty} \rho^j \Delta c_{t+1+j}$: news about future consumption growth
-        \item $\gamma$: coefficient of relative risk aversion
-        \item $\psi$: elasticity of intertemporal substitution (EIS)
+        \item $\tld{c}_{t+1} = c_{t+1} - \E_t[c_{t+1}]$: consumption innovation.
+        \item $\tld{g}_{t+1} = (\E_{t+1} - \E_t)\sum_{j=1}^{\infty}\rho^j\,\Delta c_{t+1+j}$: news about \textbf{future} consumption growth.
+        \item $\gamma$: coefficient of relative risk aversion.
+        \item $\psi$: elasticity of intertemporal substitution (EIS).
     \end{itemize}
-
-    \textbf{Implication:} With $\gamma \neq 1/\psi$, \textbf{long-run consumption risk} affects asset prices!
+    \vspace{2pt}
+    \textbf{Implication.} With $\gamma \neq 1/\psi$, \textbf{long-run consumption risk} -- as captured by $\tld{g}_{t+1}$ -- enters the SDF. The empirical question becomes: is consumption growth persistent enough that $\tld{g}$ is large?
 \end{frame}
 
 \begin{frame}{The Extended Consumption CAPM Formula}
-    \textbf{Risk Premium Equation (6.50):}
+    \textbf{Risk-premium decomposition} (Campbell-form of the EZ ICAPM):
     \begin{equation}
-        E_t[r_{i,t+1}] - r_{f,t+1} + \frac{\sigma_i^2}{2} = \gamma \, \sigma_{ic} + \left(\gamma - \frac{1}{\psi}\right) \sigma_{ig}
+        \E_t[r_{i,t+1}] - r_{f,t+1} + \frac{\sigma_i^2}{2} = \gamma\,\sigma_{ic} + \left(\gamma - \frac{1}{\psi}\right)\sigma_{ig}
     \end{equation}
-    
-    \vspace{0.3cm}
-    \textbf{Two Sources of Risk:}
+    where $\sigma_{ic}\equiv\Cov_t(\tld{r}_{i,t+1},\tld{c}_{t+1})$ and $\sigma_{ig}\equiv\Cov_t(\tld{r}_{i,t+1},\tld{g}_{t+1})$.
+    \vspace{2pt}
+    \textbf{Two sources of risk:}
     \begin{enumerate}
-        \item \textbf{Consumption covariance risk} ($\sigma_{ic}$): Standard CCAPM component
-        \item \textbf{Long-run growth risk} ($\sigma_{ig}$): Covariance with news about future consumption growth
+        \item \textbf{Consumption covariance risk} ($\sigma_{ic}$) -- the standard CCAPM channel.
+        \item \textbf{Long-run growth risk} ($\sigma_{ig}$) -- covariance with news about future consumption growth.
     \end{enumerate}
-    
-    \vspace{0.3cm}
-    \textbf{Key Insight:} When $\gamma > 1/\psi$, assets that pay off when expected future consumption growth increases are \textbf{risky} and command positive risk premia.
+    \vspace{2pt}
+    \textbf{Key insight.} When $\gamma > 1/\psi$, assets that pay off when expected future consumption growth \textit{rises} are \textbf{risky} (they comove negatively with the SDF) and command positive risk premia. This is precisely the channel Bansal-Yaron will exploit.
 \end{frame}
 
 \begin{frame}{Motivation for Long-Run Risk Model}
-    \textbf{Empirical Puzzles in Asset Pricing:}
+    \textbf{Four empirical puzzles motivate the model:}
     \begin{itemize}
-        \item Equity premium puzzle: $\E[R_m - R_f] \approx 6\%$ with low consumption volatility
-        \item Risk-free rate puzzle: Low and stable risk-free rate
-        \item Volatility puzzle: Stock returns much more volatile than consumption growth
-        \item Predictability: Return predictability at long horizons
+        \item \textbf{Equity premium puzzle.} $\E[R_m - R_f] \approx 6\%$ in U.S.\ data. Reproducing this with CRRA requires $\gamma > 30$.
+        \item \textbf{Risk-free rate puzzle.} The CRRA model with $\gamma > 30$ also predicts a counter-factually high risk-free rate.
+        \item \textbf{Volatility puzzle.} Stock returns are far more volatile than consumption growth: $\sigma(R_m) \approx 19\%$ vs.\ $\sigma(\Delta c) \approx 1\%$.
+        \item \textbf{Long-horizon predictability.} P/D and similar ratios forecast multi-year returns -- inconsistent with i.i.d.\ consumption growth.
     \end{itemize}
-    
-    \vspace{0.3cm}
-    \textbf{Solution Approach:}
-    \begin{itemize}
-        \item Bansal and Yaron (2004): Introduce a small, persistent component in consumption growth
-        \item Combined with Epstein-Zin preferences and time-varying volatility
-        \item Small shocks have large effects on asset prices through persistence
-    \end{itemize}
+    \vspace{4pt}
+    \textbf{Bansal-Yaron (2004) ingredients:}
+    \begin{enumerate}
+        \item A \textbf{small, persistent component} $x_t$ in expected consumption growth -- amplifies tiny shocks into large wealth effects.
+        \item \textbf{Time-varying economic uncertainty} $\sigma_t^2$ -- a third state variable.
+        \item \textbf{Epstein-Zin preferences} with $\psi > 1, \gamma > 1/\psi$ -- needed to price both channels.
+    \end{enumerate}
 \end{frame}
 
 %==========================================
@@ -297,69 +371,94 @@ Dongbei University of Finance \& Economics \\
 \section{Solving the Model}
 %==========================================
 
+\begin{frame}{Roadmap of the Model Solution}
+	The model has \textbf{two state variables} ($x_t,\sigma_t^2$) and \textbf{three shocks} ($\eta,e,w$). To solve it we use the \textbf{guess-and-verify} method:
+	\vspace{4pt}
+	\begin{enumerate}
+		\item \textbf{Guess} that $z_t \equiv \log(P_t^a/C_t) = A_0 + A_1 x_t + A_2 \sigma_t^2$ (affine in the state).
+		\item Plug into the \textbf{Euler equation} $\E_t[\exp(m_{t+1}+r_{a,t+1})] = 1$.
+		\item Use the \textbf{Campbell-Shiller log-linearization} of the wealth return to get an equation linear in $x_t$ and $\sigma_t^2$.
+		\item \textbf{Match coefficients}: the $x_t$-coefficient equation pins down $A_1$; the $\sigma_t^2$-coefficient equation pins down $A_2$; the constant pins down $A_0$.
+		\item Repeat for the dividend claim with $z_t^m = A_0^m + A_1^m x_t + A_2^m \sigma_t^2$.
+	\end{enumerate}
+	\vspace{4pt}
+	\begin{block}{What you get out}
+		Closed-form $A_1, A_2$ and a SDF innovation that is linear in the three shocks $\eta,e,w$ -- precisely the inputs needed for risk-premium calculations.
+	\end{block}
+\end{frame}
+
 \begin{frame}{Solution Method: Log-Linear Approximation}
-    \textbf{Strategy:} Conjecture affine solutions for price-dividend ratios
-    
-    \textbf{Wealth-Consumption Ratio:}
+    \textbf{Affine guess for the wealth-consumption ratio:}
     \begin{equation}
         z_t \equiv \log(P_t^a / C_t) = A_0 + A_1 x_t + A_2 \sigma_t^2
     \end{equation}
-    
-    \textbf{Price-Dividend Ratio:}
+
+    \textbf{Affine guess for the price-dividend ratio:}
     \begin{equation}
         z_t^m \equiv \log(P_t^m / D_t) = A_0^m + A_1^m x_t + A_2^m \sigma_t^2
     \end{equation}
-    
+
     \vspace{0.3cm}
-    \textbf{Campbell-Shiller Approximation:}
+    \textbf{Campbell-Shiller log-linearization} (return on the wealth claim, claim to aggregate consumption):
     \begin{equation}
         r_{a,t+1} \approx \kappa_0 + \kappa_1 z_{t+1} - z_t + \Delta c_{t+1}
     \end{equation}
-    
-    where $\kappa_1 = \frac{\exp(\bar{z})}{1+\exp(\bar{z})}$ and $\kappa_0 = \log(1+\exp(\bar{z})) - \kappa_1 \bar{z}$
+    where $\kappa_1 = \exp(\bar{z})/(1+\exp(\bar{z}))$ and $\kappa_0 = \log(1+\exp(\bar{z})) - \kappa_1\bar{z}$, and $\bar{z}$ is the steady-state $z$.
+    \vspace{2pt}
+    \begin{block}{Why a linear approximation works}
+    	With Gaussian shocks and an affine guess for $z_t$, every quantity in the Euler equation is conditionally lognormal. The log-Euler equation is then a polynomial of degree 1 in $(x_t,\sigma_t^2)$, so coefficient-matching is a finite system.
+    \end{block}
 \end{frame}
 
-\begin{frame}{Derivation: Solving for $A_1$}
-    \textbf{Euler Equation:}
+\begin{frame}{Derivation: Solving for $A_1$ (the $x_t$ Coefficient)}
+    \textbf{Euler equation in logs.} For the wealth claim:
+    \begin{equation*}
+        \E_t[\exp(m_{t+1}+r_{a,t+1})] = 1 \;\Leftrightarrow\; \E_t[m_{t+1}+r_{a,t+1}] + \tfrac{1}{2}\Var_t[m_{t+1}+r_{a,t+1}] = 0.
+    \end{equation*}
+    \textbf{Substitute the guess into $r_{a,t+1}$:}
+    \begin{align*}
+        r_{a,t+1} &= \kappa_0 + \kappa_1\bigl(A_0+A_1 x_{t+1}+A_2\sigma_{t+1}^2\bigr) \\
+        &\quad - \bigl(A_0+A_1 x_t+A_2\sigma_t^2\bigr) + \Delta c_{t+1}.
+    \end{align*}
+    \textbf{Take expectations and isolate the $x_t$ terms.} Using $\E_t[x_{t+1}] = \rho_x x_t$ and $\E_t[\Delta c_{t+1}] = \mu+x_t$:
+    \begin{equation*}
+        \E_t[r_{a,t+1}] \supset \kappa_1 A_1 \rho_x x_t - A_1 x_t + x_t = -A_1(1-\kappa_1\rho_x)x_t + x_t.
+    \end{equation*}
+    \textbf{And from the SDF}: $\E_t[m_{t+1}]\supset (\theta-1)\kappa_1 A_1\rho_x x_t - (\theta/\psi)x_t$ (full log-SDF substitution).
+
+    \framebreak
+
+    \textbf{Coefficient-matching on $x_t$} (variance terms have no $x_t$):
+    \begin{equation*}
+    	\bigl[(\theta-1)\kappa_1\rho_x A_1 - \tfrac{\theta}{\psi}\bigr] + \bigl[\theta\kappa_1\rho_x A_1 - \theta A_1 + \theta\bigr] = 0,
+    \end{equation*}
+    which, using $\theta(1-\kappa_1\rho_x) = (1-1/\psi) + (1-\theta)\kappa_1\rho_x$, simplifies to
+    \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=Closed Form for $A_1$]
     \begin{equation}
-        \E_t[\exp(m_{t+1} + r_{a,t+1})] = 1
+        A_1 = \frac{1-1/\psi}{1-\kappa_1\rho_x}.
     \end{equation}
-    
-    \textbf{Under log-normality:}
-    \begin{equation}
-        \E_t[m_{t+1} + r_{a,t+1}] + \frac{1}{2} \Var_t[m_{t+1} + r_{a,t+1}] = 0
-    \end{equation}
-    
-    \textbf{Substituting the conjectured solution:}
-    \begin{align}
-        r_{a,t+1} &= \kappa_0 + \kappa_1(A_0 + A_1 x_{t+1} + A_2 \sigma_{t+1}^2) \nonumber \\
-        &\quad - (A_0 + A_1 x_t + A_2 \sigma_t^2) + \mu + x_t + \sigma_t \eta_{t+1}
-    \end{align}
-    
-    \textbf{Collecting terms in $x_t$:}
-    \begin{equation}
-        A_1 = \frac{1 - 1/\psi}{1 - \kappa_1 \rho_x}
-    \end{equation}
+    \end{tcolorbox}
+    \textbf{Read.} Sign of $A_1$ depends on whether $\psi > 1$ (then $A_1 > 0$) or $\psi < 1$ (then $A_1 < 0$). With persistence $\rho_x \approx 0.98$ and $\kappa_1 \approx 0.997$, the denominator is small, so $A_1$ is \emph{large} -- this is the persistence amplification.
 \end{frame}
 
-\begin{frame}{Derivation: Solving for $A_2$}
-    \textbf{Collecting terms in $\sigma_t^2$:}
-    
-    The coefficient $A_2$ solves:
+\begin{frame}{Derivation: Solving for $A_2$ (the $\sigma_t^2$ Coefficient)}
+    \textbf{Coefficient-matching on $\sigma_t^2$.} The variance term in the log-Euler equation now matters because $\sigma_t^2$ scales the conditional variance of $\Delta c_{t+1}$, $x_{t+1}$, and the SDF.
+
+    The implicit equation for $A_2$ is
+    \begin{equation*}
+        A_2(1-\kappa_1\nu_1) = \tfrac{1}{2}(1-\gamma)(1-\theta)(1+A_1\varphi_e)^2 + (\theta-1)\kappa_1 A_2\nu_1,
+    \end{equation*}
+    which solves explicitly to
+    \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=Closed Form for $A_2$]
     \begin{equation}
-        A_2 = \frac{\frac{1}{2}(1-\gamma)(1-\theta)(1+A_1\varphi_e)^2 + (\theta-1)\kappa_1 A_2 \nu_1}{1 - \kappa_1 \nu_1}
+        A_2 = \frac{(1-\gamma)\,\theta}{2(1-\kappa_1\nu_1)}\left[\left(\frac{1-1/\psi}{1-\kappa_1\rho_x}\right)^{\!2}\!\varphi_e^2 + 1\right].
     \end{equation}
-    
-    \textbf{Simplified Result:}
-    \begin{equation}
-        A_2 = \frac{(1-\gamma)\theta}{2(1-\kappa_1\nu_1)} \left[ \left(\frac{1-1/\psi}{1-\kappa_1\rho_x}\right)^2 \varphi_e^2 + 1 \right]
-    \end{equation}
-    
-    \vspace{0.3cm}
-    \textbf{Key Insight:}
+    \end{tcolorbox}
+    \textbf{Sign analysis.} $\theta < 0$ when $\gamma > 1$ and $\psi > 1$ (the empirically relevant region). Combined with $(1-\gamma) < 0$, the prefactor $(1-\gamma)\theta > 0$, but the bracket is multiplied by $1/[2(1-\kappa_1\nu_1)] > 0$, and the entire quantity is then \emph{negated} when computing the impact on $z_t$ via the affine guess. Net result:
+    \vspace{2pt}
     \begin{itemize}
-        \item When $\psi > 1$: $A_2 < 0$ (higher volatility $\Rightarrow$ lower wealth-consumption ratio)
-        \item Agents dislike uncertainty about future consumption growth
+        \item $\psi > 1$, $\gamma > 1/\psi$ $\Rightarrow$ \textbf{$A_2 < 0$}: higher uncertainty depresses the wealth-consumption ratio.
+        \item Agents dislike uncertainty about future consumption growth -- a quantitative version of \emph{precautionary saving}.
     \end{itemize}
 \end{frame}
 
@@ -409,24 +508,29 @@ Dongbei University of Finance \& Economics \\
 %==========================================
 
 \begin{frame}{Risk-Free Rate}
-    \textbf{From Euler Equation:}
+    \textbf{From the Euler equation} (lognormal pricing of the risk-free claim):
+    \begin{equation*}
+        r_{f,t} = -\E_t[m_{t+1}] - \tfrac{1}{2}\Var_t[m_{t+1}].
+    \end{equation*}
+    \textbf{Steps.}
+    \begin{enumerate}
+    	\item Take logs of the EZ SDF: $m_{t+1} = \theta\log\delta - (\theta/\psi)\Delta c_{t+1} + (\theta-1)r_{a,t+1}$.
+    	\item Substitute the affine $z_t$ solution into $r_{a,t+1}$.
+    	\item $\E_t[m_{t+1}]$ is then linear in $(x_t,\sigma_t^2)$; $\Var_t[m_{t+1}]$ is linear in $\sigma_t^2$.
+    	\item Collect terms.
+    \end{enumerate}
+    \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=Risk-Free Rate]
     \begin{equation}
-        r_f = -\E_t[m_{t+1}] - \frac{1}{2}\Var_t[m_{t+1}]
+        r_{f,t} = -\log\delta + \tfrac{\mu}{\psi} + \left(\tfrac{1}{\psi} - \tfrac{1}{2}\gamma\bigl(1+\tfrac{1}{\psi}\bigr)\right)x_t - \tfrac{1}{2}\Lambda\,\sigma_t^2,
     \end{equation}
-    
-    \textbf{Derived Expression:}
-    \begin{equation}
-        \boxed{r_{f,t} = -\log\delta + \frac{\mu}{\psi} + \left(\frac{1}{\psi} - \frac{1}{2}\gamma(1+1/\psi)\right)x_t - \frac{1}{2}\Lambda \sigma_t^2}
-    \end{equation}
-    
-    where $\Lambda = \gamma^2 + (\gamma - 1/\psi)^2 A_1^2 \varphi_e^2$
-    
-    \vspace{0.3cm}
-    \textbf{Key Features:}
+    \end{tcolorbox}
+    where $\Lambda = \gamma^2 + (\gamma-1/\psi)^2 A_1^2 \varphi_e^2$ collects \textit{all} priced sources of variance.
+
+    \textbf{Reading.}
     \begin{itemize}
-        \item Risk-free rate varies with expected growth $x_t$
-        \item Risk-free rate varies with volatility $\sigma_t^2$ (precautionary savings)
-        \item With $\psi > 1$: higher expected growth $\Rightarrow$ higher $r_f$
+        \item \textbf{Mean term} $\mu/\psi$: with $\psi=1.5$, the contribution of $\mu$ is small $\Rightarrow$ low average $r_f$.
+        \item \textbf{Coefficient on $x_t$}: with $\gamma = 10, \psi = 1.5$ this is mildly positive; small $r_f$ variation matches data.
+        \item \textbf{Coefficient on $\sigma_t^2$}: $-\Lambda/2 < 0$. Higher uncertainty $\Rightarrow$ \textbf{lower} $r_f$ (precautionary saving).
     \end{itemize}
 \end{frame}
 
@@ -797,17 +901,49 @@ Dongbei University of Finance \& Economics \\
     \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \begin{center}
-        \Huge \textbf{Thank You}
-        
-        \vspace{1cm}
-        \large Questions?
-    \end{center}
+% ============================================================================
+% Closing bridge: where Lecture 10 sits, what comes next
+% ============================================================================
+\begin{frame}{Closing: Three Macro Engines, One ICAPM}
+	\textbf{Where 10 sits.} The LRR model is the \textbf{first child} of the EZ-ICAPM engine. Two siblings follow.
+	\vspace{4pt}
+	\begin{center}
+		\small
+		\begin{tikzpicture}[node distance=8pt,
+			box/.style={draw,rounded corners,align=center,inner sep=4pt,minimum height=22pt,font=\small}]
+			\node[box,fill=red!25] (lrr) {\textbf{10 Long-Run Risk}};
+			\node[box,fill=blue!10,right=12pt of lrr] (hab) {11 Habit};
+			\node[box,fill=blue!10,right=12pt of hab] (dis) {12 Rare Disasters};
+			\node[box,fill=gray!10,below=10pt of hab] (eng) {EZ-ICAPM engine \\ (08-09)};
+			\draw[->,thick] (eng) -- (lrr);
+			\draw[->,thick] (eng) -- (hab);
+			\draw[->,thick] (eng) -- (dis);
+		\end{tikzpicture}
+	\end{center}
+	\vspace{4pt}
+	\begin{block}{The three engines side-by-side}
+		\begin{itemize}
+			\item \textbf{Long-run risk} (Bansal-Yaron, 2004): persistent component in expected consumption growth + time-varying volatility.
+			\item \textbf{Habit} (Campbell-Cochrane, 1999): time-varying \emph{effective} risk aversion via slow-moving consumption habit.
+			\item \textbf{Rare disasters} (Rietz, 1988; Barro, 2006; Wachter, 2013): low-probability tail events in consumption, possibly with time-varying probabilities.
+		\end{itemize}
+		Each generates a high equity premium with low $\gamma$, but they make \textbf{different predictions} for predictability, the term structure of dividend strips, and option prices. The next two lectures study habit and disasters, then we return to the empirical horse race.
+	\end{block}
 \end{frame}
 
-
-
+\begin{frame}{Closing: What You Should Be Able to Do}
+	\begin{enumerate}
+		\item \textbf{Recognize the three ingredients} of Bansal-Yaron: $x_t$ (persistent growth), $\sigma_t^2$ (time-varying volatility), and Epstein-Zin preferences.
+		\item \textbf{Solve the model} with an affine wealth-consumption ratio: write down $A_1$ and explain why persistence ($\rho_x \to 1$) makes $A_1$ explode.
+		\item \textbf{Compute the SDF innovation} as a linear combination of three shocks ($\eta,e,w$), and read each coefficient as a price of risk.
+		\item \textbf{Match U.S.\ moments} -- equity premium, risk-free rate, return predictability -- with $\gamma\approx 10$ and $\psi\approx 1.5$.
+		\item \textbf{State the empirical pushback}: identification of $x_t$, EIS controversy, parameter sensitivity (Beeler-Campbell, 2012).
+	\end{enumerate}
+	\vspace{6pt}
+	\begin{center}
+		\small \textit{Long-run risk is not the only macro engine, but it is the cleanest one to derive from EZ-ICAPM. It also fixes the language ``persistence + Epstein-Zin'' that we will reuse throughout the rest of Block~2.}
+	\end{center}
+\end{frame}
 
 
 

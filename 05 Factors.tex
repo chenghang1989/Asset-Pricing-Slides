@@ -119,8 +119,6 @@
 }
 \date{\today} % Date, can be changed to a custom date
 
-
-
 \AtBeginSection[]
 {
 	\begin{frame}{Content}
@@ -145,7 +143,145 @@
 \begin{frame}
 	\titlepage % Print the title page as the first slide
 \end{frame}
+
+% ---------------------------------------------------------
+% Global Roadmap: where this lecture sits in the 3-act story
+% ---------------------------------------------------------
+\begin{frame}{Roadmap: From CAPM to Factor War}
+	This lecture is \textbf{Act I} of a three-lecture arc.
+	\vspace{4pt}
+	\begin{center}
+		\small
+		\begin{tikzpicture}[node distance=4pt, every node/.style={font=\small}]
+			\node[draw,rounded corners,fill=gray!10] (a) {03~~CAPM};
+			\node[draw,rounded corners,fill=red!25,right=of a] (b) {\textbf{05~~FF Factor (here)}};
+			\node[draw,rounded corners,fill=gray!10,right=of b] (c) {06~~Q-Factor (PCAPM)};
+			\node[draw,rounded corners,fill=gray!10,right=of c] (d) {07~~Factor Zoo / War};
+			\draw[->,thick] (a) -- (b);
+			\draw[->,thick] (b) -- (c);
+			\draw[->,thick] (c) -- (d);
+		\end{tikzpicture}
+	\end{center}
+	\vspace{4pt}
+	\textbf{Storyline}:
+	\begin{enumerate}
+		\item CAPM cannot explain a growing list of \textit{anomalies} (size, value, momentum, profitability, investment, IVOL\ldots).
+		\item Fama and French \textbf{absorb anomalies into factors}: SMB, HML, RMW, CMA. Each new anomaly triggers a new factor.
+		\item Lu Zhang and co-authors offer a \textbf{rival route}: derive factors from production theory $\rightarrow$ \textbf{q-factor model} (Lecture 06).
+		\item By the 2010s, $300{+}$ factors are published $\rightarrow$ \textbf{Factor Zoo}, then \textbf{Factor War} over which factors are real (Lecture 07).
+	\end{enumerate}
+	\vspace{2pt}
+	\textit{This lecture: how CAPM became FF3, and why FF3 was already losing the war the day it was published.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Lecture-level outline
+% ---------------------------------------------------------
+\begin{frame}{Lecture Outline}
+	\begin{enumerate}
+		\item \textbf{Section 1.} CAPM in crisis $\rightarrow$ the 1992 ``beta is dead'' bombshell $\rightarrow$ the 1993 Fama-French Three-Factor Model.
+		\item \textbf{Section 2.} New anomalies that FF3 \textit{cannot} explain: momentum (Carhart 1997), profitability and investment, idiosyncratic volatility.
+		\item \textbf{Section 3.} \textit{Why} alpha persists: omitted risk vs.\ data mining vs.\ genuine mispricing $\rightarrow$ each explanation births a new model.
+		\item \textbf{Bridge to Lecture 06.} The two repair routes:
+		\begin{itemize}
+			\item \textit{Empirical patch}: Fama-French add factors $\rightarrow$ FF5 (2015), FF6 (2018).
+			\item \textit{Theoretical reset}: Lu Zhang and co-authors derive factors from the firm's investment FOC $\rightarrow$ q-factor (HXZ 2015).
+		\end{itemize}
+	\end{enumerate}
+\end{frame}
+
 \section{The Fama-French Three-Factor Model}
+
+\subsection{Background: The Road to 1993}
+
+% ---------------------------------------------------------
+% BG-1. The Crisis of CAPM: Anomalies Accumulate (1977--1992)
+% ---------------------------------------------------------
+\begin{frame}{The Crisis of CAPM: Anomalies Accumulate (1977--1992)}
+	\textbf{By the late 1980s, empirical failures of CAPM had piled up:}
+	\vspace{4pt}
+	\begin{itemize}
+		\item \textbf{Size Effect:} \href{https://doi.org/10.1016/0304-405X(81)90018-0}{\textcolor{blue}{Banz (1981)}} --- Small-cap stocks earn higher returns than CAPM predicts; the ``Small Firm Effect'' became widely known.
+		\item \textbf{Value Effect (B/M):} \href{https://doi.org/10.3905/jpm.1985.409007}{\textcolor{blue}{Rosenberg, Reid, and Lanstein (1985)}} --- High book-to-market stocks outperform; they called it ``Persuasive Evidence of Market Inefficiency.''
+		\item \textbf{Earnings/Price (E/P) Effect:} \href{https://doi.org/10.1111/j.1540-6261.1977.tb03327.x}{\textcolor{blue}{Basu (1977)}} --- Low P/E stocks earn higher risk-adjusted returns.
+		\item \textbf{Long-term Reversal:} \href{https://doi.org/10.1111/j.1540-6261.1985.tb05004.x}{\textcolor{blue}{De Bondt and Thaler (1985)}} --- Past 3--5 year losers beat past winners.
+		\item \textbf{Leverage Effect:} \href{https://doi.org/10.1111/j.1540-6261.1988.tb03952.x}{\textcolor{blue}{Bhandari (1988)}} --- High debt-to-equity firms earn higher returns.
+	\end{itemize}
+	\vspace{6pt}
+	\begin{beamercolorbox}[sep=0.3em,wd=\linewidth,rounded=true,shadow=true]{postit}
+		\small These anomalies all appear to be \textbf{independent} of CAPM beta. Either the model is incomplete, or markets are inefficient.
+	\end{beamercolorbox}
+\end{frame}
+
+% ---------------------------------------------------------
+% BG-2. The 1992 Bombshell
+% ---------------------------------------------------------
+\begin{frame}{The 1992 Bombshell: ``Beta is Dead''}
+	\textbf{\href{https://doi.org/10.1111/j.1540-6261.1992.tb04398.x}{\textcolor{blue}{Fama and French (1992)}} --- ``The Cross-Section of Expected Stock Returns,'' \textit{Journal of Finance}}
+	\vspace{6pt}
+	\begin{itemize}
+		\item \textbf{Sample:} All NYSE, AMEX, NASDAQ non-financial stocks, 1963--1990.
+		\item \textbf{Method:} Fama-MacBeth cross-sectional regressions with multiple controls.
+		\item \textbf{Key Finding:}
+		\begin{itemize}
+			\item Once you control for \textbf{Size (ME)} and \textbf{Book-to-Market (B/M)}, \textbf{beta has no incremental explanatory power} for the cross-section of returns.
+			\item The slope on beta becomes \textit{statistically indistinguishable from zero}.
+			\item Size and B/M jointly absorb the roles of leverage and E/P.
+		\end{itemize}
+		\item \textbf{The shock:} Fama was the creator of the Efficient Market Hypothesis (EMH) and a strong CAPM proponent. His own evidence declared CAPM's empirical failure.
+	\end{itemize}
+	\vspace{4pt}
+	\footnotesize \textit{The Wall Street Journal ran a front-page story: ``Is Beta Dead?''}
+\end{frame}
+
+% ---------------------------------------------------------
+% BG-3. The Fischer Black Backlash
+% ---------------------------------------------------------
+\begin{frame}{Fischer Black Fights Back: ``Beta and Return'' (1993)}
+	The publication of FF92 triggered immediate controversy. Fischer Black, co-creator of the Black-Scholes model and a committed CAPM believer, published a rebuttal:
+	\vspace{4pt}
+	\textbf{\href{https://doi.org/10.3905/jpm.1993.409462}{\textcolor{blue}{Black (1993)}} --- ``Beta and Return,'' \textit{Journal of Portfolio Management}}
+	\vspace{4pt}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\textbf{Black's Arguments:}
+		\begin{itemize}
+			\item \textbf{Data Snooping:} With enough variables, some will fit by chance. Size and B/M were selected \textit{post hoc}.
+			\item \textbf{Sample Sensitivity:} The FF size premium is concentrated in January and in specific sub-periods.
+			\item \textbf{Economic Plausibility:} Why would size \textit{per se} be a risk factor?
+		\end{itemize}
+		\column{0.5\textwidth}
+		\textbf{\href{https://doi.org/10.1111/j.1540-6261.1995.tb05184.x}{\textcolor{blue}{Kothari, Shanken \& Sloan (1995)}}:}
+		\begin{itemize}
+			\item Using annual (not monthly) data, beta \textit{does} appear significant.
+			\item \textbf{Survivorship Bias:} COMPUSTAT over-represents surviving firms with high B/M, inflating the value premium.
+			\item A more cautious conclusion is warranted.
+		\end{itemize}
+	\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% BG-4. Fama and French's 1993 Response
+% ---------------------------------------------------------
+\begin{frame}{The 1993 Solution: From Diagnosis to Model}
+	Facing critics, Fama and French did not retreat --- they \textbf{built a model}:
+	\vspace{4pt}
+	\textbf{\href{https://www.sciencedirect.com/science/article/pii/0304405X93900235}{\textcolor{blue}{Fama and French (1993)}} --- ``Common Risk Factors in the Returns on Stocks and Bonds,'' \textit{Journal of Financial Economics}}
+	\vspace{6pt}
+	\textbf{The Strategic Move:}
+	\begin{enumerate}
+		\item If Size and B/M predict returns cross-sectionally (FF92), then \textbf{portfolios that mimic these dimensions must carry systematic risk}.
+		\item Construct \textbf{SMB} and \textbf{HML} as mimicking portfolios.
+		\item Show they explain \textit{time-series} comovement of stock returns --- not just a cross-sectional pattern.
+		\item Connect to Merton's ICAPM: SMB and HML proxy for \textit{state variables} that affect investment opportunities.
+	\end{enumerate}
+	\vspace{4pt}
+	\begin{beamercolorbox}[sep=0.3em,wd=\linewidth,rounded=true,shadow=true]{postit}
+		\small \textbf{Rhetorical Judo:} They turned an anomaly into a risk factor, preserving rational asset pricing while acknowledging CAPM's failure.
+	\end{beamercolorbox}
+\end{frame}
+
+\subsection{The Model: Construction and Intuition}
 
 % ---------------------------------------------------------
 % 1. Introduction & Philosophy
@@ -250,6 +386,38 @@
 	See \href{https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html}{\textcolor{blue}{Kenneth French's Data Library}} for updated data.
 \end{frame}
 
+\subsection{Economic Interpretation}
+
+% ---------------------------------------------------------
+% 5b. FF3's Explanatory Power over Anomalies
+% ---------------------------------------------------------
+\begin{frame}{Beyond Size and Value: Explaining the Anomaly Zoo}
+	\small
+	\textbf{\href{https://doi.org/10.1111/j.1540-6261.1996.tb05202.x}{\textcolor{blue}{Fama and French (1996)}} --- ``Multifactor Explanations of Asset Pricing Anomalies,'' \textit{JF}}
+	\begin{block}{The Bold Claim}
+		Most CAPM anomalies of the 1980s are \textit{not} independent puzzles --- they are different manifestations of the \textbf{same} size and value factors.
+	\end{block}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\textbf{Anomalies absorbed by FF3:}
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item \textbf{E/P} (Basu, 1977); \textbf{C/P}: high yield $\to$ high B/M.
+			\item \textbf{Sales growth} (LSV, 1994).
+			\item \textbf{Long-term reversal} (DeBondt-Thaler, 1985): losers become value.
+			\item \textbf{Leverage / distress} (Bhandari, 1988; Chan-Chen, 1991).
+		\end{itemize}
+		\column{0.5\textwidth}
+		\textbf{The Glaring Exception:}
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item \textbf{Momentum} (\href{https://doi.org/10.1111/j.1540-6261.1993.tb04702.x}{\textcolor{blue}{Jegadeesh-Titman, 1993}}): past 12M winners keep winning.
+			\item FF3 \textit{worsens} momentum alpha (winners load \textit{negatively} on HML).
+			\item Motivates \textbf{\href{https://doi.org/10.1111/j.1540-6261.1997.tb03808.x}{\textcolor{blue}{Carhart (1997)}}}'s 4-factor model (UMD).
+		\end{itemize}
+	\end{columns}
+	\vspace{3pt}
+	\footnotesize \textit{Takeaway: FF3 didn't just fit 25 portfolios --- it \textbf{unified} a decade of anomalies. That's why it became the benchmark.}
+\end{frame}
+
 % ---------------------------------------------------------
 % 6. Economic Mechanism
 % ---------------------------------------------------------
@@ -276,38 +444,238 @@
 	\end{columns}
 \end{frame}
 
+\subsection{Debates, Challenges, and Legacy}
+
 % ---------------------------------------------------------
-% 7. Empirical Evidence: China
+% DT-1. The Characteristics vs. Covariances Debate
 % ---------------------------------------------------------
-\begin{frame}{Empirical Evidence in China: The Shell Value}
-	Applying FF3 to China requires modification due to the unique institutional background.
-	
+\begin{frame}{The Deepest Challenge: Characteristics vs. Covariances}
+	\textbf{\href{https://doi.org/10.1111/j.1540-6261.1997.tb02724.x}{\textcolor{blue}{Daniel and Titman (1997)}} --- ``Evidence on the Characteristics of Cross-Sectional Variation in Stock Returns,'' \textit{Journal of Finance}}
+	\vspace{6pt}
+	\begin{block}{The Central Question}
+		Does the \textit{loading on the HML factor} (covariance) earn a premium, or is it the \textit{B/M ratio itself} (characteristic) that predicts returns?
+	\end{block}
+	\vspace{6pt}
+	\begin{columns}
+		\column{0.52\textwidth}
+		\textbf{The Risk-Based View (FF93):}
+		\begin{itemize}
+			\item Returns reflect \textbf{factor loadings} ($h_i$).
+			\item Two firms with identical B/M but different $h_i$ should have different expected returns.
+			\item SMB and HML are genuine risk factors.
+		\end{itemize}
+		\column{0.52\textwidth}
+		\textbf{Daniel \& Titman's Finding:}
+		\begin{itemize}
+			\item After controlling for \textbf{characteristics} (Size, B/M directly), the factor \textit{loadings} have \textbf{no additional explanatory power}.
+			\item SMB/HML are proxies for characteristics, \textbf{not independent risk factors}.
+			\item Consistent with the \textit{mispricing} / behavioral view (LSV 1994).
+		\end{itemize}
+	\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% DT-2. Davis, Fama, French (2000) Response
+% ---------------------------------------------------------
+\begin{frame}{The Defense: Davis, Fama, and French (2000)}
+	Fama and French struck back with a longer sample:
+	\vspace{4pt}
+	\textbf{\href{https://doi.org/10.1111/0022-1082.00209}{\textcolor{blue}{Davis, Fama, and French (2000)}} --- ``Characteristics, Covariances, and Average Returns: 1929 to 1997,'' \textit{Journal of Finance}}
+	\vspace{6pt}
 	\begin{itemize}
-		\item \href{https://doi.org/10.1016/j.jfineco.2019.03.008}{\textcolor{blue}{Liu, Stambaugh, and Yuan (2019)}}: \textbf{Size and Value in China}.
-		\item \textbf{The Shell Value Problem:} In China, IPOs are tightly regulated. Failed firms are valuable as ``shells" for reverse mergers.
-		\item \textbf{Consequence:} The smallest stocks (junk) often have high prices (low returns), contradicting the standard size effect.
-		\item \textbf{Solution:} Exclude the bottom 30\% of stocks (Shells) when constructing factors.
-		\item \textbf{Value Factor:} They find Earnings-to-Price (EP) works better than Book-to-Market (BM) in China.
+		\item \textbf{Extended sample:} 1929--1997 (vs.\ Daniel and Titman's 1963--1993).
+		\item \textbf{Key Finding:} Over the longer horizon, the \textbf{factor loadings} do matter beyond characteristics.
+		\begin{itemize}
+			\item The Daniel-Titman result is \textit{sample-specific}: the 1963--1993 period happened to favor characteristics.
+			\item In the full sample, both characteristics \textit{and} covariances contain information.
+		\end{itemize}
+		\item \textbf{Verdict:} The debate was \textbf{never fully resolved}. It remains one of the central unresolved questions in empirical asset pricing.
+	\end{itemize}
+	\vspace{4pt}
+	\footnotesize \textit{The characteristics vs.\ covariances debate later re-emerged in the ``factor zoo'' era and continues in the machine learning literature (Kelly, Pruitt, Su, 2019).}
+\end{frame}
+
+% ---------------------------------------------------------
+% DT-3. International Evidence
+% ---------------------------------------------------------
+\begin{frame}{International Evidence: The Value Premium is Global}
+	One of the strongest defenses of the FF3 factors is their \textbf{global replication}:
+	\vspace{4pt}
+	\begin{itemize}
+		\item \textbf{\href{https://doi.org/10.1111/0022-1082.00073}{\textcolor{blue}{Fama and French (1998)}}} --- ``Value versus Growth: The International Evidence,'' \textit{Journal of Finance}:
+		\begin{itemize}
+			\item Value stocks (high B/M) outperform growth stocks in \textbf{12 out of 13} major international markets.
+			\item Average value premium: $\approx 7.7\%$ per year internationally.
+			\item This near-universality is hard to explain as US-specific data snooping.
+		\end{itemize}
+		\item \textbf{\href{https://doi.org/10.1111/j.1540-6261.2012.01802.x}{\textcolor{blue}{Fama and French (2012)}}} --- ``Size, Value, and Momentum in International Stock Returns,'' \textit{JFE}:
+		\begin{itemize}
+			\item Extended to 23 developed markets.
+			\item Size and value premiums are \textbf{local} (not global) --- the factors need to be constructed country-by-country.
+			\item Momentum (not in FF3) is also pervasive globally.
+		\end{itemize}
+	\end{itemize}
+	\vspace{4pt}
+	\footnotesize \textit{Counter-evidence: the size premium has weakened substantially post-publication (\href{https://doi.org/10.1111/jofi.12931}{\textcolor{blue}{van Dijk, 2011}}). The value premium also weakened sharply after 2010 (\href{https://doi.org/10.1016/j.jfineco.2021.06.003}{\textcolor{blue}{Fama and French, 2021}}).}
+\end{frame}
+
+% ---------------------------------------------------------
+% DT-4. Legacy: How FF3 Changed Asset Pricing
+% ---------------------------------------------------------
+\begin{frame}{Legacy: How FF3 Changed Finance}
+	\small
+	\begin{columns}
+		\column{0.5\textwidth}
+		\textbf{Academic Impact:}
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item \textbf{Citation Machine:} FF93 is one of the most cited papers in economics ($>$30{,}000 GS citations).
+			\item \textbf{New Benchmark:} every empirical paper now controls for Size, Value \textit{and} Market.
+			\item \textbf{Ken French's Data Library:} free public data used worldwide (\href{https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html}{\textcolor{blue}{link}}).
+			\item \textbf{Nobel Prize 2013:} Fama awarded; this work was central.
+		\end{itemize}
+		\column{0.5\textwidth}
+		\textbf{Industry Impact:}
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item \textbf{Dimensional Fund Advisors (DFA):} co-founded by FF's students; built on systematic small/value tilts.
+			\item \textbf{Smart Beta / Factor Investing:} the $\sim$\$1T ``smart beta'' ETF industry is rooted in FF3.
+			\item \textbf{Performance Attribution:} FF3 (later Carhart-4) became the standard to strip style returns from ``true alpha.''
+		\end{itemize}
+	\end{columns}
+	\vspace{2pt}
+	\begin{beamercolorbox}[sep=0.3em,wd=\linewidth,rounded=true,shadow=true]{postit}
+		\footnotesize \textbf{The paradox:} by publishing the factors, FF handed the market a roadmap --- planting the seeds of the ``Factor Zoo'' era they would later lament.
+	\end{beamercolorbox}
+\end{frame}
+
+% ---------------------------------------------------------
+% 7a. China: The Shell Value Problem
+% ---------------------------------------------------------
+\begin{frame}{China: The Shell Value Problem}
+	\small
+	\textbf{\href{https://doi.org/10.1016/j.jfineco.2019.03.008}{\textcolor{blue}{Liu, Stambaugh, and Yuan (2019, \textit{JFE})}} --- ``Size and Value in China''}
+	\vspace{2pt}
+	\begin{block}{Why FF3 fails out-of-the-box in China}
+		IPO is tightly rationed by the CSRC --- 7 administrative steps, 25-member committee, application waits often $\geq$ 3 years. Private firms bypass IPO via \textbf{reverse merger} into a small listed ``shell.'' Smallest stocks therefore carry a non-fundamental \textbf{shell premium}.
+	\end{block}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\textbf{Quantifying the shell:}
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item \textbf{83\%} of 2007--2016 reverse mergers came from the \textbf{bottom 30\%} by size.
+			\item Estimated shell value $\approx$ \textbf{30\% of market cap} for a typical bottom-30\% stock (avg.\ $S/V = 29.5\%$).
+			\item These stocks are only \textbf{7\%} of total market cap but distort SMB heavily.
+			\item Median US shell: \$2M; median CN shell: \$200M (Floros-Sapp, 2011).
+		\end{itemize}
+		\column{0.5\textwidth}
+		\textbf{Evidence the bottom 30\% is ``different''}
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item Earnings--surprise regression $R_{t-k,t+k} = a + b\,SUE$: bottom 30\% has the \textbf{lowest} $b$ and $R^2$ in CN. Opposite pattern in US.
+			\item Their returns covary \textit{positively} with reverse-merger premium and \textit{negatively} with the IPO count.
+			\item \textbf{Solution (CH protocol):} drop the smallest 30\% before building any factor.
+		\end{itemize}
+	\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% 7b. China: Why EP beats BM (the horse race)
+% ---------------------------------------------------------
+\begin{frame}{China: Why EP Replaces BM (the Fama--MacBeth Horse Race)}
+	\small
+	Following \href{https://doi.org/10.1111/j.1540-6261.1992.tb04398.x}{\textcolor{blue}{Fama--French (1992)}}, LSY run cross-sectional FM regressions of monthly returns on $\beta$, $\log\!\text{ME}$, and four valuation ratios (EP, BM, AM, CP) jointly. Sample: 2000--2016, 204 months, smallest 30\% excluded.
+	\vspace{2pt}
+	\begin{table}
+		\centering
+		\footnotesize
+		\caption{Selected FM slopes (Newey--West $t$-stats in parentheses; Table 2 of LSY 2019)}
+		\begin{tabular}{lccccc}
+			\hline
+			Spec.\ & $\log$ME & EP$^{+}$ & $\log$BM & $\log$AM & CP$^{+}$ \\
+			\hline
+			Each ratio alone & $-0.005$ & $0.95$ & $0.006$ & $0.005$ & $0.05$ \\
+			& $(-4.34)$ & $(4.88)$ & $(3.21)$ & $(3.03)$ & $(3.41)$ \\
+			All four jointly & $-0.007$ & $0.78$ & $0.002$ & $0.001$ & $0.018$ \\
+			& $(-4.49)$ & $(4.38)$ & $(1.31)$ & $(0.99)$ & $(1.35)$ \\
+			\hline
+		\end{tabular}
+	\end{table}
+	\vspace{2pt}
+	\begin{itemize}\setlength\itemsep{1pt}
+		\item Each ratio is significant on its own --- but in the joint regression \textbf{EP subsumes the others}.
+		\item Mirror image of FF (1992) US result, where \textbf{BM} subsumed EP, AM, CP.
+		\item One-$\sigma$ change in EP$^{+}$ implies $\approx$ \textbf{0.52\% / month} in expected return.
+		\item $\Rightarrow$ LSY use \textbf{EP} (not BM) to build the China value factor (\textbf{VMG = Value Minus Growth}).
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Performance of CH-3 Model}
+% ---------------------------------------------------------
+% 7c. China: CH-3 construction + summary stats
+% ---------------------------------------------------------
+\begin{frame}{Building CH-3 and Its Summary Statistics}
+	\small
+	\textbf{Construction (after dropping the smallest 30\% and stocks listed $<$ 6 months):}
+	\begin{itemize}\setlength\itemsep{1pt}
+		\item Each month split the remaining 70\% by median ME into \textbf{S} / \textbf{B}.
+		\item Independently split by EP into top 30\% \textbf{V}alue / mid 40\% \textbf{M} / bottom 30\% \textbf{G}rowth (negative-EP stocks classified as G).
+		\item 6 value-weighted intersections $\Rightarrow$
+	\end{itemize}
+	$$\text{SMB} = \tfrac{1}{3}(SV+SM+SG) - \tfrac{1}{3}(BV+BM+BG); \quad \text{VMG} = \tfrac{1}{2}(SV+BV) - \tfrac{1}{2}(SG+BG)$$
+	\textbf{MKT}: value-weighted return on the 70\% universe, in excess of the 1-yr deposit rate.
+	\vspace{2pt}
 	\begin{table}
-		\caption{Summary statistics for the CH-3 factors (Liu et al., 2019)}
-		\small
+		\centering
+		\footnotesize
+		\caption{CH-3 factor summary, 2000--2016 (204 mo.); Table 3 of LSY 2019}
 		\begin{tabular}{lcccccc}
-			\hline & & & & \multicolumn{3}{c} { Correlations } \\
-			\cline { 5 - 7 } Factor & Mean & Std. dev. & $t$ -stat. & MKT & SMB & VMG \\
-			\hline 
-			MKT & $0.66$ & $8.09$ & $1.16$ & $1.00$ & $0.12$ & $-0.27$ \\
-			SMB & $1.03$ & $4.52$ & $3.25$ & $0.12$ & $1.00$ & $-0.62$ \\
-			VMG & $1.14$ & $3.75$ & $4.34$ & $-0.27$ & $-0.62$ & $1.00$ \\
+			\hline & & & & \multicolumn{3}{c}{Correlations} \\
+			\cline{5-7} Factor & Mean (\%/mo) & Std.\ dev.\ & $t$-stat & MKT & SMB & VMG \\
+			\hline
+			MKT & 0.66 & 8.09 & 1.16 & 1.00 & 0.12 & $-0.27$ \\
+			SMB & 1.03 & 4.52 & \textbf{3.25} & 0.12 & 1.00 & $-0.62$ \\
+			VMG & 1.14 & 3.75 & \textbf{4.34} & $-0.27$ & $-0.62$ & 1.00 \\
 			\hline
 		\end{tabular}
 	\end{table}
 	\footnotesize
-	\textit{Note: The CH-3 model (MKT, SMB, VMG) successfully explains most anomalies in China, except for high turnover and volatility.}
+	\textit{MKT premium is insignificant; SMB and VMG both clear $t > 3$. The strong negative SMB--VMG correlation ($-0.62$) is much larger in magnitude than in the US: in China, small stocks tend to be \textbf{growth} stocks.}
 \end{frame}
+
+% ---------------------------------------------------------
+% 7d. CH-3 vs FF-3 + anomaly explanation
+% ---------------------------------------------------------
+\begin{frame}{CH-3 vs FF-3: Head-to-Head and Anomaly Explanation}
+	\small
+	\textbf{Pricing each other's factors} (Table 5):
+	\begin{table}
+		\centering
+		\footnotesize
+		\begin{tabular}{lcc}
+			\hline
+			Tested factor & CH-3 $\alpha$ (\%/mo) & FF-3 $\alpha$ (\%/mo) \\
+			\hline
+			FF-SMB (BM-based) & $-0.04~(-0.66)$ & --- \\
+			FF-HML (BM-based) & $0.34~(0.97)$ & --- \\
+			SMB (CH-3) & --- & $\textbf{0.47}~(\textbf{7.03})$ \\
+			VMG (CH-3) & --- & $\textbf{1.39}~(\textbf{7.93})$ \\
+			\hline
+			GRS $p$-value (joint) & 0.41 & $< 10^{-12}$ \\
+			\hline
+		\end{tabular}
+	\end{table}
+	$\Rightarrow$ \textbf{CH-3 prices FF-3, but FF-3 leaves a 16.7\%/yr alpha on VMG.}
+	\vspace{4pt}
+	\textbf{Explaining 10 significant CN anomalies} (Table 9):
+	\begin{itemize}\setlength\itemsep{1pt}
+		\item Avg.\ $|\alpha|$: \textbf{CH-3 = 0.45\%}, FF-3 = 0.90\%, CAPM = 1.02\%.
+		\item CH-3 explains \textbf{8 of 10} anomalies, including \textbf{profitability (ROE)} and \textbf{volatility / MAX} --- both of which FF-3 \textit{cannot} explain even in the US.
+		\item CH-3 fails only on \textbf{1-month reversal} ($\alpha = 0.93\%$, $t=1.70$) and \textbf{1-month abnormal turnover} ($\alpha = 1.28\%$, $t=2.86$).
+		\item Adding a sentiment-motivated turnover factor \textbf{PMO} (Pessimistic Minus Optimistic) yields \textbf{CH-4}, which kills the remaining two ($\alpha$'s of $0.49\%$ and $0.00\%$). Motivation: 88\% of free float is held by \textbf{101M+} retail accounts.
+	\end{itemize}
+\end{frame}
+
+
+
+
+\subsection{Methodology}
 
 % ---------------------------------------------------------
 % 8. Methodology: Time Series
@@ -345,6 +713,8 @@
 	\textit{Advantage: Corrects for cross-sectional correlation in residuals.}
 \end{frame}
 
+\subsection{Extensions and What Came Next}
+
 % ---------------------------------------------------------
 % 10. Limitations & Conclusion
 % ---------------------------------------------------------
@@ -356,9 +726,9 @@
 		\item \textbf{Profitability \& Investment:} FF3 ignores the ``Quality" dimension.
 		\item \textbf{The Evolution:}
 		\begin{itemize}
-			\item $\rightarrow$ \textbf{Carhart (1997) 4-Factor Model}: Adds Momentum (MOM).
-			\item $\rightarrow$ \textbf{Fama-French (2015) 5-Factor Model}: Adds Profitability (RMW) and Investment (CMA).
-			\item $\rightarrow$ \textbf{q-Factor Model} (Hou, Xue, Zhang, 2015): Based on investment theory.
+			\item $\rightarrow$ \textbf{\href{https://doi.org/10.1111/j.1540-6261.1997.tb03808.x}{\textcolor{blue}{Carhart (1997)}} 4-Factor Model}: Adds Momentum (MOM).
+			\item $\rightarrow$ \textbf{\href{https://doi.org/10.1016/j.jfineco.2014.10.010}{\textcolor{blue}{Fama and French (2015)}} 5-Factor Model}: Adds Profitability (RMW) and Investment (CMA).
+			\item $\rightarrow$ \textbf{q-Factor Model} (\href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{Hou, Xue, and Zhang, 2015}}): Based on investment theory.
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -412,7 +782,7 @@
 			\item \textbf{Winners} (high past returns) tend to have high prices relative to book value $\rightarrow$ Low B/M $\rightarrow$ \textbf{Growth Stocks}.
 			\item \textbf{Losers} (low past returns) tend to have low prices $\rightarrow$ High B/M $\rightarrow$ \textbf{Value Stocks}.
 		\end{itemize}
-		\item \textbf{FF3 Prediction:} Since Winners are "Growth" and Losers are "Value", FF3 predicts that Losers should earn \textit{higher} returns than Winners (due to the HML premium).
+		\item \textbf{FF3 Prediction:} Since Winners are ``Growth" and Losers are ``Value", FF3 predicts that Losers should earn \textit{higher} returns than Winners (due to the HML premium).
 		\item \textbf{Reality:} Winners massively outperform Losers.
 		\item \textbf{Result:} The FF3 $\alpha$ for a momentum strategy is often \textit{larger} than its raw return.
 	\end{itemize}
@@ -476,13 +846,44 @@
 	\end{itemize}
 \end{frame}
 
+% ---------------------------------------------------------
+% Momentum Crashes
+% ---------------------------------------------------------
+\begin{frame}{The Dark Side: Momentum Crashes}
+	\small
+	\textbf{\href{https://doi.org/10.1016/j.jfineco.2015.12.002}{\textcolor{blue}{Daniel and Moskowitz (2016)}} --- ``Momentum Crashes,'' \textit{JFE}}
+	\begin{block}{The Stylized Fact}
+		Momentum delivers high Sharpe ratios on average, but suffers \textbf{rare, severe, predictable} crashes during market rebounds from bear states.
+	\end{block}
+	\begin{columns}
+		\column{0.55\textwidth}
+		\textbf{Anatomy of a crash:}
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item \textbf{Mar–May 2009:} WML factor lost $\approx -73\%$ in two months --- the worst drawdown in 80+ years.
+			\item \textbf{Mechanism:} after a bear market, ``losers'' are distressed, high-beta stocks. When the market rebounds, the \textit{short leg} explodes upward.
+			\item \textbf{Optionality:} the loser portfolio acts like a written call on the market $\to$ negatively skewed payoffs.
+		\end{itemize}
+		\column{0.45\textwidth}
+		\textbf{Risk-managed momentum:}
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item \href{https://doi.org/10.1016/j.jfineco.2014.11.003}{\textcolor{blue}{Barroso and Santa-Clara (2015, JFE)}}: scale WML by inverse of realized volatility.
+			\item Nearly \textbf{doubles} the Sharpe ratio and removes the left-tail crash.
+			\item Daniel-Moskowitz also propose a dynamic-weight version conditioning on bear-state and variance.
+		\end{itemize}
+	\end{columns}
+	\vspace{2pt}
+	\footnotesize \textit{Other major crashes: 1932 ($-$74\% rebound), 2001 (post tech-bust), 2020 (Apr--Nov COVID rotation, $\approx -45\%$). Momentum's average premium survives, but timing matters.}
+\end{frame}
 
-\begin{frame}{Momentum}
+% ---------------------------------------------------------
+% Updated Momentum Performance to 2025
+% ---------------------------------------------------------
+\begin{frame}{Momentum: Updated Performance Through 2025}
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.7\linewidth]{Files/mom.png}
-		\caption{Fama-French-Carhart Log Cumulative Normalized Factor Returns, 1926–2013}
-		\label{fig:mom}
+		\includegraphics[width=1\linewidth]{Files/mom_recent.png}
+		\caption{Cumulative log return of the WML (Mom) factor, 1927–2026. Red bands mark the 2009 and 2020 crashes. Source: Ken French Data Library.}
+		\label{fig:mom_recent}
 	\end{figure}
 \end{frame}
 
@@ -535,6 +936,59 @@
 			Momentum is not an inherent property of the asset's cash flows. Instead, it depends on the \textbf{investor clientele}. When noise traders dominate (A-shares), we see reversals; when sophisticated investors dominate (B-shares), we see momentum.
 		\end{block}
 	\end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------
+% BRIDGE: from "FF3 fails again" to the two competing fixes
+% ---------------------------------------------------------
+\subsection{The Two Repair Routes}
+
+\begin{frame}{Stocktake: What FF3 Cannot Explain}
+	By the late 2000s, FF3 was leaking on \textbf{four} large fronts:
+	\vspace{4pt}
+	\begin{center}
+		\small
+		\begin{tabular}{@{}lll@{}}
+			\toprule
+			\textbf{Anomaly} & \textbf{Sign vs.\ FF3} & \textbf{Headline reference} \\
+			\midrule
+			Momentum (12-1) & FF3 makes it \textit{worse} & \href{https://doi.org/10.1111/j.1540-6261.1993.tb04702.x}{\textcolor{blue}{Jegadeesh-Titman (1993)}} \\
+			Profitability (gross/ROE) & FF3 misses entirely & \href{https://doi.org/10.1016/j.jfineco.2013.01.003}{\textcolor{blue}{Novy-Marx (2013)}} \\
+			Investment / Asset growth & FF3 misses entirely & \href{https://doi.org/10.1111/j.1540-6261.2008.01370.x}{\textcolor{blue}{Cooper-Gulen-Schill (2008)}} \\
+			Idiosyncratic volatility & Wrong sign for FF3 & \href{https://doi.org/10.1111/j.1540-6261.2006.00836.x}{\textcolor{blue}{Ang-Hodrick-Xing-Zhang (2006)}} \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\vspace{6pt}
+	\begin{block}{The market split into two camps}
+		\begin{itemize}
+			\item \textbf{Camp 1 -- Empirical patch (Fama-French school)}: keep adding factors until the alphas vanish. \\
+			$\rightarrow$ Carhart (1997) FF3+MOM, FF5 (2015), FF6 (2018).
+			\item \textbf{Camp 2 -- Theoretical reset (Lu Zhang school)}: derive factors from the firm's investment first-order condition. \\
+			$\rightarrow$ Hou, Xue, and Zhang (2015) \textit{q}-factor model; later HMXZ (2021) $q^5$.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Two Repair Routes, One Disagreement}
+	\small
+	\begin{tabular}{@{}p{0.46\linewidth}p{0.46\linewidth}@{}}
+		\toprule
+		\textbf{Empirical patch (FF camp)} & \textbf{Theoretical reset (Zhang camp)} \\
+		\midrule
+		Identify a robust anomaly $\Rightarrow$ build a long-short portfolio $\Rightarrow$ call it a factor. & Start from a production-based model $\Rightarrow$ derive an Euler equation $\Rightarrow$ \textit{factors are dictated by theory}. \\
+		\addlinespace
+		Justification \textit{ex post} via Dividend Discount Model intuition (\href{https://doi.org/10.1016/j.jfineco.2014.10.010}{\textcolor{blue}{Fama-French, 2015}}). & Justification \textit{ex ante}: marginal $q = $ marginal cost of investment $\Rightarrow$ I/A and ROE must price the cross-section. \\
+		\addlinespace
+		Strength: easy to extend; handles new anomalies by adding factors. & Strength: parsimonious and falsifiable; one model speaks to many anomalies at once. \\
+		\addlinespace
+		Weakness: \textit{ad hoc}; the factor zoo problem starts here. & Weakness: tightly tied to neoclassical investment theory; less flexible. \\
+		\bottomrule
+	\end{tabular}
+	\vspace{4pt}
+	\begin{center}
+		\footnotesize \textit{Lecture 06 walks through the second route in full. Lecture 07 then asks: which side won the war?}
+	\end{center}
 \end{frame}
 
 % \subsection{Betting Against Beta}
@@ -993,7 +1447,7 @@
     \textbf{The Rational Asset Pricing View:}
     \begin{itemize}
         \item What appears as alpha may be compensation for risk we have not modeled
-        \item \textcolor{blue}{\href{https://doi.org/10.1142/9789814417358_0001}{Ross (1976)}} Arbitrage Pricing Theory: Returns determined by multiple systematic risks
+        \item \textcolor{blue}{\href{https://doi.org/10.1016/0022-0531(76)90046-6}{Ross (1976)}} Arbitrage Pricing Theory: Returns determined by multiple systematic risks
         \item \textcolor{blue}{\href{https://onlinelibrary.wiley.com/doi/10.1111/j.1540-6261.2011.01671.x}{Cochrane (2011)}}: "Discount rates" or "expected returns" reflect systematic risk
     \end{itemize}
 
@@ -1014,32 +1468,56 @@
     \end{itemize}
 \end{frame}
 
+% ---------------------------------------------------------
+% Bridge: two flavors of "omitted risk"
+% ---------------------------------------------------------
+\begin{frame}{Two Flavors of ``Omitted Risk''}
+	\small
+	If we accept that alpha hides an omitted factor, \textit{where does the new factor come from}?
+	\begin{enumerate}\setlength\itemsep{2pt}
+		\item \textbf{Statistical / empirical}: identify a robust long-short return; canonize it.
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item \href{https://doi.org/10.1111/j.1540-6261.1997.tb03808.x}{\textcolor{blue}{Carhart (1997)}}: add UMD --- momentum too big to ignore.
+			\item \href{https://doi.org/10.1016/j.jfineco.2014.10.010}{\textcolor{blue}{Fama-French (2015)}}: add RMW \& CMA (profitability, investment).
+			\item \href{https://doi.org/10.1093/rfs/hhw107}{\textcolor{blue}{Stambaugh-Yuan (2017)}}: MGMT and PERF from a behavioral mispricing index.
+		\end{itemize}
+		\item \textbf{Structural / theoretical}: derive the factor from a primitive model.
+		\begin{itemize}\setlength\itemsep{1pt}
+			\item \href{https://doi.org/10.1016/0022-0531(76)90046-6}{\textcolor{blue}{Ross (1976)}} APT: latent factors pricing tradable assets.
+			\item \href{https://doi.org/10.2307/1913811}{\textcolor{blue}{Merton (1973)}} ICAPM: factors $=$ innovations in state variables.
+			\item \href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{Hou-Xue-Zhang (2015)}} \textit{q}-factor: factors from the firm's investment FOC.
+		\end{itemize}
+	\end{enumerate}
+	\begin{block}{Why this bridge matters}
+		The same anomaly (e.g., asset growth) can be ``explained'' by adding CMA \textit{or} by deriving I/A from \textit{q}-theory. \textbf{Lecture 06} takes Route 2 seriously --- is the production-based answer more disciplined?
+	\end{block}
+\end{frame}
+
 \begin{frame}{The Risk-Based Interpretation}
+    \small
     \textbf{Arguments for Risk-Based Explanation:}
-    
-    \vspace{0.2cm}
+    \vspace{2pt}
+
     \textbf{1. Theoretical Foundation:}
-    \begin{itemize}
-        \item \textcolor{blue}{\href{https://doi.org/10.2307/1913811}{Merton (1973) ICAPM}}: Multiple state variables affect marginal utility
-        \item \textcolor{blue}{\href{https://doi.org/10.1142/9789814417358_0001}{Ross (1976) APT}}: Multiple systematic risk sources
-        \item Anomalies may capture these unmeasured state variables
+    \begin{itemize}\setlength\itemsep{1pt}
+        \item \textcolor{blue}{\href{https://doi.org/10.2307/1913811}{Merton (1973) ICAPM}}: multiple state variables affect marginal utility.
+        \item \textcolor{blue}{\href{https://doi.org/10.1016/0022-0531(76)90046-6}{Ross (1976) APT}}: multiple systematic risk sources.
+        \item Anomalies may capture these unmeasured state variables.
     \end{itemize}
-    
-    \vspace{0.3cm}
+
     \textbf{2. Empirical Patterns Consistent with Risk:}
-    \begin{itemize}
-        \item \textbf{Time-varying returns:} Higher returns when risk aversion is high
-        \item \textbf{Comovement:} Anomaly portfolios move together in bad times
-        \item \textbf{Macroeconomic sensitivity:} Returns correlate with business cycles
+    \begin{itemize}\setlength\itemsep{1pt}
+        \item \textbf{Time-varying returns:} higher returns when risk aversion is high.
+        \item \textbf{Comovement:} anomaly portfolios move together in bad times.
+        \item \textbf{Macro sensitivity:} returns correlate with business cycles.
     \end{itemize}
-    
-    \vspace{0.3cm}
+
     \textbf{3. Examples of Risk-Based Stories:}
-    \begin{itemize}
-        \item \textbf{Value premium:} Distress risk \href{https://doi.org/10.1111/j.1540-6261.1996.tb05202.x}{\textcolor{blue}{(Fama and French, 1996)}}
-        \item \textbf{Size premium:} Greater exposure to economic downturns
-        \item \textbf{Momentum:} Compensation for crash risk \href{https://doi.org/10.1016/j.jfineco.2015.12.002}{\textcolor{blue}{(Daniel and Moskowitz, 2016)}} 
-        \item \textbf{Low volatility:} Funding liquidity risk \href{https://doi.org/10.1016/j.jfineco.2013.10.005}{\textcolor{blue}{(Frazzini and Pedersen, 2014)}} 
+    \begin{itemize}\setlength\itemsep{1pt}
+        \item \textbf{Value:} distress risk \href{https://doi.org/10.1111/j.1540-6261.1996.tb05202.x}{\textcolor{blue}{(Fama-French, 1996)}}.
+        \item \textbf{Size:} greater exposure to economic downturns.
+        \item \textbf{Momentum:} compensation for crash risk \href{https://doi.org/10.1016/j.jfineco.2015.12.002}{\textcolor{blue}{(Daniel-Moskowitz, 2016)}}.
+        \item \textbf{Low vol:} funding liquidity risk \href{https://doi.org/10.1016/j.jfineco.2013.10.005}{\textcolor{blue}{(Frazzini-Pedersen, 2014)}}.
     \end{itemize}
 \end{frame}
 
@@ -1108,9 +1586,7 @@
     \begin{itemize}
         \item \textbf{China replication evidence:}
         \begin{itemize}
-            \item \href{https://doi.org/10.1016/j.pacfin.2022.101739}{\textcolor{blue}{Han and Shi (2022)}}: among 62 Chinese anomalies, trading-friction effects are the strongest and sentiment is a major state variable.
-            \item \href{https://doi.org/10.1287/mnsc.2023.4904}{\textcolor{blue}{Li, Liu, Liu, and Wei (2024)}}: 83.37\% of 469 anomaly variables fail under reliable A-share breakpoints and value-weighted tests.
-            \item \href{https://eng.pbcsf.tsinghua.edu.cn/dfiles/wp6.pdf}{\textcolor{blue}{Hou, Qiao, and Zhang (August 2024)}}: only 38 of 454 Chinese raw strategies survive a multiple-testing hurdle, and none survive after risk adjustment.
+            \item \href{https://doi.org/10.1287/mnsc.2023.4904}{\textcolor{blue}{Li, Liu, Liu, and Wei (2024, \textit{MS})}}: 83.37\% of 469 anomaly variables fail under reliable A-share breakpoints and value-weighted tests.
         \end{itemize}
         \item \textbf{Recent frontier:}
         \begin{itemize}
@@ -1188,13 +1664,43 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{But If the model is wrong? (When FF3 Fails)}
-         \textbf{The ``Risk-Based" Fix (Save EMH)}
-        \begin{itemize}
-            \item \textit{Logic:} Alpha is just compensation for a \textbf{missing risk factor}.
-            \item \textit{Action:} Augment the model (SDF Engineering).
-            \item \textit{Evolution:} Carhart (4-factor) $\rightarrow$ Fama-French (5-factor) $\rightarrow$ q-factor (Hou, Xue, Zhang).
-        \end{itemize}
+\begin{frame}{If the Model Is Wrong: Two Disciplined Reactions}
+	When FF3 (or FF5, or any chosen benchmark) fails, the literature splits into two disciplined responses.
+	\vspace{6pt}
+	\begin{block}{Reaction 1 -- Save EMH by enlarging the SDF}
+		\begin{itemize}
+			\item \textit{Logic:} the alpha is compensation for a \textbf{missing risk factor}.
+			\item \textit{Action:} augment the model (SDF engineering).
+			\item \textit{Trajectory:} Carhart (4F) $\rightarrow$ \href{https://doi.org/10.1016/j.jfineco.2014.10.010}{\textcolor{blue}{FF5 (2015)}} $\rightarrow$ \href{https://doi.org/10.1016/j.jfineco.2018.02.012}{\textcolor{blue}{FF6 (2018)}}.
+		\end{itemize}
+	\end{block}
+	\begin{block}{Reaction 2 -- Re-found the model on theory}
+		\begin{itemize}
+			\item \textit{Logic:} factors are not free parameters; they must come from a structural model.
+			\item \textit{Action:} write down the firm's investment problem; let the FOC tell us which factors matter.
+			\item \textit{Trajectory:} Cochrane's investment CAPM $\rightarrow$ Liu-Whited-Zhang (2009) $\rightarrow$ \href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{HXZ (2015) \textit{q}-factor}} $\rightarrow$ HMXZ $q^5$.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+% ---------------------------------------------------------
+% Preview: Lecture 06
+% ---------------------------------------------------------
+\begin{frame}{Preview of Lecture 06: A Production-Based Reset}
+	\begin{itemize}
+		\item Lectures 03--05 viewed asset pricing from the \textbf{demand side}: marginal utility of consumption (CCAPM, ICAPM, FF).
+		\item Lecture 06 flips perspective to the \textbf{supply side}: the firm's marginal cost of investment.
+		\item Three takeaways to expect:
+		\begin{enumerate}
+			\item Tobin's $q$ implies that \textit{investment} and \textit{profitability} are the natural cross-sectional pricing variables -- not constructed empirically, but \textbf{derived from a first-order condition}.
+			\item This logic produces the \href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{HXZ (2015) \textit{q}-factor model}} -- a direct rival to FF5.
+			\item The fight between the two camps -- empirical FF5 vs.\ theoretical HXZ -- detonates the \textbf{Factor War} (Lecture 07).
+		\end{enumerate}
+	\end{itemize}
+	\vspace{4pt}
+	\begin{center}
+		\small \textit{From here on, every new ``factor'' is on trial: empirical legitimacy on one side, theoretical legitimacy on the other.}
+	\end{center}
 \end{frame}
 
 \end{document}

@@ -92,6 +92,9 @@
 \usepackage{unicode-math}
 \setmathfont{Libertinus Math}% 使用默认的数学字体或你偏好的数学字体 Latin Modern Math/Libertinus Math
 
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
 \usepackage{ragged2e}
 \justifying\let\raggedright\justifying %两端对齐
 
@@ -137,10 +140,60 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 %\end{frame}
 
 % ============================================================================
-% Section: From Power Utility to Recursive (Epstein-Zin) Preferences
+% Roadmap: 08 vs 09 -- this lecture and the next one are one continuous derivation
 % ============================================================================
 
-\section{From Power Utility to Recursive (Epstein-Zin) Preferences}
+\begin{frame}{Roadmap: Lectures 08--09 Are One Derivation}
+	\begin{center}
+		\small
+		\begin{tikzpicture}[node distance=8pt,
+			box/.style={draw,rounded corners,align=center,inner sep=4pt,minimum height=22pt,font=\small},
+			stage/.style={box,fill=gray!10},
+			here/.style={box,fill=red!25}]
+			\node[stage] (a) {Power utility \\ ($\gamma=1/\psi$ tied)};
+			\node[here, right=of a] (b) {\textbf{Epstein-Zin preferences} \\ \textbf{(here, 08 \S1)}};
+			\node[here, below=12pt of b] (c) {\textbf{Primitive SDF in $V_{t+1}/\mu_t(V_{t+1})$} \\ \textbf{(here, 08 \S2)}};
+			\node[stage, below=12pt of c] (d) {Wealth-return SDF \\ (09 \S1)};
+			\node[stage, right=of d] (e) {Consumption-free SDF \\ (Campbell, 09 \S2)};
+			\node[stage, below=12pt of d] (f) {Merton two-beta ICAPM \\ + empirical applications (09 \S3)};
+			\draw[->,thick] (a) -- (b);
+			\draw[->,thick] (b) -- (c);
+			\draw[->,thick] (c) -- (d);
+			\draw[->,thick] (d) -- (e);
+			\draw[->,thick] (d) -- (f);
+			\draw[->,thick] (e) -- (f);
+		\end{tikzpicture}
+	\end{center}
+	\vspace{4pt}
+	\begin{block}{What 08 delivers, what 09 needs}
+		\begin{itemize}
+			\item This lecture (08) gives you the SDF in its \textbf{primitive form}: \\
+			$M_{t+1} = \delta\bigl(\tfrac{C_{t+1}}{C_t}\bigr)^{-1/\psi}\bigl(\tfrac{V_{t+1}}{\mu_t(V_{t+1})}\bigr)^{-(\gamma-1/\psi)}$ \quad --- but $V_{t+1}$ is \textbf{not observable}.
+			\item Lecture 09 makes the SDF operational by replacing $V_{t+1}$ first with the wealth return, then with Campbell's consumption-free expansion.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Lecture 08 Outline}
+	\begin{enumerate}
+		\item \textbf{Section 1.} Why the standard CRRA utility cannot solve the equity premium and risk-free rate puzzles simultaneously $\rightarrow$ recursive preferences (Kreps-Porteus, Epstein-Zin) decouple risk aversion $\gamma$ from intertemporal substitution $\psi$.
+		\item \textbf{Section 2.} The chain-rule derivation of the Epstein-Zin SDF.
+		\begin{itemize}
+			\item Three partial derivatives: $\partial f/\partial\mu$ (driven by $\psi$), $\partial\mu/\partial V$ (driven by $\gamma$), $\partial V/\partial C$ (driven by $\psi$).
+			\item Combining them yields the primitive SDF and the two-shock decomposition $\widetilde{m}_{t+1} = -\gamma\,\widetilde{c}_{t+1} - (\gamma-1/\psi)(\widetilde{v}_{t+1}-\widetilde{c}_{t+1})$.
+		\end{itemize}
+	\end{enumerate}
+	\vspace{4pt}
+	\begin{center}
+		\footnotesize \textit{Goal: by the end of 08 you can write down the SDF; by the end of 09 you can take it to data.}
+	\end{center}
+\end{frame}
+
+% ============================================================================
+% Section: Epstein-Zin Preferences (renamed from "From Power Utility...")
+% ============================================================================
+
+\section{Epstein-Zin Preferences}
 
 \begin{frame}
     \frametitle{The Problems with Standard Power Utility}
@@ -212,7 +265,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \begin{frame}
     \frametitle{The Solution: Recursive Preferences}
     
-    \textbf{Key Insight (\href{https://doi.org/10.2307/1913656}{\textcolor{blue}{Kreps-Porteus (1978)}}; \href{https://doi.org/10.1142/9789814417358_0012}{\textcolor{blue}{Epstein and Zin (1989)}} ;\href{https://www.journals.uchicago.edu/doi/10.1086/261750} {\textcolor{blue}{Epstein and Zin (1991)}})}:
+    \textbf{Key Insight (\href{https://doi.org/10.2307/1913656}{\textcolor{blue}{Kreps-Porteus (1978)}}; \href{https://doi.org/10.2307/1913778}{\textcolor{blue}{Epstein and Zin (1989)}} ;\href{https://www.journals.uchicago.edu/doi/10.1086/261750} {\textcolor{blue}{Epstein and Zin (1991)}})}:
     
     Break the lifetime utility problem into two stages:
     
@@ -321,7 +374,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \begin{frame}
     \frametitle{Generalization to Infinite Horizon}
     
-    \textbf{Recursive Formulation (\href{https://doi.org/10.1142/9789814417358_0012}{\textcolor{blue}{Epstein and Zin, 1989}} ):}
+    \textbf{Recursive Formulation (\href{https://doi.org/10.2307/1913778}{\textcolor{blue}{Epstein and Zin, 1989}} ):}
     
     \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=Recursive Utility]
     \begin{equation*}
@@ -536,9 +589,52 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 % ============================================================================
-% Section: Epstein-Zin SDF Derivation
+% Section: The Primitive Epstein-Zin SDF
 % ============================================================================
-\section{Epstein-Zin SDF}
+\section{The Primitive Epstein-Zin SDF}
+
+% ============================================================================
+% Section-level navigation: where each partial derivative fits
+% ============================================================================
+\begin{frame}{Roadmap of the SDF Derivation}
+	The pricing kernel is a marginal rate of substitution:
+	\begin{equation*}
+		q(s_t \to s_{t+1}) = \frac{\partial V_t/\partial C_{t+1}(s_t,s_{t+1})}{\partial V_t/\partial C_t(s_t)}.
+	\end{equation*}
+	Because $V_t = f(C_t,\mu_t(V_{t+1}))$ is recursive, we apply the chain rule:
+	\vspace{4pt}
+	\begin{center}
+		\small
+		\begin{tikzpicture}[node distance=4pt,
+			box/.style={draw,rounded corners,align=center,inner sep=4pt,font=\small,minimum height=20pt}]
+			\node[box,fill=blue!10] (a) {$\dfrac{\partial f}{\partial \mu(V_{t+1})}$};
+			\node[box,fill=blue!10,right=of a] (b) {$\dfrac{\partial \mu(V_{t+1})}{\partial V_{t+1}(s_{t+1})}$};
+			\node[box,fill=blue!10,right=of b] (c) {$\dfrac{\partial V_{t+1}}{\partial C_{t+1}(s_{t+1})}$};
+			\draw[->,thick] (a) -- (b);
+			\draw[->,thick] (b) -- (c);
+		\end{tikzpicture}
+	\end{center}
+	\vspace{2pt}
+	\begin{center}
+		\small
+		\begin{tabular}{@{}llc@{}}
+			\toprule
+			\textbf{Partial} & \textbf{Driving parameter} & \textbf{Frame in this section} \\
+			\midrule
+			$\partial f/\partial\mu(V_{t+1})$ & EIS $\psi$ (time aggregator) & PD~1 \\
+			$\partial\mu/\partial V_{t+1}$ & risk aversion $\gamma$ (CE function) & PD~2 \\
+			$\partial V_{t+1}/\partial C_{t+1}$ & EIS $\psi$ (time aggregator at $t{+}1$) & PD~3 \\
+			$\partial V_t/\partial C_t$ & EIS $\psi$ (denominator) & Den. \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\vspace{2pt}
+	\begin{block}{Output of this section}
+		Combining the four partials gives the primitive Epstein-Zin SDF
+		$M_{t+1} = \delta\bigl(\tfrac{C_{t+1}}{C_t}\bigr)^{-1/\psi}\bigl(\tfrac{V_{t+1}}{\mu_t(V_{t+1})}\bigr)^{-(\gamma-1/\psi)}$.
+		The unobservability of $V_{t+1}$ motivates the operationalization in Lecture~09.
+	\end{block}
+\end{frame}
 
 % ============================================================================
 % Detailed Derivation: Epstein-Zin SDF
@@ -1149,7 +1245,31 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \textbf{This dual pricing mechanism is the foundation of the long-run risk model.}
 \end{frame}
 
-
+% ============================================================================
+% Closing bridge: where 08 ends, why 09 starts
+% ============================================================================
+\begin{frame}{Where We End, and What 09 Will Do}
+	\textbf{We have:} the primitive Epstein-Zin SDF
+	\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black]
+	\begin{equation*}
+		M_{t+1} = \delta \left( \frac{C_{t+1}}{C_t} \right)^{-1/\psi} \left( \frac{V_{t+1}}{\mu_t(V_{t+1})} \right)^{-(\gamma-1/\psi)}
+	\end{equation*}
+	\end{tcolorbox}
+	and its log innovation
+	\begin{equation*}
+		\widetilde{m}_{t+1} = -\gamma\,\widetilde{c}_{t+1} - \left(\gamma - \tfrac{1}{\psi}\right)(\widetilde{v}_{t+1}-\widetilde{c}_{t+1}).
+	\end{equation*}
+	\vspace{2pt}
+	\textbf{The empirical problem.} The continuation utility $V_{t+1}$ is \textbf{not in any dataset}. It depends on the entire path of future consumption.
+	\vspace{4pt}
+	\begin{block}{Lecture 09 -- Two operationalizations of the same SDF}
+		\begin{enumerate}
+			\item \textbf{Wealth-return form}: use $V_t = \phi(X_t)W_t$ + the budget constraint to replace $V_{t+1}/\mu_t(V_{t+1})$ with $(1+R_{W,t+1})$.
+			\item \textbf{Consumption-free form (Campbell 1993)}: log-linearize the budget constraint to also remove $C_{t+1}$, ending in a two-beta ICAPM with wealth and \emph{hedging} factors.
+		\end{enumerate}
+		Both forms are algebraic re-expressions of the SDF you derived above; nothing economic is added or lost.
+	\end{block}
+\end{frame}
 
 %\begin{frame}
 %\frametitle{Bullet Points}

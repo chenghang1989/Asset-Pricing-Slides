@@ -92,6 +92,9 @@
 \setmathfont{Libertinus Math}% 使用默认的数学字体或你偏好的数学字体 Latin Modern Math/Libertinus Math
 % \setmathfont[version=bold]{Latin Modern Math}
 
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
 \usepackage{ragged2e}
 \justifying\let\raggedright\justifying %两端对齐
 %----------------------------------------------------------------------------------------
@@ -100,7 +103,7 @@
 
 \title[Asset Pricing]{\textbf{Asset Pricing}} % The short title appears at the bottom of every slide, the full title is only on the title page
 
-\subtitle{7. Factor Zoo}
+\subtitle{7. Factor Zoo and Factor War}
 
 \author[Cheng Hang]{Cheng Hang} % Your name
 \institute[DUFE] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -137,6 +140,68 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 %--------------------------------------
 %	PRESENTATION SLIDES
 %--------------------------------------
+
+% ---------------------------------------------------------
+% Roadmap: where Lecture 07 sits in the 3-act story
+% ---------------------------------------------------------
+\begin{frame}{Roadmap: From CAPM to Factor War}
+	This lecture is \textbf{Act III} of a three-lecture arc.
+	\vspace{4pt}
+	\begin{center}
+		\small
+		\begin{tikzpicture}[node distance=4pt, every node/.style={font=\small}]
+			\node[draw,rounded corners,fill=gray!10] (a) {03~~CAPM};
+			\node[draw,rounded corners,fill=gray!10,right=of a] (b) {05~~FF Factor};
+			\node[draw,rounded corners,fill=gray!10,right=of b] (c) {06~~Q-Factor};
+			\node[draw,rounded corners,fill=red!25,right=of c] (d) {\textbf{07~~Zoo / War (here)}};
+			\draw[->,thick] (a) -- (b);
+			\draw[->,thick] (b) -- (c);
+			\draw[->,thick] (c) -- (d);
+		\end{tikzpicture}
+	\end{center}
+\end{frame}
+
+% ---------------------------------------------------------
+% Recap: where 05 and 06 brought us
+% ---------------------------------------------------------
+\begin{frame}{Where We Left Off}
+	After Lectures 05 and 06 we have \textbf{two flagship models}:
+	\begin{itemize}
+		\item \href{https://doi.org/10.1016/j.jfineco.2018.02.012}{\textcolor{blue}{Fama-French (2018) FF6}}: M, SMB, HML, RMW, CMA, UMD --- the empirical patch route.
+		\item \href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{Hou-Xue-Zhang (2015) Q4}} and \href{https://doi.org/10.1093/rof/rfaa004}{\textcolor{blue}{HMXZ (2021) $q^5$}}: M, ME, I/A, ROE, EG --- the theoretical reset.
+	\end{itemize}
+	\vspace{4pt}
+	But these are not the only models on the table. \textbf{Hundreds} of additional factors have been published.
+	\vspace{4pt}
+	\begin{block}{The numbers}
+		\begin{itemize}
+			\item \href{https://doi.org/10.1093/rfs/hhv059}{\textcolor{blue}{Harvey-Liu-Zhu (2016)}}: \textbf{316} published factors.
+			\item \href{https://doi.org/10.1093/rfs/hhy131}{\textcolor{blue}{Hou-Xue-Zhang (2020)}}: replication of \textbf{452} U.S.\ anomalies; \textbf{$\approx$\,65\% fail} under value-weighting and microcap exclusion.
+			\item \href{https://doi.org/10.1561/104.00000112}{\textcolor{blue}{Chen-Zimmermann (2022)}}: open-source dataset of \textbf{200+} signals.
+			\item \href{https://doi.org/10.1111/jofi.13249}{\textcolor{blue}{Jensen-Kelly-Pedersen (2023)}}: \textbf{153 factors $\times$ 93 countries}.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+% ---------------------------------------------------------
+% Lecture outline: the four battlefields
+% ---------------------------------------------------------
+\begin{frame}{From Zoo to War: A Tour of Four Battlefields}
+	The Factor Zoo is not anarchy --- it is a structured \textbf{multi-front war}. This lecture organizes it into four battlefields:
+	\vspace{6pt}
+	\begin{enumerate}
+		\item \textbf{Battlefield I: FF vs.\ HXZ} --- empirical vs.\ structural foundations. \\
+		\textit{Headline papers:} \href{https://doi.org/10.1016/j.jfineco.2018.02.012}{\textcolor{blue}{FF (2018)}} ``Choosing Factors''; \href{https://doi.org/10.1093/rof/rfy032}{\textcolor{blue}{Hou-Mo-Xue-Zhang (2019)}} ``Which Factors?''.
+		\item \textbf{Battlefield II: Risk vs.\ Behavioral} --- factors as risk premia or as mispricing patches. \\
+		\textit{Headline papers:} \href{https://doi.org/10.1093/rfs/hhw107}{\textcolor{blue}{Stambaugh-Yuan (2017)}} mispricing factors; \href{https://doi.org/10.1093/rfs/hhz069}{\textcolor{blue}{Daniel-Hirshleifer-Sun (2020)}} behavioral factors.
+		\item \textbf{Battlefield III: Observable vs.\ Latent} --- handcrafted long-short portfolios or statistical factors. \\
+		\textit{Headline papers:} \href{https://doi.org/10.1016/j.jfineco.2019.05.001}{\textcolor{blue}{Kelly-Pruitt-Su (2019)}} IPCA; \href{https://doi.org/10.1093/rfs/hhaa020}{\textcolor{blue}{Lettau-Pelger (2020)}} PCA-RP.
+		\item \textbf{Battlefield IV: Factors vs.\ Characteristics} --- do we need factors at all? \\
+		\textit{Headline papers:} \href{https://doi.org/10.1111/j.1540-6261.1997.tb02724.x}{\textcolor{blue}{Daniel-Titman (1997)}}; \href{https://doi.org/10.1111/jofi.12876}{\textcolor{blue}{Kozak-Nagel-Santosh (2020)}}; \href{https://doi.org/10.1093/rfs/hhz123}{\textcolor{blue}{Freyberger-Neuhierl-Weber (2020)}}.
+	\end{enumerate}
+	\vspace{4pt}
+	\textit{Add to these: model-selection \textit{tools} (Sharpe ratio, HJ-distance, Bayesian shrinkage), ML-based methods, and recent moves toward consolidation.}
+\end{frame}
 
 \section{The Factor Zoo Problem}
 
@@ -231,7 +296,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 \begin{frame}{Post-Publication Decay}
-    \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhw101}{McLean and Pontiff (2016)}} "Does Academic Research Destroy Predictability?"}
+    \textbf{\textcolor{blue}{\href{https://doi.org/10.1111/jofi.12365}{McLean and Pontiff (2016)}} "Does Academic Research Destroy Predictability?"}
     
     
     \textbf{Key Finding:}
@@ -288,7 +353,12 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{itemize}
 \end{frame}
 
-\section{The Factor Wars: Competing Models}
+\section{The Factor Wars: Four Battlefields}
+
+% ---------------------------------------------------------
+% Battlefield I: FF vs HXZ (empirical vs structural)
+% ---------------------------------------------------------
+\subsection{Battlefield I -- FF vs.\ HXZ (Empirical vs.\ Structural)}
 
 \begin{frame}{Evolution of Multi-Factor Models}
     \begin{table}
@@ -300,7 +370,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
             \textcolor{blue}{\href{https://doi.org/10.1016/0304-405X(93)90023-5}{Fama-French (1993)}} & Market, Size (SMB), Value (HML) \\[0.2cm]
             \textcolor{blue}{\href{https://doi.org/10.1111/j.1540-6261.1997.tb03808.x}{Carhart (1997)}} & FF3 + Momentum (UMD) \\[0.2cm]
             \textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2013.01.003}{Novy-Marx (2013)}} & Market, Size, Value, Profitability \\[0.2cm]
-            \textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2014.02.010}{Fama-French (2015)}} & Market, Size, Value, Profitability (RMW), Investment (CMA) \\[0.2cm]
+            \textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2014.10.010}{Fama-French (2015)}} & Market, Size, Value, Profitability (RMW), Investment (CMA) \\[0.2cm]
             \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhu068}{Hou, Xue, Zhang (2015)}} & Market, Size, Investment (I/A), Profitability (ROE) \\[0.2cm]
             \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhw107}{Stambaugh-Yuan (2017)}} & Market, Size, Management (MGMT), Performance (PERF) \\[0.2cm]
             \textcolor{blue}{\href{https://doi.org/10.1016/j.jfineco.2018.02.012}{Fama-French (2018)}} & FF5 + Momentum (FF6) \\[0.2cm]
@@ -385,7 +455,48 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 
-\section{Model Selection: The Maximum Sharpe Ratio Criterion}
+% ---------------------------------------------------------
+% Battlefield II: Risk vs Behavioral
+% ---------------------------------------------------------
+\subsection{Battlefield II -- Risk vs.\ Behavioral}
+
+\begin{frame}{Are Factors Risk Premia or Mispricing Patches?}
+	Both FF and HXZ models read factors as \textbf{risk compensation}. A parallel literature reads the same patterns as \textbf{mispricing}.
+	\vspace{4pt}
+	\begin{block}{Stambaugh-Yuan (2017): Mispricing Factors}
+		\href{https://doi.org/10.1093/rfs/hhw107}{\textcolor{blue}{Stambaugh and Yuan (2017)}} build two factors from a composite \textit{mispricing index} (11 anomalies):
+		\begin{itemize}
+			\item \textbf{MGMT}: aggregates ``management''-related anomalies (net stock issues, accruals, asset growth, etc.).
+			\item \textbf{PERF}: aggregates ``performance''-related anomalies (gross profitability, return on assets, momentum, etc.).
+		\end{itemize}
+		Their four-factor model (M, SMB, MGMT, PERF) prices a broad anomaly set as well as FF5 / Q4 in many tests.
+	\end{block}
+	\textbf{Why this matters.} If MGMT and PERF capture mispricing rather than risk, the appropriate response is \textit{arbitrage} (limits-to-arbitrage research), not \textit{factor expansion}.
+\end{frame}
+
+\begin{frame}{Behavioral Factors: \href{https://doi.org/10.1093/rfs/hhz069}{\textcolor{blue}{Daniel-Hirshleifer-Sun (2020)}}}
+	\textbf{Two-factor behavioral model} grounded in psychology:
+	\begin{itemize}
+		\item \textbf{FIN}: long-horizon mispricing factor; long firms with low net financing, short firms with high net financing.
+		\item \textbf{PEAD}: short-horizon mispricing factor; long firms with positive earnings surprises, short firms with negative ones.
+	\end{itemize}
+	\vspace{4pt}
+	\textbf{Key claims}:
+	\begin{enumerate}
+		\item Investors \textit{overreact} to long-horizon information $\rightarrow$ FIN.
+		\item Investors \textit{underreact} to earnings news $\rightarrow$ PEAD.
+		\item Together with M and SMB, the four-factor behavioral model explains many anomalies that FF5 / Q4 cannot.
+	\end{enumerate}
+	\vspace{4pt}
+	\begin{block}{The unresolved disagreement}
+		Risk-based and behavioral camps fit the same data with different interpretations. Whether the cross-section reflects \textbf{compensated risk} or \textbf{persistent mispricing} is the deepest unresolved question of the Factor War.
+	\end{block}
+\end{frame}
+
+% =========================================================
+% The "referee's toolkit" — tools to judge battlefield winners
+% =========================================================
+\section{The Referee's Toolkit: How to Judge a Factor Model}
 
 \begin{frame}{The Model Selection Problem}
     \textbf{The Challenge:}
@@ -413,10 +524,10 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{itemize}
     
     
-    \textit{Following: \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhx182}{Barillas and Shanken (2017)}}, \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhz089}{Barillas and Shanken (2018)}}}
+    \textit{Following: \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhw101}{Barillas and Shanken (2017)}}, \textcolor{blue}{\href{https://doi.org/10.1111/jofi.12607}{Barillas and Shanken (2018)}}}
 \end{frame}
 
-\section{Theoretical Foundation}
+\subsection{Theoretical Foundation: SDF, HJ-Bound, Sharpe Ratio}
 
 \begin{frame}{Starting Point: The SDF Framework}
     \textbf{Fundamental Pricing Equation:}
@@ -919,7 +1030,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{itemize}
 \end{frame}
 
-\section{Fama-French (2018) Implementation}
+\subsection{Applying the Toolkit: \href{https://doi.org/10.1016/j.jfineco.2018.02.012}{\textcolor{blue}{Fama and French (2018)}}}
 
 \begin{frame}{FF (2018): Applying the Sharpe Ratio Criterion}
     \textbf{Research Design:}
@@ -1154,7 +1265,30 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{itemize}
 \end{frame}
 
-\section{New Methodologies and Solutions}
+% =========================================================
+% Battlefields III & IV: factor discovery and the characteristics rebellion
+% =========================================================
+\section{Battlefields III \& IV: New Frontiers}
+
+\subsection{Battlefield III -- Observable vs.\ Latent Factors}
+
+\begin{frame}{Why Latent Factors?}
+	The FF / HXZ / SY / DHS factors are all \textit{observable}: handcrafted long-short portfolios.
+	\vspace{4pt}
+	\textbf{Latent-factor critique:}
+	\begin{itemize}
+		\item With 200+ candidate characteristics, no economist can know \textit{ex ante} which long-shorts to build.
+		\item Statistical procedures (PCA, IPCA, deep learning) can extract a small number of \textbf{latent} factors that span the cross-section.
+		\item These latent factors do not have intuitive names but are \textit{spanning-equivalent} to combinations of characteristics.
+	\end{itemize}
+	\vspace{4pt}
+	\textbf{Three landmark papers}:
+	\begin{itemize}
+		\item \href{https://doi.org/10.1016/j.jfineco.2019.05.001}{\textcolor{blue}{Kelly, Pruitt, and Su (2019, JFE)}}: IPCA -- characteristics drive time-varying factor loadings; 5--6 latent factors absorb most of the anomaly zoo.
+		\item \href{https://doi.org/10.1093/rfs/hhaa020}{\textcolor{blue}{Lettau and Pelger (2020, RFS)}}: PCA-RP -- a principal components estimator that incorporates the asset-pricing moment conditions.
+		\item \href{https://doi.org/10.1093/rfs/hhaa009}{\textcolor{blue}{Gu, Kelly, and Xiu (2020, RFS)}}: deep learning roughly \textit{doubles} OOS Sharpe versus linear factor models.
+	\end{itemize}
+\end{frame}
 
 \begin{frame}{Machine Learning Approaches}
     \textbf{The Promise: Handle High Dimensions}
@@ -1309,6 +1443,23 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{itemize}
 \end{frame}
 
+\subsection{Battlefield IV -- Factors vs.\ Characteristics}
+
+\begin{frame}{Do We Need Factors at All? -- The Characteristics Camp}
+	\textbf{The original challenge.} \href{https://doi.org/10.1111/j.1540-6261.1997.tb02724.x}{\textcolor{blue}{Daniel and Titman (1997)}} argue that average returns line up with \textit{characteristics} (size, B/M), not with factor loadings. If true, \textbf{factor models are misspecified}: characteristics are sufficient.
+	\vspace{6pt}
+	\textbf{The modern revival.}
+	\begin{itemize}
+		\item \href{https://doi.org/10.1111/jofi.12876}{\textcolor{blue}{Kozak, Nagel, and Santosh (2018)}}: with many characteristics, the SDF is dense in characteristic space; sparse factor models are an inadequate approximation.
+		\item \href{https://doi.org/10.1016/j.jfineco.2019.06.008}{\textcolor{blue}{Kozak, Nagel, and Santosh (2020)}}: ``Shrinking the cross-section'' --- combine ridge/lasso shrinkage with characteristics to estimate the SDF directly, bypassing the factor-zoo problem.
+		\item \href{https://doi.org/10.1093/rfs/hhz123}{\textcolor{blue}{Freyberger, Neuhierl, and Weber (2020)}}: nonparametric model selection finds $\sim$10 truly independent characteristics.
+	\end{itemize}
+	\vspace{4pt}
+	\begin{block}{The hybrid consensus}
+		Most current practice mixes the two: \textbf{characteristics-instrumented} factor models (IPCA), \textbf{shrinkage SDFs} on a wide characteristic set, and \textbf{economically motivated factor families}. Pure factor-only or pure characteristics-only positions have lost ground.
+	\end{block}
+\end{frame}
+
 \begin{frame}{The Characteristics Response}
     \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhaa018}{Chordia, Goyal, and Saretto (2020)}} and \textcolor{blue}{\href{https://doi.org/10.1093/rfs/hhz089}{Fama and French (2020)}}}
     
@@ -1346,7 +1497,23 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{itemize}
 \end{frame}
 
-\section{Recent Developments (2020-2025)}
+% =========================================================
+% From Zoo to Consensus
+% =========================================================
+\section{From Zoo to Consensus (2020--2025)}
+
+\begin{frame}{Three Convergence Trends}
+	After a decade of war, the field is starting to converge on three points:
+	\begin{enumerate}
+		\item \textbf{A small core of factors is robust everywhere}: market, size, value, profitability, investment, momentum, and (sometimes) low-risk. \href{https://doi.org/10.1111/jofi.13249}{\textcolor{blue}{Jensen-Kelly-Pedersen (2023)}} replicate \textbf{153} factors in \textbf{93} countries; \textit{factor families} survive far better than individual factors.
+		\item \textbf{The bar is higher}: \href{https://doi.org/10.1093/rfs/hhv059}{\textcolor{blue}{HLZ (2016)}} t-stat $>3$ rule is now standard; pre-registration and OOS evidence are increasingly required; ``open-source'' anomaly datasets (\href{https://doi.org/10.1561/104.00000112}{\textcolor{blue}{Chen-Zimmermann, 2022}}) make replication trivial.
+		\item \textbf{Hybrid models dominate}: characteristics-instrumented factor models (IPCA, KPS), shrinkage SDFs (KNS), and ML-augmented benchmarks now beat both pure FF6 and pure Q5 in OOS Sharpe ratios.
+	\end{enumerate}
+	\vspace{4pt}
+	\begin{block}{The verdict on the war}
+		Neither the FF camp nor the HXZ camp ``won.'' Each claimed half the truth. The synthesis, due in large part to ML and IPCA, is that \textbf{a few low-rank latent factors plus shrinkage on a wide characteristic set} explains the cross-section better than any 5- or 6-factor model.
+	\end{block}
+\end{frame}
 
 \begin{frame}{Transaction Costs and Tradability}
     \textbf{\textcolor{blue}{\href{https://doi.org/10.1093/rof/rfae034}{Johansson, Sabbatucci, and Tamoni (2025)}} ``Tradable Factor Risk Premia"}
@@ -1669,37 +1836,30 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Final Thoughts}
-    \textbf{The State of Asset Pricing in 2025:}
-    
-    \begin{itemize}
-        \item \textbf{Progress:} Better understanding of what drives returns
-        \item \textbf{Humility:} Recognition of many past "discoveries" were spurious
-        \item \textbf{Rigor:} Higher statistical standards being adopted
-        \item \textbf{Realism:} More attention to implementation constraints
-    \end{itemize}
-    
-    
-    \textbf{Unresolved Questions:}
-    \begin{itemize}
-        \item Fundamental nature of alpha (risk vs. mispricing)
-        \item ``Correct" number of factors
-        \item Role of machine learning (help or harm?)
-        \item Declining returns to factors over time
-    \end{itemize}
-    
-    
-    \textbf{For Students and Researchers:}
-    \begin{itemize}
-        \item Critical thinking about published results
-        \item Emphasis on replication and robustness
-        \item Economic intuition alongside statistical tests
-        \item Bridge academic research and practical implementation
-    \end{itemize}
-    
-    
-    \textit{The factor zoo is not a crisis, but an opportunity to deepen our understanding of asset prices}
+\begin{frame}{Final Thoughts: Closing the Three-Lecture Arc}
+	\textbf{Where we started.} CAPM could not explain a handful of anomalies (Lecture 03).
+	\par
+	\textbf{Where we ended up.} A literature with $300{+}$ candidate factors, four major battlefields, and a slowly emerging consensus.
+	\vspace{6pt}
+	\begin{block}{The three takeaways for empirical research}
+		\begin{enumerate}
+			\item Always treat ``factor'' and ``anomaly'' as a \textbf{joint hypothesis}: the same data point can support either reading.
+			\item Choose your benchmark deliberately: FF6 is the empirical workhorse; Q5 is the structurally cleanest; latent-factor benchmarks (IPCA) are the OOS frontier.
+			\item Replicate before you publish, and publish your code: the field has moved from \textit{search-and-claim} to \textit{search-replicate-and-share}.
+		\end{enumerate}
+	\end{block}
+	\textbf{Unresolved questions to take into your own research.}
+	\begin{itemize}
+		\item Are anomalies risk premia or persistent mispricing?
+		\item How many \textit{economically distinct} factors really exist?
+		\item Will ML uncover new structure or amplify p-hacking?
+		\item As alphas decay post-publication (\href{https://doi.org/10.1111/jofi.12365}{\textcolor{blue}{McLean-Pontiff, 2016}}), what is the half-life of a ``factor''?
+	\end{itemize}
+	\vspace{4pt}
+	\begin{center}
+		\small \textit{The factor zoo is not a crisis. It is the dataset of an emerging science of expected returns.}
+	\end{center}
 \end{frame}
 
 
-\end{document} 
+\end{document}

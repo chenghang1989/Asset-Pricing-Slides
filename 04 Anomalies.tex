@@ -225,11 +225,16 @@
 
 \begin{frame}{China-Focused Synthesis Papers}
 	\begin{itemize}
-		\item \href{https://doi.org/10.1016/j.pacfin.2022.101739}{\textcolor{blue}{Han and Shi (2022)}} study \textbf{62 Chinese anomalies}: trading-friction anomalies are strongest, sentiment matters, and publication decay is weak.
-		\item \href{https://doi.org/10.1287/mnsc.2023.4904}{\textcolor{blue}{Li, Liu, Liu, and Wei (2024)}} replicate \textbf{469 anomaly variables} in A-shares: \textbf{83.37\%} fail under reliable breakpoints and value-weighted tests; CH3, CH4, and $q$-factor perform best.
-		\item \href{https://eng.pbcsf.tsinghua.edu.cn/dfiles/wp6.pdf}{\textcolor{blue}{Hou, Qiao, and Zhang (August 2024 draft)}} construct \textbf{454 Chinese strategies}: only 38 raw strategies survive a multiple-testing cutoff of $t=2.85$, and none survive after risk adjustment.
-		\item \href{https://www.cfrn.com.cn/uploads/master/paper/20240728/66a60a40ddd07.pdf}{\textcolor{blue}{Wang and Zhu (March 2024 draft)}} compare \textbf{11 factor models} on \textbf{105 Chinese anomalies}: Q5 dominates in time-series and anomaly-explaining tests, while Q5, FF6, and IPCA5 jointly lead in cross-sectional horse races.
+		\item \href{https://doi.org/10.1016/j.jfineco.2019.03.008}{\textcolor{blue}{Liu, Stambaugh, and Yuan (2019, JFE)}} build the \textbf{CH3} factor model: drop the bottom 30\% of stocks to strip out shell-value contamination and replace B/M with E/P.
+		\item \href{https://doi.org/10.1287/mnsc.2023.4904}{\textcolor{blue}{Li, Liu, Liu, and Wei (2024, MS)}} replicate \textbf{469 anomaly variables} in A-shares: \textbf{83.37\%} fail under reliable breakpoints and value-weighted tests; CH3, CH4, and $q$-factor perform best.
+		\item \href{https://eng.pbcsf.tsinghua.edu.cn/dfiles/wp6.pdf}{\textcolor{blue}{Hou, Qiao, and Zhang (2024 draft)}} construct \textbf{454 Chinese strategies}: only 38 raw strategies survive a multiple-testing cutoff of $t=2.85$, and \textbf{none} survive after risk adjustment.
+		\item \href{https://www.cfrn.com.cn/uploads/master/paper/20240728/66a60a40ddd07.pdf}{\textcolor{blue}{Wang and Zhu (2024 draft)}} compare \textbf{11 factor models} on \textbf{105 Chinese anomalies}: Q5 dominates in time-series and anomaly-explaining tests; Q5, FF6, and IPCA5 jointly lead in cross-sectional horse races.
 	\end{itemize}
+
+	\vspace{0.3cm}
+	\begin{beamercolorbox}[sep=0.4em,wd=\linewidth,rounded=true,shadow=true]{postit}
+		\textbf{China lesson:} the same signal often needs a different construction (e.g., drop smallest 30\%, use E/P, lag Chinese accounting data by $\geq 4$ months after fiscal year-end).
+	\end{beamercolorbox}
 \end{frame}
 
 \begin{frame}{Anomaly Types Already Covered in This Project}
@@ -277,6 +282,74 @@
 	\end{itemize}
 \end{frame}
 
+\begin{frame}{Step 0: Data Preparation and Sample Filters}
+	\textbf{Standard U.S. pipeline (CRSP--Compustat)}
+	\begin{itemize}
+		\item Keep NYSE / AMEX / NASDAQ common stocks (CRSP share codes 10 and 11).
+		\item Drop financials (SIC 6000--6999) from B/M tests: leverage is mechanical.
+		\item Require at least 24 months of return history to estimate $\beta$ and IVOL.
+		\item Apply a \textbf{delisting return adjustment} (Shumway, 1997) to avoid upward bias.
+		\item Winsorize firm characteristics at 1\% and 99\% before Fama-MacBeth.
+	\end{itemize}
+
+	\textbf{China pipeline (CSMAR / Wind / RESSET)}
+	\begin{itemize}
+		\item Drop the first \textbf{6 months} after IPO (or drop B-shares entirely).
+		\item Drop \textbf{ST / *ST} stocks and firms with negative book equity.
+		\item Drop the bottom \textbf{30\%} by market cap if testing small-size-related signals, to remove shell-value contamination (Liu, Stambaugh, Yuan 2019).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Step 1: The Fama-French Timing Convention}
+	Why a careful timing convention matters: \textbf{accounting data become public with a lag}; using contemporaneous data creates look-ahead bias.
+
+	\vspace{0.3cm}
+	\textbf{U.S. standard (FF 1993):}
+	\begin{itemize}
+		\item At the end of June of year $t$, match each stock to the firm's fiscal year-ending accounting data from \textbf{December of year $t-1$}.
+		\item Use market equity at \textbf{end of December $t-1$} for B/M.
+		\item Portfolios are held from \textbf{July of year $t$ through June of year $t+1$}.
+	\end{itemize}
+
+	\vspace{0.2cm}
+	\textbf{China standard (Liu, Stambaugh, Yuan 2019):}
+	\begin{itemize}
+		\item Wait until \textbf{May of year $t$}: annual reports filed by April 30 are then public.
+		\item Portfolios rebalanced at end of April, held May--April.
+	\end{itemize}
+
+	\begin{beamercolorbox}[sep=0.35em,wd=\linewidth,rounded=true,shadow=true]{postit}
+		\textbf{Rule of thumb:} assume \textbf{4 months} for U.S., \textbf{4--6 months} for China, between fiscal year-end and usable portfolio formation.
+	\end{beamercolorbox}
+\end{frame}
+
+\begin{frame}{Step 2: Single Sort vs. $2\times 3$ Double Sort}
+	\textbf{Single sort} by signal $z$ into deciles (or quintiles):
+	\begin{itemize}
+		\item Simple; the long-short spread is the decile 10 minus decile 1 return.
+		\item But: decile 10 and decile 1 may differ in \textbf{size}, \textbf{sector}, or \textbf{liquidity}, confounding the signal.
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Step 3: Momentum --- A Detailed Recipe}
+	Jegadeesh-Titman momentum in standard form:
+	\begin{enumerate}
+		\item At end of month $t$, rank stocks by cumulative return from month $t-12$ to month $t-2$ (skip the most recent month).
+		\item Use NYSE deciles for U.S. breakpoints; sort all stocks in A-shares.
+		\item Long the top decile (``winners''), short the bottom decile (``losers'').
+		\item Hold for \textbf{1 month}, value-weight within each leg, rebalance monthly.
+		\item Return in month $t+1$:
+		\begin{equation*}
+			UMD_{t+1} = R_{W,t+1} - R_{L,t+1}
+		\end{equation*}
+	\end{enumerate}
+
+	\textbf{Why the skip month?} Short-term reversal in month $t+1$ would contaminate a momentum signal that already includes month $t$'s return.
+
+	\textbf{Common variants:} 6-month formation, 3-month holding, overlapping portfolios (Jegadeesh-Titman average of $J\times K$ calendar-time strategies).
+\end{frame}
+
 \begin{frame}{Two Core Testing Frameworks}
 	\textbf{1. Time-Series Alpha Tests}
 	\begin{equation}
@@ -299,6 +372,71 @@
 	\end{itemize}
 \end{frame}
 
+\begin{frame}{The GRS Test in Detail}
+	\textbf{Setup:} $N$ test assets, $K$ tradable factors, $T$ time-series observations. Each asset has OLS alpha $\hat\alpha_i$ and residual vector $\hat\varepsilon_i$.
+
+	\vspace{0.2cm}
+	\textbf{The statistic}
+	\begin{equation*}
+		GRS = \frac{T-N-K}{N} \cdot \frac{\hat{\alpha}'\hat{\Sigma}^{-1}\hat{\alpha}}{1 + \bar{f}' \hat{\Omega}^{-1} \bar{f}} \sim F(N, T-N-K)
+	\end{equation*}
+	where $\hat{\Sigma}$ is the residual covariance, $\bar{f}$ the factor mean vector, $\hat{\Omega}$ the factor covariance.
+
+	\vspace{0.2cm}
+	\textbf{Economic reading:}
+	\begin{itemize}
+		\item Numerator $\hat{\alpha}'\hat{\Sigma}^{-1}\hat{\alpha}$ is the \textbf{squared maximum Sharpe ratio} obtained from the residuals.
+		\item Denominator is the squared Sharpe of the factors.
+		\item A model passes when factors already absorb the Sharpe-ratio-maximizing opportunity.
+	\end{itemize}
+
+	\textbf{Caveat:} $N$ cannot be too large relative to $T$; inverting $\hat{\Sigma}$ becomes unstable, which is why the literature reports GRS on $25$ or $32$ base portfolios, not on $200$.
+\end{frame}
+
+\begin{frame}{Fama-MacBeth: The Two-Pass Procedure}
+	\textbf{Pass 1 --- Time-series $\beta$ estimation for each asset}
+	\begin{equation*}
+		R_{i,t}^e = a_i + \beta_i' f_t + \varepsilon_{i,t}, \qquad t=1,\dots,T
+	\end{equation*}
+	delivers $\hat{\beta}_i$ for each of the $N$ assets (or portfolios).
+
+	\vspace{0.2cm}
+	\textbf{Pass 2 --- Cross-sectional regression each period}
+	\begin{equation*}
+		R_{i,t+1}^e = \gamma_{0,t+1} + \gamma_{t+1}' \hat{\beta}_i + u_{i,t+1}, \qquad i=1,\dots,N
+	\end{equation*}
+	delivers a time series of $\hat\gamma_{t+1}$ estimates. The premia are the \textbf{time-series averages}:
+	\begin{equation*}
+		\bar\gamma = \tfrac{1}{T}\sum_{t=1}^{T} \hat\gamma_{t+1}, \qquad
+		t\text{-stat}(\bar\gamma) = \bar\gamma / \left(s(\hat\gamma)/\sqrt{T}\right).
+	\end{equation*}
+
+	\vspace{0.2cm}
+	\textbf{Errors-in-variables:} betas are \emph{generated regressors}. Use \textbf{Shanken (1992) correction} or report Newey-West standard errors with appropriate lag when using monthly data.
+\end{frame}
+
+\begin{frame}{Spanning Regressions: Is Factor X Redundant?}
+	A simple but powerful test --- ask whether a candidate factor $X$ adds anything to an existing model with factors $f$:
+	\begin{equation*}
+		X_t = a + b' f_t + e_t
+	\end{equation*}
+
+	\begin{itemize}
+		\item If $\hat a \approx 0$ with small $t$-statistic $\Rightarrow$ $X$ is \textbf{spanned} by $f$; no marginal pricing information.
+		\item If $\hat a > 0$ with $t > 2.5$ $\Rightarrow$ $X$ offers mean-variance improvement beyond $f$.
+	\end{itemize}
+
+	\vspace{0.2cm}
+	\textbf{Canonical use cases}
+	\begin{itemize}
+		\item Regress UMD on FF5 $\to$ $\hat a \gg 0$: momentum is not spanned.
+		\item Regress HML on the $q$-factors $\to$ $\hat a$ near zero: HML is approximately spanned by investment + profitability (Hou-Xue-Zhang 2015).
+		\item Regress RMW on the $q$-factors $\to$ largely spanned by ROE.
+	\end{itemize}
+
+	\textbf{Key discipline:} every new factor paper must show that its factor is \emph{not spanned} by existing benchmarks.
+\end{frame}
+
 \begin{frame}{What Makes Anomaly Evidence Credible?}
 	\begin{itemize}
 		\item \textbf{No look-ahead bias}: accounting variables must be lagged until they are publicly available.
@@ -312,6 +450,31 @@
 	\begin{beamercolorbox}[sep=0.4em,wd=\linewidth,rounded=true,shadow=true]{postit}
 		\textbf{PhD standard:} report the raw spread, factor alpha, Sharpe ratio, turnover, frictions, and a transparent timing convention.
 	\end{beamercolorbox}
+\end{frame}
+
+\begin{frame}{A Reporting Checklist for Any New Anomaly Paper}
+	\small
+	\begin{table}
+		\centering
+		\resizebox{\linewidth}{!}{
+			\begin{tabular}{p{3.4cm}p{8.2cm}}
+				\toprule
+				\textbf{Block} & \textbf{What to report} \\
+				\midrule
+				Signal definition & Exact formula, data source, lag convention, handling of missing values \\
+				Sample filters & Exchanges, share types, financial-firm exclusion, micro-cap screens, minimum price \\
+				Portfolio construction & Breakpoint source (NYSE vs.\ full sample), weighting (EW and VW), rebalancing frequency, skip month \\
+				Raw performance & Mean excess return, $t$-stat, Sharpe ratio, worst drawdown \\
+				Risk adjustment & Alphas under CAPM, FF3, Carhart-4, FF5, $q$-factor or $q^5$; GRS where applicable \\
+				Implementation & Turnover, one-way transaction costs, break-even cost, capacity estimate \\
+				Robustness & Subperiods, alternative definitions, excluding micro-caps, excluding top earnings announcements \\
+				\bottomrule
+			\end{tabular}
+		}
+	\end{table}
+
+	\normalsize
+	\textbf{Discipline:} if a referee can imagine a number you did not report, your paper is not robust.
 \end{frame}
 
 \section{Canonical Anomalies}
@@ -380,6 +543,45 @@
 		\end{itemize}
 		\item They motivate \href{https://doi.org/10.1016/j.jfineco.2014.10.010}{\textcolor{blue}{FF5 (2015)}} and the \href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{$q$-factor model}}.
 	\end{itemize}
+\end{frame}
+
+\begin{frame}{Short-Term and Long-Run Reversal}
+	\textbf{Short-term reversal (STR)}
+	\begin{itemize}
+		\item \href{https://doi.org/10.1111/j.1540-6261.1990.tb03695.x}{\textcolor{blue}{Jegadeesh (1990)}}: sort on the previous month's return; yesterday's losers beat yesterday's winners in month $t+1$.
+		\item Consistent with microstructure noise: bid-ask bounce, liquidity provision, and temporary price pressure.
+		\item Gross spread is large but turnover is enormous; \textbf{net} of costs the strategy is near zero in standard samples.
+	\end{itemize}
+
+	\textbf{Long-run reversal (LTR)}
+	\begin{itemize}
+		\item \href{https://doi.org/10.1111/j.1540-6261.1985.tb05004.x}{\textcolor{blue}{De Bondt and Thaler (1985)}}: sort on returns over months $t-60$ to $t-13$; long losers, short winners; hold for several years.
+		\item Consistent with overreaction to long strings of good or bad news.
+	\end{itemize}
+
+	\textbf{Coexistence puzzle:} short-term reversal, 12-month momentum, and long-run reversal together imply a non-monotonic autocorrelation structure --- a central stylized fact any behavioral model must match.
+\end{frame}
+
+\begin{frame}{Accruals, PEAD, and Net Issuance}
+	\textbf{Accruals (Sloan 1996, AR)}
+	\begin{itemize}
+		\item Signal: $(\Delta CA - \Delta Cash) - (\Delta CL - \Delta STD - \Delta TP) - Dep$, scaled by total assets.
+		\item Firms with high accruals earn \textbf{lower} future returns --- investors fail to distinguish cash from accrual components of earnings.
+	\end{itemize}
+
+	\textbf{Post-earnings announcement drift (PEAD)}
+	\begin{itemize}
+		\item \href{https://doi.org/10.2307/2491062}{\textcolor{blue}{Bernard and Thomas (1989)}}: standardized unexpected earnings (SUE) predict returns \textbf{for up to 60 trading days} after the announcement.
+		\item Classic underreaction anomaly; long-short SUE decile spread roughly 1\% per month.
+	\end{itemize}
+
+	\textbf{Net equity issuance}
+	\begin{itemize}
+		\item \href{https://doi.org/10.1111/j.1540-6261.2008.01389.x}{\textcolor{blue}{Pontiff and Woodgate (2008)}}: high net issuers underperform.
+		\item Consistent with managerial market-timing and also with the $q$-theory view that issuance proxies for the cost of capital.
+	\end{itemize}
+
+	\textbf{Note:} accruals, PEAD, and issuance are the most \emph{information-driven} anomalies --- and therefore the most likely to shrink as accounting disclosure improves.
 \end{frame}
 
 \begin{frame}{Low-Risk, Idiosyncratic Volatility, and Liquidity}
@@ -530,6 +732,25 @@
 	\end{itemize}
 \end{frame}
 
+\begin{frame}{Adapting the Empirical Design for China}
+	\textbf{Institutional facts that change the recipe}
+	\begin{itemize}
+		\item \textbf{IPO pricing cap} and a slow listing queue $\Rightarrow$ small shell firms trade at a permanent premium.
+		\item \textbf{Delisting is rare} ($<$ 0.1\% per year historically) $\Rightarrow$ the small-cap segment is structurally different.
+		\item \textbf{Short-sale list} (margin and securities lending): only about 2{,}200 names are shortable, often with prohibitive borrow fees.
+		\item \textbf{Retail dominance:} 70--85\% of turnover, amplifying behavioral effects.
+	\end{itemize}
+
+	\vspace{0.2cm}
+	\textbf{Design adjustments}
+	\begin{itemize}
+		\item Exclude the bottom 30\% by market cap when building SMB (CH3 protocol).
+		\item Use E/P rather than B/M; Chinese accounting book value is slow to revise.
+		\item Lag accounting data 4--6 months; align to the April annual-report deadline.
+		\item Report results separately for \textbf{shortable} and \textbf{non-shortable} samples.
+	\end{itemize}
+\end{frame}
+
 \begin{frame}{External Validity: Why China Matters}
 	\begin{itemize}
 		\item International evidence separates \textbf{universal mechanisms} from \textbf{market-structure artifacts}.
@@ -545,35 +766,35 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Recent Frontier I: Alternative Data in the Cross-Section}
+\begin{frame}{Recent Frontier I: Text, Machine Learning, and Characteristics}
 	\scriptsize
 	\begin{table}
 		\centering
 		\resizebox{\linewidth}{!}{
-			\begin{tabular}{p{2.9cm}p{3.6cm}p{4.6cm}}
+			\begin{tabular}{p{3.0cm}p{3.6cm}p{4.6cm}}
 				\toprule
-				\textbf{Alternative Data} & \textbf{Recent Paper} & \textbf{Main Cross-Sectional Insight} \\
+				\textbf{Method / Data} & \textbf{Representative Paper} & \textbf{Main Cross-Sectional Insight} \\
 				\midrule
-				Earnings-call climate text & \href{https://doi.org/10.1093/rfs/hhad094}{\textcolor{blue}{Li, Shan, Tang, and Yao (2024)}} & Transition climate risk extracted from call transcripts is priced; firms that do not respond proactively trade at a discount. \\
-				Media tone disagreement & \href{https://doi.org/10.1016/j.iref.2025.104751}{\textcolor{blue}{Media tone disagreement in China (2025)}} & Disagreement in media coverage predicts future returns, especially when short selling is constrained and sentiment is weak. \\
-				Employee review platforms & \href{https://doi.org/10.1016/j.pacfin.2025.102847}{\textcolor{blue}{Bae and Ha (2025)}} & Job-platform satisfaction scores predict about 1.11\% per month winner-minus-loser spreads in Korea. \\
-				Patent inventor networks & \href{https://doi.org/10.1016/j.ribaf.2025.103004}{\textcolor{blue}{Bae, Kim, and Kwon (2025)}} & More integrated inventor networks predict higher long-run returns through innovation quality and key-talent risk. \\
+				Neural-network characteristics & \href{https://doi.org/10.1093/rfs/hhaa009}{\textcolor{blue}{Gu, Kelly, and Xiu (2020, RFS)}} & Deep learning on 94 characteristics roughly \emph{doubles} out-of-sample Sharpe vs.\ linear benchmarks. \\
+				Conditional factor model (IPCA) & \href{https://doi.org/10.1016/j.jfineco.2019.05.001}{\textcolor{blue}{Kelly, Pruitt, and Su (2019, JFE)}} & Characteristics are time-varying loadings on a small set of latent factors; 5 IPCA factors absorb most of the anomaly zoo. \\
+				Earnings-call climate text & \href{https://doi.org/10.1093/rfs/hhad094}{\textcolor{blue}{Li, Shan, Tang, and Yao (2024, RFS)}} & Transition climate risk extracted from call transcripts is priced; firms that do not respond proactively trade at a discount. \\
+				Global factor replication & \href{https://doi.org/10.1111/jofi.13249}{\textcolor{blue}{Jensen, Kelly, and Pedersen (2023, JF)}} & 153 factors replicated in 93 countries using a common hierarchical Bayesian protocol; factor \emph{families} survive better than individual factors. \\
 				\bottomrule
 			\end{tabular}
 		}
 	\end{table}
 
 	\normalsize
-	\textbf{Pattern:} the most useful alternative data are usually proxies for \textbf{intangible capital}, \textbf{beliefs}, or \textbf{non-accounting risk exposures}.
+	\textbf{Pattern:} modern frontier work compresses the ``anomaly zoo'' into a small set of latent factors and tests it globally under a single protocol.
 \end{frame}
 
 \begin{frame}{Recent Frontier II: What Is New in 2024--2026?}
 	\begin{itemize}
-		\item \href{https://doi.org/10.1016/j.jfineco.2024.103952}{\textcolor{blue}{He, Su, and Yu (2024)}}: subjective macroeconomic perceptions help \textbf{time} many anomalies; optimism strengthens quality and low-risk but weakens value and investment.
-		\item \href{https://doi.org/10.1093/rapstu/raaf001}{\textcolor{blue}{M\"uller and Schmickler (2025)}}: anomaly payoffs are not additively separable; double sorts uncover many economically large interactions.
-		\item \href{https://www.nber.org/papers/w32767}{\textcolor{blue}{Hirshleifer and Ma (2025 revision)}} show that EDGAR and XBRL shrink \textbf{accounting-based anomalies}, directly linking market efficiency to information technology.
-		\item \href{https://www.nber.org/papers/w34009}{\textcolor{blue}{Chernov, Dahlquist, and Lochstoer (July 2025)}} argue that many characteristic factors contain large \textbf{unpriced components}; hedging them can sharply raise Sharpe ratios.
-		\item \href{https://doi.org/10.1016/j.pacfin.2026.103109}{\textcolor{blue}{Abnormal analyst coverage in China (2026)}}: unusual analyst coverage predicts later ROA surprises and stock returns.
+		\item \href{https://doi.org/10.1016/j.jfineco.2024.103952}{\textcolor{blue}{He, Su, and Yu (2024, JFE)}}: subjective macroeconomic perceptions help \textbf{time} many anomalies; optimism strengthens quality and low-risk but weakens value and investment.
+		\item \href{https://doi.org/10.1093/rapstu/raaf001}{\textcolor{blue}{M\"uller and Schmickler (2025, RAPS)}}: anomaly payoffs are not additively separable; double sorts uncover economically large interaction terms that single-sort portfolios mask.
+		\item \href{https://www.nber.org/papers/w32767}{\textcolor{blue}{Hirshleifer and Ma (2025 NBER revision)}}: EDGAR and XBRL shrink \textbf{accounting-based anomalies} after their rollout, directly linking market efficiency to information technology.
+		\item \href{https://www.nber.org/papers/w34009}{\textcolor{blue}{Chernov, Dahlquist, and Lochstoer (2025 NBER)}}: many characteristic factors contain large \textbf{unpriced components}; hedging them sharply raises Sharpe ratios and reshapes the SDF.
+		\item \href{https://doi.org/10.1561/104.00000112}{\textcolor{blue}{Chen and Zimmermann (2022, CFR)}} release an open-source anomaly dataset covering 200+ signals, which is now the standard benchmark for any claim of novelty.
 	\end{itemize}
 \end{frame}
 

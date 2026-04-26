@@ -1490,7 +1490,7 @@ The weight is the \textbf{Bartlett} weight.
 	\begin{itemize}
 		\item \textbf{Rule of thumb}: $L = \lfloor 4(T/100)^{2/9} \rfloor$ (\href{https://doi.org/10.2307/2297912}{\textcolor{blue}{Newey and West (1994)}})
 		\item \textbf{For overlapping returns}: If using $k$-period returns with monthly data, set $L \geq k-1$
-		\item \textbf{Automatic selection}: \href{https://doi.org/10.1111/j.1468-0262.2004.00518.x}{\textcolor{blue}{Andrews and Monahan (1992)}} propose data-driven bandwidth selection
+		\item \textbf{Automatic selection}: \href{https://doi.org/10.2307/2951574}{\textcolor{blue}{Andrews and Monahan (1992)}} propose data-driven bandwidth selection
 	\end{itemize}
 	
 	\vspace{10pt}
@@ -1528,8 +1528,8 @@ The weight is the \textbf{Bartlett} weight.
 	\vspace{10pt}
 	\textbf{Solutions}:
 	\begin{itemize}
-		\item \href{https://doi.org/10.1093/rfs/hhm014}{\textcolor{blue}{Lewellen (2004)}}: Bias-adjusted estimator
-		\item \href{https://doi.org/10.1093/rfs/hhl021}{\textcolor{blue}{Amihud and Hurvich (2004)}}: Augmented regression
+		\item \href{https://doi.org/10.1016/j.jfineco.2002.11.002}{\textcolor{blue}{Lewellen (2004)}}: Bias-adjusted estimator
+		\item \href{https://doi.org/10.1017/S0022109000003227}{\textcolor{blue}{Amihud and Hurvich (2004)}}: Augmented regression
 		\item Bootstrap methods to construct valid confidence intervals
 	\end{itemize}
 \end{frame}
@@ -1551,7 +1551,7 @@ The weight is the \textbf{Bartlett} weight.
 	\textbf{Solutions}:
 	\begin{itemize}
 		\item Newey-West with $L \geq k-1$ lags
-		\item \href{https://doi.org/10.1093/rfs/hhl042}{\textcolor{blue}{Hodrick (1992)}} standard errors
+		\item \href{https://doi.org/10.1093/rfs/5.3.357}{\textcolor{blue}{Hodrick (1992)}} standard errors
 		\item \href{https://doi.org/10.1093/rfs/hhl042}{\textcolor{blue}{Boudoukh, Richardson, and Whitelaw (2008)}}: VAR-based inference
 	\end{itemize}
 \end{frame}
@@ -1573,11 +1573,11 @@ The weight is the \textbf{Bartlett} weight.
 	\end{itemize}
 	
 	\vspace{5pt}
-	\textbf{Key insight} (\href{https://doi.org/10.1093/rfs/hhl042}{\textcolor{blue}{Ang and Bekaert (2007)}}): Hodrick standard errors have better finite-sample properties than Newey-West for long-horizon regressions.
+	\textbf{Key insight} (\href{https://doi.org/10.1093/rfs/hhl021}{\textcolor{blue}{Ang and Bekaert (2007)}}): Hodrick standard errors have better finite-sample properties than Newey-West for long-horizon regressions.
 \end{frame}
 
 \begin{frame}{Data Snooping and Multiple Testing}
-	\href{https://doi.org/10.1111/jofi.12607}{\textcolor{blue}{Harvey, Liu, and Zhu (2016)}}: ``...and the Cross-Section of Expected Returns''
+	\href{https://doi.org/10.1093/rfs/hhv059}{\textcolor{blue}{Harvey, Liu, and Zhu (2016)}}: ``...and the Cross-Section of Expected Returns''
 	
 	\vspace{5pt}
 	\textbf{Problem}: With many predictors tested, some will appear significant by chance.
@@ -1591,7 +1591,7 @@ The weight is the \textbf{Bartlett} weight.
 	\textbf{Solutions}:
 	\begin{itemize}
 		\item Bonferroni correction: Use $\alpha/m$ for $m$ tests
-		\item \href{https://doi.org/10.1093/rfs/hhx001}{\textcolor{blue}{Harvey (2017)}}: Require $|t| > 3.0$ for significance
+		\item \href{https://doi.org/10.1111/jofi.12530}{\textcolor{blue}{Harvey (2017)}}: Require $|t| > 3.0$ for significance
 		\item Out-of-sample testing
 		\item Pre-registration of hypotheses
 	\end{itemize}
