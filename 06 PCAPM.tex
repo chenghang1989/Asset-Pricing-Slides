@@ -159,6 +159,9 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 			\draw[->,thick] (c) -- (d);
 		\end{tikzpicture}
 	\end{center}
+
+\href{https://theinvestmentcapm.com/index.html}{\textcolor{blue}{Zhang Lu's Website: Investment CAPM}}    
+
 \end{frame}
 
 % ---------------------------------------------------------
@@ -252,8 +255,8 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \textbf{Economic Intuition:}
     \begin{itemize}
         \item In equilibrium, return on \textit{financial claims} to firm = return on \textit{physical investment}
-        \item If financial returns $>$ investment returns $\rightarrow$ Arbitrage: Invest more
-        \item If financial returns $<$ investment returns $\rightarrow$ Disinvest, return cash
+        \item If financial returns $<$ investment returns $\rightarrow$ Arbitrage: Invest more
+        \item If financial returns $>$ investment returns $\rightarrow$ Disinvest, return cash
         \item Firms' optimization pins down the cross-section of expected returns
     \end{itemize}
     
@@ -733,6 +736,144 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{itemize}
 \end{frame}
 
+% =========================================================
+% New section: Cochrane's investment return identity
+% (PDF Section 7.1.2)
+% =========================================================
+\section{Cochrane's Investment Return: The Bridge to Financial Returns}
+
+\begin{frame}{Why a Separate ``Investment Return''?}
+    \textbf{Recap:} Tobin's Q (\ref{equ:tobins q}) relates the \textit{level} of investment to the \textit{level} of stock prices.
+    \vspace{0.2cm}
+    \textbf{Two practical problems with level-on-level tests:}
+    \begin{itemize}
+        \item Average $q = V/K$ is contaminated by intangible/inframarginal assets, measurement error in the capital stock, and goodwill.
+        \item Cross-sectional dispersion of $V/K$ is huge $\Rightarrow$ requires implausibly steep $\phi'(\cdot)$ to fit (\href{https://www.aeaweb.org/articles?id=10.1257/jel.31.4.1875}{\textcolor{blue}{Chirinko, 1993}}).
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{Cochrane's (1991, 1996) move:} Differentiate the level-on-level relation across time / firms.
+    \begin{itemize}
+        \item Convert $q$-theory into a statement about \textbf{returns} rather than \textbf{prices}.
+        \item Returns differ across time (high-frequency) and across firms (cross-section), absorbing fixed measurement biases.
+        \item Investment returns become observable from accounting data: $Y/K$, $I/K$, $\delta$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Defining the Investment Return}
+    \textbf{Step 1: Rearrange Tobin's Q ($V_t = D_t + \mathrm{E}_t[M_{t+1}V_{t+1}]$) and Hayashi (\ref{equ:hayashi}):}
+    \begin{equation*}
+        \phi'\left(\frac{I_t}{K_t}\right) = \mathrm{E}_t\left[M_{t+1} \frac{\partial V_{t+1}}{\partial K_{t+1}}\right]
+    \end{equation*}
+
+    \textbf{Step 2: Define the gross investment return}
+    \begin{equation}\label{equ:investment return def}
+        \boxed{
+        1 + R^I_{t+1} \equiv \frac{\partial V_{t+1}/\partial K_{t+1}}{\phi'(I_t/K_t)} = \frac{\text{Marginal benefit of capital tomorrow}}{\text{Marginal cost of investment today}}
+        }
+    \end{equation}
+
+    \textbf{Step 3: The fundamental Euler equation for $R^I$}
+    \begin{equation}\label{equ:investment euler}
+        1 = \mathrm{E}_t\left[M_{t+1} (1 + R^I_{t+1})\right]
+    \end{equation}
+
+    \vspace{0.1cm}
+    \textbf{Reading.} The investment return is the \textit{ex-post realized} return on a marginal dollar of physical investment, exactly analogous to the financial return on a stock.
+\end{frame}
+
+\begin{frame}{The Central Identity: Financial = Investment Return}
+    \textbf{Combining (\ref{equ:hayashi}), (\ref{equ:tobins q}), and (\ref{equ:investment return def}):}
+    \begin{equation}\label{equ:central identity}
+        \boxed{
+        \underbrace{1 + R_{t+1}}_{\text{Financial return}} \;=\; \underbrace{1 + R^I_{t+1}}_{\text{Investment return}}
+        \;=\; \frac{\partial V_{t+1}/\partial K_{t+1}}{\phi'(I_t/K_t)}
+        }
+    \end{equation}
+
+    \textbf{This is an identity, not a hypothesis:}
+    \begin{itemize}
+        \item Holds \textbf{state by state}, not just in expectation.
+        \item Embeds three structural ingredients: CRS production, CRS adjustment costs, optimizing manager.
+        \item No assumption about the SDF: holds for \textbf{any} valid $M_{t+1}$ that prices the firm.
+    \end{itemize}
+
+    \vspace{0.1cm}
+    \textbf{Why this is a game-changer:}
+    \begin{itemize}
+        \item Plug observable accounting variables ($Y/K$, $I/K$) into RHS $\rightarrow$ get implied financial returns.
+        \item Stock returns are no longer the residual --- they must obey a structural restriction from real-side data.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cochrane (1991, JF): The First Time-Series Test}
+    \textbf{Setup.}
+    \begin{itemize}
+        \item Use \textit{aggregate} U.S. nonfinancial corporate sector data.
+        \item Construct a single investment return $R^I_t$ from aggregate $I/K$ and $Y/K$.
+        \item Compare with the aggregate stock-market return.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{Two main findings.}
+    \begin{enumerate}
+        \item \textbf{Adjustment costs must be high.} Without high $a$, the implied investment return is far too smooth to match volatile stock returns. Tobin's $q$ must move a lot $\rightarrow$ $\phi'$ must be very sensitive to $I/K$.
+        \item \textbf{Expected investment and expected stock returns co-move.} Aggregate investment is depressed exactly when stock prices are depressed (high expected returns).
+    \end{enumerate}
+
+    \vspace{0.1cm}
+    \begin{block}{Take-away}
+        Production data, processed through the firm's FOC, replicate the basic time-series properties of equity returns. The \textit{q}-theory is empirically alive at the macro level.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Cochrane (1996, JPE): A Two-Sector Cross-Sectional Test}
+    \textbf{Setup.}
+    \begin{itemize}
+        \item Two investment returns: \textbf{residential} and \textbf{nonresidential} aggregate investment.
+        \item Use them as factors in a multifactor representation of the SDF:
+        \begin{equation*}
+            M_{t+1} = a + b_1 R^{I,\text{res}}_{t+1} + b_2 R^{I,\text{non-res}}_{t+1}
+        \end{equation*}
+        \item Test whether the implied two-factor model prices size-sorted portfolios.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{Key insight: Production-side factors as SDF proxies.}
+    \begin{itemize}
+        \item In CCAPM, the SDF is consumption-based.
+        \item In Cochrane's reformulation, the SDF is \textbf{investment-based}: the marginal rates of transformation across sectors stand in for marginal rates of substitution.
+        \item This is the conceptual ancestor of the \textbf{HXZ (2015) \textit{q}-factor model}: replace residential / nonresidential split with a corporate-investment + profitability split.
+    \end{itemize}
+
+    \vspace{0.1cm}
+    \textbf{Result.} The two-factor investment model explains the size effect roughly as well as the FF3 model of the same era --- with no preferences whatsoever in the kernel.
+\end{frame}
+
+\begin{frame}{From Identity to Empirical Strategy}
+    \textbf{What can we test from $1+R_{t+1} = 1+R^I_{t+1}$?}
+    \begin{itemize}
+        \item \textbf{Strong form (state-by-state):} Equality holds in every realization. Universally rejected --- too tight.
+        \item \textbf{Weak form (moments):} Equality of \textit{means}, \textit{variances}, \textit{covariances} of $R$ and $R^I$ across portfolios.
+        \item \textbf{Factor form (Cochrane 1996):} Use $R^I$ as factors and test pricing of asset returns.
+        \item \textbf{Loading form (HXZ 2015):} Replace $R^I$ with empirical mimicking portfolios sorted on the determinants of $R^I$ ($I/A$, ROE).
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \begin{center}
+        \small
+        \begin{tikzpicture}[node distance=10pt, every node/.style={font=\small}]
+            \node[draw,rounded corners,fill=gray!10] (a) {\shortstack{Cochrane (1991)\\time series}};
+            \node[draw,rounded corners,fill=gray!10,right=of a] (b) {\shortstack{Cochrane (1996)\\2 factors}};
+            \node[draw,rounded corners,fill=red!15,right=of b] (c) {\shortstack{LWZ (2009)\\structural GMM}};
+            \node[draw,rounded corners,fill=red!25,right=of c] (d) {\shortstack{HXZ (2015)\\\textit{q}-factor}};
+            \draw[->,thick] (a) -- (b);
+            \draw[->,thick] (b) -- (c);
+            \draw[->,thick] (c) -- (d);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
 \section{The Investment-Return Relation}
 
 \begin{frame}{From Q-Theory to Expected Returns}
@@ -977,6 +1118,109 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \textit{Returns are high when profitability is high and investment was cheap (low $I_t/K_t$)}
 \end{frame}
 
+% ---------------------------------------------------------
+% New: LWZ empirical implementation details
+% (PDF Section 7.1.2, page 213)
+% ---------------------------------------------------------
+\begin{frame}{LWZ's Empirical Strategy: GMM on Moments}
+    \textbf{Why not test the strong-form identity $1+R_{t+1} = 1+R^I_{t+1}$ state-by-state?}
+    \begin{itemize}
+        \item Such an exact restriction is overwhelmingly rejected by the data.
+        \item Driven by measurement error in $Y/K$, $I/K$, and timing mismatches between accounting and market data.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{LWZ's compromise: match moments, not paths.}
+    \begin{itemize}
+        \item For each test portfolio $i$, define moment conditions:
+        \begin{equation*}
+            g_i(\theta) = \begin{pmatrix} \mathrm{E}[R_{i,t+1}] - \mathrm{E}[R^I_{i,t+1}(\theta)] \\ \mathrm{Var}(R_{i,t+1}) - \mathrm{Var}(R^I_{i,t+1}(\theta)) \end{pmatrix}
+        \end{equation*}
+        where $\theta = (\alpha, a)$ are the only structural parameters.
+        \item Use \textbf{GMM} to minimize a weighted norm of $\{g_i(\theta)\}$ across portfolios.
+    \end{itemize}
+
+    \vspace{0.1cm}
+    \textbf{Why this is parsimonious:} Two parameters discipline the cross-section of \textit{both} mean and volatility of returns. No latent factors, no preference parameters.
+\end{frame}
+
+\begin{frame}{LWZ's Test Assets and Headline Findings}
+    \textbf{Three sets of test portfolios (each capturing an anomaly):}
+    \begin{enumerate}
+        \item \textbf{Capital investment-sorted:} High-$I/A$ firms have low average returns (\href{https://doi.org/10.1111/j.1540-6261.2004.00709.x}{\textcolor{blue}{Titman, Wei, Xie 2004}}).
+        \item \textbf{Earnings-surprise-sorted (SUE):} Post-earnings-announcement drift --- high-SUE firms keep outperforming.
+        \item \textbf{Book-to-market-sorted:} The classic value premium.
+    \end{enumerate}
+
+    \vspace{0.2cm}
+    \textbf{Estimated parameters $(\alpha, a)$ across portfolio types:}
+    \small
+    \begin{center}
+        \begin{tabular}{@{}lcc@{}}
+            \toprule
+            \textbf{Portfolio sort} & $\alpha$ (capital share) & $a$ (adj.\ cost) \\
+            \midrule
+            Investment $I/A$ & $0.2$--$0.5$ & \textbf{Low} \\
+            Earnings surprise (SUE) & $0.2$--$0.5$ & Intermediate \\
+            Book-to-market & $0.2$--$0.5$ & \textbf{Very high} \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    \vspace{0.1cm}
+    \textbf{Reading.}
+    \begin{itemize}
+        \item Capital share is reasonable and stable across anomalies.
+        \item But the adjustment-cost parameter is \textit{not}: it must be much higher for value firms than for investment-sorted firms.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Why Different Anomalies Demand Different $a$}
+    \textbf{Mechanics of the LWZ formula (\ref{equ:lwz return}):}
+    \begin{equation*}
+        1 + R_{t+1} = \frac{\alpha\, Y_{t+1}/K_{t+1} + \frac{a}{2}(I_{t+1}/K_{t+1})^2 + (1-\delta)[1+a(I_{t+1}/K_{t+1})]}{1 + a(I_t/K_t)}
+    \end{equation*}
+
+    \vspace{0.1cm}
+    \textbf{Investment-sorted (low $a$ suffices):}
+    \begin{itemize}
+        \item High-investment firms have very high $I_t/K_t$ \textit{today} but much lower $I_{t+1}/K_{t+1}$ tomorrow.
+        \item A modestly positive $a$ already pulls down their returns through the denominator. Big $a$ would over-shoot.
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \textbf{Value-sorted (very high $a$ needed):}
+    \begin{itemize}
+        \item Growth firms have high investment in \textit{both} periods plus high $Y/K$.
+        \item Without large $a$, the formula predicts \textit{high} returns for growth firms --- the opposite of the data.
+        \item Forces $a$ to be large enough that the convex cost dominates the profitability term.
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \begin{block}{The pervasive heterogeneity problem}
+        ``Different parameters for different anomalies'' is a chronic disease of $q$-theoretic asset pricing. The cleaner empirical response is the HXZ \textit{q}-factor model, which replaces structural estimation with mimicking-portfolio loadings.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Beyond Quadratic: Richer Adjustment-Cost Specifications}
+    \textbf{The classic quadratic $\phi(I/K) = I/K + (a/2)(I/K)^2$ has known limitations.}
+
+    \vspace{0.15cm}
+    \textbf{Three extensions in the literature:}
+    \begin{enumerate}
+        \item \textbf{Asymmetric costs (\href{https://doi.org/10.1111/j.1540-6261.2004.00709.x}{\textcolor{blue}{Zhang 2005}}):} different $a$ for $I>0$ vs.\ $I<0$ to make disinvestment costlier. Crucial for the value premium (next section).
+        \item \textbf{Greater-than-quadratic convexity (\href{https://doi.org/10.1086/520552}{\textcolor{blue}{Merz \& Yashiv, 2007}}):} adjustment costs in \textit{both} capital and labor; super-quadratic curvature. Fits aggregate investment far better than the textbook model.
+        \item \textbf{Fixed costs / non-convex costs (\href{https://doi.org/10.2307/2118364}{\textcolor{blue}{Abel \& Eberly, 1994}}):} introduces inaction regions where $I=0$ over a range of $q$.
+    \end{enumerate}
+
+    \vspace{0.1cm}
+    \textbf{Why this matters for asset pricing:}
+    \begin{itemize}
+        \item The shape of $\phi(\cdot)$ controls the volatility of $\phi'(\cdot)$, hence the volatility of investment returns.
+        \item Different anomalies probe different regions of $\phi(\cdot)$ $\rightarrow$ explains why a single quadratic fails.
+    \end{itemize}
+\end{frame}
+
 \section{Empirical Implications and Predictions}
 
 \begin{frame}{Testable Predictions from the Model}
@@ -1096,6 +1340,241 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 
 
 % =========================================================
+% New section: explaining firms' betas via production
+% (PDF Section 7.1.3, Zhang 2005)
+% =========================================================
+\section{Explaining Firms' Betas: Zhang (2005)}
+
+\begin{frame}{From Pricing to Betas: A Different Question}
+    \textbf{So far:} We have priced the cross-section using investment + profitability \textit{characteristics}.
+
+    \vspace{0.2cm}
+    \textbf{Now ask:} Why do \textit{value} firms \textbf{covary more strongly with the SDF} than \textit{growth} firms?
+    \begin{itemize}
+        \item This is the original Fama-French (1992) value premium puzzle.
+        \item Empirically: high B/M (value) firms earn higher average returns and have higher betas in some periods.
+        \item The challenge: \textbf{generate} the value premium endogenously from a production model with an exogenous SDF.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{\href{https://doi.org/10.1111/j.1540-6261.2004.00709.x}{\textcolor{blue}{Zhang (2005, JF)}}: ``The value premium''}
+    \begin{itemize}
+        \item Take a heteroskedastic single-factor SDF as given (rules out behavioral channels).
+        \item Add \textbf{asymmetric} adjustment costs: it is more costly to disinvest than to invest.
+        \item Show that this asymmetry generates a sizable value premium endogenously.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Zhang (2005): The SDF and Productivity}
+    \textbf{Heteroskedastic single-factor SDF (in logs):}
+    \begin{equation}\label{equ:zhang sdf}
+        m_{t+1} = \log\beta - \gamma_t (x_{t+1} - x_t)
+    \end{equation}
+    \begin{equation}\label{equ:zhang gamma}
+        \gamma_t = \gamma_0 + \gamma_1 (x_t - \bar{x}), \qquad \gamma_1 < 0
+    \end{equation}
+    where $x_t$ is aggregate (log) productivity following an AR(1).
+
+    \textbf{Read.} The price of risk $\gamma_t$ rises in bad times ($x_t$ low) --- countercyclical risk aversion baked in.
+
+    \vspace{0.2cm}
+    \textbf{Idiosyncratic productivity for firm $j$:}
+    \begin{itemize}
+        \item $z_{jt}$ follows AR(1) with common persistence.
+        \item \textbf{Value} firms: low current $z_{jt}$ $\rightarrow$ low productivity, low investment, low profits.
+        \item \textbf{Growth} firms: high current $z_{jt}$ $\rightarrow$ high productivity, high investment.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{Conditional CAPM holds by construction}, but the model still generates a sizable \textit{unconditional} value premium.
+\end{frame}
+
+\begin{frame}{The Asymmetric Adjustment Cost}
+    \textbf{Quadratic but kinked at $I=0$:}
+    \begin{equation}\label{equ:zhang cost}
+        \phi_{jt} = \frac{I_{jt}}{K_{jt}} + \frac{a_{jt}}{2}\left(\frac{I_{jt}}{K_{jt}}\right)^2,
+        \qquad a_{jt} = \begin{cases} a^+ & \text{if } I_{jt} > 0 \\ a^- & \text{if } I_{jt} < 0 \end{cases}
+    \end{equation}
+    with the central restriction
+    \begin{equation*}
+        \boxed{a^- > a^+}
+    \end{equation*}
+
+    \vspace{0.1cm}
+    \textbf{Why this asymmetry is realistic.}
+    \begin{itemize}
+        \item Used capital markets are illiquid; reselling installed capital incurs large discounts.
+        \item Layoff and reorganization costs are concentrated on the disinvestment side.
+        \item Specific human capital, learning-by-doing, and contract rigidities all create downward inflexibility.
+    \end{itemize}
+
+    \vspace{0.1cm}
+    \textbf{Empirical micro-evidence:} \href{https://doi.org/10.1086/250002}{\textcolor{blue}{Caballero, Engel, Haltiwanger (1995)}}; \href{https://www.jstor.org/stable/2233834}{\textcolor{blue}{Cooper-Haltiwanger (2006)}}.
+\end{frame}
+
+\begin{frame}{The Mechanism: Who Bears the Bad-Times Risk?}
+    \textbf{Calibration outcome.}
+    \begin{itemize}
+        \item In good times: both value and growth firms invest, but \textbf{growth invests more} $\rightarrow$ pays the high $a^+$ at the margin.
+        \item In bad times: growth still invests modestly, but \textbf{value disinvests} $\rightarrow$ pays the much higher $a^-$ at the margin.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \begin{center}
+        \small
+        \begin{tabular}{@{}lcc@{}}
+            \toprule
+            & \textbf{Good times} & \textbf{Bad times} \\
+            \midrule
+            \textbf{Growth} (high $z_j$) & high $I/K$, high $a^+$ cost & moderate $I/K$, $a^+$ cost \\
+            \textbf{Value} (low $z_j$) & moderate $I/K$, $a^+$ cost & disinvest, \textbf{high $a^-$ cost} \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    \vspace{0.2cm}
+    \textbf{Implication for risk:}
+    \begin{itemize}
+        \item Firms with \textbf{low} adjustment costs at the margin can smooth dividends $\rightarrow$ less risky.
+        \item Firms with \textbf{high} adjustment costs cannot smooth $\rightarrow$ more risky.
+        \item \textbf{Growth} firms are riskier in \textit{good} times; \textbf{value} firms are riskier in \textit{bad} times.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Why an Unconditional Value Premium Emerges}
+    \textbf{Combining the asymmetric exposure with the heteroskedastic SDF:}
+    \begin{itemize}
+        \item Value firms are risky exactly when the price of risk $\gamma_t$ is \textit{high} (bad times).
+        \item Growth firms are risky when the price of risk is \textit{low} (good times).
+        \item Unconditional expected return: $\mathrm{E}[R_j] - R_f \approx -\mathrm{Cov}(M_{t+1}, R_{j,t+1})$.
+        \item Same $\beta$ is rewarded more if the covariance lands in high-$\gamma_t$ states.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \begin{equation*}
+        \underbrace{\mathrm{E}[R^V] - \mathrm{E}[R^G]}_{\text{Value premium}} > 0
+        \;\;\Leftarrow\;\;
+        \underbrace{\text{Value risk in bad times}}_{\text{high price of risk}}
+        \;>\;
+        \underbrace{\text{Growth risk in good times}}_{\text{low price of risk}}
+    \end{equation*}
+
+    \vspace{0.1cm}
+    \begin{block}{Take-away}
+        Production technology + asymmetric adjustment costs is enough to \textbf{endogenize} a value premium from an exogenous SDF, without invoking behavioral mispricing.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Limitations and Modern Extensions}
+    \textbf{What Zhang (2005) cannot deliver:}
+    \begin{itemize}
+        \item Imposes the \textbf{conditional CAPM} by construction $\rightarrow$ only \textit{small} unconditional CAPM-alpha can arise.
+        \item Cannot match the post-1990s evidence that value firms have \textbf{lower} CAPM betas than growth firms.
+        \item Silent on momentum and other non-value anomalies.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{Generalizations (alternative SDFs that deviate further from the CAPM):}
+    \begin{itemize}
+        \item \href{https://doi.org/10.1093/rfs/hht067}{\textcolor{blue}{Bazdresch, Belo, Lin (2014)}}: shocks to adjustment costs.
+        \item \href{https://doi.org/10.1111/jofi.12080}{\textcolor{blue}{Kogan and Papanikolaou (2014)}}: investment-specific technology shocks lower the price of investment goods; growth options provide insurance.
+        \item \href{https://doi.org/10.1093/rfs/hhx135}{\textcolor{blue}{McQuade (2018)}}: positive volatility shocks raise marginal utility; growth firms hedge them.
+    \end{itemize}
+
+    \vspace{0.1cm}
+    \textbf{Common thread.} Move beyond a CAPM-style SDF to capture insurance value of growth options or aversion to specific shock types.
+\end{frame}
+
+% =========================================================
+% New section: Belo (2010) marginal rate of transformation
+% (PDF Section 7.3)
+% =========================================================
+\section{Production Recovers the SDF: Belo (2010)}
+
+\begin{frame}{A Symmetric View: Marginal Rate of Transformation}
+    \textbf{Cochrane's (1988b) provocation.}
+    \begin{quote}
+        \small \textit{If asset prices reveal consumers' marginal rate of substitution across states, do they not also reveal producers' marginal rate of transformation?}
+    \end{quote}
+
+    \vspace{0.2cm}
+    \textbf{Why this is non-trivial.}
+    \begin{itemize}
+        \item Standard production: $Y_{t+1}(s) = \varepsilon_{t+1}(s) F(K_{t+1})$.
+        \item Output is multiplicative in an \textbf{exogenous} shock $\varepsilon_{t+1}(s)$ --- firms cannot shift output across states.
+        \item Then the production possibility frontier (PPF) is Leontief; the slope is undefined; no MRT recoverable.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{Belo (2010)'s move.} Let firms have flexible technology so the PPF becomes \textbf{smooth and concave}. Then its slope at the optimum equals the SDF.
+\end{frame}
+
+\begin{frame}{Belo's Flexible Technology}
+    \textbf{Firms also choose the state-contingent productivity $\varepsilon_{j,t+1}$, subject to:}
+    \begin{equation}\label{equ:belo constraint}
+        \mathrm{E}_t\left[\left(\frac{\varepsilon_{j,t+1}}{\Theta_{j,t+1}}\right)^{\alpha}\right]^{1/\alpha} \leq 1, \qquad \alpha > 1
+    \end{equation}
+    where $\Theta_{j,t+1}$ is an exogenous baseline productivity.
+
+    \vspace{0.15cm}
+    \textbf{Reading the parameter $\alpha$.}
+    \begin{itemize}
+        \item $\alpha \to \infty$: $\varepsilon_{j,t+1} \equiv \Theta_{j,t+1}$ $\rightarrow$ standard exogenous-shock model.
+        \item Finite $\alpha$: firm allocates productivity across future states, like portfolio shares on a unit budget.
+        \item Smaller $\alpha$ $\Rightarrow$ more flexibility $\Rightarrow$ flatter PPF $\Rightarrow$ stronger identification of MRT.
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \textbf{First-order condition.} Firms shift productivity into states with high marginal utility of the numeraire and high own-output prices.
+\end{frame}
+
+\begin{frame}{Recovering the SDF from Production Data}
+    \textbf{Belo's identification result (two sectors, log notation):}
+    \begin{equation}\label{equ:belo sdf}
+        \widetilde{m}_{t+1} = -\frac{1}{1-\lambda}\Delta\widetilde{p}_{2,t+1} + \frac{\alpha-1}{1-\lambda}(\Delta\widetilde{y}_{2,t+1} - \Delta\widetilde{y}_{1,t+1}) + (\alpha-1)\Delta\widetilde{y}_{1,t+1}
+    \end{equation}
+    where $\sim$ denotes innovations, sector 1 is the numeraire, $\lambda$ is sector 2's loading on the business cycle factor.
+
+    \vspace{0.2cm}
+    \textbf{Empirical implementation.}
+    \begin{itemize}
+        \item Sector 1 = durable goods producers; Sector 2 = nondurable goods producers.
+        \item Test by GMM on excess returns of standard test assets (size $\times$ B/M, durable-vs-nondurable beta-sorted).
+        \item Annual data, 1930--2007.
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \textbf{Headline estimates:}
+    \begin{itemize}
+        \item $\alpha$ slightly above 1 $\rightarrow$ producers \textit{do} adapt productivity to states.
+        \item $\lambda$ slightly below 1 $\rightarrow$ nondurables less cyclical than durables.
+        \item Model is \textit{not rejected} on any tested set of test assets.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Why Belo (2010) Is Conceptually Important}
+    \textbf{The big picture: a fully production-side asset pricing model.}
+    \begin{itemize}
+        \item No utility function, no consumer preferences entering the SDF.
+        \item SDF inferred from \textbf{relative output prices and quantity growth} of sectors.
+        \item Bad times $\rightarrow$ low nondurable price, high nondurable output growth, low durable output growth.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{Connection to consumption-based models.}
+    \begin{itemize}
+        \item Consistent with \href{https://doi.org/10.1086/498293}{\textcolor{blue}{Yogo (2006)}}: durables \textit{consumption} prices assets when households are durable-averse in bad times.
+        \item Belo recovers the same SDF from the \textit{production} side. Symmetric duality between consumption and production.
+        \item Also consistent with \href{https://doi.org/10.1111/j.1540-6261.2009.01464.x}{\textcolor{blue}{Gomes, Kogan, Yogo (2009)}}: durable producers carry higher systematic risk and earn higher average returns.
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \begin{block}{The closing thought}
+        Combined with $q$-theory, Belo's model completes the production-based program: \textbf{both} the cross-section of returns \textbf{and} the SDF itself can be read off real-side data.
+    \end{block}
+\end{frame}
+
+% =========================================================
 % New section: the FF5 vs Q-factor showdown
 % =========================================================
 \section{The Showdown: FF5 vs. \textit{q}-Factor}
@@ -1108,7 +1587,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 	\vspace{6pt}
 	\begin{enumerate}
 		\item \href{https://doi.org/10.1111/j.1540-6261.1991.tb03750.x}{\textcolor{blue}{Cochrane (1991, JF)}} ``Production-based asset pricing'': financial returns must equal investment returns in equilibrium.
-		\item \href{https://doi.org/10.1111/j.1540-6261.2010.01580.x}{\textcolor{blue}{Chen and Zhang (2010, JF)}} ``A better three-factor model that explains more anomalies'': market $+$ I/A $+$ ROA beats FF3 on many anomalies.
+		\item \href{https://static1.squarespace.com/static/5e6033a4ea02d801f37e15bb/t/5f61583e88f43b7d5b7196b5/1600215105801/Chen_Zhang_JF.pdf}{\textcolor{red}{Chen and Zhang (2010, JF)}} ``A better three-factor model that explains more anomalies'': market $+$ I/A $+$ ROA beats FF3 on many anomalies.
 		\item \href{https://doi.org/10.2139/ssrn.1418117}{\textcolor{blue}{Chen, Novy-Marx, and Zhang (2011, WP)}} ``An alternative three-factor model'': renames the rival three-factor benchmark.
 		\item \href{https://doi.org/10.1086/649760}{\textcolor{blue}{Liu, Whited, and Zhang (2009, JPE)}} estimate the structural production model and tie investment-based returns to portfolio sorts.
 		\item \href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{Hou, Xue, and Zhang (2015, RFS)}} ``Digesting anomalies'': the \textit{q}-factor model in its mature form (M, ME, I/A, ROE).
