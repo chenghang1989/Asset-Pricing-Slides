@@ -3,3 +3,9 @@
 .vscode/
 .DS_Store
 Digest/
+*.nav
+*.snm
+*.toc
+*.synctex.gz
+Useful Files/
+*.pdf

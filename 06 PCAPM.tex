@@ -116,7 +116,8 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 
 	\AtBeginSection[]
 {
-	\begin{frame}{Content}
+	\begin{frame}[allowframebreaks]{Content}
+		\small
 		\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide] %这几个参数我也不知道该如何准确地解释，反正它们最终的效果是突出显示当前章节，而其它章节都进行了淡化处理
 		\addtocounter{framenumber}{-1}  %目录页不计算页码
 	\end{frame}
@@ -184,6 +185,25 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 % ---------------------------------------------------------
+% Narrative spine: what problem each block solves
+% ---------------------------------------------------------
+\begin{frame}{The Narrative: Four Locks}
+	\small
+	The lecture is not a list of q-theory results. It opens four locks in sequence:
+	\vspace{4pt}
+	\begin{enumerate}
+		\item \textbf{Legitimacy:} Can factors be \textit{derived} from firm optimization rather than mined from anomalies?
+		\item \textbf{Measurement:} The FOC gives marginal $q$; under CRS, can we replace it with observable average $q$?
+		\item \textbf{Return bridge:} Can accounting variables imply returns without specifying household preferences?
+		\item \textbf{Empirical weapon:} Can investment and profitability become a traded factor model that challenges FF5?
+	\end{enumerate}
+	\vspace{4pt}
+	\begin{block}{How to read the math}
+		Equations in Sections 1--5 \textbf{build the machine}; Sections 6--12 turn that machine into \textbf{testable returns and factors}.
+	\end{block}
+\end{frame}
+
+% ---------------------------------------------------------
 % Two paradigms side-by-side
 % ---------------------------------------------------------
 \begin{frame}{Two Paradigms of Asset Pricing}
@@ -246,26 +266,26 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 \begin{frame}{Core Intuition: Why Production Matters for Returns}
-    \textbf{The Fundamental Equality:}
+    \small
+    \textbf{Preview of the Claim We Will Prove:}
     \begin{equation*}
         \underbrace{\text{Financial Return}}_{\text{Stock market}} = \underbrace{\text{Investment Return}}_{\text{Real economy}}
     \end{equation*}
+    Treat this as the lecture's claim for now. Sections 2--6 show what assumptions make it work.
     
     
     \textbf{Economic Intuition:}
     \begin{itemize}
-        \item In equilibrium, return on \textit{financial claims} to firm = return on \textit{physical investment}
-        \item If financial returns $<$ investment returns $\rightarrow$ Arbitrage: Invest more
-        \item If financial returns $>$ investment returns $\rightarrow$ Disinvest, return cash
-        \item Firms' optimization pins down the cross-section of expected returns
+        \item In equilibrium, the return on a \textit{financial claim} to the firm must match the return on marginal \textit{physical investment}.
+        \item If $R^{I} > R$: investment has positive NPV $\rightarrow$ firms invest more.
+        \item If $R^{I} < R$: capital is better returned to investors $\rightarrow$ firms disinvest or pay out cash.
     \end{itemize}
     
     
-    \textbf{Key Insight:}
+    \textbf{Key Insight for Cross-Sectional Returns:}
     \begin{itemize}
-        \item Firms with different investment and profitability characteristics face different investment returns
-        \item These differences in investment returns must equal differences in financial returns
-        \item $\Rightarrow$ Investment and profitability predict stock returns
+        \item Firms with different investment and profitability characteristics face different investment returns.
+        \item Those differences must show up as differences in expected stock returns.
     \end{itemize}
 \end{frame}
 
@@ -546,25 +566,32 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 \begin{frame}{The Envelope Theorem}
-    \textbf{What is the Marginal Value of Capital?}
-    
-    Differentiate Bellman equation (\ref{equ:bellman}) with respect to $K_t$ and advance one period:
+    \textbf{Goal:} Derive the marginal value of capital $\frac{\partial V_{t+1}}{\partial K_{t+1}}$.
+
+    By the envelope theorem, differentiate the Bellman equation with respect to the state variable, holding the optimal investment choice fixed; then advance one period:
     \begin{equation}\label{equ:envelope}
-        \frac{\partial V_{t+1}}{\partial K_{t+1}} = \frac{\partial D_{t+1}}{\partial K_{t+1}} + \mathrm{E}_{t+1}\left[M_{t+2} \frac{\partial V_{t+2}}{\partial K_{t+1}}\right]
+        \frac{\partial V_{t+1}}{\partial K_{t+1}} = \underbrace{\frac{\partial D_{t+1}}{\partial K_{t+1}}}_{\text{Step 1: current dividend}} + \underbrace{\mathrm{E}_{t+1}\left[M_{t+2} \frac{\partial V_{t+2}}{\partial K_{t+1}}\right]}_{\text{Step 2--3: continuation value}}
     \end{equation}
+
+    \textbf{Step 1: Differentiate the dividend} $D_{t+1} = \alpha Y_{t+1} - \Phi_{t+1}$, with $\Phi_{t+1} \equiv \phi\!\left(\frac{I_{t+1}}{K_{t+1}}\right) K_{t+1}$:
+    \begin{equation*}
+        \frac{\partial D_{t+1}}{\partial K_{t+1}} = \alpha \frac{\partial Y_{t+1}}{\partial K_{t+1}} - \frac{\partial \Phi_{t+1}}{\partial K_{t+1}}
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{The Envelope Theorem: Cost Term}
+    \textbf{Step 1 continued:} Differentiate the investment-cost term.
     
-    \textbf{Step 1: Compute $\frac{\partial D_{t+1}}{\partial K_{t+1}}$}
+    Apply the \textbf{product rule} to $\Phi_{t+1} = \phi(I_{t+1}/K_{t+1}) \cdot K_{t+1}$:
     \begin{equation*}
         \begin{aligned}
-            \frac{\partial D_{t+1}}{\partial K_{t+1}} &= \frac{\partial}{\partial K_{t+1}}\left[\alpha Y_{t+1} - \phi\left(\frac{I_{t+1}}{K_{t+1}}\right) K_{t+1}\right] \\
-            &= \alpha \frac{\partial Y_{t+1}}{\partial K_{t+1}} - \frac{\partial}{\partial K_{t+1}}\left[\phi\left(\frac{I_{t+1}}{K_{t+1}}\right) K_{t+1}\right]
+            \frac{\partial \Phi_{t+1}}{\partial K_{t+1}} &= \underbrace{\phi'\!\left(\tfrac{I_{t+1}}{K_{t+1}}\right) \cdot \left(-\tfrac{I_{t+1}}{K_{t+1}^2}\right) \cdot K_{t+1}}_{\text{chain rule on } \phi(I/K)} + \underbrace{\phi\!\left(\tfrac{I_{t+1}}{K_{t+1}}\right) \cdot 1}_{\text{derivative of } K} \\
+            &= \phi\!\left(\tfrac{I_{t+1}}{K_{t+1}}\right) - \phi'\!\left(\tfrac{I_{t+1}}{K_{t+1}}\right) \tfrac{I_{t+1}}{K_{t+1}}
         \end{aligned}
     \end{equation*}
-    
-    The investment cost term:
-    \begin{equation*}
-        \frac{\partial \Phi_{t+1}}{\partial K_{t+1}} = \phi\left(\frac{I_{t+1}}{K_{t+1}}\right) - \phi'\left(\frac{I_{t+1}}{K_{t+1}}\right) \frac{I_{t+1}}{K_{t+1}}
-    \end{equation*}
+
+    \vspace{4pt}
+    \textbf{Why this matters:} holding investment fixed, a larger capital base lowers the investment rate $I/K$ and therefore changes adjustment costs.
 \end{frame}
 
 \begin{frame}{The Envelope Theorem (cont.)}
@@ -573,7 +600,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
         \frac{\partial V_{t+2}}{\partial K_{t+1}} = \frac{\partial V_{t+2}}{\partial K_{t+2}} \cdot \frac{\partial K_{t+2}}{\partial K_{t+1}} = \frac{\partial V_{t+2}}{\partial K_{t+2}} (1-\delta)
     \end{equation*}
     
-    because $K_{t+2} = I_{t+1} + (1-\delta)K_{t+1}$ (only undepreciated capital matters)
+    because $K_{t+2} = I_{t+1} + (1-\delta)K_{t+1}$ and the envelope step holds $I_{t+1}$ fixed (only undepreciated capital matters)
     
     
     \textbf{Step 3: Apply FOC (\ref{equ:marginal}) One Period Forward}
@@ -991,7 +1018,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \textbf{Problem:} Q-theory gives general relationship, but need specific form for empirics
     
     \vspace{0.2cm}
-    \textbf{Liu, Whited, and Zhang (2009) Specification:}
+    \textbf{\href{https://doi.org/10.1086/649760}{\textcolor{blue}{Liu, Whited, and Zhang (2009)}} Specification:}
     \begin{equation}\label{equ:lwz cost}
         \phi\left(\frac{I_t}{K_t}\right) = \frac{I_t}{K_t} + \frac{a}{2}\left(\frac{I_t}{K_t}\right)^2
     \end{equation}
@@ -1486,256 +1513,409 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 % =========================================================
-% New section: Belo (2010) marginal rate of transformation
-% (PDF Section 7.3)
-% =========================================================
-\section{Production Recovers the SDF: Belo (2010)}
-
-\begin{frame}{A Symmetric View: Marginal Rate of Transformation}
-    \textbf{Cochrane's (1988b) provocation.}
-    \begin{quote}
-        \small \textit{If asset prices reveal consumers' marginal rate of substitution across states, do they not also reveal producers' marginal rate of transformation?}
-    \end{quote}
-
-    \vspace{0.2cm}
-    \textbf{Why this is non-trivial.}
-    \begin{itemize}
-        \item Standard production: $Y_{t+1}(s) = \varepsilon_{t+1}(s) F(K_{t+1})$.
-        \item Output is multiplicative in an \textbf{exogenous} shock $\varepsilon_{t+1}(s)$ --- firms cannot shift output across states.
-        \item Then the production possibility frontier (PPF) is Leontief; the slope is undefined; no MRT recoverable.
-    \end{itemize}
-
-    \vspace{0.2cm}
-    \textbf{Belo (2010)'s move.} Let firms have flexible technology so the PPF becomes \textbf{smooth and concave}. Then its slope at the optimum equals the SDF.
-\end{frame}
-
-\begin{frame}{Belo's Flexible Technology}
-    \textbf{Firms also choose the state-contingent productivity $\varepsilon_{j,t+1}$, subject to:}
-    \begin{equation}\label{equ:belo constraint}
-        \mathrm{E}_t\left[\left(\frac{\varepsilon_{j,t+1}}{\Theta_{j,t+1}}\right)^{\alpha}\right]^{1/\alpha} \leq 1, \qquad \alpha > 1
-    \end{equation}
-    where $\Theta_{j,t+1}$ is an exogenous baseline productivity.
-
-    \vspace{0.15cm}
-    \textbf{Reading the parameter $\alpha$.}
-    \begin{itemize}
-        \item $\alpha \to \infty$: $\varepsilon_{j,t+1} \equiv \Theta_{j,t+1}$ $\rightarrow$ standard exogenous-shock model.
-        \item Finite $\alpha$: firm allocates productivity across future states, like portfolio shares on a unit budget.
-        \item Smaller $\alpha$ $\Rightarrow$ more flexibility $\Rightarrow$ flatter PPF $\Rightarrow$ stronger identification of MRT.
-    \end{itemize}
-
-    \vspace{0.15cm}
-    \textbf{First-order condition.} Firms shift productivity into states with high marginal utility of the numeraire and high own-output prices.
-\end{frame}
-
-\begin{frame}{Recovering the SDF from Production Data}
-    \textbf{Belo's identification result (two sectors, log notation):}
-    \begin{equation}\label{equ:belo sdf}
-        \widetilde{m}_{t+1} = -\frac{1}{1-\lambda}\Delta\widetilde{p}_{2,t+1} + \frac{\alpha-1}{1-\lambda}(\Delta\widetilde{y}_{2,t+1} - \Delta\widetilde{y}_{1,t+1}) + (\alpha-1)\Delta\widetilde{y}_{1,t+1}
-    \end{equation}
-    where $\sim$ denotes innovations, sector 1 is the numeraire, $\lambda$ is sector 2's loading on the business cycle factor.
-
-    \vspace{0.2cm}
-    \textbf{Empirical implementation.}
-    \begin{itemize}
-        \item Sector 1 = durable goods producers; Sector 2 = nondurable goods producers.
-        \item Test by GMM on excess returns of standard test assets (size $\times$ B/M, durable-vs-nondurable beta-sorted).
-        \item Annual data, 1930--2007.
-    \end{itemize}
-
-    \vspace{0.15cm}
-    \textbf{Headline estimates:}
-    \begin{itemize}
-        \item $\alpha$ slightly above 1 $\rightarrow$ producers \textit{do} adapt productivity to states.
-        \item $\lambda$ slightly below 1 $\rightarrow$ nondurables less cyclical than durables.
-        \item Model is \textit{not rejected} on any tested set of test assets.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Why Belo (2010) Is Conceptually Important}
-    \textbf{The big picture: a fully production-side asset pricing model.}
-    \begin{itemize}
-        \item No utility function, no consumer preferences entering the SDF.
-        \item SDF inferred from \textbf{relative output prices and quantity growth} of sectors.
-        \item Bad times $\rightarrow$ low nondurable price, high nondurable output growth, low durable output growth.
-    \end{itemize}
-
-    \vspace{0.2cm}
-    \textbf{Connection to consumption-based models.}
-    \begin{itemize}
-        \item Consistent with \href{https://doi.org/10.1086/498293}{\textcolor{blue}{Yogo (2006)}}: durables \textit{consumption} prices assets when households are durable-averse in bad times.
-        \item Belo recovers the same SDF from the \textit{production} side. Symmetric duality between consumption and production.
-        \item Also consistent with \href{https://doi.org/10.1111/j.1540-6261.2009.01464.x}{\textcolor{blue}{Gomes, Kogan, Yogo (2009)}}: durable producers carry higher systematic risk and earn higher average returns.
-    \end{itemize}
-
-    \vspace{0.15cm}
-    \begin{block}{The closing thought}
-        Combined with $q$-theory, Belo's model completes the production-based program: \textbf{both} the cross-section of returns \textbf{and} the SDF itself can be read off real-side data.
-    \end{block}
-\end{frame}
-
-% =========================================================
 % New section: the FF5 vs Q-factor showdown
 % =========================================================
 \section{The Showdown: FF5 vs. \textit{q}-Factor}
 
 % ---------------------------------------------------------
-% Q-factor lineage: how Lu Zhang's program got here
+% Prologue: narrative tee-up
 % ---------------------------------------------------------
-\begin{frame}{The Lu Zhang Program: A Decade of Build-up}
-	The \textit{q}-factor model did not appear out of thin air; it is the endpoint of a decade-long construction.
-	\vspace{6pt}
+\begin{frame}{Prologue: A Decade-Long Drama in Asset Pricing}
+	The FF5--Q4 showdown is the public face of a fifteen-year contest that played out behind the scenes at \textit{Journal of Finance}.
+	\begin{itemize}
+		\item \textbf{2009}: ``A Better Three-Factor Model'' is \textit{accepted} at JF for April 2010 --- then \textit{pulled} at the last moment.
+		\item \textbf{2010--2011}: revised version held for a year, then rejected.
+		\item \textbf{2012}: Zhang rebuilds his team with Hou and Xue; the model finally appears in RFS 2015.
+		\item \textbf{2015}: in the same window, FF publish FF5 with two of the same variables but a different motivation.
+	\end{itemize}
+	\begin{block}{Why we tell this story}
+		Asset pricing models are competing narratives about the same data. \textit{Which} model became dominant and \textit{why} is as important as the regressions.
+	\end{block}
+	\vspace{2pt}
+	{\tiny\textit{Source: Zhang (2016, Tsinghua Financial Review); HXZ (2015) acknowledgements; Harvey (2011) editor report.}}
+\end{frame}
+
+% ---------------------------------------------------------
+% Q-factor lineage: refined with full dates
+% ---------------------------------------------------------
+\begin{frame}[allowframebreaks]{The Lu Zhang Program: From ``Neoclassical Factors'' (2007) to HXZ (2015)}
+	\small
+	A single research program, eight years, six title changes:
+	\vspace{4pt}
 	\begin{enumerate}
-		\item \href{https://doi.org/10.1111/j.1540-6261.1991.tb03750.x}{\textcolor{blue}{Cochrane (1991, JF)}} ``Production-based asset pricing'': financial returns must equal investment returns in equilibrium.
-		\item \href{https://static1.squarespace.com/static/5e6033a4ea02d801f37e15bb/t/5f61583e88f43b7d5b7196b5/1600215105801/Chen_Zhang_JF.pdf}{\textcolor{red}{Chen and Zhang (2010, JF)}} ``A better three-factor model that explains more anomalies'': market $+$ I/A $+$ ROA beats FF3 on many anomalies.
-		\item \href{https://doi.org/10.2139/ssrn.1418117}{\textcolor{blue}{Chen, Novy-Marx, and Zhang (2011, WP)}} ``An alternative three-factor model'': renames the rival three-factor benchmark.
-		\item \href{https://doi.org/10.1086/649760}{\textcolor{blue}{Liu, Whited, and Zhang (2009, JPE)}} estimate the structural production model and tie investment-based returns to portfolio sorts.
-		\item \href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{Hou, Xue, and Zhang (2015, RFS)}} ``Digesting anomalies'': the \textit{q}-factor model in its mature form (M, ME, I/A, ROE).
+		\item \textbf{1991} \quad \href{https://doi.org/10.1111/j.1540-6261.1991.tb03750.x}{\textcolor{blue}{Cochrane (JF)}} ``Production-based asset pricing'' --- financial returns equal investment returns in equilibrium.
+		\item \textbf{2007} \quad NBER WP 13282 ``Neoclassical Factors'' (Liu--Whited--Zhang). First attempt to price returns with the investment FOC.
+		\item \textbf{Jan 2009} \quad ``An Equilibrium Three-Factor Model'' (Chen--Zhang).
+		\item \textbf{Apr 2009} \quad ``Production-Based Factors'' (Chen--Zhang).
+		\item \textbf{End 2009} \quad ``\href{https://static1.squarespace.com/static/5e6033a4ea02d801f37e15bb/t/5f61583e88f43b7d5b7196b5/1600215105801/Chen_Zhang_JF.pdf}{\textcolor{red}{A Better Three-Factor Model That Explains More Anomalies}}'' --- \textit{accepted at JF Vol.\ 65(2), April 2010}. Title imposed by a senior referee (reportedly Sheridan Titman).
+		\item \textbf{2010} \quad Paper \textit{withdrawn} after Robert Novy-Marx flags a timing error; revision resubmitted in April 2010.
+		\item \textbf{Apr 2011} \quad Revised version \textit{rejected} after a year-long review.
+		\item \textbf{2011} \quad SSRN WP ``An Alternative Three-Factor Model'' (\href{https://doi.org/10.2139/ssrn.1418117}{\textcolor{blue}{Chen, \textit{Novy-Marx}, Zhang}}).
+		\item \textbf{2012} \quad NBER WP ``Digesting Anomalies'' (Hou--Xue--Zhang). New team, four-factor form (adds Size).
+		\item \textbf{2015} \quad Published as \href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{HXZ (2015, RFS)}}, editor's choice and lead article.
+	\end{enumerate}
+\end{frame}
+
+% ---------------------------------------------------------
+% The 2009 JF paper that almost was
+% ---------------------------------------------------------
+\begin{frame}{The 2009 JF Paper That Almost Was}
+	The version slated for JF April 2010 used the working title ``\textit{Production-Based Factors}.'' A senior referee insisted on a more confrontational title:
+	\vspace{6pt}
+	\begin{center}
+		\large \textbf{``A Better Three-Factor Model That Explains More Anomalies''}
+	\end{center}
+	\vspace{4pt}
+	Zhang has since written that he opposed the title but was overruled. The framing was a direct shot at \href{https://doi.org/10.1016/0304-405X(93)90023-5}{\textcolor{blue}{Fama-French (1993)}}.
+	\vspace{6pt}
+	\begin{block}{Why titles matter in asset pricing}
+		``Better'' and ``more'' implicitly demote FF3 from \textit{the} model to \textit{a} model. Had this paper appeared in JF in April 2010, the empirical asset pricing reading list of 2010--2015 would look very different.
+	\end{block}
+	\vspace{4pt}
+	\tiny\textit{Quotation reconstructed from Zhang (2016, ``Factors War,'' Tsinghua Financial Review). The identity of the senior referee has never been formally confirmed.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Anatomy of the timing error -- technical detail
+% ---------------------------------------------------------
+\begin{frame}[allowframebreaks]{Anatomy of the Timing Error}
+	\textbf{What broke?} The profitability factor in the JF version was built monthly with a blanket \textbf{4-month lag} from fiscal quarter end:
+	\[
+		\text{ROA}_t \;=\; \frac{\text{IB}_{q}}{\text{Total Assets}_{q-1}}, \qquad t \;=\; (\text{fiscal quarter end of } q) + 4\text{ months}.
+	\]
+	The implicit assumption was that, by 4 months after fiscal quarter end, every firm's earnings are already public. \textbf{Not quite.}
+	\vspace{6pt}
+	\textbf{Why a 4-month lag is not always safe} (SEC filing rules):
+	\begin{itemize}
+		\item 10-Q (quarterly): due within 40 or 45 days of fiscal quarter end.
+		\item 10-K (annual): due within 75--90 days of fiscal year end.
+		\item \textbf{NT (Non-Timely) filings}: an extra 5 days for 10-Qs, 15 days for 10-Ks --- and in practice often \textit{much} longer.
+	\end{itemize}
+
+    \framebreak
+	Audit Analytics (2014) documented \textbf{201 NT filings} across NYSE/AMEX/NASDAQ between 2011 and 2013, with a non-trivial tail of firms taking $>$90 days post-NT filing to actually disclose. A blanket 4-month lag from fiscal quarter end \textbf{could include earnings the market had not yet seen} --- look-ahead bias.
+	
+	\textbf{What Novy-Marx spotted}\quad For a fraction of firms in each cross-section, the factor was using earnings that were not yet public at portfolio formation, biasing the profitability sort.
+	\vspace{6pt}
+	\textbf{The fix in HXZ (2015):}
+	\begin{enumerate}
+		\item Switch the profitability factor from \textbf{ROA} (assets in the denominator) to \textbf{ROE} (book equity in the denominator). Both keep ``income before extraordinary items'' (Compustat \texttt{IBQ}) in the numerator.
+		\item Stop using a blanket 4-month lag for earnings. Use the \textbf{actual \texttt{RDQ}} field (Compustat \textit{quarterly earnings announcement date}): a firm enters the sort \textit{only after} its earnings have been publicly announced.
+		\item Require the fiscal quarter end of the announced earnings to lie within 6 months prior to portfolio formation (filters stale data).
 	\end{enumerate}
 	\vspace{4pt}
-	\begin{block}{Reading the program in one line}
-		Each step pushed the message ``\textit{factors are not free; they come from the firm's investment FOC}'' deeper, until 2015 made it impossible to ignore.
+	\begin{block}{The lesson, and the credit}
+		The economic content never changed. What changed was the data plumbing: \textbf{point-in-time} earnings instead of a calendar-based lag. The HXZ (2015) acknowledgements preserve the credit to Novy-Marx --- ``We are extremely grateful to Robert Novy-Marx for identifying a timing error in the empirical analysis of the previous work.''
 	\end{block}
 \end{frame}
 
 % ---------------------------------------------------------
-% HXZ (2015) -- the q-factor in its mature form
+% Four years of limbo + FF5 coincidence
 % ---------------------------------------------------------
-\begin{frame}{Hou, Xue, and Zhang (2015): \textit{q}-Factors in One Page}
-	\textbf{Theoretical mapping (from earlier in this lecture):}
-	\begin{itemize}
-		\item Firm's investment FOC: marginal $q$ $=$ marginal cost of investment.
-		\item Cross-sectional implication: \textit{low}-investment firms must have \textit{higher} expected returns; \textit{high-profitability} firms must have \textit{higher} expected returns.
-	\end{itemize}
+\begin{frame}[allowframebreaks]{Four Years of Limbo, and a Suspicious FF5 Coincidence}
+	\textbf{April 2010}: the corrected version returns to JF.
 	\vspace{2pt}
-	\textbf{Empirical implementation:} four factors --- \textbf{M, ME, I/A, ROE}.
+	\textbf{April 2011}: rejected after a \textit{full year} of review. By Zhang's account, this was ``the darkest time of my career.''
+	\vspace{4pt}
 	\begin{itemize}
-		\item \textbf{ME}: size factor (small $-$ big).
-		\item \textbf{I/A}: investment factor (low $-$ high asset growth).
-		\item \textbf{ROE}: profitability factor (high $-$ low return on equity).
+		\item Harvey's 2010 JF editor report claims no paper was in review more than 187 days. The Chen-Zhang revision's actual timeline does not square cleanly with that report.
+		\item The team rebuilds. Hou and Xue join; Size is added as a fourth factor; the 2012 NBER WP ``Digesting Anomalies'' is born.
 	\end{itemize}
-	\vspace{2pt}
-	\textbf{Headline numbers (1972--2012, U.S.):}
-	\begin{itemize}
-		\item Among $\sim$80 anomalies tested, the \textit{q}-factor model leaves \textbf{far fewer significant alphas} than FF3, Carhart, or even FF5.
-		\item Average absolute alpha across anomalies cuts roughly in half versus FF3.
-	\end{itemize}
+	\framebreak
+	\textbf{The 2014--2015 timeline that raises eyebrows:}
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{@{}lll@{}}
+			\toprule
+			Date & HXZ & FF5 \\
+			\midrule
+			Aug 2014 & accepted at \textit{RFS} & --- \\
+			Sep 2014 & --- & accepted at \textit{JFE} \\
+			Mar 2015 & published (lead article) & --- \\
+			Apr 2015 & --- & published \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\vspace{4pt}
+	\begin{block}{The opportunity cost of a four-year delay}
+		Had HXZ appeared in JF April 2010 as planned, it would have predated FF5 by five years and the textbook narrative would arguably read ``q-factor first.'' Instead, FF5 inherited the throne of FF3 essentially uncontested.
+	\end{block}
 \end{frame}
 
 % ---------------------------------------------------------
-% Q-factor construction details (kept from original)
+% HXZ theory frame
 % ---------------------------------------------------------
-\begin{frame}[allowframebreaks]{Constructing the Four \textit{q}-Factors}
+\begin{frame}{HXZ (2015): The Investment FOC at Work}
+	\textbf{Two-period economy, quadratic adjustment costs.} Firm $i$'s investment FOC delivers $1 + a\,I_{i0}/A_{i0} = E_0[M_1\,\Pi_{i1}]$, and under constant returns to scale the stock return collapses to
+	\[
+		r^S_{i,1} \;=\; \frac{\Pi_{i,1}}{1 + a\, I_{i,0}/A_{i,0}} \quad\Longrightarrow\quad E_0[r^S_{i,1}] \;=\; \frac{E_0[\Pi_{i,1}]}{1 + a\,I_{i,0}/A_{i,0}}.
+	\]
+	\textbf{Two cross-sectional predictions} (holding the other variable fixed):
 	\begin{itemize}
-		\item \textbf{Investment-to-assets, I/A}: the annual change in total assets divided by 1-year-lagged total assets.
-		\item \textbf{Profitability, ROE}: income before extraordinary items divided by 1-quarter-lagged book equity.
-		\item Construct the q-factors from a triple 2-by-3-by-3 sort on size, I/A, and ROE:
-		\begin{itemize}
-			\item At the end of \textbf{June} of each year $ t $, we use the median NYSE size (stock price per share times shares outstanding from CRSP) to split NYSE, Amex, and NASDAQ stocks into 2 groups, small and big.
-			\item  Independently, at the end of \textbf{June} of year $ t $, we break all stocks into 3 I/A groups, using the NYSE breakpoints for the low 30\%, middle 40\%, and high 30\% of the ranked values of I/A for the fiscal year ending in calendar year $ t -1 $.
-			\item Independently, at the beginning of each month, we sort all stocks into 3 groups based on the NYSE breakpoints for the low 30\%, middle 40\%, and high 30\% of the ranked values of ROE. Earnings data in Compustat quarterly files are used in the months \textbf{immediately} after the \textbf{most recent public quarterly earnings} announcement dates. For example, suppose the earnings for the fourth fiscal quarter of year $t-1$ are publicly announced on March 5 (or March 25) of year $t$. In that case, we use the announced earnings (divided by the book equity from the third quarter of year $t-1$) to form portfolios at the beginning of April of year $t$. In addition, for a firm to enter the factor construction, we require the end of the fiscal quarter corresponding to its most recently announced quarterly earnings within 6 months before the portfolio formation. We impose this restriction to exclude stale earnings.
-			\item The ROE portfolios are rebalanced monthly at the beginning of each month, and the size and I/A portfolios are rebalanced annually at the end of each June.
-		\end{itemize}
+		\item \textbf{High $I/A \Rightarrow$ low expected return} (investment channel).
+		\item \textbf{High expected profitability $\Rightarrow$ high expected return} (profitability channel).
 	\end{itemize}
+	\begin{block}{Why this matters for the showdown with FF5}
+		Both predictions follow from \textit{firm} optimization, not from a discount factor specification. HXZ's factors are projections of the optimal investment rule onto observable characteristics, not patches on FF3 motivated by accounting identities.
+	\end{block}
 \end{frame}
 
 % ---------------------------------------------------------
-% FF5 vs Q4 head-to-head
+% Constructing the four q-factors (refined with RDQ emphasis)
 % ---------------------------------------------------------
-\begin{frame}{FF5 vs.\ Q4: A Head-to-Head Comparison}
+\begin{frame}[allowframebreaks]{Constructing the Four \textit{q}-Factors: The RDQ Fix in Detail}
 	\small
+	\textbf{Variables.}
+	\begin{itemize}
+		\item \textbf{ME}: price $\times$ shares outstanding (CRSP), end of June.
+		\item \textbf{I/A}: $\Delta$ total assets $/$ total assets$_{-1}$ (Compustat annual \texttt{AT}). Annual.
+		\item \textbf{ROE}: \texttt{IBQ}$_q$ $/$ book equity$_{q-1}$ (Compustat quarterly). \textit{Monthly}, point-in-time.
+	\end{itemize}
+	\vspace{2pt}
+	\textbf{Sample.} CRSP common stocks, NYSE/AMEX/NASDAQ. Excludes financials and firms with negative book equity. \textbf{1972/01--2012/12}; start date dictated by quarterly earnings announcement (\texttt{RDQ}) coverage.
+	\vspace{4pt}
+	\textbf{Triple 2$\times$3$\times$3 sort.}
+	\begin{itemize}
+		\item End of June year $t$: median NYSE \textit{Size} $\rightarrow$ 2 groups.
+		\item End of June year $t$: NYSE 30/40/30 breakpoints of \textit{I/A} for the fiscal year ending in $t-1$ $\rightarrow$ 3 groups.
+		\item Each \textit{month} $m$: NYSE 30/40/30 breakpoints of \textit{ROE} computed with the most recent earnings announcement $\rightarrow$ 3 groups.
+	\end{itemize}
+	Intersections give 18 portfolios.
+	\framebreak
+	\textbf{The point-in-time discipline} (this is the bug fix from 2010):
+	\begin{itemize}
+		\item Earnings data are used \textit{only} from months \textbf{immediately after} the public quarterly announcement date \texttt{RDQ}. Example: earnings for Q4 of year $t-1$ announced 5 March year $t$ $\Rightarrow$ used to form portfolios at the \textit{beginning of April} year $t$.
+		\item The fiscal quarter end of the announced earnings must lie within 6 months prior to portfolio formation. This safeguards against stale earnings.
+		\item Note the asymmetry: for \textit{non-earnings} quarterly variables (where there is no \texttt{RDQ}), HXZ still use a 4-month lag --- the very lag that broke the JF version when applied to earnings.
+	\end{itemize}
+	\vspace{4pt}
+	\textbf{Factor returns} (averages across the 18 corner portfolios):
+	\begin{itemize}
+		\item $r_{\text{ME}}$: small avg.\ $-$ big avg.\ (9 small $-$ 9 big).
+		\item $r_{\text{I/A}}$: low-investment avg.\ $-$ high-investment avg.\ (6 $-$ 6).
+		\item $r_{\text{ROE}}$: high-ROE avg.\ $-$ low-ROE avg.\ (6 $-$ 6).
+	\end{itemize}
+	\vspace{2pt}
+	\textbf{Rebalancing.} Size and I/A portfolios annually (end of June). ROE portfolios \textbf{monthly}. \textit{Monthly} ROE rebalancing is precisely what creates the timing-error danger zone --- and what makes the \texttt{RDQ}-based safeguard essential.
+\end{frame}
+
+% ---------------------------------------------------------
+% HXZ empirical headlines
+% ---------------------------------------------------------
+\begin{frame}{HXZ Empirical Headlines: 80 Anomalies on Trial}
+	\small
+	\textbf{The universe} (1972--2012). 80 candidate predictors. With NYSE breakpoints and value-weighted returns, \textbf{about half are insignificant} in the broad cross-section --- including 12 of 13 trading-frictions anomalies.
+	\vspace{4pt}
+	\textbf{Among the 35 anomalies that survive screening:}
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{lccc}
+			\toprule
+			Model & $\overline{|\alpha_{H{-}L}|}$ & \#\{|t|$>$1.96\} & GRS rej.\ \\
+			\midrule
+			FF3 & 0.55\% & 27 & 28 \\
+			Carhart 4 & 0.33\% & 19 & 24 \\
+			\textbf{Q4 (HXZ)} & \textbf{0.20\%} & \textbf{5} & \textbf{20} \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\vspace{2pt}
+	\textbf{Where Q4 wins big.}\ Momentum (via ROE loadings), profitability (via ROE), net stock issues / accruals / composite issuance (via I/A).
+	\vspace{2pt}
+	\textbf{Where Q4 underperforms.}\ Operating accruals (OA) and R\&D-to-market: GAAP expenses R\&D, mechanically depressing ROE for innovative firms.
+\end{frame}
+
+% ---------------------------------------------------------
+% FF5 motivation from DDM (refined with full equations)
+% ---------------------------------------------------------
+\begin{frame}[allowframebreaks]{How FF5 Defends Itself: The DDM Detour}
+	\href{https://doi.org/10.1016/j.jfineco.2014.10.010}{\textcolor{blue}{Fama and French (2015)}} motivate RMW and CMA from the dividend discount model. Start from
+	\begin{equation}\label{equ:市值等于未来股利贴现-c}
+		m_{t}\;=\;\sum_{\tau=1}^{\infty} \mathrm{E}\!\left(d_{t+\tau}\right) /(1+r)^{\tau},
+	\end{equation}
+	and use \href{http://www.jstor.org/stable/2351143}{\textcolor{blue}{Miller--Modigliani (1961)}} with clean-surplus accounting ($d = Y - dB$):
+	\begin{equation}\label{equ:股利换成盈利减去投资-c}
+		M_{t}\;=\;\sum_{\tau=1}^{\infty} \mathrm{E}\!\left(Y_{t+\tau}-dB_{t+\tau}\right) /(1+r)^{\tau}.
+	\end{equation}
+	Dividing by book equity:
+	\begin{equation}\label{equ:市值账面比-c}
+		\frac{M_{t}}{B_{t}}\;=\;\frac{\sum_{\tau=1}^{\infty} \mathrm{E}(Y_{t+\tau}-dB_{t+\tau}) /(1+r)^{\tau}}{B_{t}}.
+	\end{equation}
+	\vspace{2pt}
+	\textbf{Three statements about expected returns} from (\ref{equ:市值账面比-c}):
+	\begin{enumerate}
+		\item Lower $M_t/B_t$ (higher B/M), \textit{holding $E[Y]$ and $E[dB]$ fixed}, $\Rightarrow$ higher $r$. \quad $\Rightarrow$ HML.
+		\item Higher expected earnings $E[Y]$, \textit{holding M/B and $E[dB]$ fixed}, $\Rightarrow$ higher $r$. \quad $\Rightarrow$ RMW.
+		\item Higher expected investment $E[dB]$, \textit{holding M/B and $E[Y]$ fixed}, $\Rightarrow$ \textbf{lower} $r$. \quad $\Rightarrow$ CMA.
+	\end{enumerate}
+	\vspace{4pt}
+	\begin{block}{Why HXZ call this a defense, not a derivation}
+		Equation (\ref{equ:市值账面比-c}) is an \textbf{accounting identity}; it has no structural content beyond the DDM itself. The economic mechanism (\textit{why} expected investment should relate to discount rates) is read off ex post. HXZ's complaint: ``you reached the same variables but skipped the production model.''
+	\end{block}
+	\framebreak
+	\textbf{FF5 variable definitions:}
+	\begin{itemize}
+		\item \textbf{Operating profitability (OP)} for the June-of-$t$ sort: from $t-1$ annual financials, $(\text{Revenues} - \text{COGS} - \text{SG\&A} - \text{Interest expense})\,/\,\text{Book equity}$. \textbf{Annual update.}
+		\item \textbf{Investment (Inv)}: $\Delta$Total Assets from $t-2$ to $t-1$, divided by Total Assets$_{t-2}$.
+	\end{itemize}
+	\vspace{4pt}
+	\begin{block}{Note from FF (2015) and the first big difference from HXZ}
+		FF (2015) note that ``the investment variable is the expected growth of \textit{book equity}, not assets,'' but use asset growth as a proxy (consistent with HXZ). \textbf{The bigger gap is timing}: FF5 updates profitability \textit{annually} from year $t-1$ financials, whereas HXZ updates ROE \textit{monthly} as each new \texttt{RDQ} arrives. That single design choice is the main reason the Q4 absorbs momentum and FF5 does not.
+	\end{block}
+\end{frame}
+
+% ---------------------------------------------------------
+% FF5 factor construction: three sort choices
+% ---------------------------------------------------------
+\begin{frame}{FF5 Factor Construction: Three Sort Choices}
+	\small
+	Fama--French (2015) actually consider \textbf{three} ways to build the factors, to test sensitivity to portfolio design:
+	\vspace{4pt}
+	\begin{enumerate}
+		\item \textbf{2$\times$3 sorts} (FF93 tradition): independent sort on Size and \textit{one} of $\{$B/M, OP, Inv$\}$, NYSE median for Size, NYSE 30/70 for the other variable. 6 portfolios per sort. Drops the middle 40\% of the second variable.
+		\item \textbf{2$\times$2 sorts}: NYSE medians for both variables; includes the middle of the distribution. Better diversified, smaller premium spreads, similar Sharpe ratios.
+		\item \textbf{2$\times$2$\times$2$\times$2 sorts}: jointly control for Size, B/M, OP, Inv. 16 portfolios. ``Cleanest'' marginal premiums but with messy correlations (HML--RMW correlation jumps to 0.63!).
+	\end{enumerate}
+	\vspace{4pt}
+	\textbf{Headline factor premiums in 1963--2013 (2$\times$3 sorts):}
+	\begin{center}
+		\begin{tabular}{lcccc}
+			\toprule
+			& SMB & HML & RMW & CMA \\
+			\midrule
+			Mean (\%/mo) & 0.29 & 0.37 & 0.25 & 0.33 \\
+			$t$ & 2.31 & 3.20 & 2.92 & 4.07 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\vspace{2pt}
+	All four clear the standard $|t|>2$ hurdle; CMA and HML clear the \href{https://doi.org/10.1093/rfs/hhv059}{\textcolor{blue}{Harvey--Liu--Zhu (2016)}} $|t|>3$ multiple-testing hurdle outright.
+\end{frame}
+
+% ---------------------------------------------------------
+% FF's own admission: HML is redundant
+% ---------------------------------------------------------
+\begin{frame}[allowframebreaks]{Fama--French's Own Admission: HML Is Redundant}
+	A striking result \textit{inside} Fama--French (2015), Table 6. Regress each factor on the other four:
+	\vspace{4pt}
+	\begin{center}
+		\small
+		\begin{tabular}{lcccccc}
+			\toprule
+			\textbf{LHS} & $\alpha$ & $t(\alpha)$ & $b_{\text{Mkt}}$ & $b_{\text{HML}}$ & $b_{\text{RMW}}$ & $b_{\text{CMA}}$ \\
+			\midrule
+			$R_M - R_F$ & 0.82 & 4.94 & --- & 0.03 & $-$0.40 & $-$0.91 \\
+			SMB         & 0.39 & 3.23 & 0.13 & 0.05 & $-$0.48 & $-$0.17 \\
+			\textbf{HML} & $\mathbf{-0.04}$ & $\mathbf{-0.47}$ & 0.01 & --- & 0.23 & \textbf{1.04} \\
+			RMW         & 0.43 & 5.45 & $-$0.09 & 0.20 & --- & $-$0.44 \\
+			CMA         & 0.28 & 5.03 & $-$0.10 & 0.45 & $-$0.21 & --- \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\vspace{4pt}
+	\textbf{Read the HML row.} $t(\alpha) = -0.47$. HML's average return is \textit{fully} absorbed by Mkt, SMB, RMW, and especially CMA (slope $1.04$, $t = 23.0$ in the underlying regression).
+	\framebreak
+	\begin{block}{Fama and French's own conclusion}
+		``Adding HML does not improve the mean-variance-efficient tangency portfolio produced by combining the riskfree asset, the market portfolio, SMB, RMW, and CMA.'' \\[2pt]
+		\textit{In FF5's own data, HML is redundant.} HXZ had been making this argument since 2010 with I/A and ROE; FF5 confirms it using CMA and RMW.
+	\end{block}
+\end{frame}
+
+% ---------------------------------------------------------
+% Head-to-head comparison
+% ---------------------------------------------------------
+\begin{frame}{Head-to-Head: FF5 vs.\ Q4}
+	\scriptsize
 	\begin{tabular}{@{}lp{0.36\linewidth}p{0.36\linewidth}@{}}
 		\toprule
-		& \textbf{FF5} (\href{https://doi.org/10.1016/j.jfineco.2014.10.010}{\textcolor{blue}{Fama-French 2015}}) & \textbf{Q4} (\href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{Hou-Xue-Zhang 2015}}) \\
+		& \textbf{FF5} (\href{https://doi.org/10.1016/j.jfineco.2014.10.010}{\textcolor{blue}{Fama--French 2015}}) & \textbf{Q4} (\href{https://doi.org/10.1093/rfs/hhu068}{\textcolor{blue}{Hou--Xue--Zhang 2015}}) \\
 		\midrule
 		Factors & MKT, SMB, HML, RMW, CMA & MKT, ME, I/A, ROE \\
 		\addlinespace
-		Profitability proxy & Operating profitability (annual) & ROE (latest quarterly earnings) \\
+		Theoretical foundation & DDM accounting identity (\textit{ex post}) & Investment Euler equation (\textit{ex ante}) \\
 		\addlinespace
-		Investment proxy & $\Delta$Assets / Assets (annual) & I/A (annual) \\
+		Profitability proxy & Operating profitability, \textbf{annual} update & ROE, \textbf{monthly} update on \texttt{RDQ} \\
 		\addlinespace
-		Theoretical foundation & Dividend-Discount Model intuition (\textit{ex post}) & Investment Euler equation (\textit{ex ante}) \\
+		Investment proxy & $\Delta$Assets/Assets, annual & $\Delta$Assets/Assets, annual \\
 		\addlinespace
-		Role of HML & Core factor & Redundant once I/A and ROE are present \\
+		Sort design & 2$\times$3 (also 2$\times$2 and 2$\times$2$\times$2$\times$2 reported) & 2$\times$3$\times$3 triple sort \\
 		\addlinespace
-		Anomaly explanation & Strong on value, profitability, investment; weak on momentum & Strong on momentum (via ROE), profitability, investment; weak on long-horizon reversal \\
+		Role of HML & ``Core'' factor, but redundant in FF5's own spanning test & Absent (not in the model) \\
+		\addlinespace
+		Anomaly explanation & Strong on value, profitability, investment; \textbf{weak on momentum} (need FF6) & Strong on momentum (via ROE), profitability, investment; weak on accruals, R\&D \\
 		\bottomrule
 	\end{tabular}
 	\vspace{4pt}
 	\begin{center}
-		\footnotesize \textit{The two models share the same DNA (size, profitability, investment) but disagree on the timing convention for profitability and on whether HML is a primitive factor.}
+		\footnotesize \textit{Same DNA, different parents. The disagreement is over timing convention and theoretical origin --- not which variables matter.}
 	\end{center}
-\end{frame}
-
-% ---------------------------------------------------------
-% FF5 motivation (from DDM) — kept as a deeper-dive frame
-% ---------------------------------------------------------
-\begin{frame}[allowframebreaks]{Aside: How Fama-French (2015) Defends FF5}
-	\href{https://doi.org/10.1016/j.jfineco.2014.10.010}{\textcolor{blue}{Fama and French (2015)}} motivate RMW and CMA from the dividend discount model:
-	\begin{equation}\label{equ:市值等于未来股利贴现-c}
-		p_{t}=\sum_{\tau=1}^{\infty} \mathrm{E}\left(d_{t+\tau}\right) /(1+r)^{\tau}
-	\end{equation}
-	\href{http://www.jstor.org/stable/2351143}{\textcolor{blue}{Miller and Modigliani (1961)}}: the time-$t$ market value implied by \textcolor{blue}{(\ref{equ:市值等于未来股利贴现-c})} is
-	\begin{equation}\label{equ:股利换成盈利减去投资-c}
-		p_{t}=\sum_{\tau=1}^{\infty} \mathrm{E}\left(e_{t+\tau}-d b_{t+\tau}\right) /(1+r)^{\tau}
-	\end{equation}
-	Dividing by book equity:
-	\begin{equation}\label{equ:市值账面比-c}
-		\frac{p_{t}}{b_{t}}=\frac{\sum_{\tau=1}^{\infty} \mathrm{E}\left(e_{t+\tau}-d b_{t+\tau}\right) /(1+r)^{\tau}}{b_{t}}
-	\end{equation}
-	\textbf{Three statements about expected returns:}
-	\begin{enumerate}
-		\item Lower $p_t$ (higher $b_t/p_t$) implies higher expected return $\rightarrow$ HML.
-		\item Higher \textit{expected} earnings imply higher expected return $\rightarrow$ RMW.
-		\item Higher \textit{expected} growth in book equity (investment) implies lower expected return $\rightarrow$ CMA.
-	\end{enumerate}
-	\begin{block}{Why this is only a defense, not a derivation}
-		The DDM logic is an \textbf{accounting identity, not a structural model}. The HXZ critique is precisely that FF5's RMW/CMA are economically equivalent to the \textit{q}-factors but lack the underlying first-order condition.
-	\end{block}
-	\framebreak
-	\textbf{FF5 variable definitions (for completeness):}
-	\begin{itemize}
-		\item \textbf{Operating profitability (OP)}: in the June-of-year-$t$ sort, measured from year $t-1$ accounting data as revenues minus cost of goods sold, minus selling, general, and administrative expenses, minus interest expense, all divided by book equity.
-		\item \textbf{Investment (Inv)}: the change in total assets from fiscal year $t-2$ to fiscal year $t-1$, divided by $t-2$ total assets.
-	\end{itemize}
-	\begin{block}{A clarifying note from FF (2015)}
-		\textbf{The investment variable is the expected growth of book equity, not assets.} FF replicate all tests using book equity growth, with results similar to those obtained with the growth of assets.
-	\end{block}
 \end{frame}
 
 % ---------------------------------------------------------
 % Hou-Mo-Xue-Zhang (2019) — the formal horse race
 % ---------------------------------------------------------
-\begin{frame}{The Formal Horse Race: \href{https://doi.org/10.1093/rof/rfy032}{\textcolor{blue}{Hou-Mo-Xue-Zhang (2019)}} ``Which Factors?''}
-	HMXZ run a head-to-head spanning regression battery between Q4, FF5, FF6, and Stambaugh-Yuan (2017) on a unified sample of 150 anomalies.
+\begin{frame}{The Formal Horse Race: \href{https://doi.org/10.1093/rof/rfy032}{\textcolor{blue}{Hou--Mo--Xue--Zhang (2019)}} ``Which Factors?''}
+	HMXZ run spanning-regression tests between Q4, FF5, FF6, and Stambaugh--Yuan (2017) on 150 anomalies. The paper won the 2019 \textit{RoF} Spangle IQAM Best Paper Prize.
 	\vspace{4pt}
 	\textbf{Three sharp results:}
 	\begin{enumerate}
-		\item \textbf{HML and CMA are redundant} once I/A and ROE are included; their alphas vs.\ Q4 are economically tiny and statistically insignificant.
-		\item \textbf{Q4 spans FF5}: the Q4 portfolio achieves the FF5 squared Sharpe ratio with strictly fewer factors.
-		\item \textbf{FF5 does \textit{not} span Q4}: ROE in particular cannot be replicated as a linear combination of FF5 factors.
+		\item \textbf{HML and CMA are redundant} once I/A and ROE are included; their alphas vs.\ Q4 are tiny and insignificant.
+		\item \textbf{Q4 spans FF5}: Q4 attains the FF5 squared Sharpe ratio with strictly fewer factors.
+		\item \textbf{FF5 does \textit{not} span Q4}: ROE cannot be replicated as a linear combination of FF5 factors --- its alpha against FF5 is large and significant.
 	\end{enumerate}
-	\vspace{4pt}
 	\begin{block}{Implication}
-		On the standard model-comparison criteria of squared Sharpe ratio and spanning, the \textit{q}-factor model dominates FF5. \textbf{This is the core ammunition of the Lu Zhang camp in the Factor War.}
+		On squared Sharpe ratio and spanning, the \textit{q}-factor model dominates FF5. \textbf{This is the core ammunition of the Lu Zhang camp in the Factor War} --- and reads, to sympathetic eyes, as a quiet rebuttal to whatever process delayed the original paper from 2010 to 2015.
 	\end{block}
 \end{frame}
 
 % ---------------------------------------------------------
-% q5 extension
+% q5 extension — with full technical detail
 % ---------------------------------------------------------
-\begin{frame}{Extension: The $q^5$ Model (Hou, Mo, Xue, Zhang 2021)}
-	\textbf{Motivation.} The original Q4 leaves residual alphas on \textit{expected-growth} anomalies (e.g., earnings-announcement returns, R\&D, distress).
+\begin{frame}[allowframebreaks]{The $q^5$ Extension: Adding Expected Growth (\href{https://doi.org/10.1093/rof/rfaa004}{\textcolor{blue}{HMXZ 2021}})}
+	\textbf{Motivation.} The Q4 leaves residual alphas on anomalies driven by \textit{future} investment growth (R\&D-to-market, accruals, distress, earnings-announcement returns). The static FOC misses a term that appears in the dynamic FOC.
 	\vspace{4pt}
-	\textbf{The fifth factor.} \href{https://doi.org/10.1093/rof/rfaa004}{\textcolor{blue}{Hou-Mo-Xue-Zhang (2021)}} add an \textbf{Expected Investment Growth} factor (EG) derived from forecasting next-period $I/A$ with a small set of predictors.
-	\vspace{4pt}
+	\textbf{The dynamic investment return} (Cochrane 1991, generalized):
+	\[
+		r^{I}_{i,t+1} \;=\; \frac{X_{i,t+1} + \tfrac{a}{2}(I_{i,t+1}/A_{i,t+1})^{2} + (1-\delta)\bigl[\,1 + a\,(I_{i,t+1}/A_{i,t+1})\,\bigr]}{1 + a\,(I_{i,t}/A_{i,t})}.
+	\]
+	The last term in the numerator is the \textit{expected marginal $q$ next period}. Higher expected $I/A$ growth, holding profitability and current $I/A$ fixed, must raise the discount rate. Hence a third structural factor.
+	\framebreak
+	\textbf{Constructing the Expected Growth (EG) factor.}
 	\begin{itemize}
-		\item Theoretical reading: EG is the natural counterpart of FF6's UMD inside the investment Euler equation.
-		\item Empirical reading: $q^5$ matches or beats FF6 on the broadest anomaly samples to date.
+		\item Run monthly Fama--MacBeth regressions of future $d^{\tau}\!I/A \equiv (I/A)_{t+\tau} - (I/A)_{t}$ on three predictors:
+		\begin{itemize}
+			\item $\log q$ --- Tobin's $q$, (ME $+$ long-term debt $+$ short-term debt) $/$ book assets.
+			\item $\mathrm{Cop}$ --- cash-based operating profitability \href{https://doi.org/10.1016/j.jfineco.2016.03.002}{\textcolor{blue}{(Ball et al.\ 2016)}}.
+			\item $d\mathrm{Roe}$ --- 4-quarter change in ROE.
+		\end{itemize}
+		\item Combine the 120-month rolling-window average slopes with each firm's most recent predictors to get $E_{t}[d^{1}\!I/A]$ \textbf{in real time}.
+		\item Form EG via an independent 2$\times$3 sort on Size and $E_{t}[d^{1}\!I/A]$.
 	\end{itemize}
 	\vspace{4pt}
+	\textbf{Result.} EG earns \textbf{0.84\% per month} ($t = 10.27$) over 1967--2018. The Q4 cannot explain it: $\alpha_{Q4} = 0.67\%$ ($t = 9.75$). The premium clears any reasonable multiple-testing hurdle.
+	\framebreak
+	\textbf{The $q^{5}$ model.}
+	\[
+		E[R_{i}] - R_{f} = \beta_{i}^{\mathrm{Mkt}} E[\mathrm{Mkt}] + \beta_{i}^{\mathrm{ME}} E[r_{\mathrm{ME}}] + \beta_{i}^{\mathrm{I/A}} E[r_{\mathrm{I/A}}] + \beta_{i}^{\mathrm{ROE}} E[r_{\mathrm{ROE}}] + \beta_{i}^{\mathrm{EG}} E[r_{\mathrm{EG}}].
+	\]
+	\vspace{4pt}
+	\textbf{Horse race across 150 anomalies (HMXZ 2021):}
+	\begin{center}
+		\small
+		\begin{tabular}{lccc}
+			\toprule
+			Model & $\overline{|\alpha_{H{-}L}|}$ & \#\{|t|$>$3\} & GRS rejections (of 150) \\
+			\midrule
+			FF6 & 0.30\% & 37 & 91 \\
+			FF6c (RMW$\to$RMWc) & 0.27\% & 25 & 71 \\
+			Q4 (HXZ) & 0.28\% & 25 & 101 \\
+			\textbf{$q^{5}$ (HMXZ)} & \textbf{0.19\%} & \textbf{6} & \textbf{57} \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\vspace{4pt}
 	\begin{block}{The structural rebuttal to UMD}
-		Where Carhart added momentum because it ``works,'' Lu Zhang's camp added EG because the FOC \textit{predicts} that expected investment growth must be priced. The contrast captures the entire empirical-vs-structural divide.
+		Where Carhart added momentum because it ``works,'' Lu Zhang's camp added EG because the FOC \textit{predicts} that expected investment growth must be priced. The contrast captures the empirical-vs-structural divide that runs through this entire lecture.
 	\end{block}
 \end{frame}
 
@@ -1745,10 +1925,11 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \begin{frame}{The Q Camp's Manifesto}
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.6\linewidth]{Files/Front}
+		\includegraphics[height=0.7\textheight]{Files/Front}
 	\end{figure}
-	\vspace{4pt}
-	\centering \footnotesize \textit{Hou, Mo, Xue, Zhang. \textbf{The Investment CAPM} (Cambridge University Press, 2025).}
+	\begin{center}
+		\footnotesize \textit{Hou, Mo, Xue, Zhang.\ \textbf{The Investment CAPM} (Cambridge University Press, 2025) --- the long-form statement of the program.}
+	\end{center}
 \end{frame}
 
 \begin{frame}{The Q Camp's Tally Against Anomalies}
@@ -1759,19 +1940,24 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 % ---------------------------------------------------------
-% Closing preview to Lecture 07
+% Closing — quiet vindication
 % ---------------------------------------------------------
-\begin{frame}{Closing the Showdown: A Tie?}
-	After this lecture, you should hold two thoughts at once:
+\begin{frame}[allowframebreaks]{Closing the Showdown: A Quiet Vindication}
+	\textbf{Two thoughts to hold at once:}
 	\begin{enumerate}
-		\item The \textit{q}-factor model is structurally cleaner: factors emerge from the firm's FOC.
-		\item FF5/FF6 remain the empirical workhorse: more flexible, easier to extend.
+		\item The \textit{q}-factor model is structurally cleaner: factors emerge from the firm's FOC, not from an accounting identity.
+		\item FF5/FF6 remain the empirical workhorse: more flexible, easier to extend, and overwhelmingly more cited (FF5 citations $\gg$ HXZ citations on Google Scholar).
 	\end{enumerate}
 	\vspace{6pt}
-	But the literature did not stop at FF5 vs.\ Q4. \textit{Hundreds} of additional factors were published between 2010 and today --- mispricing factors, behavioral factors, latent (PCA/IPCA) factors, ML-extracted factors.
-	\vspace{4pt}
+	\textbf{Quiet signs the tide is shifting:}
+	\begin{itemize}
+		\item John Cochrane (Fama's son-in-law) still hosts the pre-revision Chen--Zhang manuscript on his \textit{Empirical Asset Pricing} course site under ``Production-based methods.'' \textit{Even inside the Fama family, the original paper is not erased.}
+		\item HMXZ (2019) won \textit{Review of Finance}'s best paper prize.
+		\item $q^{5}$ (HMXZ 2021) is, on the broadest anomaly samples available, the best-performing factor model on the market.
+	\end{itemize}
+	\framebreak
 	\begin{block}{Preview of Lecture 07}
-		The bilateral fight between FF and HXZ is just one front. Once you zoom out, the literature is a \textbf{Factor Zoo}, and zoos breed \textbf{Factor Wars}: \href{https://doi.org/10.1093/rfs/hhv059}{\textcolor{blue}{Harvey-Liu-Zhu (2016)}} document 316 factors; \href{https://doi.org/10.1093/rfs/hhy131}{\textcolor{blue}{Hou-Xue-Zhang (2020)}} fail to replicate most anomalies; \href{https://doi.org/10.1111/jofi.12883}{\textcolor{blue}{Feng-Giglio-Xiu (2020)}} build a formal selection rule. The next lecture organizes the war into four battlefields.
+		The bilateral FF--HXZ fight is just one front. Once you zoom out, the literature is a \textbf{Factor Zoo}, and zoos breed \textbf{Factor Wars}: \href{https://doi.org/10.1093/rfs/hhv059}{\textcolor{blue}{Harvey--Liu--Zhu (2016)}} document 316 factors; \href{https://doi.org/10.1093/rfs/hhy131}{\textcolor{blue}{Hou--Xue--Zhang (2020)}} fail to replicate most anomalies; \href{https://doi.org/10.1111/jofi.12883}{\textcolor{blue}{Feng--Giglio--Xiu (2020)}} build a formal selection rule. The next lecture organizes the war into four battlefields.
 	\end{block}
 \end{frame}
 
