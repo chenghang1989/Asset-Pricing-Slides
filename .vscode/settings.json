@@ -1,18 +1,22 @@
 {
     "workbench.colorCustomizations": {
+        "panel.border": "#f45009",
+        "sideBar.border": "#f45009",
+        "activityBar.border": "#f45009",
+        "editor.foldBackground": "#3b82f620",
         "terminal.ansiYellow": "#C19C00",
         "editorCursor.foreground": "#f73131",
         "terminalCursor.foreground": "#FF0000",
-        "activityBar.background": "#580F33",
-        "titleBar.activeBackground": "#7C1648",
-        "titleBar.activeForeground": "#FEFCFD",
-        "titleBar.inactiveBackground": "#580F33",
-        "titleBar.inactiveForeground": "#FEFCFD",
-        "statusBar.background": "#580F33",
-        "statusBar.foreground": "#FEFCFD",
-        "statusBar.debuggingBackground": "#580F33",
-        "statusBar.debuggingForeground": "#FEFCFD",
-        "statusBar.noFolderBackground": "#580F33",
-        "statusBar.noFolderForeground": "#FEFCFD"
+        "statusBar.noFolderBackground": "#0B366D",
+        "statusBar.noFolderForeground": "#F9FBFE",
+        "activityBar.background": "#092D5A",
+        "titleBar.activeBackground": "#88B7F3",
+        "titleBar.activeForeground": "#051A34",
+        "titleBar.inactiveBackground": "#092D5A",
+        "titleBar.inactiveForeground": "#051A34",
+        "statusBar.background": "#0B366D",
+        "statusBar.foreground": "#F9FBFE",
+        "statusBar.debuggingBackground": "#0B366D",
+        "statusBar.debuggingForeground": "#F9FBFE"
     }
 }

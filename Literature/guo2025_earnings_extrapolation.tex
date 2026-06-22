@@ -1,0 +1,805 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+
+\mode<presentation>{
+	\usetheme{Pittsburgh}
+	\usecolortheme{beaver}
+}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{amsmath,bm}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{unicode-math}
+\usepackage{ragged2e}
+\usepackage{adjustbox}
+\usepackage{xcolor}
+
+\setsansfont{Calibri}[
+	Path=../Font/,
+	Scale=0.9,
+	Extension=.ttf,
+	UprightFont=*-Regular,
+	BoldFont=*-Bold,
+	ItalicFont=*-Italic,
+	BoldItalicFont=*-BoldItalic
+]
+\setmathfont{Libertinus Math}
+\setCJKmainfont{Songti SC}
+\setCJKsansfont{Songti SC}
+
+\justifying\let\raggedright\justifying
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=8mm,text margin right=8mm}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamercolor{postit}{fg=black,bg=yellow!18}
+\setbeamercolor{note}{fg=black,bg=gray!8}
+\setbeamercolor{alerted text}{fg=red!70!black}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\tabnote}[1]{\vspace{2pt}{\scriptsize\textcolor{gray!70!black}{#1}}}
+\newcommand{\tighttable}{\scriptsize\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}}
+\newcommand{\tinytab}{\tiny\setlength{\tabcolsep}{2.2pt}\renewcommand{\arraystretch}{1.08}}
+\newcommand{\nm}{\textsc{nm}}            % newsy month
+\newcommand{\nnm}{\textsc{non-nm}}       % non-newsy month
+\newcommand{\flag}{\ensuremath{\textstyle\sum_{j=1}^{4}\mathrm{mkt}^{nm}_{t,j}}}
+\newcommand{\xexp}{x^{\mathrm{exp}}}
+\newcommand{\xact}{x^{\mathrm{act}}}
+
+\title[Earnings Extrapolation]{\textbf{盈利外推与可预测的股市收益}}
+\subtitle{Earnings Extrapolation and Predictable Stock Market Returns}
+\author[Cheng Hang]{Cheng Hang}
+\institute[DUFE]{文献精读 · Hongye Guo (HKU), \textit{Review of Financial Studies} 38(6), 2025\\School of Fintech, Dongbei University of Finance \& Economics}
+\date{\today}
+
+\AtBeginSection[]
+{
+	\begin{frame}{Content}
+		\small
+		\tableofcontents[currentsection,sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+		\addtocounter{framenumber}{-1}
+	\end{frame}
+}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+% =====================================================================
+\begin{frame}{一句话总览}
+	\begin{beamercolorbox}[sep=0.6em,wd=\linewidth,rounded=true]{postit}
+		美国市场在\textbf{每个季度第一个月}（1/4/7/10 月）的收益，强烈地预测未来各月收益：若被预测月\emph{也是}季度首月则\textbf{负向}（reversal），否则\textbf{正向}（continuation）。两条腿相互抵消，于是\emph{无条件}自相关接近 0——这正是长期被当作市场有效象征的那个"零自相关"。
+	\end{beamercolorbox}
+	\vspace{4pt}
+	\begin{itemize}
+		\item 季度首月是 ``earnings season''：最早披露上一季度的盈利、含有关于\textbf{总量经济}的新鲜信息。作者称之为 \textbf{newsy months}（1/4/7/10 月），其余 8 个月为 \textbf{non-newsy months}。
+		\item 机制：投资者把 newsy 月的盈利\textbf{外推}去预测未来盈利，却没意识到\emph{未来 newsy 月的盈利与过去的相似度会离散地下降}——即把一个\emph{时变}的衰减速度错误地\textbf{压成常数}（parameter compression）。
+		\item 含义：同一个信号，投资者\textbf{同时}对一类目标 overreact、对另一类目标 underreact，于是同时产生 reversal 与 continuation。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{为什么这篇文章值得逐页精读}
+	\begin{itemize}
+		\item \textbf{挑战一个"教科书事实"}：月度市场收益几乎不可预测（Fama 1970；Poterba--Summers 1988）。本文用一个\emph{月度可交易、跨行业跨国稳健}的信号，把样本外 $R^2$ 从"几十个基点"推到约 \alert{4\%}，整整高一个数量级。
+		\item \textbf{方法论亮点}：把回归的\emph{因变量}拆成两块（newsy / non-newsy），再把\emph{自变量}拆成两块——一个看似平庸的"过去 12 个月动量"里，藏着两条强烈、方向相反的预测关系。
+		\item \textbf{理论贡献}：首次把"参数压缩"机制引入股票市场，为 Fama (1998) 对行为金融的著名批评（reversal 与 continuation 大致等频出现、合起来仍像有效市场）提供\emph{单一机制}的统一解释。
+		\item \textbf{证据链完整}：时序 → 稳健性 → 风险解释证伪 → 例子直觉 → 模型 → survey 直接检验 → 行业/国别横截面 out-of-sample → 替代解释逐一排除。是一篇"把一个 stylized fact 做到底"的范本。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{全文逻辑地图（看表的顺序）}
+	\tighttable
+	\begin{tabularx}{\textwidth}{lYl}
+		\toprule
+		环节 & 在问什么 & 关键表/图 \\
+		\midrule
+		现象 & newsy 收益如何预测未来 newsy / non-newsy？ & Table 2--3, Fig.\,1 \\
+		真伪 & 是数据挖掘/异常值/Stambaugh 偏误吗？还在不在？ & Table A1, A2 \\
+		冲击 & 市场到底有多可预测？哪些常识被推翻？ & Table 4, Fig.\,2 \\
+		排除风险 & 高频、常为负、两腿耦合——风险补偿讲得通吗？ & Fig.\,2--3 \\
+		直觉 & 一个 April 的例子：step function 与常数衰减 & Fig.\,4 \\
+		模型 & 把直觉写成可解的均衡定价模型 & Eq.\,(2)--(5) \\
+		检验 & 时点对齐、survey、行业、国别 & Table 5--10, C2 \\
+		交易 & 能不能真的赚到？ & Table A3--A4 \\
+		\bottomrule
+	\end{tabularx}
+	\tabnote{下文每张表都对应三个问题：这张表想检验什么？关键数字是多少？它在多大程度上支持作者主张？}
+\end{frame}
+
+% =====================================================================
+\section{核心发现：被忽视的市场可预测性}
+
+\begin{frame}{出发点：一个被奉为"市场有效象征"的事实}
+	\begin{itemize}
+		\item Kendall--Hill (1953)、Fama (1965) 很早就记录：股票收益的\textbf{序列自相关}接近 0。
+		\item Fama (1970) 把弱式有效定义为"价格已反映过去价格中的全部信息"，而美国\emph{总量市场}尤其符合：Poterba--Summers (1988) 显示 12 个月内月度市场收益只有微弱、不显著的正自相关。
+		\item 这条"近零自相关"被反复引用，几乎成了\textbf{市场有效假说的徽章}。
+	\end{itemize}
+	\vspace{4pt}
+	\begin{beamercolorbox}[sep=0.45em,wd=\linewidth,rounded=true]{note}
+		本文的核心动作：\textbf{这个"近零"是两条强烈、方向相反的预测关系平均后的假象}。只要按"被预测月是不是季度首月"分样本，平均就会被拆开。
+	\end{beamercolorbox}
+\end{frame}
+
+\begin{frame}{两步 refinement：从"平庸动量"到"两条强腿"}
+	把"用过去 12 个月收益预测下 1 个月收益"做两步细化：
+	\begin{enumerate}
+		\item \textbf{对因变量分类（被预测月的时点）}：
+		\begin{itemize}
+			\item 若下个月是\textbf{季度首月}（newsy）：过去 12 个月收益\textbf{强烈负向}预测它（reversal）。
+			\item 若下个月是\textbf{非季度首月}（non-newsy）：过去 12 个月收益\textbf{强烈正向}预测它（continuation）。
+		\end{itemize}
+		\item \textbf{对自变量分类（用哪些过去月）}：任意连续 12 个月里恰有 4 个是季度首月，而\emph{正是这 4 个 newsy 月}对预测未来收益格外有用。
+	\end{enumerate}
+	\vspace{3pt}
+	\begin{beamercolorbox}[sep=0.45em,wd=\linewidth,rounded=true]{postit}
+		一句话压缩：\textbf{newsy 月收益负向预测未来 newsy 月收益，正向预测未来 non-newsy 月收益。}
+	\end{beamercolorbox}
+\end{frame}
+
+\begin{frame}{回归设定与 lagging 方式（Figure 1）}
+	旗舰时序回归（先看 4 个独立 lag）：
+	\[
+	\mathrm{mkt}_t=\alpha+\sum_{j=1}^{4}\beta_j\,\mathrm{mkt}^{nm}_{t,j}+\epsilon_t .
+	\]
+	\begin{itemize}
+		\item $\mathrm{mkt}^{nm}_{t,j}$ = 月 $t$ \emph{之前}第 $j$ 个 newsy 月（1/4/7/10 月）的市场收益。
+		\item 关键在 lagging \textbf{随因变量滚动}：若因变量是 11 月，则 lag\,1nm = 10 月、lag\,2nm = 7 月……当因变量推进到 12 月、次年 1 月时，右侧 4 个 lag \emph{保持不变}；直到因变量变为次年 2 月，lag\,1nm 才跳到 1 月（2 月之前最近的 newsy 月）。
+		\item 之后为聚焦，用\textbf{单一旗舰信号} $\flag$（过去 4 个 newsy 月收益之和）。lag 数取 4 是为对齐文献里"1 年回看窗"的动量策略，\emph{并非}为最大化表现。
+	\end{itemize}
+	\tabnote{$\sum_{j=1}^{4}\mathrm{mkt}^{nm}_{t,j}$ 的系数大致等于 Table 2 中前四个系数的平均。}
+\end{frame}
+
+\begin{frame}{Table 2：四个 lag 的 lead--lag 关系（1926--2021）}
+	\tighttable
+	\begin{tabular}{lrrrr}
+		\toprule
+		& (1) All & (2) NM & (3) Non-NM & (4) Difference \\
+		\midrule
+		$\mathrm{mkt}^{nm}_{t,1}$ & $0.090^{*}$ & $-0.168^{**}$ & $0.219^{***}$ & $-0.388^{***}$ \\
+		& [1.73] & [$-2.32$] & [3.92] & [$-4.23$] \\
+		$\mathrm{mkt}^{nm}_{t,2}$ & 0.014 & $-0.177^{***}$ & $0.109^{**}$ & $-0.287^{***}$ \\
+		$\mathrm{mkt}^{nm}_{t,3}$ & 0.069 & 0.041 & $0.083^{**}$ & $-0.042$ \\
+		$\mathrm{mkt}^{nm}_{t,4}$ & 0.027 & $-0.086$ & $0.084^{**}$ & $-0.169^{**}$ \\
+		const & $0.007^{***}$ & $0.017^{***}$ & 0.002 & $0.015^{***}$ \\
+		$N$ & 1{,}136 & 378 & 758 & 1{,}136 \\
+		$R^2$ & 0.013 & 0.064 & 0.072 & 0.070 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{4pt}
+	\begin{itemize}
+		\item 第 (1) 列重现"弱动量"的传统印象；第 (2) 列（因变量为 newsy 月）系数\textbf{显著为负}，第 (3) 列（non-newsy 月）\textbf{显著为正}，两者平均抵消成 (1)。
+		\item 第 (4) 列是\textbf{主结论}：newsy 与 non-newsy 的系数差全部为负，且 lag 越短差越大。截距项差 $0.015^{***}$ 说明 newsy 月本身平均收益更高。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 3：旗舰信号 $\flag$ 跨子样本}
+	\tighttable
+	\begin{tabular}{lrrrrrrr}
+		\toprule
+		& (1) All & (2) NM & (3) Non-NM & (4) All & (5) Post-WWII & (6) First & (7) Second \\
+		\midrule
+		$\flag$ & $0.052^{**}$ & $-0.103^{***}$ & $0.129^{***}$ & $0.129^{***}$ & $0.082^{***}$ & $0.162^{***}$ & $0.090^{***}$ \\
+		& [2.04] & [$-2.67$] & [4.76] & [4.76] & [3.59] & [3.86] & [3.17] \\
+		$\flag\times I^{nm}_t$ & & & & $-0.232^{***}$ & $-0.157^{***}$ & $-0.279^{***}$ & $-0.176^{***}$ \\
+		& & & & [$-4.93$] & [$-3.51$] & [$-3.96$] & [$-3.09$] \\
+		$I^{nm}_t$ & & & & $0.016^{***}$ & $0.011^{***}$ & $0.019^{***}$ & $0.012^{**}$ \\
+		const & $0.007^{***}$ & $0.017^{***}$ & 0.002 & 0.002 & $0.005^{**}$ & $-0.001$ & 0.005 \\
+		$N$ & 1{,}136 & 378 & 758 & 1{,}136 & 893 & 567 & 569 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{3pt}
+	\begin{itemize}
+		\item 交互项 $-0.232$（$t=-4.93$）是全文的\textbf{核心系数}：newsy 月相对 non-newsy 月，斜率低 $0.232$。
+		\item 用过去 12 个月收益直接回归只得 $t=0.60$；只放 newsy 月收益就把无条件动量推过 5\% 门槛（第 1 列 $0.052^{**}$）。
+		\item 第 (5)--(7) 列：post-WWII、上半段、下半段\textbf{都成立}，并非某一历史时期独有。
+	\end{itemize}
+\end{frame}
+
+% =====================================================================
+\section{制度根源：美国的盈利周期}
+
+\begin{frame}{为什么季度首月"newsy"：盈利周期的两个来源}
+	\begin{enumerate}
+		\item \textbf{财季对齐}：约 85\% 的美国公司在日历季度末（3/6/9/12 月）结账，因此从总量看，财季与日历季度高度对齐。
+		\item \textbf{异质的披露时滞}：几乎都在结账后 3 个月内披露，但快慢差别很大——约 44\% 在季度\emph{第一个月}披露，43\% 在第二个月，13\% 在第三个月。
+	\end{enumerate}
+	\vspace{3pt}
+	\begin{itemize}
+		\item 二者叠加，使\textbf{季度首月}成为投资者\emph{第一次}了解上一季度总量经济表现的时点：早披露公司的盈利含有 \textbf{common time component}，可外推到晚披露公司、乃至未来财季（盈利跨多个财季正自相关）。
+		\item 第二个月也有很多披露，但那时关于上一季度"已经知道得差不多了"——边际信息含量低。这就是 ``earnings season'' 受到额外关注的原因。
+	\end{itemize}
+	\tabnote{要点：newsy 月的特殊性是针对\textbf{总量}现金流而言；对单只股票的\emph{特质}现金流，披露在哪个月信息量相同。}
+\end{frame}
+
+\begin{frame}{Table 1：美国盈利周期的量化证据（1971--2021）}
+	\tighttable
+	\begin{tabular}{lrrrrrr}
+		\toprule
+		& \multicolumn{2}{c}{A: 财季结束月} & \multicolumn{2}{c}{B: 披露月(全部)} & \multicolumn{2}{c}{B: 披露月(对齐\&及时)} \\
+		& Count & Percent & Count & Percent & Count & Percent \\
+		\midrule
+		Group 1: Jan/Apr/Jul/Oct & 78{,}747 & 8.9\% & 387{,}466 & \alert{43.6\%} & 345{,}986 & 46.5\% \\
+		Group 2: Feb/May/Aug/Nov & 49{,}385 & 5.6\% & 385{,}806 & 43.4\% & 344{,}666 & 46.3\% \\
+		Group 3: Mar/Jun/Sep/Dec & 761{,}310 & \alert{85.6\%} & 116{,}170 & 13.1\% & 53{,}830 & 7.2\% \\
+		Total & 889{,}442 & 100\% & 889{,}442 & 100\% & 744{,}482 & 100\% \\
+		\bottomrule
+	\end{tabular}
+	\vspace{4pt}
+	\begin{itemize}
+		\item Panel A：85.6\% 的财季在 3/6/9/12 月末结束 $\Rightarrow$ 财季与日历季度对齐。
+		\item Panel B：43.6\% 的披露落在\textbf{季度首月}（"对齐\&及时"口径下升到 46.5\%），首月因此是最早的盈利时点。
+	\end{itemize}
+\end{frame}
+
+% =====================================================================
+\section{主实证：动态可预测性与对文献的冲击}
+
+\begin{frame}{这个模式"是真的吗"：三道排除（Appendix A.1）}
+	\begin{itemize}
+		\item \textbf{数据挖掘？}核心系数 $-0.232$ 的 $p$-value $=8.2\times10^{-7}$。即使做 Bonferroni 校正，也需要约 \alert{60{,}000} 个相互独立的检验才能让它变得不显著——不现实。
+		\item \textbf{异常值？}Table A1 把样本按\emph{十年}切片：每个十年都出现\textbf{正的} $\beta_1$（continuation）与\textbf{负的} $\beta_2$（newsy 月的相对斜率，即交互项；reversal 强度为 $\beta_1+\beta_2$）。模式贯穿全样本，且在样本首尾尤强、近年并未消退（避开了 Goyal--Welch 对"信号失效"的批评）。
+		\item \textbf{Stambaugh 偏误？}预测回归中因变量误差与自变量同期创新相关、自变量越持久偏误越大。按 Stambaugh (1999) 计算，对 $-0.232$ 的偏误至多 $-0.006$，可忽略。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table A1：逐十年的 $\beta_1$（continuation）与 $\beta_2$（交互）}
+	\tinytab
+	\begin{tabular}{lrrrrrrrrr}
+		\toprule
+		& --1939 & 1940s & 1950s & 1960s & 1970s & 1980s & 1990s & 2000s & 2010-- \\
+		\midrule
+		$\beta_1$ ($\flag$) & $0.239^{***}$ & 0.041 & $0.107^{*}$ & 0.019 & 0.063 & 0.072 & 0.094 & 0.091 & $0.146^{**}$ \\
+		$\beta_2$ ($\times I^{nm}_t$) & $-0.408^{***}$ & $-0.138$ & $-0.100$ & $-0.085$ & $-0.117$ & $-0.263^{**}$ & $-0.199$ & $-0.209^{*}$ & $-0.291^{***}$ \\
+		$N$ & 159 & 120 & 120 & 120 & 120 & 120 & 120 & 120 & 137 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{5pt}
+	\begin{itemize}
+		\item \textbf{每个}十年 $\beta_1>0$、$\beta_2<0$，符号从不反转；强弱有波动（首尾两段最强）但不是被个别观测驱动。
+		\item Figure 3 进一步把各十年的 continuation 强度 $\beta_1$ 与 reversal 强度 $\beta_1+\beta_2$ 对画：呈清晰\textbf{负相关}——continuation 强的十年，reversal 也强。两条腿在数据里\textbf{耦合}，提示应当用\emph{一个}故事同时解释。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 4：市场到底有多可预测？样本外 $R^2$}
+	\tighttable
+	\begin{tabular}{lrrrrrrrr}
+		\toprule
+		Method & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+		\midrule
+		OOS $R^2$ & 0.49\% & 3.72\% & 3.60\% & 3.68\% & 3.97\% & 3.77\% & 3.82\% & \alert{4.30\%} \\
+		\bottomrule
+	\end{tabular}
+	\vspace{3pt}
+	\[
+	R^2=1-\frac{\sum_{t}(r_t-\hat r_t)^2}{\sum_{t}(r_t-\bar r_t)^2},\qquad \bar r_t=\text{扩展窗历史均值}.
+	\]
+	\begin{itemize}
+		\item 用\textbf{实时（无前视）}系数构造的预测，OOS $R^2$ 介于 3.6\%--4.3\%（method 0 是 Campbell--Thompson 基准）。
+		\item 对照：Goyal--Welch (2008) 的 18 个预测变量月度 OOS $R^2$ 介于 $-3.28\%$ 到 $0.22\%$，均值 $-0.81\%$；Campbell--Thompson (2008) 加约束后均值仅 $0.32\%$。
+		\item 本文把 OOS $R^2$ 抬高了约\textbf{一个数量级}，显著移动了"市场几乎不可预测"这一文献先验。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{被推翻的三个"无害假设"}
+	本文的预期收益序列（Figure 2，method 6）带来三处与主流建模习惯冲突的事实：
+	\begin{enumerate}
+		\item \textbf{并不持久}：月度自相关约 $-0.20$（多数预测变量给出高度持久的预期收益）。
+		\item \textbf{并不总高于无风险利率}：预期市场收益\emph{每 3 个月就有 1 个月}低于 1 月期国库券利率，每 5 个月有 1 个月\textbf{为负}。
+		\item \textbf{并非协方差平稳}：月度收益的自协方差不仅取决于两点的\emph{间距}，还取决于它们\emph{是不是 newsy}。
+	\end{enumerate}
+	\vspace{3pt}
+	\begin{beamercolorbox}[sep=0.45em,wd=\linewidth,rounded=true]{note}
+		这三点既是经验发现，也直接\textbf{为"风险解释"设置障碍}——见下一节。
+	\end{beamercolorbox}
+\end{frame}
+
+\begin{frame}{为什么不太可能是风险补偿（Section 3.4）}
+	若把可预测性归于"可预测的风险解析"，需要：好的 newsy 月之后，\emph{未来 newsy 月变安全、未来 non-newsy 月变危险}。三条理由让这很难成立：
+	\begin{itemize}
+		\item \textbf{高频且符号交替}：预期收益逐月震荡，且对过去的依赖要在正负之间反复切换（正→负→正……）。habit、long-run risk、disaster、intermediary 等主流模型的风险在月频上都相当\textbf{持久}，不会这样跳。
+		\item \textbf{常常为负}：预期收益 1/3 的月份低于国库券、1/5 为负 $\Rightarrow$ 投资者要\emph{频繁}认为股市比国库券还安全，难以置信（Gómez-Cram 2022）。
+		\item \textbf{两腿耦合}（Figure 3）：reversal 与 continuation 在数据里同强同弱，理想的解释应当\textbf{一个故事覆盖两条腿}，而非分别用两个风险故事拼接。
+	\end{itemize}
+	\tabnote{结论：最自然的解释落在\textbf{行为金融}——投资者犯可预测的错误。}
+\end{frame}
+
+% =====================================================================
+\section{机制：带"参数压缩"的盈利外推}
+
+\begin{frame}{一个 April 的例子（Section 4）}
+	设投资者只用 newsy 月披露的盈利来预测未来盈利（呼应 earnings season 的高关注度）。假设\textbf{4 月}刚出现\emph{利好}盈利新闻：
+	\begin{itemize}
+		\item \textbf{5、6 月}（披露 Q1 盈利，与 4 月\emph{同一财季}，财季距离为 0）：与 4 月\emph{极其相似} $\Rightarrow$ 大概率也好。
+		\item \textbf{7 月}（披露 Q2 盈利，\emph{相邻财季}）：仍大概率好，但与 4 月的相似度\textbf{离散下降}（差一个财季，而非零个）。
+		\item 类似的"下台阶"还发生在 10 月、次年 1 月、次年 4 月……
+	\end{itemize}
+	\vspace{3pt}
+	\begin{beamercolorbox}[sep=0.45em,wd=\linewidth,rounded=true]{postit}
+		4 月盈利对未来各月盈利的\textbf{预测力}是一个\textbf{阶梯函数}：只在 newsy（E）月\emph{下台阶}，在 non-newsy（L）月几乎持平。Appendix B 用真实 ROE 数据验证了这个阶梯。
+	\end{beamercolorbox}
+\end{frame}
+
+\begin{frame}{Figure 4：阶梯（真实）vs.\ 常数衰减（信念）}
+	\tighttable
+	\begin{tabularx}{\textwidth}{lcccccccc}
+		\toprule
+		预测目标期（站在 0E 末）& 0E & 0L & 1E & 1L & 2E & 2L & 3E & $\cdots$ \\
+		\midrule
+		真实预测力（蓝圈，只在 E 期下台阶）& 自身 & 高 & 中 & 中 & 低 & 低 & 更低 & 阶梯 \\
+		红叉相对蓝圈（等速直线，均值相近）& $\approx$ & 偏低 & 偏高 & 偏低 & 偏高 & 偏低 & 偏高 & 交替 \\
+		\midrule
+		投资者反应 & -- & under & over & under & over & under & over & 交替 \\
+		事后修正 $\to$ 收益 & -- & 续涨$(+)$ & 反转$(-)$ & 续涨$(+)$ & 反转$(-)$ & 续涨$(+)$ & 反转$(-)$ & \\
+		\bottomrule
+	\end{tabularx}
+	\vspace{4pt}
+	\begin{itemize}
+		\item E = 季度早半段（newsy）；L = 晚半段（non-newsy）。投资者站在 0E 末，预测 0L、1E、1L、2E…… 的盈利。
+		\item 真实预测力按\textbf{阶梯}下降（只在 E 期下台阶）；投资者却用一条\textbf{等速、单调}的平滑直线（红叉）近似它——这就是 \textbf{parameter compression}：把时变的衰减速度压成一个中庸常数。
+		\item 红叉与蓝圈\emph{均值相近}：因此在刚下台阶的 \textbf{E 期红叉高于蓝圈}（信念偏高 $\to$ overreact $\to$ 反转），在持平的 \textbf{L 期红叉低于蓝圈}（信念偏低 $\to$ underreact $\to$ 续涨）。逐期符号交替的误差，正是可预测的盈利惊喜与收益之源。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{从误差到收益：同时 under- 与 overreact}
+	\begin{itemize}
+		\item 在未来\textbf{newsy（E）月}：信念预测力\emph{偏高} $\Rightarrow$ 投资者 \textbf{overreact} $\Rightarrow$ 之后出现\emph{负}惊喜 $\Rightarrow$ \textbf{reversal}。
+		\item 在未来\textbf{non-newsy（L）月}：信念预测力\emph{偏低} $\Rightarrow$ 投资者 \textbf{underreact} $\Rightarrow$ 之后出现\emph{正}惊喜 $\Rightarrow$ \textbf{continuation}。
+		\item 因此 ``好的 0E'' 平均预测：0L 正、1E 负、1L 正、2E 负……与 Table 2/3 的符号完全吻合。
+	\end{itemize}
+	\vspace{3pt}
+	\begin{beamercolorbox}[sep=0.5em,wd=\linewidth,rounded=true]{postit}
+		\textbf{一个机制、两种反应}：投资者只盯一个信号，却用它预测\emph{多个相关性不同}的目标；对高相关目标 underreact、对低相关目标 overreact。\\
+		普适寓意：\textit{"investors underreact when forecasting something because they overreact when forecasting something else."}
+	\end{beamercolorbox}
+\end{frame}
+
+% =====================================================================
+\section{模型（完整推导）}
+
+\begin{frame}{模型设定（Section 5；基于 Guo--Wachter 2025, Nagel--Xu 2022）}
+	\begin{itemize}
+		\item 无限期、离散时间、\textbf{风险中性}投资者，时间贴现参数 $r$（故 $P=r\,\mathbb{E}[\,\cdot_{t+1}]$）。
+		\item $D_t$ 为总量股利，$d_t=\log D_t$。设\textbf{奇数期 = E（newsy）}，\textbf{偶数期 = L（non-newsy）}。
+		\item 定义"去均值"的现金流状态：
+		\[
+		db_t = d_t - b_{t-1} = d_t-(1-\rho)\sum_{i=0}^{\infty}\rho^{i}d_{t-1-i},
+		\]
+		其中 $b_{t-1}$ 是过去股利的\textbf{指数加权移动平均}（近似按比例的账面权益），故 $db_t$ 近似 \textbf{ROE} 度量（呼应 Appendix B）。
+		\item 模型采用\textbf{对数线性（指数）}形式以减少状态变量、得到闭式解；图 4 的线性衰减在模型里变成 log 线性衰减。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{投资者信念：只用 newsy 信号、常数衰减（Eq.\,2）}
+	信念过程：$db_{t+1}=\xexp_t+u_{t+1}$，$u_{t+1}\overset{iid}{\sim}\mathcal{N}(0,\sigma_u)$，且
+	\[
+	\xexp_t=
+	\begin{cases}
+		\displaystyle\sum_{j=0}^{\infty}e^{(2j+0.5)\delta}\,u_{t-2j}, & t\ \text{为奇(E)}\\[2.0ex]
+		\displaystyle\sum_{j=0}^{\infty}e^{(2j+1.5)\delta}\,u_{t-(2j+1)}, & t\ \text{为偶(L)}.
+	\end{cases}
+	\]
+	等价的递归形式：
+	\[
+	\xexp_t=
+	\begin{cases}
+		e^{\delta}\xexp_{t-1}+e^{0.5\delta}u_t, & t\ \text{为奇(E)}\\[0.6ex]
+		e^{\delta}\xexp_{t-1}, & t\ \text{为偶(L)}.
+	\end{cases}
+	\]
+	\begin{itemize}
+		\item 即投资者 (i) \textbf{只用 newsy 月信号} $u_t$ 更新信念；(ii) 每期施加\textbf{常数衰减} $e^{\delta}$。
+		\item 数据\emph{同意} (i)，但\emph{不同意} (ii)——真实衰减并非常数。$\delta<0$（图中 $e^{\delta}=0.9$）。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{真实数据生成过程：衰减只发生在"进入 newsy"时（Eq.\,3）}
+	匹配图 4 的蓝圈，真实过程为：
+	\[
+	\xact_t=
+	\begin{cases}
+		\xact_{t-1}+u_t, & t\ \text{为奇(E)}\\[0.6ex]
+		e^{2\delta}\xact_{t-1}, & t\ \text{为偶(L)}
+	\end{cases}
+	\qquad\Longleftrightarrow\qquad
+	\xact_t=
+	\begin{cases}
+		\displaystyle\sum_{j=0}^{\infty}e^{(2j)\delta}u_{t-2j}, & t\ \text{奇}\\[2.0ex]
+		\displaystyle\sum_{j=0}^{\infty}e^{(2j+2)\delta}u_{t-(2j+1)}, & t\ \text{偶}.
+	\end{cases}
+	\]
+	\begin{itemize}
+		\item 衰减集中在 $t$ 为偶（即下一期 $t+1$ 是 newsy）之时——这正是阶梯"下台阶"的位置。
+		\item 与 Eq.\,(2) 逐项相比可得\textbf{信念与真实的偏差}：
+		\[
+		\xact_t=
+		\begin{cases}
+			e^{-0.5\delta}\,\xexp_t, & t\ \text{奇(E)}\quad(e^{-0.5\delta}>1:\ \text{红叉}\,>\,\text{蓝圈})\\[0.6ex]
+			e^{+0.5\delta}\,\xexp_t, & t\ \text{偶(L)}\quad(e^{+0.5\delta}<1:\ \text{红叉}\,<\,\text{蓝圈}).
+		\end{cases}
+		\]
+	\end{itemize}
+	\tabnote{逐项验证（$t$ 奇）：$\xact$ 在 $u_{t-2j}$ 上载荷 $e^{2j\delta}$，$\xexp$ 上载荷 $e^{(2j+0.5)\delta}$，比值 $=e^{-0.5\delta}$。$t$ 偶同理得 $e^{+0.5\delta}$。}
+\end{frame}
+
+\begin{frame}{真实现金流与定价：从信念到价格（Eq.\,4--5）}
+	真实现金流过程（用 $\xexp_t$ 表示，便于定价）：
+	\[
+	db_{t+1}=\xact_t+u_{t+1}=
+	\begin{cases}
+		e^{-0.5\delta}\xexp_t+u_{t+1}, & t\ \text{奇(E)}\\[0.6ex]
+		e^{+0.5\delta}\xexp_t+u_{t+1}, & t\ \text{偶(L)}.
+	\end{cases}
+	\]
+	设 $P_{nt}$ 为 $n$ 期后到期的 equity strip 价格，$F_n(x_t)=P_{nt}/D_t$。风险中性 $\Rightarrow P_{nt}=\mathbb{E}_t[r\,P_{n-1,t+1}]$，故
+	\[
+	F_n(x_t)=\mathbb{E}_t\!\Big[r\,F_{n-1}(x_{t+1})\tfrac{D_{t+1}}{D_t}\Big].\tag{5}
+	\]
+	\textbf{猜测解}（价比依赖两个状态 $\xexp_t,db_t$，并区分奇偶）：
+	\[
+	\frac{P_{nt}}{D_t}=
+	\begin{cases}
+		e^{\,a^1_n+b^1_n\xexp_t+c^1_n db_t}, & t\ \text{奇(E)}\\[0.6ex]
+		e^{\,a^0_n+b^0_n\xexp_t+c^0_n db_t}, & t\ \text{偶(L)}.
+	\end{cases}
+	\]
+\end{frame}
+
+\begin{frame}{递归系数与闭式解}
+	代入 $d_{t+1}-d_t=db_{t+1}-\rho\,db_t$ 并取对数，按 $t$ 的奇偶得到两组递归：
+	\begin{columns}[t]
+		\begin{column}{0.49\textwidth}
+			\textbf{$t$ 奇（E）}：
+			\begin{align*}
+				a^1_n&=a^0_{n-1}+\log r+\tfrac{(c^0_{n-1}+1)^2}{2}\sigma_u^2\\
+				b^1_n&=e^{\delta}b^0_{n-1}+(1+c^0_{n-1})\\
+				c^1_n&=-\rho
+			\end{align*}
+		\end{column}
+		\begin{column}{0.51\textwidth}
+			\textbf{$t$ 偶（L）}：
+			\begin{align*}
+				a^0_n&=a^1_{n-1}+\log r+\tfrac{(b^1_{n-1}e^{0.5\delta}+c^1_{n-1}+1)^2}{2}\sigma_u^2\\
+				b^0_n&=e^{\delta}b^1_{n-1}+(1+c^1_{n-1})\\
+				c^0_n&=-\rho
+			\end{align*}
+		\end{column}
+	\end{columns}
+	\vspace{4pt}
+	初始条件 $a^1_0=b^1_0=c^1_0=a^0_0=b^0_0=c^0_0=0$。可解出闭式：
+	\[
+	\boxed{\,b^1_n=b^0_n=(1-\rho)\,\frac{1-e^{n\delta}}{1-e^{\delta}}\, }\;>0\quad(\forall n\ge 1).
+	\]
+	\begin{itemize}
+		\item 直觉：$\xexp_t$ 高 $\Rightarrow$ 预期未来现金流增长高 $\Rightarrow$ 当前估值高（$b_n>0$）。$c_n=-\rho$ 反映 $db_t$ 的均值回复。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{收益分解：可预测部分\textbf{符号交替}}
+	代入真实现金流，$\log(1+R_{n,t+1})$ 等于：
+	\[
+	\begin{cases}
+		a^0_{n-1}-a^1_n+\underbrace{(e^{-0.5\delta}-1)}_{>0}(1-\rho)\,\xexp_t+(1-\rho)\,u_{t+1}, & t\ \text{奇},\ t{+}1\ \text{偶(L)}\\[1.4ex]
+		a^1_{n-1}-a^0_n+\underbrace{(e^{+0.5\delta}-1)}_{<0}(1-\rho)\,\xexp_t+(b^1_{n-1}e^{\delta}+1-\rho)\,u_{t+1}, & t\ \text{偶},\ t{+}1\ \text{奇(E)}.
+	\end{cases}
+	\]
+	\begin{itemize}
+		\item \textbf{不可预测部分}由当期现金流冲击 $u_{t+1}$ 驱动，与同期收益\emph{正相关}，占收益方差的大部分。
+		\item \textbf{可预测部分}的系数符号交替：$e^{-0.5\delta}-1>0$（流向 non-newsy）、$e^{+0.5\delta}-1<0$（流向 newsy）。
+		\item 故过去现金流冲击\textbf{正向}预测 non-newsy 收益、\textbf{负向}预测 newsy 收益；经"冲击与同期收益正相关"，\emph{过去收益}也复制这一符号 $\Rightarrow$ 复现 Table 2/3。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{模型的一个反事实与其修补}
+	\begin{itemize}
+		\item \textbf{反事实}：该简化模型预测收益与现金流惊喜\textbf{高度}相关；但数据中二者只\emph{弱}正相关。
+		\item \textbf{根源}：假设投资者把 $u_t$ \emph{全部}外推进 $\xexp_t$，于是冲击几乎完全驱动估值与收益。
+		\item \textbf{修补方向}：更现实的设定让投资者识别出部分冲击是\textbf{纯暂时性}的，将其\emph{排除}在状态变量 $\xexp_t$ 之外。
+		\item 图 4 可按"相关现金流度量"的不同被映射成多种模型：本节用 Nagel--Xu (2022) 的现金流冲击；其他可选 Guo--Wachter (2025) 的 ``certainly uncertain'' 冲击、Bordalo et al.\ (2024) 的 intangible news。
+	\end{itemize}
+	\tabnote{要点：模型是\textbf{机制的最简范例}，不追求拟合二阶矩；核心是把"参数压缩 $\to$ 符号交替的可预测收益"写清楚。}
+\end{frame}
+
+% =====================================================================
+\section{假设检验：四类证据}
+
+\begin{frame}{检验一：reversal 直到 earnings season 才开始（Table 5）}
+	\tighttable
+	\begin{tabular}{lrrr}
+		\toprule
+		因变量（NM 子样本，$N=378$）& (1) $\mathrm{mkt}_t$ & (2) 首 5 个交易日 & (3) 剔除首周 \\
+		\midrule
+		$\flag$ & $-0.103^{***}$ & 0.019 & $-0.120^{***}$ \\
+		& [$-2.67$] & [1.03] & [$-2.92$] \\
+		const & $0.017^{***}$ & $0.005^{***}$ & $0.012^{***}$ \\
+		$R^2$ & 0.029 & 0.005 & 0.047 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{4pt}
+	\begin{itemize}
+		\item 季度首月的\textbf{第一周}几乎没有披露（仅 0.27\% 的披露落在首 5 个交易日，远低于平均一周的约 8\%；第二周升到 2.93\%）。
+		\item 因此若 reversal 真由盈利披露驱动，它\emph{不应}出现在首周——第 (2) 列系数确实接近 0；剔除首周后 reversal 反而\textbf{更强}（第 3 列）。
+		\item 这把可预测性\textbf{钉在早期盈利披露的时点}上，排除了与盈利无关的"季度性波动"故事。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{检验一（续）：Q1 模式更弱（Table 6）}
+	\tighttable
+	\begin{tabular}{lrrrrrr}
+		\toprule
+		& \multicolumn{3}{c}{Q2--Q4} & \multicolumn{3}{c}{Q1} \\
+		& 首月 & 第二月 & 第三月 & January & February & March \\
+		\midrule
+		$\flag$ & $-0.125^{***}$ & $0.173^{***}$ & $0.121^{***}$ & $-0.024$ & 0.056 & 0.084 \\
+		& [$-2.83$] & [3.67] & [2.95] & [$-0.35$] & [1.07] & [1.14] \\
+		\bottomrule
+	\end{tabular}
+	\vspace{5pt}
+	\begin{itemize}
+		\item Q1 的两条腿（reversal 与 continuation）\textbf{都更弱}、不显著。两个原因：
+		\begin{itemize}
+			\item Q1 披露更慢：美国 Q1 中位披露时滞 41 天 vs 其余季度 30 天（公司还要忙 10-K 申报）$\Rightarrow$ 1 月"不那么 newsy"。
+			\item Q1 有大量\textbf{税务相关交易}，给总量收益叠加了无关波动。
+		\end{itemize}
+		\item 与机制一致：newsy 程度下降，预测模式随之减弱。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{检验二：survey 直接度量预期（Table 7，IBES 1985--2021）}
+	预测：过去盈利惊喜\textbf{正向}预测未来 non-newsy 月惊喜、\textbf{负向}（相对）预测未来 newsy 月惊喜 $\Rightarrow$ 交互项为负。
+	\tighttable
+	\begin{tabular}{lrrrrr}
+		\toprule
+		& (1) All & (2) NM & (3) Non-NM & (4) All & (5) All \\
+		\midrule
+		$\sum_{j=1}^{12}\mathrm{Sup}_{t-j}$ & $0.061^{***}$ & $0.049^{***}$ & $0.068^{***}$ & $0.068^{***}$ & \\
+		& [8.54] & [4.82] & [9.96] & [9.95] & \\
+		$\sum\mathrm{Sup}_{t-j}\times I^{nm}_t$ & & & & $-0.019^{**}$ [$-2.18$] & \\
+		$\sum_{j=1}^{4}\mathrm{Sup}^{nm}_{t,j}$ & & & & & $0.227^{***}$ [10.81] \\
+		$\sum\mathrm{Sup}^{nm}\times I^{nm}_t$ & & & & & $-0.064^{**}$ [$-2.26$] \\
+		$N$ & 419 & 140 & 279 & 419 & 419 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{3pt}
+	\begin{itemize}
+		\item 交互项\textbf{显著为负}（(4)(5) 列）：newsy 月的惊喜可预测性确实更弱，符合 overreaction 更强。
+		\item 注意第 (2) 列仍为正（非负）：分析师\emph{整体 underreaction}（(1) 列强正）这一层不会传导进市场收益（美国市场收益整体不强正自相关）——作者建模的是\textbf{市场预期}，survey 只是其带"时滞"的代理。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{检验二（续）：firm-level Coibion--Gorodnichenko（Table 8）}
+	回归 $\mathrm{Sup}_{i,t}=\alpha+\beta_1\sum_{j=1}^{12}\mathrm{Rev}^{t}_{i,t-j}+\beta_2\sum\mathrm{Rev}^{t}_{i,t-j}\times I^{nm}_t+\beta_3 I^{nm}_t+\epsilon_{i,t}$，按 CG 思路用\textbf{修正}识别 under-/overreaction。
+	\tighttable
+	\begin{tabular}{lrrr}
+		\toprule
+		& (1) & (2) & (3) \\
+		\midrule
+		$\sum_{12}\mathrm{Rev}$ & $0.339^{***}$ [2.87] & & \\
+		$\sum_{12}\mathrm{Rev}\times I^{nm}_t$ & $-0.222^{***}$ [$-2.70$] & & \\
+		$\sum_{4}\mathrm{Rev}^{nm}$ & & $0.619^{***}$ [3.02] & \\
+		$\sum_{4}\mathrm{Rev}^{nm}\times I^{nm}_t$ & & $-0.486^{***}$ [$-3.06$] & \\
+		$\sum_{8}\mathrm{Rev}^{nnm}$ & & & $0.366^{***}$ [2.98] \\
+		$\sum_{8}\mathrm{Rev}^{nnm}\times I^{nm}_t$ & & & $-0.127$ [$-1.48$] \\
+		$N$ & 269{,}384 & 296{,}496 & 284{,}886 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{3pt}
+	\begin{itemize}
+		\item 交互项 $\beta_2<0$（(1) 列）：针对 newsy 月盈利的修正更像 \textbf{overreaction}。
+		\item (2)(3) 列：把修正拆成 newsy/non-newsy 来源后，\textbf{newsy 部分}的交互项显著（(2)），non-newsy 部分不显著（(3)）——即 newsy 自变量主导了 (1) 的模式，与机制吻合。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{检验三：行业横截面 out-of-sample（Table 9）}
+	直觉：若一组股票 (i) 基本面紧密相连、(ii) 数量众多（沿盈利周期渐次披露），则机制应同样成立。行业是"更小但更紧密的经济体"。
+	\[
+	\mathrm{exret}_{i,t}=\alpha+\beta\sum_{j=1}^{4}\mathrm{exret}^{nm}_{i,t,j}+\epsilon_{i,t}\quad(\text{行业收益减市场})
+	\]
+	\tighttable
+	\begin{tabular}{lrrrr}
+		\toprule
+		行业口径 & (1) All & (2) NM & (3) Non-NM & (4) Difference \\
+		\midrule
+		A: SIC major group & $0.021^{***}$ & $-0.012$ & $0.038^{***}$ & $-0.050^{***}$ \\
+		B: SIC industry group & $0.020^{***}$ & $-0.008$ & $0.034^{***}$ & $-0.041^{***}$ \\
+		C: SIC industry & $0.020^{**}$ & $-0.017$ & $0.038^{***}$ & $-0.055^{***}$ \\
+		\bottomrule
+	\end{tabular}
+	\vspace{3pt}
+	\begin{itemize}
+		\item 行业动量整体为正（(1)），但\textbf{完全集中在 non-newsy 月、在 newsy 月消失}（(2)(3)），差异显著为负（(4)）——与总量市场同构。
+		\item 这是\textbf{真正的样本外}（à la Jensen--Kelly--Pedersen 的"换数据集"路径），扩展了广度也提供独立验证。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{检验三（续）：异质性与 placebo（Table 10）——sharp test}
+	\tinytab
+	\begin{tabular}{lrrrrrrrrrr}
+		\toprule
+		& \multicolumn{2}{c}{连通性} & \multicolumn{2}{c}{进入壁垒} & \multicolumn{2}{c}{均衡度} & \multicolumn{2}{c}{规模} & \multicolumn{2}{c}{Placebo} \\
+		& low & high & low & high & low & high & small & large & missing & random \\
+		\midrule
+		$\beta_1$ & $0.037^{**}$ & $0.052^{***}$ & $0.043^{**}$ & $0.053^{***}$ & $0.039^{*}$ & $0.057^{***}$ & $0.017^{***}$ & $0.027^{***}$ & 0.060 & 0.001 \\
+		$\beta_2$ & $-0.035$ & $-0.121^{***}$ & $-0.036$ & $-0.103^{***}$ & $-0.037$ & $-0.111^{***}$ & $-0.015$ & $-0.028^{***}$ & 0.005 & $-0.001$ \\
+		\bottomrule
+	\end{tabular}
+	\vspace{4pt}
+	\begin{itemize}
+		\item 机制预测的"更强"出现在：现金流\textbf{连通性高}、进入壁垒\textbf{高}、强弱公司\textbf{更均衡}、成分股\textbf{更多}的行业——数据全部吻合（$\beta_2$ 在 high 组显著、low 组不显著）。
+		\item \textbf{Placebo}：用未分类 SIC（0/9910/9990/9999/缺失）拼成的"假行业"、或\emph{随机}分配的"SIC"，效应消失。
+		\item \textbf{为何是 sharp test}：一般"低效率股票可预测性更强"会预测\emph{小、低市值}行业效应更大；但这里效应在\textbf{大、难进入}行业更强，方向\emph{相反}，故不太可能由"低效率"混淆驱动。
+	\end{itemize}
+\end{frame}
+
+% =====================================================================
+\section{替代解释、可交易性与全球证据}
+
+\begin{frame}{替代解释逐一排除（Section 7）}
+	\begin{itemize}
+		\item \textbf{公司内生择时披露}：文献证实早披露者通常报喜（deHaan et al.\ 2015 等）。但这至多解释"早披露惊喜更高"，\emph{说不清}为何\textbf{早期收益正向预测晚期收益}、更解释不了\textbf{跨季度}关系；若有作用，方向反而偏负。
+		\item \textbf{可预测的风险解析}：见 §3.4——需要月频、符号交替、且规模大到让股市常比国库券安全。habit/LRR/disaster/intermediary 的风险都太持久；Savor--Wilson (2016) 的盈利公告风险、Savor--Wilson (2013) 的宏观公告日溢价都对不上（实测在 FOMC/就业/GDP/PPI/ISM 等\textbf{前五大宏观公告日}，可预测性反而\emph{弱约 75\%}）。
+		\item \textbf{收益季节性}（Heston--Sadka 2008；Keloharju et al.\ 2016）：他们说\emph{整年 lag}预测力\textbf{异常高}；而本文恰恰说在\textbf{季度首月}预测系数异常\emph{低}——本文结论是"\emph{尽管}有季节性"，而非"\emph{因为}季节性"。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{能不能赚到：时序与横截面策略（Table A3--A4）}
+	用\textbf{实时、无前视}的扩展窗系数构造策略；回归式 $\mathrm{mkt}_t=\beta x_{t-1}+1\cdot\overline{\mathrm{mkt}}_{t-1}+\epsilon_t$（对历史均值系数约束为 1），仓位 $\propto c_t x_t$，再缩放到与市场同波动（5.34\%/月）。
+	\begin{columns}[t]
+		\begin{column}{0.5\textwidth}
+			\textbf{Table A3：时序策略（赌总量市场）}
+			\tighttable
+			\begin{tabular}{lrr}
+				\toprule
+				& 常数项($\alpha$) & $t$ \\
+				\midrule
+				平均收益 & 0.829\% & [4.29] \\
+				CAPM $\alpha$ & 0.753\% & [4.35] \\
+				FF3 $\alpha$ & 0.640\% & [3.83] \\
+				FF4 $\alpha$ & 0.749\% & [3.90] \\
+				\bottomrule
+			\end{tabular}
+			\par\vspace{2pt}
+			\scriptsize 年化 Sharpe $\approx 0.44$，与市场相当——但底层只是\textbf{总量市场}，交易成本低于股票级再平衡。
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\textbf{Table A4：横截面策略（赌行业）}
+			\tighttable
+			\begin{tabular}{lrr}
+				\toprule
+				& 常数项($\alpha$) & $t$ \\
+				\midrule
+				平均收益 & 0.619\% & [3.89] \\
+				+MKT & 0.638\% & [3.98] \\
+				+MKT,HML,SMB & 0.621\% & [3.90] \\
+				+MOM & 0.566\% & [3.27] \\
+				\bottomrule
+			\end{tabular}
+			\par\vspace{2pt}
+			\scriptsize 年化 Sharpe $\approx 0.33$；对 MOM 载荷不强（它\emph{1/3 的时间在反向押注} continuation）。
+		\end{column}
+	\end{columns}
+	\vspace{3pt}
+	\tabnote{回归系数本身即多空组合收益（Fama--MacBeth 1973）；本节是为剔除权重中的前视偏误而显式构造实时组合。}
+\end{frame}
+
+\begin{frame}{盈利动态的直接证据（Appendix B，Table B1）}
+	用\textbf{总量 ROE}（季度盈利／账面权益，按当月披露公司汇总；不用收益信息）刻画阶梯。用季度早半段 ROE 预测后续 8 期：
+	\tinytab
+	\begin{tabular}{lrrrrrrrr}
+		\toprule
+		被预测期 & $\mathrm{roe}_{q,L}$ & $\mathrm{roe}_{q+1,E}$ & $\mathrm{roe}_{q+1,L}$ & $\mathrm{roe}_{q+2,E}$ & $\mathrm{roe}_{q+2,L}$ & $\mathrm{roe}_{q+3,E}$ & $\mathrm{roe}_{q+3,L}$ & $\mathrm{roe}_{q+4,E}$ \\
+		\midrule
+		$\mathrm{roe}_{q,E}$ 系数 & $1.060^{***}$ & $0.642^{***}$ & $0.771^{***}$ & $0.493^{***}$ & $0.569^{***}$ & $0.367^{***}$ & $0.451^{***}$ & $0.286^{***}$ \\
+		\bottomrule
+	\end{tabular}
+	\vspace{4pt}
+	\begin{itemize}
+		\item 从左到右，\textbf{每当被预测期是 E（newsy）就出现离散下跌}：列 1$\to$2、3$\to$4、5$\to$6、7$\to$8 的差\textbf{显著}；而 2$\to$3、4$\to$5、6$\to$7 的差\emph{不显著}。
+		\item 这正是图 4 蓝圈"阶梯函数"的真实数据版本——\textbf{不依赖收益}就能看到盈利相似度在 newsy 月下台阶。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{全球证据（Appendix C，Table C1--C2）}
+	\begin{columns}[t]
+		\begin{column}{0.46\textwidth}
+			\textbf{Table C1：全球盈利周期（1998--2021）}
+			\tinytab
+			\begin{tabular}{lrr}
+				\toprule
+				& 财季末 & 披露(对齐\&及时) \\
+				\midrule
+				Jan/Apr/Jul/Oct & 5.7\% & 19.8\% \\
+				Feb/May/Aug/Nov & 6.5\% & 62.7\% \\
+				Mar/Jun/Sep/Dec & 87.8\% & 17.5\% \\
+				\bottomrule
+			\end{tabular}
+			\par\vspace{3pt}
+			\scriptsize 全球披露更慢：平均时滞 55 天($\approx$2 月) vs 美国 37 天。故全球把\textbf{首月+第二月}合并定义为 newsy ``month''。半年报国家仍按季度日历运转，理论照样适用。
+		\end{column}
+		\begin{column}{0.54\textwidth}
+			\textbf{Table C2：国别动量的同构（1926--2021）}
+			\tinytab
+			\begin{tabular}{lrrrr}
+				\toprule
+				& All & Non-NM & Diff & Post-WWII \\
+				\midrule
+				A: 市场收益 & 0.010 & $0.037^{***}$ & $-0.040^{**}$ & $-0.041^{**}$ \\
+				B: 超额收益 & $0.018^{***}$ & $0.035^{***}$ & $-0.025^{**}$ & $-0.029^{**}$ \\
+				\bottomrule
+			\end{tabular}
+			\par\vspace{3pt}
+			\scriptsize 国别动量（Moskowitz--Ooi--Pedersen 2012）同样\textbf{集中在 non-newsy、在 newsy 月失效}；Panel B 先剔除各国对美股的 beta（24 月滚动、无前视）后结论不变。Table C3 还显示各国 reversal 也\emph{不}出现在其本国的 preseason。
+		\end{column}
+	\end{columns}
+	\vspace{2pt}
+	\tabnote{美国是世界最大市场、披露最快且对他国有不对称影响，会"抽走"他国 newsy 月的信息含量；因此全球结果是更苛刻的 out-of-sample。}
+\end{frame}
+
+% =====================================================================
+\section{贡献定位与启示}
+
+\begin{frame}{理论定位：parameter compression 文献}
+	\begin{itemize}
+		\item 本文属\textbf{基本面外推}传统（Lakonishok--Shleifer--Vishny 1994；Greenwood--Hanson 2013；Bouchaud et al.\ 2019；Nagel--Xu 2022），但加了一层\textbf{参数压缩}。
+		\item 与 \textbf{diagnostic expectations}（Bordalo et al.）的区别：DE 平均\emph{过度外推}；本文外推水平\textbf{平均正确}，只是在\emph{特定月份}偏高或偏低——under- 与 overextrapolation \textbf{共存}，只是瞄准不同月份的盈利。
+		\item 微观基础是 Gabaix (2019) 的\textbf{有限注意}（sparse maximization）：认知受限使投资者不去穷尽参数空间，转而用一个"默认"中庸速度 $x^d$。
+		\item 同源工作：Matthies (2021, 协方差压缩)、Wang (2021, 收益率曲线自相关压缩)、Augenblick--Lazarus--Thaler (2025, 强弱信号推断偏差)、Fan--Liang--Peng (2021)。本文\textbf{首次}把该机制用于股票市场并给出经验含义。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{对 Fama (1998) 批评的回应}
+	\begin{beamercolorbox}[sep=0.5em,wd=\linewidth,rounded=true]{note}
+		Fama (1998)：行为金融里 reversal 与 continuation 大致\textbf{等频}出现，合在一起又像有效市场；关键是要说清\emph{何时}投资者会 under- 而非 overreact。
+	\end{beamercolorbox}
+	\vspace{4pt}
+	\begin{itemize}
+		\item 参数压缩提供了一条统一路径：把 under- 与 overreaction 装进\textbf{同一框架}。当一个信号对不同预测目标的\emph{相关性不同}时，"压平"这一相关性就会\textbf{对高相关目标 underreact、对低相关目标 overreact}。
+		\item 更进一步的"令人意外"之处：即便投资者只看\textbf{单一}信号，也能\emph{同时}对它 under- 和 overreact——因为同一信号被用于预测\textbf{多个}相关性不同的目标。
+		\item 与 Matthies (2021)、Wang (2021) 互补：本文把"压缩成单一常数"推广为"压缩成一个更简单但\emph{非常数}的函数"。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{其他文献关系（Section 1 \& 7）}
+	\tighttable
+	\begin{tabularx}{\textwidth}{lY}
+		\toprule
+		文献线 & 本文的差异化定位 \\
+		\midrule
+		拆分变量（Lou--Polk--Skouras 2019/2022）& 他们拆 close-to-open / open-to-close；本文拆\emph{因变量}（newsy/non-newsy）\textbf{又}拆\emph{自变量}。 \\
+		可预测却仍意外（Hartzmark--Solomon 2013；Chang et al.\ 2017）& 把"早期盈利披露"看作可预测的 trend-breaking 事件，投资者仍被其相关性下降所意外。 \\
+		相关性忽视（Enke--Zimmermann 2019；Fedyk--Hodson 2023）& 投资者未充分体会盈利早/晚披露之间的相关性。 \\
+		盈利公告与收益（Beaver；Bernard--Thomas；Savor--Wilson 2016）& 关注\textbf{误反应与 lead--lag}，而非公告周风险溢价；用总量/行业而非"公告 vs 非公告"组合。 \\
+		行业内信息传递（Foster 1981；Ramnath 2002；Thomas--Zhang 2008）& 月频、行业级超额收益、兼顾\textbf{季内与跨季}关系。 \\
+		\bottomrule
+	\end{tabularx}
+\end{frame}
+
+\begin{frame}{对做研究的启示}
+	\begin{enumerate}
+		\item \textbf{"拆变量"是廉价而强力的识别工具}：一个无条件看平庸的关系，按合适维度切开后可能藏着两条强腿。先问"因变量/自变量该不该分类"。
+		\item \textbf{把机制写成可证伪的 sharp prediction}：本文不止说"存在可预测性"，而是预测\emph{符号交替、随 newsy 程度变化、随行业连通性变化}——再用 Table 5/6/10 和 placebo 去钉死。
+		\item \textbf{用 survey 数据正面检验"预期"}：不停在收益层面，而是直接看分析师预期里有没有对应的 under-/overreaction（Table 7--8）。
+		\item \textbf{out-of-sample 的两条路}：本文走 Jensen--Kelly--Pedersen 式"换数据集"（行业、国别），而非只等"发表后衰减"。
+		\item \textbf{排除替代解释要"说清为什么不够"}：对风险、内生择时、季节性，作者都指出\emph{方向或量级}对不上，而非仅"加控制后仍显著"。
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{小结}
+	\begin{beamercolorbox}[sep=0.6em,wd=\linewidth,rounded=true]{postit}
+		美国市场收益\textbf{可以}被过去收益预测：newsy 月负向预测未来 newsy、正向预测未来 non-newsy。背后是\textbf{带参数压缩的盈利外推}——投资者把盈利相似度的时变衰减压成常数，于是\emph{同一信号、多个目标}下同时 under- 与 overreact。
+	\end{beamercolorbox}
+	\vspace{6pt}
+	\begin{itemize}
+		\item \textbf{现象}：OOS $R^2\approx4\%$（高一个数量级），跨十年、跨行业、跨国稳健；推翻"预期收益持久 / 恒高于 $r_f$ / 协方差平稳"三个常识。
+		\item \textbf{机制}：阶梯 vs 常数衰减（Fig.\,4），由 Table B1 的真实 ROE 阶梯、Table 5/6 的时点对齐、Table 7/8 的 survey 共同支撑。
+		\item \textbf{理论}：把 parameter compression 引入股市，为 Fama (1998) 之问提供\textbf{单一机制}的统一答案。
+	\end{itemize}
+\end{frame}
+
+\end{document}

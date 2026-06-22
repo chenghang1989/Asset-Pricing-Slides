@@ -143,7 +143,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 % Roadmap: 08 vs 09 -- this lecture and the next one are one continuous derivation
 % ============================================================================
 
-\begin{frame}{Roadmap: Lectures 08--09 Are One Derivation}
+\begin{frame}[shrink=12]{Roadmap: Lectures 08--09 Are One Derivation}
 	\begin{center}
 		\small
 		\begin{tikzpicture}[node distance=8pt,
@@ -432,7 +432,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     
 \end{frame}
 
-\begin{frame}
+\begin{frame}[shrink=18]
     \frametitle{The Complete Epstein-Zin Utility}
     
     \textbf{Putting It Together:}
@@ -468,34 +468,73 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     
 \end{frame}
 
-\begin{frame}
+\begin{frame}[allowframebreaks]
     \frametitle{Alternative Parameterization}
     
-    \textbf{Often Convenient to Define:}
+    \textbf{First define two shorthand parameters:}
     \begin{equation*}
-        \theta \equiv \frac{1 - 1/\psi}{1 - \gamma}
+        \rho \equiv 1-\frac{1}{\psi}, \qquad \alpha \equiv 1-\gamma
     \end{equation*}
     
-    
-    Then the utility function becomes:
+    Then the Epstein-Zin utility can be written as
     \begin{equation*}
-        U_t = \left[ (1-\delta)C_t^{\theta(1-\gamma)} + \delta \left( E_t U_{t+1}^{1-\gamma} \right)^{\theta} \right]^{\frac{1}{\theta(1-\gamma)}}
+        U_t=\left[(1-\delta)C_t^\rho+\delta\left(E_tU_{t+1}^{\alpha}\right)^{\rho/\alpha}\right]^{1/\rho}.
     \end{equation*}
     
+    \textbf{The composite parameter used in Lecture 09 is:}
+    \begin{equation*}
+        \boxed{\theta \equiv \frac{1-\gamma}{1-1/\psi}=\frac{\alpha}{\rho}}
+    \end{equation*}
+    
+    \begin{block}{Why introduce $\theta$?}
+        $\theta$ is not a new preference primitive. It is a bookkeeping device that makes the SDF algebra compact. In Lecture 09 it lets us write the wealth-return SDF as
+        \[
+        M_{t+1}=\delta^\theta\left(\frac{C_{t+1}}{C_t}\right)^{-\theta/\psi}(1+R_{W,t+1})^{-(1-\theta)}.
+        \]
+    \end{block}
+
+    \framebreak
+
+    \textbf{Equivalent utility representation.}
+    Since
+    \begin{equation*}
+        \rho=\frac{1-\gamma}{\theta}, \qquad \frac{\rho}{1-\gamma}=\frac{1}{\theta}, \qquad \frac{1}{\rho}=\frac{\theta}{1-\gamma},
+    \end{equation*}
+    we can rewrite utility as
+    \begin{tcolorbox}[colback=green!5!white, colframe=green!75!black, title=Equivalent Epstein-Zin Form]
+    \begin{equation*}
+        U_t=
+        \left[
+        (1-\delta)C_t^{(1-\gamma)/\theta}
+        +\delta\left(E_tU_{t+1}^{1-\gamma}\right)^{1/\theta}
+        \right]^{\theta/(1-\gamma)}.
+    \end{equation*}
+    \end{tcolorbox}
+
+    \textbf{The identity we will use repeatedly:}
+    \begin{equation*}
+        \boxed{\gamma-\frac{1}{\psi}=(1-\theta)\left(1-\frac{1}{\psi}\right)=(1-\theta)\rho}
+    \end{equation*}
+
+    \framebreak
     
     \textbf{Interpretation of $\theta$:}
     \begin{itemize}
-        \item Measures the \textit{timing preference} for resolution of uncertainty
-        \item $\theta = 1$ (i.e., $\gamma = 1/\psi$): Risk-neutral timing (standard CRRA)
-        \item $\theta > 1$ (i.e., $\gamma > 1/\psi$): Prefer \textit{early} resolution of uncertainty
-        \item $\theta < 1$ (i.e., $\gamma < 1/\psi$): Prefer \textit{late} resolution of uncertainty
+        \item $\theta$ summarizes the relative strength of risk aversion and intertemporal substitution.
+        \item If $\gamma = 1/\psi$, then $\theta=1$ and Epstein-Zin collapses to standard CRRA.
+        \item If $\gamma \neq 1/\psi$, the SDF contains an additional continuation-value or wealth-return component.
+        \item Do \textbf{not} read the sign of $\theta$ mechanically as a timing preference. For example, when $\gamma>1$ and $\psi>1$, $\theta<0$ under this convention, but $\gamma>1/\psi$ still means risk aversion is strong relative to IES.
     \end{itemize}
     
     
     \textbf{Economic Intuition:}
     \begin{itemize}
-        \item If $\gamma > 1/\psi$: High risk aversion relative to IES
-        \item Want to know bad news early to adjust consumption path
+        \item The economically meaningful comparison is $\gamma$ versus $1/\psi$.
+        \item If $\gamma > 1/\psi$: risk aversion is high relative to IES, so continuation-value risk matters for asset prices.
+        \item This is exactly why the primitive SDF will contain the extra term
+        \[
+            \left(\frac{V_{t+1}}{\mu_t(V_{t+1})}\right)^{-(\gamma-1/\psi)}.
+        \]
     \end{itemize}
     
 \end{frame}
@@ -596,7 +635,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 % ============================================================================
 % Section-level navigation: where each partial derivative fits
 % ============================================================================
-\begin{frame}{Roadmap of the SDF Derivation}
+\begin{frame}[shrink=20]{Roadmap of the SDF Derivation}
 	The pricing kernel is a marginal rate of substitution:
 	\begin{equation*}
 		q(s_t \to s_{t+1}) = \frac{\partial V_t/\partial C_{t+1}(s_t,s_{t+1})}{\partial V_t/\partial C_t(s_t)}.
@@ -677,8 +716,9 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \begin{itemize}
         \item Parameter $\gamma$: coefficient of relative risk aversion
         \item Controls attitude toward risk in continuation utility
-        \item When $\gamma > 1$: risk averse (concave in utility)
-        \item When $\gamma = 1$: risk neutral in this dimension
+        \item When $\gamma > 0$: risk averse in continuation utility
+        \item When $\gamma = 0$: risk neutral in continuation utility
+        \item When $\gamma = 1$: log-utility limit of the certainty equivalent
     \end{itemize}
     
     \textbf{Key insight:} By separating $\psi$ and $\gamma$, we decouple intertemporal substitution from risk aversion.
@@ -1248,7 +1288,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 % ============================================================================
 % Closing bridge: where 08 ends, why 09 starts
 % ============================================================================
-\begin{frame}{Where We End, and What 09 Will Do}
+\begin{frame}[shrink=20]{Where We End, and What 09 Will Do}
 	\textbf{We have:} the primitive Epstein-Zin SDF
 	\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black]
 	\begin{equation*}

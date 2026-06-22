@@ -167,7 +167,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 % ============================================================================
 % Recap: what we inherit from 08
 % ============================================================================
-\begin{frame}{Recap: The Primitive SDF and Why It Is Not Usable}
+\begin{frame}[shrink=8]{Recap: The Primitive SDF and Why It Is Not Usable}
 	\textbf{From Lecture 08:}
 	\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=Primitive Epstein-Zin SDF]
 	\begin{equation*}
@@ -262,6 +262,9 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     \end{equation*}
     
     where $\psi_t \equiv C_t/W_t$ is the consumption-wealth ratio (depends on state $X_t$).
+    \begin{block}{Notation warning}
+        $\psi_t$ with a time subscript is the \textbf{consumption-wealth ratio}. The preference parameter $\psi$ without a subscript is the \textbf{elasticity of intertemporal substitution}. They are different objects.
+    \end{block}
     
     \textbf{This gives us:}
     \begin{equation*}
@@ -466,10 +469,15 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \begin{frame}[allowframebreaks]
     \frametitle{Step 4c: Collecting Powers $\Rightarrow$ Wealth-Return SDF}
 
-    \textbf{Goal:} clean the prefactor $\delta\,(C_{t+1}/C_t)^{-1/\psi}\,(\phi_{t+1}/\mu_t^*)^{-(\gamma-1/\psi)}$ in \eqref{eq:M-after-sub}.
-    \vspace{4pt}
+    \textbf{Goal:} eliminate the remaining unobservable ratio $\phi_{t+1}/\mu_t^*$ in
+    \begin{equation*}
+        M_{t+1}
+        = \delta\left(\frac{C_{t+1}}{C_t}\right)^{-1/\psi}
+        \left(\frac{\phi_{t+1}}{\mu_t^*}\right)^{-(\gamma-1/\psi)}
+        (1+R_{W,t+1})^{-(\gamma-1/\psi)}.
+    \end{equation*}
 
-    \textbf{The composite parameter $\theta$.} Define
+    \textbf{The composite parameter.} Define
     \begin{equation*}
     	\theta \equiv \frac{1-\gamma}{1-1/\psi} = \frac{1-\gamma}{\rho}.
     \end{equation*}
@@ -481,32 +489,92 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 
     \framebreak
 
-    \textbf{Use the FOC value of $\mu_t^*$ from \eqref{eq:mustar-closed} together with $\phi_{t+1}$ from \eqref{eq:phi-closed}.}
+    \textbf{Step A. Convert $\phi_{t+1}/\mu_t^*$ into growth rates.}
 
-    Combining gives, after collecting,
+    Let
     \begin{equation*}
-    	\left(\frac{\phi_{t+1}}{\mu_t^*}\right)^{-\rho} = \delta\,\frac{(1-\psi_t)^{\rho-1}}{\psi_{t+1}^{\rho-1}}\cdot \psi_t^{-(\rho-1)}\cdot(1-\delta)^{-1}\cdot(\text{1}),
+        G_{c,t+1}\equiv \frac{C_{t+1}}{C_t}, \qquad R^W_{t+1}\equiv 1+R_{W,t+1}.
     \end{equation*}
-    which, when raised to the power $(1-\theta)$ via \eqref{eq:theta-identity}, yields
+    Since $C_t=\psi_tW_t$ and $W_{t+1}=(1-\psi_t)W_tR^W_{t+1}$,
     \begin{equation*}
-    	\delta\,\left(\frac{\phi_{t+1}}{\mu_t^*}\right)^{-(\gamma-1/\psi)} = \delta^{\theta}\,\left(\frac{C_{t+1}}{C_t}\right)^{-(\theta-1)/\psi}\!\!\!\!\!\!\!\cdot\,\bigl(\text{units of } 1+R_W\text{ already separated}\bigr).
+        G_{c,t+1}
+        =\frac{\psi_{t+1}W_{t+1}}{\psi_tW_t}
+        =\frac{\psi_{t+1}(1-\psi_t)}{\psi_t}R^W_{t+1}.
     \end{equation*}
-    \footnotesize\textit{(The full bookkeeping of $\psi_t,\psi_{t+1}$ is mechanical; the only economic content is the $\theta$ identity.)}
+    Hence
+    \begin{equation}\label{eq:gc-rw-psi-ratio}
+        \frac{\psi_{t+1}(1-\psi_t)}{\psi_t}
+        =\frac{G_{c,t+1}}{R^W_{t+1}}.
+    \end{equation}
 
     \framebreak
 
-    \normalsize
-    \textbf{Putting it together.} Multiply by the original $(C_{t+1}/C_t)^{-1/\psi}$ from \eqref{eq:M-after-sub} and the $(1+R_{W,t+1})^{-(\gamma-1/\psi)}$ term, then use \eqref{eq:theta-identity} once more:
-    \begin{itemize}
-    	\item Consumption exponent: $-1/\psi - (\theta-1)/\psi = -\theta/\psi$.
-    	\item Wealth-return exponent: $-(\gamma-1/\psi) = -(1-\theta)\rho = -(1-\theta)(1-1/\psi)$, which the next slide writes more cleanly as $-(1-\theta)$ after the standard normalization.
-    \end{itemize}
+    \textbf{Step B. Use the FOC identities for $\phi$ and $\mu^*$.}
+
+    From Step 4b:
+    \begin{equation*}
+        \phi_{t+1}^{\rho}=(1-\delta)\psi_{t+1}^{\rho-1},
+        \qquad
+        (\mu_t^*)^\rho=\frac{1-\delta}{\delta}\left(\frac{\psi_t}{1-\psi_t}\right)^{\rho-1}.
+    \end{equation*}
+    Divide the first equation by the second:
+    \begin{equation*}
+        \begin{aligned}
+        \left(\frac{\phi_{t+1}}{\mu_t^*}\right)^\rho
+        &=\delta\,\psi_{t+1}^{\rho-1}\left(\frac{1-\psi_t}{\psi_t}\right)^{\rho-1}\\
+        &=\delta\left(\frac{\psi_{t+1}(1-\psi_t)}{\psi_t}\right)^{\rho-1}\\
+        &=\delta\left(\frac{G_{c,t+1}}{R^W_{t+1}}\right)^{\rho-1}.
+        \end{aligned}
+    \end{equation*}
+    The last line uses \eqref{eq:gc-rw-psi-ratio}.
+
+    \framebreak
+
+    \textbf{Step C. Raise to the required power.}
+
+    Since $(\gamma-1/\psi)/\rho=1-\theta$ and $\rho-1=-1/\psi$,
+    \begin{equation*}
+        \boxed{
+        \delta\left(\frac{\phi_{t+1}}{\mu_t^*}\right)^{-(\gamma-1/\psi)}
+        =
+        \delta^\theta
+        \left(\frac{G_{c,t+1}}{R^W_{t+1}}\right)^{(1-\theta)/\psi}
+        }.
+    \end{equation*}
+    This step is pure algebra: the FOC converts the shadow value ratio into consumption growth and the wealth return.
+
+    \framebreak
+
+    \textbf{Putting it together.}
+    \begin{equation*}
+        \begin{aligned}
+        M_{t+1}
+        &=\delta^\theta
+        G_{c,t+1}^{-1/\psi}
+        \left(\frac{G_{c,t+1}}{R^W_{t+1}}\right)^{(1-\theta)/\psi}
+        (R^W_{t+1})^{-(1-\theta)\rho}.
+        \end{aligned}
+    \end{equation*}
+    Now collect powers:
+    \begin{equation*}
+        -\frac{1}{\psi}+\frac{1-\theta}{\psi}
+        =-\frac{\theta}{\psi},
+        \qquad
+        -\frac{1-\theta}{\psi}-(1-\theta)\rho
+        =-(1-\theta)\left(\frac{1}{\psi}+\rho\right)
+        =-(1-\theta).
+    \end{equation*}
+    The last equality uses $\rho=1-1/\psi$.
+
     \begin{tcolorbox}[colback=green!5!white, colframe=green!75!black, title=Result of Step 4]
     \begin{equation*}
-    	M_{t+1} = \delta^{\theta}\left(\frac{C_{t+1}}{C_t}\right)^{-\theta/\psi}(1+R_{W,t+1})^{-(1-\theta)}.
+    	M_{t+1}
+        = \delta^{\theta}
+        \left(\frac{C_{t+1}}{C_t}\right)^{-\theta/\psi}
+        (1+R_{W,t+1})^{-(1-\theta)}.
     \end{equation*}
     \end{tcolorbox}
-    The next frame interprets this and gives its log innovation.
+    \textbf{What changed?} The primitive SDF no longer contains $V_{t+1}$ or $\mu_t(V_{t+1})$. It depends only on consumption growth and the wealth return.
 \end{frame}
 
 \begin{frame}[allowframebreaks]
@@ -588,13 +656,13 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
     
     \textbf{Case 3: General Epstein-Zin ($\gamma \neq 1/\psi$)}
     \begin{itemize}
-        \item Both terms present with weights $\theta$ and $1-\theta$
+        \item Both terms are present; $\theta$ and $1-\theta$ are algebraic loadings, not necessarily portfolio weights between 0 and 1
         \item Nests both consumption CAPM and traditional CAPM
-        \item When $\gamma > 1/\psi$ (empirically plausible):
+        \item When $\gamma \neq 1/\psi$:
         \begin{itemize}
-            \item $0 < \theta < 1$
-            \item Both consumption and wealth returns are priced
-            \item Greater weight on wealth returns
+            \item $1-\theta \neq 0$, so the wealth-return component enters the SDF
+            \item Assets covarying with wealth return carry a distinct risk premium
+            \item The sign and size of the loading depend on the joint values of $\gamma$ and $\psi$
         \end{itemize}
     \end{itemize}
  \end{frame}
@@ -619,18 +687,26 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[shrink=8]
     \frametitle{Risk-Free Rate}
+    \footnotesize
     
-    Under joint lognormality and homoskedasticity, the risk-free rate is:
+    Under joint lognormality, the risk-free rate is determined by the log SDF:
     \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black]
-    \begin{equation*}
-        % r_{f,t} = -\log(\delta) + \frac{1}{\psi} E_t[\Delta c_{t+1}] - \frac{1}{2} \frac{\theta}{\psi^2} \sigma_c^2 + \frac{\theta-1}{2} \sigma_w^2
-        r_{f, t} \approx \underbrace{-\log \delta}_{\text {time preference }}+\underbrace{\frac{1}{\psi} E_t\left[\Delta c_{t+1}\right]}_{\text {Interperiod Substitution}}-\underbrace{- \frac{1}{2} \frac{\theta}{\psi^2} \sigma_c^2 + \frac{\theta-1}{2} \sigma_w^2}_{\text{ Precautionary Saving}}
-    \end{equation*}
+    \begin{align*}
+        r_{f,t}
+        &= -E_t[m_{t+1}]-\frac{1}{2}\mathrm{Var}_t(m_{t+1})\\
+        &= -\theta\log\delta
+        +\frac{\theta}{\psi}E_t[\Delta c_{t+1}]
+        +(1-\theta)E_t[r_{w,t+1}]
+        -\frac{1}{2}\mathrm{Var}_t\!\left[
+        \frac{\theta}{\psi}\Delta c_{t+1}
+        +(1-\theta)r_{w,t+1}
+        \right].
+    \end{align*}
     \end{tcolorbox}
     
-    \textbf{Key insight:} For given $\psi$, there is no quadratic term in $\gamma$
+    \textbf{Key insight:} the slope on expected consumption growth is governed by the IES channel, not by CRRA's forced $\gamma=1/\psi$ restriction.
     
     \textbf{Why this matters:}
     \begin{itemize}
@@ -645,7 +721,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 % ============================================================================
 % Bridge: why the wealth-form is not the end of the story
 % ============================================================================
-\begin{frame}{Bridge from \S 1 to \S 2: Why Go Further?}
+\begin{frame}[shrink=8]{Bridge from \S 1 to \S 2: Why Go Further?}
 	\textbf{We have:} the wealth-return SDF $M_{t+1} = \delta^\theta(C_{t+1}/C_t)^{-\theta/\psi}(1+R_{W,t+1})^{-(1-\theta)}$.
 	\vspace{4pt}
 	\textbf{Two reasons this is still not enough.}
@@ -694,15 +770,18 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 
 
 \begin{frame}{Setup: Notation and Budget Constraint}
+    \small
 	\begin{itemize}
 		\item $ W_t $: total wealth, including human capital, at the beginning of period $t$
 		\item $ C_t $: consumption at time $t$
-		\item $ r_{w,t+1} $: the gross simple return on wealth invested from period $ t $ to period $ t+1 $. The subscript $ m $ denotes the fact that total invested wealth is the "market portfolio" of assets
+		\item $ R^W_{t+1} $: gross simple return on the wealth portfolio from $t$ to $t+1$
+		\item $ r_{w,t+1}\equiv \log R^W_{t+1} $: log wealth return
+		\item $x_t\equiv c_t-w_t=\log(C_t/W_t)$: log consumption-wealth ratio
 	\end{itemize}
 	The representative agent's dynamic budget constraint can then be written as
 	\begin{align}
-		W_{t+1}=r_{w, t+1}\left(W_{t}-C_{t}\right)\\
-		\frac{W_{t+1}}{W_{t}}=r_{w, t+1}\left(1-\frac{C_{t}}{W_{t}}\right)
+		W_{t+1}=R^W_{t+1}\left(W_{t}-C_{t}\right),\\
+		\frac{W_{t+1}}{W_{t}}=R^W_{t+1}\left(1-\frac{C_{t}}{W_{t}}\right).
 	\end{align}
 	or in logs:
 	\begin{align}
@@ -710,9 +789,13 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 			\Delta w_{t+1}  =r_{w, t+1}+\log \left(1-\exp \left(c_{t}-w_{t}\right)\right)
 		\end{aligned}
 	\end{align}
+    \begin{block}{Purpose of this step}
+        We are turning a nonlinear budget constraint into a nearly linear equation in $r_w$, $\Delta c$, and $c-w$ so that it can be forward-solved.
+    \end{block}
 \end{frame}
 
 \begin{frame}{Linearizing the Budget Constraint}
+    \small
 	Take a first-order Taylor expansion around the mean $ \bar{x} $
 	\begin{align}
 		\begin{array}{l}
@@ -720,23 +803,42 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
 			-\frac{\exp (\bar{x})}{1-\exp (\bar{x})}\left(x_{t}-\bar{x}\right)
 		\end{array}
 	\end{align}
-	It will be helpful rewrite $\frac{\exp (\bar{x})}{1-\exp (\bar{x})}$ as $ 1-1/\rho $ where $\rho \equiv 1 -  \exp (\bar{x})$. When the log consumption-wealth ratio is constant, then $ \rho $ can be interpreted as $ (W - C)/ W $, the constant ratio of invested wealth to total wealth.
+	The derivative is
+    \begin{equation*}
+        \frac{d}{dx}\log(1-\exp x)=-\frac{\exp x}{1-\exp x}.
+    \end{equation*}
+    Define
+    \begin{equation*}
+        \rho \equiv 1-\exp(\bar{x}).
+    \end{equation*}
+    Then
+    \begin{equation*}
+        -\frac{\exp(\bar{x})}{1-\exp(\bar{x})}
+        =-\frac{1-\rho}{\rho}
+        =1-\frac{1}{\rho}.
+    \end{equation*}
+	When the log consumption-wealth ratio is constant, $ \rho $ can be interpreted as $ (W-C)/W $, the constant ratio of invested wealth to total wealth.
 \end{frame}
 
 \begin{frame}{Difference Equation for the Consumption-Wealth Ratio}
+    \small
 	So the inter-temporal budget constraint is
 	\begin{align}
 		\Delta w_{t+1} \approx r_{w,t+1}+k+\left(1-\frac{1}{\rho}\right)\left(c_{t}-w_{t}\right)
 	\end{align}
-	use the trivial equality
+	use the accounting identity
 	\begin{align}
 		\Delta w_{t+1}= \Delta c_{t+1}+\left(c_{t}-w_{t}\right)  -\left(c_{t+1}-w_{t+1}\right)
 	\end{align}
-	we can get
+    This identity simply rewrites wealth growth using consumption growth and the change in the consumption-wealth ratio. Substituting it into the linearized budget constraint gives
 	\begin{align}
 		&r_{w,t+1}+k+\left(1-\frac{1}{\rho}\right)\left(c_{t}-w_{t}\right) = \Delta c_{t+1}+\left(c_{t}-w_{t}\right)  -\left(c_{t+1}-w_{t+1}\right)\\
 		&-\left(c_{t+1}-w_{t+1}\right)+\frac{1}{\rho}\left(c_{t}-w_{t}\right)=r_{w, t+1}-\Delta c_{t+1}+k
 	\end{align}
+    Equivalently,
+    \begin{equation*}
+        c_t-w_t=\rho\left[(c_{t+1}-w_{t+1})+r_{w,t+1}-\Delta c_{t+1}+k\right].
+    \end{equation*}
 \end{frame}
 
 \begin{frame}{Forward-Solving the Difference Equation}
@@ -792,7 +894,7 @@ Dongbei University of Finance \& Economics \\ % Your institution for the title p
         M_{t+1} = \delta^{\theta} \left( \frac{C_{t+1}}{C_t} \right)^{-\theta/\psi} (1 + R_{W,t+1})^{-(1-\theta)}
     \end{equation*}
 
-    Then 
+    Apply the Euler equation to the wealth portfolio itself, $E_t[M_{t+1}(1+R_{W,t+1})]=1$. Then
 
     \begin{equation*}
         1=E_t\left[\left\{\delta\left(\frac{C_{t+1}}{C_t}\right)^{-1 / \psi}  (1 + R_{\mathrm{w}, t+1})\right\}^\theta\right]
@@ -854,6 +956,23 @@ c_{t+1} - E_t[c_{t+1}] &= (E_{t+1} - E_t) \left[\sum_{j=0}^{\infty} \rho^{j} r_{
 
 Substitute \textcolor{red}{(\ref{消费的信息和收益信息的关系})} into \textcolor{red}{(\ref{消费、财富形式的SDF})}
 
+\begin{equation*}
+\begin{aligned}
+\widetilde{m}_{t+1}
+&=-\frac{\theta}{\psi}\left[\widetilde{r}_{w,t+1}+(1-\psi)\widetilde{h}_{t+1}\right]
+-(1-\theta)\widetilde{r}_{w,t+1}\\
+&=-\left(\frac{\theta}{\psi}+1-\theta\right)\widetilde{r}_{w,t+1}
+-\frac{\theta(1-\psi)}{\psi}\widetilde{h}_{t+1}.
+\end{aligned}
+\end{equation*}
+
+Using $\theta=(1-\gamma)/(1-1/\psi)$,
+\begin{equation*}
+    \frac{\theta}{\psi}+1-\theta=\gamma,
+    \qquad
+    \frac{\theta(1-\psi)}{\psi}=\gamma-1.
+\end{equation*}
+
     \begin{tcolorbox}[colback=green!5!white, colframe=green!75!black, title=SDF Innovation (Without consumption)]
     \begin{equation*}
         \widetilde{m}_{t+1}=-\gamma \widetilde{r}_{w, t+1}-(\gamma-1) \widetilde{h}_{t+1} 
@@ -864,12 +983,6 @@ where
 
 \begin{equation*}
     \widetilde{h}_{t+1}  \equiv \left(\mathrm{E}_{t+1}-\mathrm{E}_t\right) \sum_{j=1}^{\infty} \rho^j r_{w, t+1+j}
-\end{equation*}
-
-and
-
-\begin{equation*}
-    \psi = 1
 \end{equation*}
 
 \end{frame}
@@ -980,7 +1093,7 @@ and
 % ============================================================================
 \section{Step 3: ICAPM Goes to Data}
 
-\begin{frame}{Reading the Two-Beta ICAPM as an Empirical Recipe}
+\begin{frame}[shrink=8]{Reading the Two-Beta ICAPM as an Empirical Recipe}
 	\textbf{From Section 2:}
 	\begin{equation*}
 		E_t[r_{i,t+1}] - r_{f,t+1} + \tfrac{\sigma_i^2}{2} = \gamma\,\sigma_{iw} + (\gamma-1)\,\sigma_{ih}.
@@ -1343,10 +1456,10 @@ and
 
 \begin{frame}{\href{https://www.sciencedirect.com/science/article/pii/S0378426624000372}{\textcolor{blue}{Cheng, Guo and Shi(2024)}}: Empirical Specifications}
 
-	$MV3_{t}=\omega_{0}+\mathbf{\beta^{\prime}Z_{t-1}}+\zeta_{t}$
+		$MV3_{t}=\omega_{0}+\beta^{\prime}\mathbf{Z}_{t-1}+\zeta_{t}$
 	\\
 	\vspace{.1in}
-	$ERET{t}=\phi+\gamma(\omega_{0}+\mathbf{\beta^{\prime}Z_{t-1}})+\mathbf{\lambda^{\prime}X_{t-1}}+\epsilon_{t}$
+		$ERET_{t}=\phi+\gamma(\omega_{0}+\beta^{\prime}\mathbf{Z}_{t-1})+\lambda^{\prime}\mathbf{X}_{t-1}+\epsilon_{t}$
 
 	\vspace{.2in}
 	Single-factor model
@@ -1378,7 +1491,7 @@ and
 			\toprule
 			&$MV3$&$TO$&$ILL\_PS$&$R^2$& $ \gamma $ & $MB$ & $INFL$ & $ERET$  &$R^2$  &OIR(p-value)\\
 			\hline \\[-2ex]
-			&\multicolumn{4}{c}{$MV3_{t}=\omega_{0}+\mathbf{\beta^{\prime}Z_{t-1}}+\zeta_{t}$}& \multicolumn{5}{c}{$ret_{t}=\phi+\gamma(\omega_{0}+\mathbf{\beta^{\prime}Z_{t-1}})+\mathbf{\lambda^{\prime}X_{t-1}}+\epsilon_{t}$}\\
+				&\multicolumn{4}{c}{$MV3_{t}=\omega_{0}+\beta^{\prime}\mathbf{Z}_{t-1}+\zeta_{t}$}& \multicolumn{5}{c}{$ret_{t}=\phi+\gamma(\omega_{0}+\beta^{\prime}\mathbf{Z}_{t-1})+\lambda^{\prime}\mathbf{X}_{t-1}+\epsilon_{t}$}\\
 			
 			\cmidrule(r){2-5}  \cmidrule(r){6-10}
 			8&0.061&$ \textbf{0.014}^{***} $&$ \textbf{7.789}^{***} $&0.303& $ \textbf{4.489}^{***} $ &  & & & 0.143 & 0.366     \\
@@ -1438,7 +1551,7 @@ and
 % ============================================================================
 % Closing summary: how 08-09 fit into the asset-pricing curriculum
 % ============================================================================
-\begin{frame}{Closing the ICAPM Arc}
+\begin{frame}[shrink=20]{Closing the ICAPM Arc}
 	\textbf{Where 08--09 sit in the bigger picture}:
 	\vspace{4pt}
 	\begin{center}

@@ -1,0 +1,936 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+
+\mode<presentation>{
+	\usetheme{Pittsburgh}
+	\usecolortheme{beaver}
+}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{amsmath,bm}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{unicode-math}
+\usepackage{ragged2e}
+\usepackage{adjustbox}
+\usepackage{xcolor}
+
+\setsansfont{Calibri}[
+	Path=../Font/,
+	Scale=0.9,
+	Extension=.ttf,
+	UprightFont=*-Regular,
+	BoldFont=*-Bold,
+	ItalicFont=*-Italic,
+	BoldItalicFont=*-BoldItalic
+]
+\setmathfont{Libertinus Math}
+\setCJKmainfont{Songti SC}
+\setCJKsansfont{Songti SC}
+
+\justifying\let\raggedright\justifying
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=8mm,text margin right=8mm}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamercolor{postit}{fg=black,bg=yellow!18}
+\setbeamercolor{note}{fg=black,bg=gray!8}
+\setbeamercolor{alerted text}{fg=red!70!black}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\papermax}{Nartea, Kong, and Wu (2017)}
+\newcommand{\paperivol}{Gu, Kang, and Xu (2018)}
+\newcommand{\tabnote}[1]{\vspace{2pt}{\scriptsize\textcolor{gray!70!black}{#1}}}
+\newcommand{\tighttable}{\scriptsize\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}}
+\newcommand{\tinytab}{\tiny\setlength{\tabcolsep}{2.2pt}\renewcommand{\arraystretch}{1.08}}
+
+\title[China Anomaly]{\textbf{中国典型 anomaly 的自然研究文章}}
+\subtitle{Extreme Returns, IVOL, and Limits of Arbitrage in China}
+\author[Cheng Hang]{Cheng Hang}
+\institute[DUFE]{School of Fintech\\Dongbei University of Finance \& Economics}
+\date{\today}
+
+\AtBeginSection[]
+{
+	\begin{frame}{Content}
+		\small
+		\tableofcontents[currentsection,sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+		\addtocounter{framenumber}{-1}
+	\end{frame}
+}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}{为什么把这两篇放在一起读}
+	这两篇文章的可读之处，不在于又报告了一个中国异象，而在于把中国市场当成研究经典 anomaly 机制的天然实验场：
+	\begin{itemize}
+		\item 中国股市散户成交占比高、投机色彩浓，便于观察彩票偏好如何进入横截面定价。
+		\item 涨跌停、卖空限制、两融标的、股指期货覆盖不足等制度摩擦同时存在，便于观察套利限制如何放大 mispricing。
+		\item 两篇文章背后都在追问同一个问题：经典 anomaly 究竟是风险补偿，是投资者偏好，还是价格没法被及时纠正？
+		\item 怎么样讲好中国Story？
+	\end{itemize}
+	\vspace{4pt}
+	\begin{beamercolorbox}[sep=0.45em,wd=\linewidth,rounded=true]{postit}
+		评价这类文章好不好，要看\textbf{中国的制度细节是否真正参与了识别}，而不是把美国 anomaly 换个样本重跑一遍。
+	\end{beamercolorbox}
+
+
+\end{frame}
+
+\begin{frame}{两篇文献的分工}
+	\tighttable
+	\begin{tabularx}{\textwidth}{lYY}
+		\toprule
+		文章 & 研究的 anomaly & 中国市场提供的识别条件 \\
+		\midrule
+		\papermax & 上月最大日收益 MAX 越高，下月收益越低 & 如果投资者偏好 lottery-like 股票，高 MAX 股票会被追捧并短期高估；中国散户主导的交易环境是天然检验场。\\
+		\paperivol & 特质波动 IVOL 越高，未来收益越低 & 如果高 IVOL 代表被高估但难以套利，那么套利越受限，负 IVOL premium 应越强、越持久；中国的交易约束恰好提供了机制变量。\\
+		\bottomrule
+	\end{tabularx}
+	\vspace{6pt}
+	\begin{center}
+		\small 可以这样定位：MAX 抓的是极端收益意义上的 lottery payoff；IVOL 抓的是难以套利的 mispricing。
+	\end{center}
+\end{frame}
+
+\begin{frame}{怎么看后面的表}
+	\begin{itemize}
+		\item 后面每张表都对应三个问题：\textbf{这张表想检验什么？关键数字是多少？它在多大程度上支持文章主张？}
+		\item 排序表不必照搬全部组合收益，盯住极端组的 spread 即可：MAX 表看 HMAX--LMAX，IVOL 表看 P5--P1 或 D10--D1。
+		\item 技术上反复出现的是三件事：portfolio sorting、Fama--MacBeth 回归，以及风险调整后的 alpha。
+	\end{itemize}
+	\vspace{4pt}
+	\begin{beamercolorbox}[sep=0.45em,wd=\linewidth,rounded=true]{note}
+		读 anomaly 实证文章的顺序：先看极端组 spread 是不是稳定；再看加入控制变量后，spread 或回归斜率是否还显著。
+	\end{beamercolorbox}
+\end{frame}
+
+\section{Nartea et al. (2017): MAX Effect}
+
+\begin{frame}{文献一：先用一句话概括}
+	\textbf{\papermax, Journal of Banking \& Finance, 2017}\\
+	\textit{Do extreme returns matter in emerging markets? Evidence from the Chinese stock market}
+	\vspace{6pt}
+	\begin{itemize}
+		\item 问题：美国和欧洲都报告了高 MAX 股票未来收益更低的现象，中国是否也存在？
+		\item 思路：高 MAX 股票具有 lottery-like payoff，偏好彩票特征的投资者会把价格抬高，后续收益自然偏低。
+		\item 结论：中国确实存在显著的负 MAX 效应；并且在中国，MAX 没有把 IVOL 效应吃掉，两者各自独立存在。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{数据和样本}
+	\begin{itemize}
+		\item 数据：日频与月频收益、会计数据均来自 CSMAR。
+		\item 样本：沪深 A 股，1997:01--2014:12；公司数由 515 增长到 2353，平均每月 1383 家，共 298{,}710 个 firm-month observations。
+		\item 剔除：保留已退市股票，避免 survivorship bias。
+		\item 处理：剔除月收益超过 200\% 的样本；IPO 首日收益不进入日频计算；日收益超出涨跌停实际范围的观测做删除或合并处理。
+	\end{itemize}
+	\tabnote{这些处理基本都是围绕涨跌停制度展开的，否则 MAX 会被价格限制机械截断，识别不出真正的极端收益。}
+\end{frame}
+
+\begin{frame}[c]{主要变量}
+	\tighttable
+	\begin{tabularx}{\textwidth}{lY}
+		\toprule
+		变量 & 定义 \\
+		\midrule
+		MAX & 上一自然月内最大单日收益；若连续触及涨跌停，则将连续涨跌停日的收益加总，近似无价格限制时的极端收益。\\
+		Size & 月末市值的对数。\\
+		BM & 第 $t-6$ 期的 book-to-market ratio。\\
+		Momentum & $t-12$ 至 $t-2$ 的 11 个月累计收益。\\
+		REV & 第 $t-1$ 期月收益，用来控制短期反转。\\
+		SSKEW / ISKEW & 参照 Harvey and Siddique 的系统偏度与特质偏度。\\
+		IV & 上月日收益对 FF3 回归后残差的标准差。\\
+		ILLIQ & Amihud 非流动性指标。\\
+		BETA & 对当期、滞后、领先市场收益回归得到的三个系数之和。\\
+		\bottomrule
+	\end{tabularx}
+\end{frame}
+
+\begin{frame}{实证设计}
+	\begin{enumerate}
+		\item 单变量排序：每月按 MAX 分五组，比较 High MAX 与 Low MAX 在下个月的收益以及 FF3 alpha。
+		\item 双重排序：先按控制变量分三组，再在组内按 MAX 分五组，最后在 MAX 维度上做平均；控制变量包括 size、BM、momentum、REV、CP、skewness、IV、ILLIQ、beta。
+		\item Fama--MacBeth 回归：用滞后一期变量预测当月收益，并依次给出二变量和多变量规格。
+		\item 持有期延长：把持有期改为 3 个月、6 个月，看价格回归是否存在较长滞后。
+	\end{enumerate}
+	\vspace{4pt}
+	\[
+	R_{i,t} = \beta_{0,t-1}+\beta_{1,t-1}MAX_{i,t-1}+\cdots+\beta_{11,t-1}BETA_{i,t-1}+\varepsilon_{i,t-1}.
+	\]
+\end{frame}
+
+\begin{frame}{主要结果：MAX 与 IVOL 在中国并存}
+	\begin{itemize}
+		\item High MAX 组合下月收益显著低于 Low MAX 组合，1 个月、6 个月持有期都成立。
+		\item 加入大量控制变量后，MAX 的负斜率依然显著；仅当把 IV 单独放进回归时，MAX 在部分规格里会被削弱。
+		\item 反过来，把 MAX 放进 IVOL 的回归里，IVOL 的负斜率也仍然存在，说明 MAX 不能简单替代 IVOL。
+		\item 这一结论与 Bali et al. (2011) 的美国证据不同：在美国，MAX 被视为 ``真效应''、IVOL 更像它的代理；在中国，两者更像两个相互独立的异象。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 1：MAX 单变量组合}
+	\tighttable
+	\begin{tabular}{lrrrr}
+		\toprule
+		& EW return & EW FF3 alpha & VW return & VW FF3 alpha \\
+		\midrule
+		Low MAX & 0.0183 & 0.0029 & 0.0134 & 0.0024 \\
+		High MAX & 0.0072 & -0.0085 & 0.0074 & -0.0045 \\
+		High--Low & -0.0111 & -0.0114 & -0.0060 & -0.0070 \\
+		t-stat & -6.21 & -6.26 & -2.30 & -2.57 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{6pt}
+	\begin{itemize}
+		\item 高 MAX 组下月跑输显著，扣除 FF3 之后仍然成立。
+		\item 等权 spread 比市值加权更大，提示这一异象在小股票中更强；不过市值加权仍显著，所以并不是纯粹的 microcap 现象。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 2：高 MAX 股票长什么样}
+	\tinytab
+	\begin{tabular}{lrrrrrrrrrr}
+		\toprule
+		& Size & BM & Mom & REV & CP & SSKEW & ISKEW & IV & ILLIQ & BETA\\
+		\midrule
+		Low MAX & 14.313 & 0.443 & 0.180 & -0.032 & 10.042 & -1.517 & 0.117 & 0.012 & 0.0026 & 0.937\\
+		High MAX & 14.175 & 0.391 & 0.284 & 0.079 & 11.193 & -1.961 & 0.925 & 0.025 & 0.0025 & 1.040\\
+		High--Low & -0.138 & -0.052 & 0.104 & 0.111 & 1.151 & -0.444 & 0.808 & 0.013 & -0.0002 & 0.103\\
+		t-stat & -19.31 & -38.94 & 27.77 & 113.19 & 32.97 & -12.98 & 155.46 & 269.69 & -6.27 & 58.61\\
+		\bottomrule
+	\end{tabular}
+	\vspace{5pt}
+	\begin{itemize}
+		\item 高 MAX 股票市值更小、BM 更低、过去收益更强、IV 更高、特质偏度更高、beta 也更高。
+		\item 这个画像非常像典型的 lottery-like 股票；也提醒我们：后面的回归必须同时控制 IV 和偏度。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 3：双重排序控制后 MAX alpha}
+	\tinytab
+	\begin{tabular}{lrrrr}
+		\toprule
+		控制变量 & EW HMAX--LMAX & t & VW HMAX--LMAX & t \\
+		\midrule
+		Size & -0.0133 & -7.18 & -0.0120 & -6.09\\
+		BM & -0.0160 & -8.34 & -0.0124 & -4.92\\
+		Momentum & -0.0129 & -6.61 & -0.0096 & -3.93\\
+		REV & -0.0139 & -6.46 & -0.0094 & -3.56\\
+		CP & -0.0125 & -6.87 & -0.0093 & -3.64\\
+		SSKEW & -0.0135 & -6.39 & -0.0095 & -3.95\\
+		ISKEW & -0.0105 & -4.29 & -0.0048 & -1.49\\
+		IV & -0.0028 & -0.92 & -0.0013 & -0.37\\
+		ILLIQ & -0.0126 & -6.85 & -0.0096 & -4.33\\
+		BETA & -0.0124 & -5.87 & -0.0077 & -2.81\\
+		\bottomrule
+	\end{tabular}
+	\vspace{4pt}
+	\begin{itemize}
+		\item 除了控制 IV、以及部分 ISKEW 规格之外，MAX 的 spread 都显著为负。
+		\item 真正的挑战来自 IV：高 MAX 与高 IV 高度相关，所以在后面的回归里必须同时放入两者。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 4：单变量 Fama--MacBeth}
+	\tighttable
+	\begin{tabular}{lrrrrrrrrrrr}
+		\toprule
+		& MAX & Size & BM & Mom & REV & CP & SSKEW & ISKEW & IV & ILLIQ & BETA\\
+		\midrule
+		Coef. & -0.155 & -0.002 & 0.012 & 0.000 & -0.049 & 0.000 & 0.001 & -0.004 & -0.948 & 10.068 & -0.003\\
+		t & -7.21 & -1.37 & 2.33 & 0.06 & -4.64 & -1.19 & 1.96 & -4.03 & -9.22 & 2.01 & -0.58\\
+		\bottomrule
+	\end{tabular}
+	\vspace{6pt}
+	\begin{itemize}
+		\item 单独放进回归时，MAX 的系数显著为负；REV、ISKEW、IV 同样为负，BM 和 ILLIQ 为正。
+		\item 这张表只告诉我们每个变量\emph{单独}能解释什么，还不能作为机制判断的依据。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 5：MAX 加控制变量后的 Fama--MacBeth}
+	\tinytab
+	\begin{tabular}{lrr}
+		\toprule
+		规格 & MAX coefficient & t-stat \\
+		\midrule
+		MAX + Size & -0.161 & -8.42\\
+		MAX + BM & -0.157 & -8.34\\
+		MAX + Momentum & -0.151 & -7.70\\
+		MAX + REV & -0.145 & -5.76\\
+		MAX + CP & -0.161 & -8.17\\
+		MAX + SSKEW & -0.158 & -8.01\\
+		MAX + ISKEW & -0.130 & -5.50\\
+		MAX + IV & 0.004 & 0.12\\
+		MAX + ILLIQ & -0.149 & -7.02\\
+		MAX + BETA & -0.155 & -7.10\\
+		All controls & -0.072 & -3.72\\
+		\bottomrule
+	\end{tabular}
+	\hfill
+	\begin{minipage}{0.44\textwidth}
+		\small
+		\begin{itemize}
+			\item 单独和 IV 放在一起时，MAX 失去显著性。
+			\item 把所有变量一起放进去之后，MAX 重新显著为负，说明它不能被常规特征完全吸收。
+			\item 同一规格里 IV = -0.182，t = -3.07，可见 MAX 和 IV 是并存关系，而不是互相替代。
+		\end{itemize}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}{Table 6：6 个月持有期的 MAX 组合}
+	\tighttable
+	\begin{tabular}{lrrrr}
+		\toprule
+		& EW return & EW FF3 alpha & VW return & VW FF3 alpha\\
+		\midrule
+		Low MAX & 0.0160 & 0.0020 & 0.0122 & 0.0028\\
+		High MAX & 0.0102 & -0.0048 & 0.0069 & -0.0040\\
+		High--Low & -0.0058 & -0.0067 & -0.0052 & -0.0068\\
+		t-stat & -4.72 & -5.85 & -2.93 & -4.43\\
+		\bottomrule
+	\end{tabular}
+	\vspace{6pt}
+	\begin{itemize}
+		\item 负 MAX 效应延续到 6 个月，提示价格向基本面收敛存在较长的滞后。
+		\item 中国卖空受限的现实，可能让高估状态的纠偏过程更慢。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 7：6 个月持有期双重排序}
+	\tinytab
+	\begin{tabular}{lrrrr}
+		\toprule
+		控制变量 & EW HMAX--LMAX & t & VW HMAX--LMAX & t\\
+		\midrule
+		Size & -0.0062 & -5.85 & -0.0061 & -5.43\\
+		BM & -0.0081 & -7.41 & -0.0084 & -5.57\\
+		Momentum & -0.0059 & -5.71 & -0.0060 & -4.32\\
+		REV & -0.0075 & -6.11 & -0.0065 & -4.22\\
+		CP & -0.0061 & -6.16 & -0.0062 & -4.76\\
+		SSKEW & -0.0059 & -5.39 & -0.0057 & -4.01\\
+		ISKEW & -0.0052 & -3.80 & -0.0045 & -2.55\\
+		IV & -0.0018 & -0.84 & -0.0006 & -0.25\\
+		ILLIQ & -0.0058 & -5.51 & -0.0048 & -4.11\\
+		BETA & -0.0058 & -5.23 & -0.0046 & -3.34\\
+		\bottomrule
+	\end{tabular}
+	\vspace{4pt}
+	\begin{itemize}
+		\item 控制其他变量后，6 个月持有期下的 MAX spread 同样显著为负。
+		\item 再次出现的现象是：只有控制 IV 时效应才被削弱。这就把 MAX 与 IVOL 的关系拉成全文的关键张力。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 8--9：6 个月 Fama--MacBeth}
+	\begin{columns}[t]
+		\begin{column}{0.48\textwidth}
+			\textbf{Table 8：单变量}
+			\scriptsize
+			\begin{tabular}{lrr}
+				\toprule
+				变量 & Coef. & t\\
+				\midrule
+				MAX & -0.581 & -8.01\\
+				Size & -0.020 & -2.56\\
+				BM & 0.049 & 2.47\\
+				REV & -0.100 & -3.17\\
+				ISKEW & -0.008 & -4.27\\
+				IV & -2.539 & -7.12\\
+				ILLIQ & 60.299 & 4.09\\
+				\bottomrule
+			\end{tabular}
+		\end{column}
+		\begin{column}{0.52\textwidth}
+			\textbf{Table 9：MAX 加控制变量}
+			\scriptsize
+			\begin{tabular}{lrr}
+				\toprule
+				规格 & MAX coefficient & t\\
+				\midrule
+				+ Size & -0.556 & -9.09\\
+				+ BM & -0.535 & -8.68\\
+				+ Momentum & -0.523 & -8.73\\
+				+ REV & -0.587 & -8.39\\
+				+ CP & -0.514 & -8.79\\
+				+ SSKEW & -0.554 & -7.93\\
+				+ ISKEW & -0.561 & -6.41\\
+				+ IV & -0.292 & -3.76\\
+				All controls & -0.155 & -2.16\\
+				\bottomrule
+			\end{tabular}
+		\end{column}
+	\end{columns}
+	\par\vspace{5pt}
+	\small 6 个月持有期下的回归进一步印证了主结论：MAX 和 IV 都保留独立的解释力。
+\end{frame}
+
+\begin{frame}{Table 10：规模组和子样本}
+	\tinytab
+	\begin{tabular}{lrrrrr}
+		\toprule
+		变量 & Small & Medium & Big & 1997--2004 & 2005--2014\\
+		\midrule
+		MAX & -0.094 & -0.111 & -0.270*** & -0.092 & -0.176**\\
+		Size & -0.028** & -0.026*** & -0.014** & -0.017 & -0.017**\\
+		BM & 0.069*** & 0.035** & 0.042** & 0.097*** & 0.028*\\
+		Momentum & -0.009 & 0.001 & 0.017 & 0.084*** & -0.023\\
+		REV & -0.007 & 0.014 & 0.035 & 0.091*** & -0.014\\
+		CP & -0.007** & -0.002 & 0.000 & -0.001 & -0.001\\
+		SSKEW & 0.004*** & 0.004*** & 0.007*** & 0.004** & 0.005**\\
+		ISKEW & -0.003 & 0.000 & -0.002 & -0.006*** & -0.001\\
+		IV & -1.712*** & -2.033*** & -1.055*** & -2.299*** & -1.387***\\
+		ILLIQ & 28.981*** & 34.390*** & 35.649** & 1.375 & 50.158***\\
+		BETA & 0.014 & -0.003 & -0.013 & 0.005 & -0.012\\
+		\bottomrule
+	\end{tabular}
+	\vspace{4pt}
+	\begin{itemize}
+		\item MAX 在大市值组和 2005--2014 子样本中更显著。
+		\item 作者的解释是：A 股中大公司往往股价绝对水平较低，更容易成为散户彩票式交易的对象。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{附录 Table 1A--1B：FF3 因子的描述统计}
+	\begin{columns}[t]
+		\begin{column}{0.52\textwidth}
+			\textbf{Table 1A：FF3 因子描述统计}
+			\scriptsize
+			\begin{tabular}{lrrr}
+				\toprule
+				& Market & SMB & HML\\
+				\midrule
+				Average return & 0.93\% & 0.82\% & 0.19\%\\
+				t-stat & 1.59 & 2.98 & 0.95\\
+				Minimum & -26.85\% & -17.30\% & -11.81\%\\
+				Median & 0.73\% & 1.12\% & 0.21\%\\
+				Maximum & 36.29\% & 10.08\% & 14.84\%\\
+				Skewness & 0.33 & -0.55 & -0.11\\
+				Kurtosis & 4.67 & 4.51 & 7.27\\
+				\bottomrule
+			\end{tabular}
+		\end{column}
+		\begin{column}{0.45\textwidth}
+			\textbf{Table 1B：FF3 因子相关矩阵}
+			\scriptsize
+			\begin{tabular}{lrrr}
+				\toprule
+				& Market & SMB & HML\\
+				\midrule
+				Market & 1.00 & 0.07 & 0.03\\
+				SMB & 0.19 & 1.00 & -0.24\\
+				HML & 0.04 & -0.25 & 1.00\\
+				\bottomrule
+			\end{tabular}
+			\par\vspace{4pt}
+			\scriptsize 上三角为 Pearson，下三角为 Spearman。
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Gu et al. (2018): IVOL and Limits of Arbitrage}
+
+\begin{frame}{文献二：先用一句话概括}
+	\textbf{\paperivol, Journal of Banking \& Finance, 2018}\\
+	\textit{Limits of arbitrage and idiosyncratic volatility: Evidence from China stock market}
+	\vspace{6pt}
+	\begin{itemize}
+		\item 问题：为什么高 IVOL 股票未来收益更低？中国市场的套利限制会不会把这一负 premium 进一步放大？
+		\item 思路：构造一个综合的 limits-of-arbitrage 指数，把中国特有的交易约束与一般市场摩擦放在同一指标内。
+		\item 结论：在套利受限更严重的股票中，负 IVOL premium 更强、也更持久；短期反转、彩票偏好和套利不对称都不足以单独解释这一现象。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{样本和变量}
+	\begin{itemize}
+		\item 样本：沪深 A 股，2002:01--2012:12；收益与会计数据来自 CSMAR，FF3 因子来自 RESSET。
+		\item 剔除：金融行业公司和 ST 公司。
+		\item 会计数据匹配：第 $t-1$ 财年的会计变量，匹配到 $t$ 年 7 月至 $t+1$ 年 6 月的收益区间。
+		\item IVOL：在每个月内，用日度超额收益对 FF3 因子做回归，取残差标准差。
+		\item MAX5：上一月日收益最高的 5 天的平均收益，作为 lottery-like payoff 的代理。
+	\end{itemize}
+	\[
+	R_{i,d}-r_{f,d}=\alpha_i+\beta_i MKT_d+s_i SMB_d+h_i HML_d+\varepsilon_{i,d}.
+	\]
+\end{frame}
+
+\begin{frame}{套利限制指数：六个组件}
+	\tighttable
+	\begin{tabularx}{\textwidth}{lY}
+		\toprule
+		组件 & 经济含义 \\
+		\midrule
+		Price-limit-hitting & 当月是否触及过涨跌停，触及越频繁，价格发现越受阻。\\
+		MTSS availability & 是否不在融资融券标的之内；不能卖空，套利者就难以做空被高估的股票。\\
+		CSI 300 membership & 是否不属于沪深 300 成分股；非成分股更难用股指期货对冲。\\
+		Amihud illiquidity & 非流动性是否高于当月中位数。\\
+		Trading volume & 交易量是否低于或等于中位数。\\
+		Analyst coverage & 分析师覆盖是否低于或等于中位数。\\
+		\bottomrule
+	\end{tabularx}
+	\par\vspace{5pt}
+	\small 每个组件识别到高套利限制时取 1；综合指数为可用组件的平均值，指数越大，套利限制越严重。
+\end{frame}
+
+\begin{frame}{Table 1：描述统计和相关性}
+	\begin{columns}[t]
+		\begin{column}{0.48\textwidth}
+			\textbf{Panel A：描述统计}
+			\scriptsize
+			\begin{tabular}{lrrrrr}
+				\toprule
+				& Mean & SD & Q1 & Median & Q3\\
+				\midrule
+				RET$_{t+1}$ & 1.34 & 9.26 & -4.69 & 0.22 & 6.18\\
+				IVOL$_t$ & 1.79 & 0.71 & 1.28 & 1.67 & 2.18\\
+				lnBM$_t$ & -1.27 & 0.96 & -1.40 & -1.15 & -0.69\\
+				lnMV$_t$ & 0.08 & 0.54 & -0.39 & 0.02 & 0.80\\
+				TURN$_t$ & 2.79 & 1.68 & 1.69 & 2.43 & 3.46\\
+				MAX5$_t$ & 3.39 & 1.20 & 2.58 & 3.19 & 4.00\\
+				\bottomrule
+			\end{tabular}
+		\end{column}
+		\begin{column}{0.52\textwidth}
+			\textbf{Panel B：关键相关性}
+			\scriptsize
+			\begin{itemize}
+				\item RET$_{t+1}$ 与 IVOL：Pearson -0.07，Spearman -0.10。
+				\item RET$_{t+1}$ 与 MAX5：Pearson -0.06，Spearman -0.08。
+				\item IVOL 与 MAX5：Pearson 0.76，Spearman 0.72。
+				\item TURN 与 IVOL：0.29；TURN 与 MAX5：0.30。
+			\end{itemize}
+			\par\vspace{4pt}
+			\small 一个重要信息：IVOL 与 MAX5 高度相关，后面任何关于 IVOL 的检验都必须把 MAX5 一并控制。
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Table 2：单变量 IVOL 组合}
+	\tighttable
+	\begin{tabular}{lrrrr}
+		\toprule
+		& VW raw & VW FF3 adj. & EW raw & EW FF3 adj.\\
+		\midrule
+		Quintile P5--P1 & -1.02 & -1.09 & -1.79 & -1.76\\
+		t-stat & -2.60 & -3.14 & -7.63 & -8.05\\
+		Decile D10--D1 & -1.32 & -1.40 & -2.21 & -2.20\\
+		t-stat & -2.77 & -3.37 & -7.51 & -7.84\\
+		\bottomrule
+	\end{tabular}
+	\vspace{6pt}
+	\begin{itemize}
+		\item 高 IVOL 股票下月收益显著低于低 IVOL 股票。
+		\item 在中国，IVOL premium 的经济量级相当可观：等权风险调整后的 D10--D1 已经达到每月 -2.20\%。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 3：套利限制越强，IVOL premium 越强}
+	\tinytab
+	\begin{tabular}{lrrrrrrrr}
+		\toprule
+		& \multicolumn{2}{c}{VW raw} & \multicolumn{2}{c}{VW FF3} & \multicolumn{2}{c}{EW raw} & \multicolumn{2}{c}{EW FF3}\\
+		& P5--P1 & t & P5--P1 & t & P5--P1 & t & P5--P1 & t\\
+		\midrule
+		Low LA & -0.43 & -0.99 & -0.47 & -1.19 & -0.99 & -3.15 & -0.95 & -3.40\\
+		Medium LA & -1.65 & -4.70 & -1.53 & -4.66 & -2.09 & -7.62 & -2.01 & -7.66\\
+		High LA & -2.35 & -8.52 & -2.18 & -8.42 & -2.40 & -9.33 & -2.29 & -9.13\\
+		High--Low & -1.92 & -4.31 & -1.71 & -4.03 & -1.41 & -4.34 & -1.34 & -4.25\\
+		\bottomrule
+	\end{tabular}
+	\vspace{5pt}
+	\begin{itemize}
+		\item 这是全文的关键表：在低套利限制组里，市值加权 IVOL premium 几乎不显著；进入高套利限制组后，则强烈显著。
+		\item 跨高低套利限制组的 spread 差异（High--Low）同样显著为负，说明套利限制确实在放大 IVOL anomaly。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Table 4：三组件指数的稳健性}
+	\tinytab
+	\begin{tabular}{lrrrr}
+		\toprule
+		& \multicolumn{2}{c}{Panel A: price limit + CSI + illiquidity} & \multicolumn{2}{c}{Panel B: MTSS + volume + coverage}\\
+		& VW FF3 P5--P1 & EW FF3 P5--P1 & VW FF3 P5--P1 & EW FF3 P5--P1\\
+		\midrule
+		Low LA & -0.75 & -1.32 & -0.69 & -1.00\\
+		Medium LA & -1.14 & -1.98 & -1.45 & -1.90\\
+		High LA & -1.98 & -2.32 & -2.01 & -2.18\\
+		High--Low & -1.23 & -1.00 & -1.31 & -1.18\\
+		t-stat High--Low & -3.09 & -3.46 & -3.16 & -3.62\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{5pt}
+	\small 无论换用哪三个组件来构造 LA 指数，高套利限制组的负 IVOL premium 都会更强，结论稳健。
+\end{frame}
+
+\begin{frame}{Table 5：去掉任一组件后的稳健性}
+	\tinytab
+	\begin{tabular}{lrrrrrr}
+		\toprule
+		去掉的组件 & Price limit & MTSS & CSI & Illiq. & Volume & Coverage\\
+		\midrule
+		VW raw High--Low & -1.31 & -1.92 & -1.92 & -1.96 & -1.62 & -1.91\\
+		t & -3.02 & -4.32 & -4.29 & -4.69 & -3.99 & -4.63\\
+		VW FF3 High--Low & -1.17 & -1.71 & -1.71 & -1.78 & -1.44 & -1.66\\
+		t & -2.79 & -4.03 & -4.03 & -4.44 & -3.74 & -4.31\\
+		EW raw High--Low & -0.89 & -1.42 & -1.42 & -1.71 & -1.15 & -1.41\\
+		t & -2.77 & -4.35 & -4.35 & -5.50 & -3.94 & -4.40\\
+		EW FF3 High--Low & -0.86 & -1.35 & -1.35 & -1.64 & -1.11 & -1.29\\
+		t & -2.74 & -4.27 & -4.28 & -5.33 & -3.86 & -4.13\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{5pt}
+	\small 任意去掉一个组件后，结果都不会被打掉；综合 LA 指数的结论并非由某一个变量单独驱动。
+\end{frame}
+
+\begin{frame}{Table 6：IVOL premium 的持续性}
+	\tinytab
+	\begin{tabular}{lrrrrrr}
+		\toprule
+		& t+1 & t+2 & t+3 & t+4 & t+5 & t+6\\
+		\midrule
+		\multicolumn{7}{l}{Raw return P5--P1}\\
+		Low LA & -0.43 & -0.67 & -0.88 & -1.26 & -1.16 & -1.03\\
+		Medium LA & -1.65 & -2.54 & -2.83 & -3.73 & -3.99 & -4.36\\
+		High LA & -2.35 & -3.37 & -3.96 & -4.40 & -4.63 & -4.96\\
+		High--Low & -1.92 & -2.69 & -3.08 & -3.14 & -3.47 & -3.93\\
+		\midrule
+		\multicolumn{7}{l}{FF3 adjusted P5--P1}\\
+		Low LA & -0.47 & -0.60 & -0.64 & -0.71 & -0.64 & -0.85\\
+		Medium LA & -1.53 & -2.22 & -2.27 & -2.93 & -3.01 & -3.53\\
+		High LA & -2.18 & -2.98 & -3.46 & -3.98 & -3.93 & -4.19\\
+		High--Low & -1.71 & -2.38 & -2.82 & -3.27 & -3.29 & -3.34\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{5pt}
+	\small 高套利限制组的负 IVOL premium 不仅更大，还在之后 6 个月里继续累积，没有出现明显反转。
+\end{frame}
+
+\begin{frame}{Table 7：Fama--MacBeth 控制套利限制}
+	\tinytab
+	\begin{tabular}{lrrr}
+		\toprule
+		变量 & (1) & (2) & (3)\\
+		\midrule
+		IVOL$^{ran}$ & -1.08*** & & -0.69\\
+		& (-2.87) & & (-1.65)\\
+		IVOL$^{ran}\times$Low LA & & -0.69 & \\
+		& & (-1.65) & \\
+		IVOL$^{ran}\times$Medium LA & & -1.57*** & -0.88**\\
+		& & (-3.55) & (-2.29)\\
+		IVOL$^{ran}\times$High LA & & -2.07*** & -1.37***\\
+		& & (-4.90) & (-2.82)\\
+		XRET$^{ran}$ & -0.99** & -0.96** & -0.96**\\
+		lnMV$^{ran}$ & -0.88 & -0.84 & -0.84\\
+		lnBM$^{ran}$ & 0.36 & 0.37 & 0.37\\
+		TURN$^{ran}$ & -0.70* & -0.72* & -0.72*\\
+		MAX5$^{ran}$ & 0.17 & 0.12 & 0.12\\
+		$R^2$ & 14.9\% & 15.3\% & 15.3\%\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{4pt}
+	\small Fama--MacBeth 回归在系数层面重复了 Table 3 的结论：IVOL 的负系数在高 LA 组最强，并且在控制 MAX5 后依然成立。
+\end{frame}
+
+\begin{frame}{Table 8：短期反转不能解释 IVOL premium}
+	\begin{columns}[t]
+		\begin{column}{0.48\textwidth}
+			\textbf{Panel A：时间序列 alpha}
+			\scriptsize
+			\begin{tabular}{lrrrr}
+				\toprule
+				& FF3 & +UMD & +STREV & +UMD+STREV\\
+				\midrule
+				Constant & -1.09*** & -1.19*** & -0.87** & -1.05***\\
+				t & -2.82 & -3.32 & -2.13 & -2.78\\
+				$R^2$ & 23.4\% & 28.7\% & 25.3\% & 29.0\%\\
+				\bottomrule
+			\end{tabular}
+		\end{column}
+		\begin{column}{0.52\textwidth}
+			\textbf{Panel B：五因子调整后 P5--P1}
+			\scriptsize
+			\begin{tabular}{lrrrr}
+				\toprule
+				& VW & t & EW & t\\
+				\midrule
+				Low LA & -0.41 & -1.00 & -0.98 & -3.42\\
+				Medium LA & -1.58 & -4.48 & -2.08 & -7.49\\
+				High LA & -2.28 & -8.24 & -2.29 & -8.57\\
+				High--Low & -1.87 & -4.34 & -1.31 & -4.13\\
+				\bottomrule
+			\end{tabular}
+		\end{column}
+	\end{columns}
+	\par\vspace{5pt}
+	\small 即便在 FF3 之外再加入动量和短期反转因子，主结论依然没有消失。
+\end{frame}
+
+\begin{frame}{Table 9：IVOL 与 MAX5 谁主导？}
+	\tighttable
+	\begin{tabular}{lrrrr}
+		\toprule
+		& EW raw & EW FF3 & VW raw & VW FF3\\
+		\midrule
+		\multicolumn{5}{l}{Panel A: sorting by IVOL}\\
+		One-way D10--D1 & -2.21 & -2.20 & -1.32 & -1.40\\
+		After controlling MAX5 & -1.44 & -1.35 & -0.97 & -0.90\\
+		t-stat controlled & -4.77 & -4.70 & -2.92 & -3.00\\
+		\midrule
+		\multicolumn{5}{l}{Panel B: sorting by MAX5}\\
+		One-way D10--D1 & -1.59 & -1.70 & -0.95 & -1.16\\
+		After controlling IVOL & 0.16 & 0.03 & 0.17 & 0.00\\
+		t-stat controlled & 0.46 & 0.08 & 0.41 & -0.01\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{5pt}
+	\small 控制 MAX5 后，IVOL 仍然显著；反过来控制 IVOL 后，MAX5 几乎完全消失。Gu et al. 据此认为 IVOL 才是更基础的定价变量。
+\end{frame}
+
+\begin{frame}{Table 10：控制 MAX5 后，LA--IVOL 仍成立}
+	\tinytab
+	\begin{tabular}{lrrrr}
+		\toprule
+		& VW raw & VW FF3 & EW raw & EW FF3\\
+		\midrule
+		\multicolumn{5}{l}{Panel A: LA and IVOL after controlling MAX5, P5--P1}\\
+		Low LA & -0.46 & -0.36 & -0.89 & -0.75\\
+		Medium LA & -1.22 & -1.10 & -1.40 & -1.32\\
+		High LA & -1.57 & -1.43 & -1.47 & -1.37\\
+		High--Low & -1.11 & -1.07 & -0.58 & -0.62\\
+		\midrule
+		\multicolumn{5}{l}{Panel B: LA and MAX5 after controlling IVOL, P5--P1}\\
+		Low LA & -0.12 & -0.29 & 0.12 & -0.11\\
+		Medium LA & -0.16 & -0.29 & -0.11 & -0.22\\
+		High LA & -0.34 & -0.42 & -0.45 & -0.51\\
+		High--Low & -0.22 & -0.13 & -0.57 & -0.40\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{5pt}
+	\small 三重排序进一步说明：lottery-like 收益特征并不能吸收掉 IVOL 与套利限制的交互效应。
+\end{frame}
+
+\begin{frame}{Table 11：套利不对称解释的边界}
+	\tighttable
+	\begin{tabular}{lrrrrrr}
+		\toprule
+		& \multicolumn{2}{c}{Low LA} & \multicolumn{2}{c}{Medium LA} & \multicolumn{2}{c}{High LA}\\
+		& Under & Over & Under & Over & Under & Over\\
+		\midrule
+		Raw P5--P1 & -0.26 & -1.29 & -1.58 & -1.88 & -2.09 & -2.48\\
+		t & -0.58 & -2.75 & -3.58 & -4.70 & -6.14 & -8.43\\
+		Over--Under & \multicolumn{2}{c}{-1.04} & \multicolumn{2}{c}{-0.30} & \multicolumn{2}{c}{-0.39}\\
+		t & \multicolumn{2}{c}{-2.20} & \multicolumn{2}{c}{-0.62} & \multicolumn{2}{c}{-1.21}\\
+		\midrule
+		FF3 P5--P1 & -0.26 & -1.29 & -1.45 & -1.75 & -1.91 & -2.34\\
+		t & -0.64 & -2.75 & -3.53 & -4.55 & -5.77 & -8.29\\
+		Over--Under & \multicolumn{2}{c}{-1.04} & \multicolumn{2}{c}{-0.30} & \multicolumn{2}{c}{-0.42}\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{5pt}
+	\small 在低 LA 组中，结果符合 Stambaugh et al.\ 的套利不对称：负 IVOL premium 主要集中在 overpriced 股票里。但是在高 LA 组中，无论 under- 还是 overpriced 股票，负 IVOL premium 都很显著——单靠套利不对称解释不充分。
+\end{frame}
+
+\begin{frame}{Table 12：回归检验套利不对称}
+	\tinytab
+	\begin{tabular}{lrr}
+		\toprule
+		变量 & (1) & (2)\\
+		\midrule
+		IVOL$^{ran}\times$Underpriced & -0.87* & \\
+		& (-1.96) & \\
+		IVOL$^{ran}\times$Overpriced & -1.60*** & \\
+		& (-3.89) & \\
+		IVOL$^{ran}\times$Low LA$\times$Under & & -0.50\\
+		IVOL$^{ran}\times$Medium LA$\times$Under & & -1.61***\\
+		IVOL$^{ran}\times$High LA$\times$Under & & -2.09***\\
+		IVOL$^{ran}\times$Low LA$\times$Over & & -1.47***\\
+		IVOL$^{ran}\times$Medium LA$\times$Over & & -1.76***\\
+		IVOL$^{ran}\times$High LA$\times$Over & & -2.14***\\
+		XRET$^{ran}$ & -0.99** & -0.96**\\
+		TURN$^{ran}$ & -0.69* & -0.69*\\
+		MAX5$^{ran}$ & 0.20 & 0.18\\
+		$R^2$ & 15.3\% & 16.0\%\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{5pt}
+	\small 在高 LA 组中，无论 underpriced 还是 overpriced 子样本，IVOL 的交互项都显著为负，支持 ``高 LA 股票整体被高估'' 的解释。
+\end{frame}
+
+\begin{frame}{附录 A1--A3：LA 指数的底层质量}
+	\begin{columns}[t]
+		\begin{column}{0.45\textwidth}
+			\textbf{A1：六个组件定义}
+			\scriptsize
+			\begin{itemize}
+				\item LALIMIT：当月至少一次触及涨跌停。
+				\item LAMTSS：未纳入融资融券卖空名单。
+				\item LACSI：不属于沪深 300。
+				\item LAAMIHUD：Amihud 非流动性高于中位数。
+				\item LAVOL：交易量低于或等于中位数。
+				\item LACOV：分析师覆盖低于或等于中位数。
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.55\textwidth}
+			\textbf{A2--A3：分布和相关性}
+			\scriptsize
+			\begin{tabular}{lrr}
+				\toprule
+				LA index bin & Number & Percentage\\
+				\midrule
+				$[0,0.2)$ & 315 & 20.8\\
+				$[0.2,0.4)$ & 275 & 18.2\\
+				$[0.4,0.6)$ & 243 & 16.0\\
+				$[0.6,0.8)$ & 408 & 27.0\\
+				$[0.8,1]$ & 271 & 17.9\\
+				\bottomrule
+			\end{tabular}
+			\par\vspace{4pt}
+			\scriptsize A3 显示六个组件之间的相关性都显著；其中最高是 LAMTSS--LACSI = 0.76，LAAMIHUD--LAVOL = 0.68——这正是作者必须做替代指数稳健性检验的原因。
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{附录 A4：两组件指数下的稳健性}
+	\tinytab
+	\begin{tabular}{lrrrr}
+		\toprule
+		Panel & VW FF3 Low & VW FF3 High & VW FF3 High--Low & t\\
+		\midrule
+		A: price limit + volume & -0.55 & -1.90 & -1.35 & -3.26\\
+		B: MTSS + analyst coverage & -0.53 & -2.42 & -1.89 & -4.03\\
+		C: CSI + illiquidity & -0.98 & -2.00 & -1.02 & -2.45\\
+		\bottomrule
+	\end{tabular}
+	\vspace{6pt}
+	\tinytab
+	\begin{tabular}{lrrrr}
+		\toprule
+		Panel & EW FF3 Low & EW FF3 High & EW FF3 High--Low & t\\
+		\midrule
+		A: price limit + volume & -1.16 & -2.37 & -1.21 & -4.41\\
+		B: MTSS + analyst coverage & -1.04 & -2.76 & -1.73 & -4.83\\
+		C: CSI + illiquidity & -1.47 & -2.02 & -0.54 & -1.96\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{5pt}
+	\small 即便把 LA 指数压缩到只有两个组件，``高 LA 组的 IVOL premium 更强'' 这一结论仍然成立。
+\end{frame}
+
+\begin{frame}{附录 A5--A6：控制 MAX5 与 overpricing 指标的构造}
+	\begin{columns}[t]
+		\begin{column}{0.48\textwidth}
+			\textbf{A5：控制 MAX5 的 Fama--MacBeth}
+			\scriptsize
+			\begin{tabular}{lrrrrrr}
+				\toprule
+				& (1)&(2)&(3)&(4)&(5)&(6)\\
+				\midrule
+				IVOL & -0.90**&&-1.07**&-0.98***&&-1.08***\\
+				MAX5 &&-0.75*&0.05&&-0.56&0.18\\
+				XRET &&&&-0.89**&-0.92*&-0.98**\\
+				TURN &&&&-0.62&-0.82**&-0.72*\\
+				$R^2$ &3.1&3.4&5.3&13.4&14.0&14.9\\
+				\bottomrule
+			\end{tabular}
+		\end{column}
+		\begin{column}{0.52\textwidth}
+			\textbf{A6：overpricing/underpricing 六个 anomaly}
+			\scriptsize
+			\begin{itemize}
+				\item Accruals：应计项越高，未来收益越低。
+				\item Net operating assets：净经营资产越高，未来收益越低。
+				\item Gross profitability：盈利能力高，未来收益高。
+				\item ROE：ROE 高，未来收益高。
+				\item Momentum：6/1/6 动量。
+				\item Composite equity issuance：股权发行越多，未来收益越低。
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{附录 A7：高 LA 股票的估值更贵}
+	\tighttable
+	\begin{tabular}{lrrrrrrr}
+		\toprule
+		& Full & Low U & Low O & Med U & Med O & High U & High O\\
+		\midrule
+		\multicolumn{8}{l}{Panel A: median P/E}\\
+		2002--2012 & 50.7 & 26.7 & 43.0 & 40.2 & 61.6 & 50.9 & 82.1\\
+		2002--2007 & 50.4 & 24.2 & 40.0 & 34.6 & 69.4 & 49.8 & 92.2\\
+		2008--2012 & 50.9 & 32.0 & 38.6 & 44.2 & 55.6 & 51.7 & 68.2\\
+		\midrule
+		\multicolumn{8}{l}{Panel B: market-wide P/E}\\
+		2002--2012 & 24.8 & 17.8 & 24.5 & 30.2 & 45.5 & 34.4 & 66.9\\
+		2002--2007 & 26.8 & 18.2 & 30.0 & 29.3 & 50.9 & 33.1 & 75.1\\
+		2008--2012 & 21.7 & 17.5 & 20.1 & 31.9 & 39.5 & 38.5 & 55.1\\
+		\bottomrule
+	\end{tabular}
+	\par\vspace{5pt}
+	\small U = underpriced，O = overpriced。即便被指标判定为 underpriced，高 LA 股票的 P/E 也明显偏高，这与 Table 11--12 的解释一致：高 LA 组整体处于偏贵的位置。
+\end{frame}
+
+\section{共同启示}
+
+\begin{frame}{两篇文章共同给出的研究路径}
+	把两篇文章合起来看，可以提炼出一个相对完整的研究步骤：
+	\begin{enumerate}
+		\item 从已经被国际文献确认的经典异象出发——MAX 和 IVOL 在美国和欧洲都已有大量证据。
+		\item 找到中国市场与发达市场最不一样的地方：散户主导、涨跌停、卖空限制、融资融券标的、股指期货覆盖范围。
+		\item 把这些制度差异转化为可量化的变量：例如 Nartea 对 MAX 做涨跌停适配，Gu 用六个组件构造 LA 指数。
+		\item 提出的问题不止是 ``中国是否也存在''，而是 ``机制在这里有没有发生变化''——MAX 会不会吸收 IVOL？LA 会不会放大 IVOL？
+		\item 实证按照单变量排序、双/三重排序、Fama--MacBeth、替代定义、机制排除的顺序逐层推进。
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{对写"中国 anomaly 文章"的几点提醒}
+	\begin{itemize}
+		\item 单纯把一个美国异象搬到中国跑一遍，贡献往往很有限；关键是中国的制度或投资者结构有没有帮助识别背后的机制。
+		\item 变量不在多，而在能不能给出一个清晰的、可证伪的预测。例如 Gu et al.\ 的 ``高 LA 组 IVOL premium 应当更强''，就是一个 sharp prediction。
+		\item 表格之间要有递进关系：先看现象是否存在，再看是否被现有特征吸收，再做机制拆分，最后做稳健性，而不是反复堆显著性。
+		\item 当一个机制解释被否定时，需要进一步说明替代机制为什么不够，而不是停在 ``加上控制变量后依然显著''。
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{两篇文章的差别在哪里}
+	\tighttable
+	\begin{tabularx}{\textwidth}{lYY}
+		\toprule
+		维度 & Nartea et al. & Gu et al.\\
+		\midrule
+		文章重心 & 验证 MAX 效应在中国是否存在，并讨论它和 IVOL 的关系。 & 解释 IVOL premium 为什么在中国更强：套利限制放大了 mispricing。\\
+		机制变量 & MAX 本身就是 lottery-like payoff 的代理，背景机制是中国投资者的风险偏好。 & LA 指数是核心机制变量，直接进入排序和交互回归。\\
+		最具说服力的表 & Table 1、3、5、9、10。 & Table 3、6、7、9、10、11、12。\\
+		结论的口径 & MAX 与 IVOL 在中国是并存的两个异象。 & 高 LA 让 IVOL 异象更强、更持久；已有的几种解释都不够充分。\\
+		\bottomrule
+	\end{tabularx}
+\end{frame}
+
+\begin{frame}{课堂讨论的三个落点}
+	\begin{enumerate}
+		\item \textbf{MAX 和 IVOL 的高相关性必须正视。} 不互相控制，就无法判断驱动横截面定价的到底是彩票偏好还是特质波动。
+		\item \textbf{套利限制是中国市场最有价值的制度特征之一。} 它能把 ``异常收益'' 的问题转化为 ``价格为什么不能被及时纠正'' 的机制问题。
+		\item \textbf{在中国做异象研究，不能只是 replication。} 最值得记住的部分恰恰是与美国证据不同的地方——MAX 没能吸收 IVOL；IVOL 在高 LA 组里更强、更持久。
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{小结}
+	\begin{beamercolorbox}[sep=0.6em,wd=\linewidth,rounded=true]{postit}
+		把两篇文章放在一起，可以看到一种中国资产定价的实证范式：借助中国投资者结构和交易制度摩擦，去重新审视经典资产定价异象的机制边界。
+	\end{beamercolorbox}
+	\vspace{8pt}
+	\begin{itemize}
+		\item Nartea et al.：极端收益越高，未来收益越低；彩票偏好解释有支持，但 MAX 与 IVOL 在中国是两个并存的异象。
+		\item Gu et al.：高 IVOL 股票未来收益低，并且在套利越受限的股票中，这一负收益更强、更持久。
+		\item 方法上最值得学习的，是它们打磨表格链的方式：从 ``异象是否存在'' 一步步走到 ``机制如何识别''。
+	\end{itemize}
+\end{frame}
+
+\end{document}
