@@ -158,9 +158,9 @@ Dongbei University of Finance \& Economics \\
 \end{block}
 \justifying
 This is a \alert{synthesis-and-outlook} capstone, not new material. We do three things:
+\vspace{-1.5em}
 \begin{itemize}
   \item \textbf{Recap} lectures 01--09 through \alert{one lens} -- the stochastic discount factor (SDF) $m$ -- so nine separate decks become a single journey.
-  \item \textbf{Look outward} to five live research \textbf{frontiers}: a roughly \alert{60/40 split} between recap and outlook.
   \item Build not more facts but a \alert{mental map} -- where every model, puzzle, and fight sits on the same equation.
 \end{itemize}
 Everything organizes around \alert{two questions $m$ must answer} and \alert{three recurring tensions}:
@@ -285,64 +285,71 @@ M_{t+1} \equiv \beta\,\frac{u'(C_{t+1})}{u'(C_t)}
 \alert{The \emph{form} $1=\E_t(MR)$ is preference-free; every model is just a different \textit{story} about $M$.}\hfill {\scriptsize(foundation: L03)}
 \end{frame}
 
-\begin{frame}{Face 1 --- Risk Premium as $-\Cov(R,m)$ (Step 2)}
+\begin{frame}{Face 1 --- Risk Premium as $-\Cov(R,\widetilde m)$ (Step 2)}
 \small
-Start from $1=\E_t[m\,R^i]$ and use the covariance identity $\E(mR)=\E(m)\E(R)+\Cov(m,R)$:
-\begin{align*}
-1 &= \E_t(m)\,\E_t(R^i) + \Cov_t(m,R^i).
-\end{align*}
-The risk-free asset has a certain return, so $\Cov_t(m,R_f)=0$ and
+Start from the raw SDF $1=\E_t[mR^i]$. The risk-free gross return fixes its scale:
 \[
-1=\E_t(m)\,R_f \quad\Longrightarrow\quad \E_t(m)=\tfrac{1}{R_f}.
+1=\E_t(m)R_f \quad\Longrightarrow\quad \E_t(m)=\tfrac{1}{R_f}.
 \]
-Substitute and rearrange for the \textbf{excess return}:
+It is cleaner to carry the \textbf{normalized SDF}
+\[
+\widetilde m \equiv \frac{m}{\E_t(m)}=R_f m,\qquad \E_t(\widetilde m)=1.
+\]
+For the gross excess return $R^{i,e}\equiv R^i-R_f$, zero cost gives
 \begin{align*}
-1 &= \tfrac{1}{R_f}\,\E_t(R^i) + \Cov_t(m,R^i),\\
-\E_t(R^i) &= R_f - R_f\,\Cov_t(m,R^i),\\
-\boxed{\ \E_t(R^i)-R_f = -\,R_f\,\Cov_t(m,R^i)\ }.
+0 &= \E_t(m)\,\E_t(R^{i,e})+\Cov_t(m,R^{i,e}),\\
+\E_t(R^{i,e})
+&= -\frac{\Cov_t(m,R^{i,e})}{\E_t(m)}
+=-R_f\Cov_t(m,R^{i,e})
+=-\Cov_t(\widetilde m,R^{i,e}).
 \end{align*}
-In logs (Jensen term $\sigma_i^2/2$): $\quad\E_t[r_i-r_f]+\tfrac{\sigma_i^2}{2}=-\,\sigma_{im}.$
+\[
+\boxed{\ \E_t(R^i)-R_f=-\Cov_t(\widetilde m,R^i)\ }.
+\]
+Lognormal case, with $s\equiv\log\widetilde m$: $\ \E_t[r_i-r_f]+\sigma_i^2/2=-\Cov_t(s,r_i).$
 \begin{block}{The conceptual heart}
-Only \alert{covariance with $m$} is priced. An asset that pays off when $m$ is high (bad times, high marginal utility) is \textbf{insurance} $\Rightarrow$ low / negative premium. Idiosyncratic risk uncorrelated with $m$ earns \textbf{nothing}.
+Only \alert{covariance with the SDF} is priced: payoff in high-$\widetilde m$ states is \textbf{insurance} $\Rightarrow$ low premium; idiosyncratic risk uncorrelated with $\widetilde m$ earns \textbf{nothing}.
 \end{block}
 \end{frame}
 
 \begin{frame}{Face 2 --- Beta Pricing: the SDF \emph{is} a Factor Model (Step 3)}
 \small
-Project $m$ onto the space of payoffs $X$: $\ m = x^{*} + \varepsilon$ with $x^{*}=\mathrm{proj}(m\mid X)$ and $\E(\varepsilon\,X)=0$. Since $\varepsilon$ is orthogonal to all returns, $x^{*}$ prices everything. Rewriting Face 1:
+Project $\widetilde m$ onto the space of payoffs $X$: $\ \widetilde m = x^{*} + \varepsilon$ with $x^{*}=\mathrm{proj}(\widetilde m\mid X)$ and $\E(\varepsilon\,X)=0$. Since $\varepsilon$ is orthogonal to all excess returns, $x^{*}$ prices all risk premia. Rewriting Face 1:
 \begin{align*}
-\E_t(R^i)-R_f &= -\,R_f\,\Cov_t(m,R^i)\\
-&= \underbrace{\frac{\Cov_t(R^i,m)}{\Var_t(m)}}_{\textstyle \beta_{i,m}}\cdot\underbrace{\Big(-R_f\,\Var_t(m)\Big)}_{\textstyle \lambda_m}\\
-&= \beta_{i,m}\,\lambda_m .
+\E_t(R^i)-R_f &= -\,\Cov_t(\widetilde m,R^i)\\
+&= \underbrace{\frac{\Cov_t(R^i,\widetilde m)}{\Var_t(\widetilde m)}}_{\textstyle \beta_{i,\widetilde m}}
+\cdot\underbrace{\Big(-\Var_t(\widetilde m)\Big)}_{\textstyle \lambda_{\widetilde m}}\\
+&= \beta_{i,\widetilde m}\,\lambda_{\widetilde m}.
 \end{align*}
-If $m$ is \textbf{linear in factors}, $m=a+b'f$, the same algebra gives the multifactor form
+If $\widetilde m$ is \textbf{linear in factors}, $\widetilde m=a+b'f$, the same algebra gives the multifactor form
 \[
 \boxed{\ \E_t(R^i)-R_f=\beta_i'\,\lambda\ },\qquad \beta_i=\Var(f)^{-1}\Cov(f,R^i).
 \]
-\textbf{CAPM} is the special case $m=a+b\,R^{W}$ (quadratic utility / market efficiency).
+\textbf{CAPM} is the special case $\widetilde m=a+b\,R^{W}$ (quadratic utility / market efficiency).
 \begin{block}{Punchline (revisited in Frontier I)}
-$1=\E(mR)$ and expected-return--beta pricing are \alert{mathematically equivalent representations of the same object}: ``estimate $m$'' $=$ ``find the factors.''
+$1=\E(mR)$ and expected-return--beta pricing are \alert{mathematically equivalent representations of the same object}: ``estimate the SDF'' $=$ ``find the factors.''
 \end{block}
 \end{frame}
 
 \begin{frame}{Face 3 --- MV Frontier \& the Hansen--Jagannathan Bound (Step 4)}
 \small
-From Face 1, $\E(R^{e})=-R_f\,\Cov(m,R^{e})=-R_f\,\rho_{m,R^e}\,\sigma(m)\,\sigma(R^{e})$ for any excess return $R^{e}$. Rearranging and using $\big|\rho_{m,R^e}\big|\le 1$:
+From Face 1, for any gross excess return $R^{e}$:
 \begin{align*}
+\E(R^{e})&=-\Cov(\widetilde m,R^{e})
+=-\rho_{\widetilde m,R^e}\sigma(\widetilde m)\sigma(R^{e}),\\
 \frac{\big|\E(R^{e})\big|}{\sigma(R^{e})}
-&= R_f\,\big|\rho_{m,R^e}\big|\,\sigma(m)
-\ \le\ R_f\,\sigma(m)
-= \frac{\sigma(m)}{\E(m)} .
+&= \big|\rho_{\widetilde m,R^e}\big|\,\sigma(\widetilde m)
+\le \sigma(\widetilde m)= \frac{\sigma(m)}{\E(m)} .
 \end{align*}
 Maximizing the left side over all assets gives the \textbf{Hansen--Jagannathan bound}:
 \[
-\boxed{\ \frac{\sigma(m)}{\E(m)}\ \ge\ \max_{R^e}\ \frac{\big|\E(R^{e})\big|}{\sigma(R^{e})}=\max\ \text{Sharpe ratio}\ }.
+\boxed{\ \sigma(\widetilde m)=\frac{\sigma(m)}{\E(m)}\ \ge\ \max_{R^e}\ \frac{\big|\E(R^{e})\big|}{\sigma(R^{e})}=\max\ \text{Sharpe ratio}\ }.
 \]
-The bound is \alert{tight} ($\rho_{m,R^e}=-1$) exactly at the \textbf{tangency / MV-efficient} portfolio: there the SDF is spanned by (is a linear function of) the maximum-Sharpe portfolio.
+The bound is \alert{tight} ($\rho_{\widetilde m,R^e}=-1$) at the \textbf{tangency / MV-efficient} portfolio: the normalized SDF is then spanned by the maximum-Sharpe portfolio.
 \begin{block}{Two puzzles this seeds}
 \begin{itemize}\itemsep1pt
-\item \textbf{Equity-premium puzzle:} a $\sim$0.5 market Sharpe forces $\sigma(m)/\E(m)$ huge, hence implausible risk aversion (\href{https://doi.org/10.1016/0304-3932(85)90061-3}{\textcolor{blue}{Mehra--Prescott (1985)}}).
-\item \textbf{Factor-war criterion (L07):} the best model is the one whose factors attain the max squared Sharpe ratio (\href{https://doi.org/10.1016/j.jfineco.2018.02.012}{\textcolor{blue}{Fama--French (2018)}}).
+\item \textbf{Equity-premium puzzle:} a $\sim$0.5 market Sharpe requires a volatile SDF (\href{https://doi.org/10.1016/0304-3932(85)90061-3}{\textcolor{blue}{Mehra--Prescott (1985)}}).
+\item \textbf{Factor-war criterion (L07):} better factors attain a higher max squared Sharpe ratio (\href{https://doi.org/10.1016/j.jfineco.2018.02.012}{\textcolor{blue}{Fama--French (2018)}}).
 \end{itemize}
 \end{block}
 \end{frame}
@@ -427,6 +434,37 @@ Subtract the conditional expectation from the loglinear return: the \textit{inno
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Why the News Split Matters}
+\footnotesize
+\RaggedRight
+The decomposition turns a realized return into a diagnostic question: \alert{which expectation moved?}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.49\textwidth}
+\textbf{\textcolor{blue}{Cash-flow news: fundamentals}}
+\begin{itemize}\scriptsize\itemsep1pt
+  \item Revisions to future dividends, earnings, productivity, or payout.
+  \item Raises prices by increasing the valuation numerator.
+  \item More visible in firm-level data, where idiosyncratic fundamentals move a lot.
+\end{itemize}
+\end{column}
+\begin{column}{0.49\textwidth}
+\textbf{\textcolor{blue}{Discount-rate news: required returns}}
+\begin{itemize}\scriptsize\itemsep1pt
+  \item Revisions to future expected returns / risk premia.
+  \item Good $N_{DR}$ for future investors is bad for today's price: prices fall now, expected returns rise later.
+  \item Persistent small changes in discount rates have large present-value effects.
+\end{itemize}
+\end{column}
+\end{columns}
+
+\vspace{-0.2em}
+\begin{itemize}\scriptsize\itemsep2pt
+  \item \textbf{Time series:} predictability is discount-rate variation before the shock; $N_{DR}$ is the same object after the shock.
+  \item \textbf{Cross-section:} priced factors are exposures to bad state-variable news, not arbitrary covariances.
+  \item \textbf{Empirical route:} estimate a VAR state vector and map shocks into revisions of expected cash flows and returns (\href{https://doi.org/10.2307/2233809}{\textcolor{blue}{Campbell 1991}}; \href{https://doi.org/10.1111/j.1540-6261.1993.tb04700.x}{\textcolor{blue}{Campbell--Ammer 1993}}).
+\end{itemize}
+\end{frame}
+
 \begin{frame}{The Risk--Return Tradeoff and Why It ``Fails''}
 \small
 The conditional equity premium \textit{is} the ICAPM risk--return relation. \href{https://doi.org/10.2307/1913811}{\textcolor{blue}{Merton (1973)}}:
@@ -486,24 +524,24 @@ Is documented predictability \alert{real}? The referee is out-of-sample (OOS) pe
 \end{itemize}
 \end{frame}
 
-\begin{frame}{AHP (2025): Reframing Excess Volatility as Persistence}
-\small
-Newest reframing -- \href{https://www.nber.org/papers/w34923}{\textcolor{blue}{Atkeson, Heathcote, and Perri (2025)}}: disagreements about excess volatility reduce to disagreements about \alert{long-run return persistence}, not short-run $R^2$.
+% \begin{frame}{AHP (2025): Reframing Excess Volatility as Persistence}
+% \small
+% Newest reframing -- \href{https://www.nber.org/papers/w34923}{\textcolor{blue}{Atkeson, Heathcote, and Perri (2025)}}: disagreements about excess volatility reduce to disagreements about \alert{long-run return persistence}, not short-run $R^2$.
 
-\textbf{Proposition 1.} The fundamental-to-actual price ratio depends \alert{entirely} on total returns and price weights -- no cash-flow dynamics:
-\begin{equation*}
-  \boxed{\;\frac{P_t^\star}{P_t} = 1 + \sum_{k=0}^{\infty}\beta^{k+1}\,
-  \E_t\!\left[\left(R_{t+k+1}^{wd} - \tfrac{1}{\beta}\right)\frac{P_{t+k}}{P_t}\right]\;}
-\end{equation*}
-To first order it is \textbf{invariant} to the chosen cash-flow measure (dividends vs.\ repurchases vs.\ earnings). The variance of log excess pricing is governed by persistence $\psi$:
-\begin{equation*}
-  \Var\!\bigl[\log(P_t^\star/P_t)\bigr] = \frac{R^2\,\Var(r)}{(1-\rho\psi)^2}.
-\end{equation*}
-\begin{itemize}
-  \item \alert{Persistence $\psi$, not short-run $R^2$, is what matters.} A low-$R^2$ but highly persistent predictor can imply \textit{more} excess volatility than a high-$R^2$ transitory one.
-  \item The predictable component $\Phi_t$ bundles rational time-varying premia \textit{with} bubbles -- staying agnostic between risk and behavioral, exactly as the news decomposition did.
-\end{itemize}
-\end{frame}
+% \textbf{Proposition 1.} The fundamental-to-actual price ratio depends \alert{entirely} on total returns and price weights -- no cash-flow dynamics:
+% \begin{equation*}
+%   \boxed{\;\frac{P_t^\star}{P_t} = 1 + \sum_{k=0}^{\infty}\beta^{k+1}\,
+%   \E_t\!\left[\left(R_{t+k+1}^{wd} - \tfrac{1}{\beta}\right)\frac{P_{t+k}}{P_t}\right]\;}
+% \end{equation*}
+% To first order it is \textbf{invariant} to the chosen cash-flow measure (dividends vs.\ repurchases vs.\ earnings). The variance of log excess pricing is governed by persistence $\psi$:
+% \begin{equation*}
+%   \Var\!\bigl[\log(P_t^\star/P_t)\bigr] = \frac{R^2\,\Var(r)}{(1-\rho\psi)^2}.
+% \end{equation*}
+% \begin{itemize}
+%   \item \alert{Persistence $\psi$, not short-run $R^2$, is what matters.} A low-$R^2$ but highly persistent predictor can imply \textit{more} excess volatility than a high-$R^2$ transitory one.
+%   \item The predictable component $\Phi_t$ bundles rational time-varying premia \textit{with} bubbles -- staying agnostic between risk and behavioral, exactly as the news decomposition did.
+% \end{itemize}
+% \end{frame}
 
 \section{The Cross-Section Journey: From One Beta to the Factor War}
 
